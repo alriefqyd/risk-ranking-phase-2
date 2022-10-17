@@ -301,6 +301,8 @@ $(function() {
         $('.js-form-project-edit').removeClass('d-none');
         $('.js-form-project-detail').addClass('d-none');
         $(this).addClass('d-none');
+        $('.js-title-form').removeClass('d-none')
+        $('.js-title-detail').addClass('d-none')
         $('.js-btn-view_project').removeClass('d-none')
     })
 
@@ -308,6 +310,8 @@ $(function() {
         $('.js-form-project-edit').addClass('d-none');
         $('.js-form-project-detail').removeClass('d-none');
         $(this).addClass('d-none');
+        $('.js-title-form').addClass('d-none')
+        $('.js-title-detail').removeClass('d-none')
         $('.js-btn-edit_project').removeClass('d-none')
     })
 

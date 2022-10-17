@@ -39,7 +39,9 @@
             @error('category')
                 b-danger
             @enderror">
-            <select name="category" data-placeholder="Select Project Category"
+            <select name="category"
+                    style="width: 100% !important;"
+                    data-placeholder="Select Project Category"
                     class="js-example-basic-single col-sm-12
                     js-select-project-category
                     select2">
@@ -89,7 +91,8 @@
             @error('owner')
                 b-danger
             @enderror">
-            <select id="" name="owner" data-url="/getProjectType" data-id="{{$user_department}}"
+            <select id="" style="width: 100% !important;"
+                    name="owner" data-url="/getProjectType" data-id="{{$user_department}}"
                     class="select2
                 js-example-basic-single
                 js-select-owner
