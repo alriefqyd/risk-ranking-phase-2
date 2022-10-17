@@ -1,0 +1,174 @@
+<?php
+
+namespace App\Models;
+
+use App\Service\ProjectService;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Project extends Model
+{
+    use HasFactory;
+    use SoftDeletes;
+    protected $guarded = ['id'];
+    protected $dates = ['deleted_at'];
+
+    const BC_STATUS = [
+        'mature' => 'Mature',
+        'not_mature' => 'Not Mature'
+    ];
+
+    public function assessment(){
+        return $this->hasOne(Assessment::class,'project_id');
+    }
+
+    public function fel1(){
+        return $this->hasOne(Fel1::class,'project_id');
+    }
+
+    public function createdBy(){
+        return $this->belongsTo(User::class,'created_by');
+    }
+
+    public function fel2(){
+        return $this->hasOne(Fel2::class,'project_id');
+    }
+
+    public function fel3(){
+        return $this->hasOne(Fel3::class,'project_id');
+    }
+
+    public function business_case(){
+        return $this->hasOne(BusinessCaseAssessment::class,'project_id');
+    }
+
+    public function owners(){
+        return $this->belongsTo(Department::class,'owner');
+    }
+
+    public function sponsors(){
+        return $this->belongsTo(Department::class,'sponsor');
+    }
+
+    public function cost_benefits(){
+        return $this->hasOne(CostBenefit::class,'project_id');
+    }
+
+    /*
+     * Method to auto delete relation
+     */
+    protected static function boot() {
+        parent::boot();
+        static::deleted(function ($project) {
+            $project->assessment()->delete();
+            $project->fel1()->delete();
+            $project->fel2()->delete();
+            $project->fel3()->delete();
+            $project->business_case()->delete();
+        });
+    }
+
+    public function scopeFilter($query, array $filters){
+        $query->when($filters['owner'] ?? false, fn($query, $owner) =>
+        $query->where('owner', '=', $owner)
+        );
+
+        $query->when($filters['sponsor'] ?? false, fn($query, $sponsor) =>
+        $query->where('sponsor', '=', $sponsor)
+        );
+
+        $query->when($filters['category'] ?? false, fn($query, $category) =>
+        $query->where('project_category', '=', $category)
+        );
+
+        $query->when($filters['type'] ?? false, fn($query, $type) =>
+        $query->where('project_type', '=', $type)
+        );
+        $query->when($filters['q'] ?? false, fn($query, $q) =>
+        $query->where('project_name', 'like', '%'.$q.'%')
+            ->orwhere('project_number', 'like', '%'.$q.'%')
+        );
+
+    }
+
+    public function getCostBenefit($isExport){
+        $data =  CostBenefit::where('project_id',$this->id)->first();
+        if(!$data){
+            return null;
+        }
+        $dataCollection = collect([]);
+        $dataValue = json_decode($data->value);
+
+        if($isExport){
+            $dataLength = sizeof($dataValue);
+            if($dataLength >= 28){
+                $year = 2019;
+                for($i=$dataLength; $i < 31; $i++){
+                    $dataCollection->push([
+                        'project_id' => $this->id,
+                        'year' => $year+1,
+                        'initial_and_sustaining_capex' => 0,
+                        'additional_revenue' => 0,
+                        'increment_operating_cost' => 0,
+                        'cost_savings' => 0,
+                        'net_incremental_benefits' => 0
+                    ]);
+                }
+            }
+        }
+
+        foreach ($dataValue as $datas){
+            $dataCollection->push([
+                'project_id' => $this->id,
+                'year' =>  $datas->year,
+                'initial_and_sustaining_capex' => $datas->initial_and_sustaining_capex,
+                'additional_revenue' => $datas->additional_revenue,
+                'increment_operating_cost' => $datas->increment_operating_cost,
+                'cost_savings' => $datas->cost_savings,
+                'net_incremental_benefits' => $datas->net_incremental_benefits
+            ]);
+        }
+        return $dataCollection;
+    }
+
+    public function getBcStatus(){
+        $projectService = new ProjectService();
+        return $projectService->getBcStatus($this);
+    }
+
+    public function getRelatedDataProjectAssessment(){
+        $projectService = new ProjectService();
+        return $projectService->getRelatedDataProjectStatus($this, $this->assessment,config('constants.related_data.assessment'));
+    }
+
+    public function getRelatedDataProjectFel1(){
+        $projectService = new ProjectService();
+        return $projectService->getRelatedDataProjectStatus($this, $this->fel1,config('constants.related_data.fel1'));
+    }
+
+    public function getRelatedDataProjectFel2(){
+        $projectService = new ProjectService();
+        return $projectService->getRelatedDataProjectStatus($this, $this->fel2,config('constants.related_data.fel2'));
+    }
+
+    public function getRelatedDataProjectFel3(){
+        $projectService = new ProjectService();
+        return $projectService->getRelatedDataProjectStatus($this, $this->fel3,config('constants.related_data.fel3'));
+    }
+
+    public function getRelatedDataProjectBusinessCase(){
+        $projectService = new ProjectService();
+        return $projectService->getRelatedDataProjectStatus($this, $this->business_case,config('constants.related_data.business-case'));
+    }
+
+    public function getProjectCategory(){
+        return Setting::PROJECT_CATEGORY[$this->project_category];
+    }
+
+    public function getNoteTemplateForm(){
+        $projectService = new ProjectService();
+        return $projectService->getNoteTemplateForm($this);
+    }
+
+}
