@@ -636,6 +636,37 @@ $(function() {
         if(!text) return '';
         return text.replace(/(<([^>]+)>)/ig,"").trim()
     }
+
+    /**
+     * This block for set session laravel from js using ajax
+     */
+    $('.js-set-session').each(function(){
+        var _this = $(this)
+        _this.on('click',function(e){
+            e.preventDefault()
+            var __this = $(this)
+            var _tab = __this.data('url')
+            var _action = __this.data('action')
+            var _project_id = __this.data('id')
+            __this.find('i').addClass('d-none')
+            __this.find('.loader-box').removeClass('d-none')
+            $.ajax({
+                url:'setSession',
+                data:{
+                    tab : _tab,
+                    action : _action,
+                    project_id : _project_id
+                },
+                success : function(data){
+                    window.location.href = data
+                    setTimeout(function (){
+                        __this.find('i').removeClass('d-none')
+                        __this.find('.loader-box').addClass('d-none')
+                    },3000)
+                }
+            })
+        })
+    })
 })
 
 

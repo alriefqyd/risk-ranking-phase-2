@@ -147,16 +147,21 @@ class ProjectService
 
         }
 
+        // check if data not exist and select template url is it user can create the data or not
         if(!$data){
-            if($userService->isUserHaveAccess($userService->create)){
-                return ' <a class="setting-primary-custom bg-cross" href="/'.$url.'/create/'.$project->id.'">
-                            <i class="fa fa-times text-white text-large-custom"></i>
-                        </a>';
-            }
-            return '<span class="setting-primary-custom bg-cross">
+            return ' <a class="js-set-session setting-primary-custom bg-cross" data-url="'.$url.'"
+            data-action="create" data-id="'.$project->id.'"
+            href="/project/'.$project->id.'">
                         <i class="fa fa-times text-white text-large-custom"></i>
-                    </span>';
-
+                        <div class="loader-box d-none">
+                            <div class="loader-2"
+                                style="width: 25px !important;
+                                height: 25px !important;
+                                border-right-color: white;
+                                border-left-color: white">
+                            </div>
+                        </div>
+                    </a>';
         }
 
         $icon = 'fa fa-check';
@@ -166,8 +171,17 @@ class ProjectService
             $bgColor = 'bg-draft';
         }
 
-        $template = '<a class="setting-primary-custom '.$bgColor.'" href="/'.$url.'/'.$data->id.'">
+        // select template if data is draft or publish
+        $template = '<a class="js-set-session setting-primary-custom '.$bgColor.'" data-id="'.$project->id.'" data-url="'.$url.'" href="/project/'.$project->id.'">
                         <i class="'.$icon.' text-white text-large-custom"></i>
+                        <div class="loader-box d-none">
+                            <div class="loader-2"
+                                style="width: 25px !important;
+                                height: 25px !important;
+                                 border-right-color: white;
+                                border-left-color: white">
+                            </div>
+                        </div>
                     </a>';
 
         return $template;

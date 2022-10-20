@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Session;
 
 class SettingController extends Controller
 {
@@ -104,5 +105,15 @@ class SettingController extends Controller
     public function download(Request $request){
         $file=storage_path('app\\documents\\') . $request->document_name;
         return Response::download($file);
+    }
+
+    /**
+     * Set Session Flash Handle By ajax to get select tab from index project to detail
+     * @param Request $request
+     *
+     */
+    public function setSession(Request $request){
+        $request->session()->flash('page-tab', 'assessment');
+        return response()->json('/project/'.$request->project_id);
     }
 }
