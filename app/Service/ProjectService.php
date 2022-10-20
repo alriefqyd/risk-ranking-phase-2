@@ -8,6 +8,10 @@ use App\Models\User;
 use App\Service\UserService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Assessment;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
+use Nette\Utils\Html;
+use function Termwind\render;
 
 class ProjectService
 {
@@ -197,5 +201,55 @@ class ProjectService
         return $template;
     }
 
+    public function getTemplateCheck($value){
+
+        if($value == 1){
+            return '<i class="fa fa-check-circle-o text-check text-small-custom"></i>';
+        }
+
+        return '<i class="fa fa-times-circle-o text-time text-small-custom"></i>';
+    }
+
+    public function getTemplateExpandChar($value){
+        $valueString = strip_tags($value);
+        $valueLimit = Str::limit($valueString,255);
+        $isOverChar = strlen($valueString) > 255;
+        $isHide = $isOverChar ? 'd-none' : '';
+        $buttonLimitCharacter = '';
+
+        if($isOverChar){
+            $buttonLimitCharacter = '
+                            <span class="alert-note js-hide-text">
+                                <i class="fa fa-arrow-left text-check"></i>
+                            </span>';
+        }
+
+        $tempLimit = '
+            <div class="js-limit-char js-show-char">
+                <div>'.$valueLimit.'</div>
+                <div class="alert-note js-expand-text">
+                    <i class="fa fa-arrow-right text-check"></i>
+                </div>
+            </div>
+        ';
+
+        $tempFull = '
+            <div class="js-expand-char js-show-char '.$isHide.'">
+                '.$value.'
+                '.$buttonLimitCharacter.'
+            </div>
+        ';
+
+
+        if($isOverChar){
+            return $tempLimit . $tempFull;
+        }
+
+        return $tempFull;
+    }
+
 
 }
+
+
+

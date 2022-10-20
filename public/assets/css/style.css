@@ -363,23 +363,23 @@ a:hover {
   margin-bottom: -10px;
   margin-top: 25px; }
 
-.click2edit ~ .note-editor.note-frame {
-  margin-bottom: 30px; }
+/*.click2edit ~ .note-editor.note-frame {*/
+/*  margin-bottom: 30px; }*/
 
-.note-editor p {
-  color: #999; }
+/*.note-editor p {*/
+/*  color: #999; }*/
 
-.note-editor.note-frame {
-  border-color: #e6edef; }
+/*.note-editor.note-frame {*/
+/*  border-color: #e6edef; }*/
 
-.note-editor i {
-  color: #24695c; }
+/*.note-editor i {*/
+/*  color: #24695c; }*/
 
-.note-editor span {
-  color: #24695c; }
+/*.note-editor span {*/
+/*  color: #24695c; }*/
 
-.note-editor.note-frame {
-  border-color: #e6edef; }
+/*.note-editor.note-frame {*/
+/*  border-color: #e6edef; }*/
 
 .modal .modal-body .card {
   -webkit-box-shadow: none !important;
@@ -4294,7 +4294,7 @@ table tbody .border-bottom-warning td {
 .page-wrapper .page-main-header {
   position: fixed;
   top: 0;
-  z-index: 9;
+  z-index: 2147483640;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -8991,6 +8991,7 @@ table tbody .border-bottom-warning td {
 
 .alert {
   border-radius: 0.15rem;
+    z-index:2147483647 !important;
   padding: 15px; }
   .alert svg {
     vertical-align: middle; }

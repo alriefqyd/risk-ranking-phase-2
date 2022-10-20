@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Service\AssessmentService;
+use App\Service\ProjectService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

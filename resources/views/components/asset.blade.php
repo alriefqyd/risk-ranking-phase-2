@@ -28,6 +28,9 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/responsive.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/custom.css')}}">
 {{--<link rel="stylesheet" type="text/css" href="{{asset('assets/summernote/summernote.min.css')}}">--}}
-<link rel="stylesheet" type="text/css" href="{{asset('assets/css/summernote.css')}}">
+{{--<link rel="stylesheet" type="text/css" href="{{asset('assets/css/summernote.css')}}">--}}
 <link rel="stylesheet" type="text/css" href="{{asset('assets/select2/dist/css/select2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/summernote/summernote-bs4.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/froala/css/froala_editor.pkgd.css')}}">
+
 @livewireStyles

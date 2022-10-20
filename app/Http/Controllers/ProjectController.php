@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assessment;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\Setting;
@@ -123,7 +124,7 @@ class ProjectController extends Controller
                 'sponsor' => $request->sponsor,
                 'project_category' => $request->category,
                 'bc_presenter' => $request->bc_presenter,
-                'bc_status' => Project::BC_STATUS['not_mature'],
+                'bc_status' => $request->bc_status,
                 'note' => $request->note,
                 'finance_analyst' => $request->finance_analyst,
                 'created_by' => Auth::user()->id
@@ -132,7 +133,7 @@ class ProjectController extends Controller
 
             $project->saveOrFail();
             DB::commit();
-            $request->session()->flash('alert-success', 'Data was successful added!');
+            $request->session()->flash('alert-success', 'Project was saved');
             return redirect('project/'.$project->id);
 
         } catch (\Exception $e) {
@@ -142,20 +143,23 @@ class ProjectController extends Controller
     }
 
     public function edit(Project $project){
-        $this->authorize('update');
+        $this->authorize('read');
 
         $projectService = new ProjectService();
 
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
 
-        return view('page.project.edit',[
+        $complexityScore = Assessment::COMPLEXITY_SCORE;
+
+        return view('page.project.detail',[
             'project' => $project,
             'projectCategory' => $this->projectCategory,
             'projectType' => $this->projectType,
             'department' => $department,
             'subDepartment' => $subDepartment,
             'userDepartment' => $this->userDepartment,
+            'complexityScore' => $complexityScore,
             'sessionUpdate' => Session::get('projectUpdate')
         ]);
     }

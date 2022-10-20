@@ -137,14 +137,9 @@
                                                 {{$project->project_number ?: '-'}}
                                             </td>
                                             <td>
-                                                @can('update')
-                                                    <a href="/project/{{$project->id}}">
-                                                        <p class="alert-color-green">{{$project->project_name}}</p>
-                                                    </a>
-                                                @else
-                                                    {{$project->project_name}}
-                                                @endcan
-
+                                                <a href="/project/{{$project->id}}">
+                                                    <p class="alert-color-green">{{$project->project_name}}</p>
+                                                </a>
                                             </td>
                                             <td class="text-center">
                                                 {!! $project->getRelatedDataProjectAssessment() !!}

@@ -9,7 +9,7 @@ class UserService
 {
     public $create = [
         User::ROLE['admin'],
-        // User::ROLE['admin-dept']
+        User::ROLE['admin-dept']
     ];
     public $read = [
         User::ROLE['sponsor'],
@@ -19,7 +19,7 @@ class UserService
     ];
     public $update = [
         User::ROLE['sponsor'],
-        // User::ROLE['admin-dept'],
+        User::ROLE['admin-dept'],
         User::ROLE['admin'],
     ];
 

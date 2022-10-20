@@ -20,7 +20,7 @@
 }
 
 .bg-cross {
-    background-color: red;
+    background-color: #d22d3d;
 }
 
 .bg-draft {
@@ -52,6 +52,17 @@
 .setting-primary-custom .text-large-custom{
     width: 100%;
 }
+.text-small-custom {
+    font-size: 30px;
+}
+
+.text-check {
+    color: green;
+}
+
+.text-time {
+    color: #d22d3d;
+}
 
 .setting-primary-custom:hover {
     background-color: #ebb833;
@@ -64,6 +75,11 @@
 
 .alert-note {
     cursor: pointer;
+}
+
+
+.alert-note .text-check:hover {
+    color:#ab8218;
 }
 
 .alert-color-yellow {
@@ -87,5 +103,13 @@
 
 .alert-color-green:hover {
     color:#ab8218
+}
+
+.loader-box-custom .loader-34-custom:after {
+    background-color: white !important;
+}
+
+.error {
+    color: #d22d3d !important;
 }
 

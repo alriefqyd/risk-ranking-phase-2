@@ -171,4 +171,14 @@ class Project extends Model
         return $projectService->getNoteTemplateForm($this);
     }
 
+    public function getCheckTemplate($value){
+        $projectService = new ProjectService();
+        return $projectService->getTemplateCheck($value);
+    }
+
+    public function getTemplateExpandChar($value){
+        $projectService = new ProjectService();
+        return $projectService->getTemplateExpandChar($value);
+    }
+
 }

@@ -25,6 +25,8 @@ Route::delete('/project/{project:id}',[\App\Http\Controllers\ProjectController::
 Route::get('/project/getProjectNote/{project:id}',[\App\Http\Controllers\ProjectController::class,'getProjectNote'])->name('project.get-project-note ')->middleware('auth');
 Route::get('/export',[\App\Http\Controllers\ExportController::class,'export'])->name('export')->middleware(['auth']);
 
+Route::post('/assessment',[\App\Http\Controllers\AssessmentController::class,'store'])->middleware('auth');
+
 Route::get('/getProjectType',[\App\Http\Controllers\SettingController::class,'getProjectType'])->middleware('auth');
 Route::get('/getSponsorByOwner',[\App\Http\Controllers\ProjectController::class,'getSponsorByOwner'])->middleware('auth');
 require __DIR__.'/auth.php';

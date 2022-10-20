@@ -1,3 +1,3 @@
 @if(Session::has('alert-success'))
-    <span class="check-notification"></span>
+    <div class="check-notification" data-msg="{{Session::get('alert-success') ?: 'Your Data Was Saved'}}"></div>
 @endif

@@ -16,6 +16,11 @@ class Setting extends Model
         'research_and_development' => 'RESEARCH AND DEVELOPMENT',
     ];
 
+    public const STATUS = [
+        'draft' => 'DRAFT',
+        'publish' => 'PUBLISH'
+    ];
+
     public const PROJECT_TYPE = 'PROJECT TYPE';
 
     public const PROJECT_TYPE_BETTERMENT = 'betterment';
