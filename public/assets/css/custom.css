@@ -113,3 +113,7 @@
     color: #d22d3d !important;
 }
 
+.modal {
+    z-index: 9999999999;
+}
+
