@@ -215,6 +215,11 @@ class ProjectService
         return $template;
     }
 
+    /**
+     * Get Template Icon
+     * @param $value
+     * @return string
+     */
     public function getTemplateCheck($value){
 
         if($value == 1){

@@ -12,9 +12,9 @@
                 </div>
                 <div class="col-sm-8">
                     @can('create')
-                    <a href="/project/create">
-                        <button class="btn btn-outline-primary-2x m-l-5 float-end" type="button">Create New Project</button>
-                    </a>
+                        <a href="/project/create">
+                            <button class="btn btn-outline-primary-2x m-l-5 float-end" type="button">Create New Project</button>
+                        </a>
                     @endcan
                     @can('export')
                         <a href="/export">

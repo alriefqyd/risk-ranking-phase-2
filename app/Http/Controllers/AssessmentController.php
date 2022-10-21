@@ -25,7 +25,9 @@ class AssessmentController extends Controller
     {
         $this->authorize('read');
         $project_id = $request->id;
-        $assessment = Assessment::with(['user','project']);
+        $assessment = Assessment::with(['user','project'])->whereHas('project',function ($q){
+            return $q->filter(request(['q','owner','sponsor','category','type']));
+        });
 
         if($project_id){
             $assessment = $assessment->orwhere('id',$project_id);
@@ -42,8 +44,8 @@ class AssessmentController extends Controller
         }
 
 
-        return view('assessment.index',[
-            'assessment' => $assessment->get()
+        return view('page.assessment.assessment_list',[
+            'assessments' => $assessment->paginate(10)
         ]);
     }
 
@@ -120,10 +122,10 @@ class AssessmentController extends Controller
                 'detail_estimate_cost_text' => $request->detail_estimate_cost_text
             ]);
 
-            if($request->has('publish')){
+            if($request?->status == 'publish'){
                 $assessment->status = 'PUBLISH';
             }
-            if($request->has('draft')){
+            if($request?->status == 'draft'){
                 $assessment->status = 'DRAFT';
             }
 
@@ -228,10 +230,10 @@ class AssessmentController extends Controller
             $assessment->impact_if_not_executed_text = $request->impact_if_not_executed_text;
             $assessment->alternatives_to_proposal_text = $request->alternatives_to_proposal_text;
             $assessment->cost_estimate_text = $request->cost_estimate_text;
-            if($request->has('publish')){
+            if($request?->status == 'publish'){
                 $assessment->status = 'PUBLISH';
             }
-            if($request->has('draft')){
+            if($request?->status == 'draft'){
                 $assessment->status = 'DRAFT';
             }
             $assessment->saveOrFail();

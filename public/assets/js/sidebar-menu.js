@@ -10,7 +10,7 @@
 
     if (localStorage.getItem("page-wrapper") === null) {
         $(".page-wrapper").addClass("compact-wrapper");
-    }   
+    }
 
   // left sidebar and horizotal menu
     if($('#pageWrapper').hasClass('compact-wrapper')){
@@ -65,11 +65,11 @@
 
           jQuery('.menu-title').append('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
           jQuery('.menu-title').click(function () {
-              jQuery('.menu-title').removeClass('active');
+              // jQuery('.menu-title').removeClass('active');
               jQuery('.menu-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
               jQuery('.menu-content').slideUp('normal');
               if (jQuery(this).next().is(':hidden') == true) {
-                  jQuery(this).addClass('active');
+                  // jQuery(this).addClass('active');
                   jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                   jQuery(this).next().slideDown('normal');
               } else {
@@ -84,7 +84,7 @@
 // toggle sidebar
 
 
-$('.toggle-sidebar').click(function() {   
+$('.toggle-sidebar').click(function() {
   $('.main-nav').toggleClass('close_icon');
   $('.page-main-header').toggleClass('close_icon');
 });
@@ -96,7 +96,7 @@ var $window = $(window);
 var widthwindow = $window.width();
 (function($) {
 "use strict";
-if(widthwindow+17 <= 993) {   
+if(widthwindow+17 <= 993) {
     $('.toggle-sidebar').attr('checked', false);
     $('.main-nav').addClass("close_icon");
     $('.page-main-header').addClass("close_icon");
@@ -117,8 +117,8 @@ if(widthwindaw+17 <= 991){
     $('.page-main-header').removeClass("close_icon");
 }
 
-if(widthwindow >= 768) {   
-    $('.toggle-sidebar').click(function() {    
+if(widthwindow >= 768) {
+    $('.toggle-sidebar').click(function() {
         $('.main-nav').toggleClass('close_icon');
         $('.page-main-header').toggleClass('close_icon');
     });
@@ -139,7 +139,7 @@ var menuWrapperSize = getMenuWrapperSize();
 
 if ((menuWrapperSize) >= '1660') {
     var sliderLimit = -3000
-    
+
 } else if ((menuWrapperSize) >= '1440') {
     var sliderLimit = -3600
 } else {
@@ -181,8 +181,8 @@ $("#left-arrow").click(function () {
 });
 
 // page active
-    $( ".main-navbar" ).find( "a" ).removeClass("active");
-    $( ".main-navbar" ).find( "li" ).removeClass("active");
+//     $( ".main-navbar" ).find( "a" ).removeClass("active");
+//     $( ".main-navbar" ).find( "li" ).removeClass("active");
 
     var current = window.location.pathname
     $(".main-navbar ul>li a").filter(function() {
@@ -190,9 +190,9 @@ $("#left-arrow").click(function () {
         var link = $(this).attr("href");
         if(link){
             if (current.indexOf(link) != -1) {
-                $(this).parents().children('a').addClass('active');
+                // $(this).parents().children('a').addClass('active');
                 $(this).parents().parents().children('ul').css('display', 'block');
-                $(this).addClass('active');
+                // $(this).addClass('active');
                 $(this).parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                 $(this).parent().parent().parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                 return false;

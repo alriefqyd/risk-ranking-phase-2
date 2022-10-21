@@ -363,35 +363,39 @@ $(function() {
      * Handle Hide Show Editor Form
      */
     var _check_count = 0;
+
     $('.js-checkbox-assessment').each(function(){
         var _this = $(this)
         var _btn_submit_assessment = $('.js-create-assessment');
         _this.on('change',function (){
             var __this = $((this))
-            var _editor = __this.closest('tr').find('.froala')
-            if(__this.is(':checked')){
-                _editor.removeClass('d-none')
-                _check_count += 1
-            } else {
-                if(_check_count > 0 ){
-                    _check_count -=1;
-                }
-
-                _editor.find('.fr-element').text('')
-                _editor.addClass('d-none')
-
-            }
-
-            if(_check_count < 1) {
-                _btn_submit_assessment.attr('disabled','disabled')
-                _btn_submit_assessment.find('.loader-34').addClass('d-none')
-                return false
-            } else {
-                _btn_submit_assessment.removeAttr('disabled')
-            }
+            checkDisableButton(__this, _btn_submit_assessment)
         })
     })
 
+    function checkDisableButton(__this, _btn_submit_assessment){
+        var _editor = __this.closest('tr').find('.froala')
+        if(__this.is(':checked')){
+            _editor.removeClass('d-none')
+            _check_count += 1
+        } else {
+            if(_check_count > 0 ){
+                _check_count -=1;
+            }
+
+            _editor.find('.fr-element').text('')
+            _editor.addClass('d-none')
+
+        }
+
+        if(_check_count < 1) {
+            _btn_submit_assessment.attr('disabled','disabled')
+            _btn_submit_assessment.find('.loader-34').addClass('d-none')
+            return false
+        } else {
+            _btn_submit_assessment.removeAttr('disabled')
+        }
+    }
 
     /**
      * Save Assessment Using AJAX
@@ -424,7 +428,7 @@ $(function() {
         var _project_id = $('.js-project-id').val();
         var _url_submit = _form.attr('action')
         var _type = _form.attr('method');
-
+        var _status = _this.data('status') ? _this.data('status') : 'draft';
 
         e.preventDefault();
         _this.attr('disabled','disabled')
@@ -435,9 +439,6 @@ $(function() {
             _this.find('.loader-34').addClass('d-none')
             return false
         }
-
-
-        console.log(_type)
 
         $.ajax({
             url: _url_submit,
@@ -465,7 +466,7 @@ $(function() {
                 level_project_text:_text_level_project,
                 detail_estimate_cost_text:_text_detail_estimate,
                 complexity_score_assessment:_text_complexity_score,
-                draft:'draft',
+                status:_status,
             },
             success:function (data){
                 console.log(data)
