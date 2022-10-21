@@ -94,13 +94,16 @@ $(function() {
         var _url = 'project/'+_id;
         var _modalNote = $('#detail_note_project');
 
+        console.log(_note)
         try{
             $.ajax({
                 url:_url,
                 data:{project_id:_id,note:_note,isQuickUpdate:true},
                 type:'put',
                 success:function(data){
-                    if(data.status){
+                    console.log(data)
+                    if(data.status === 200){
+                        console.log(data)
                         _modalNote.modal('toggle');
                         notification('','Note Successfully Added','')
                     }
@@ -365,7 +368,7 @@ $(function() {
         var _btn_submit_assessment = $('.js-create-assessment');
         _this.on('change',function (){
             var __this = $((this))
-            var _editor = __this.closest('tr').find('.froala, .js-select2')
+            var _editor = __this.closest('tr').find('.froala')
             if(__this.is(':checked')){
                 _editor.removeClass('d-none')
                 _check_count += 1
@@ -373,7 +376,10 @@ $(function() {
                 if(_check_count > 0 ){
                     _check_count -=1;
                 }
+
+                _editor.find('.fr-element').text('')
                 _editor.addClass('d-none')
+
             }
 
             if(_check_count < 1) {
@@ -393,7 +399,7 @@ $(function() {
 
     $('.js-create-assessment').on('click',function (e){
         var _this = $(this);
-        var _form = $('.js-assessment-form');
+        var _form = _this.closest('.js-assessment-form');
         var _check_problem_statement = $('#checkbox-problem-statement')
         var _check_objective = $('#checkbox-objective')
         var _check_project_scope = $('#checkbox-project-scope')
@@ -416,6 +422,8 @@ $(function() {
         var _text_level_project = editor[8].html.get()
         var _text_detail_estimate = editor[9].html.get()
         var _project_id = $('.js-project-id').val();
+        var _url_submit = _form.attr('action')
+        var _type = _form.attr('method');
 
 
         e.preventDefault();
@@ -428,9 +436,12 @@ $(function() {
             return false
         }
 
+
+        console.log(_type)
+
         $.ajax({
-            url:'/assessment/',
-            type:'post',
+            url: _url_submit,
+            type:_type,
             data:{
                 project_id : _project_id,
                 problems_statement : setBooleanNumber(_check_problem_statement.is(':checked')),
@@ -457,6 +468,7 @@ $(function() {
                 draft:'draft',
             },
             success:function (data){
+                console.log(data)
                 window.location.href = data.url;
             }
         })

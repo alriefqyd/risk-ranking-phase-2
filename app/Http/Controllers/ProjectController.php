@@ -195,14 +195,16 @@ class ProjectController extends Controller
             if($request->has('note')) $project->note = $request->note;
             if($request->has('bc_status')) $project->bc_status = $request->bc_status;
 
-            $project->project_number = $request->project_number;
-            $project->project_name = $request->project_name;
-            $project->project_type = $request->project_type;
-            $project->owner = $request->owner;
-            $project->sponsor = $request->sponsor;
-            $project->bc_presenter = $request->bc_presenter;
-            $project->project_category = $request->category;
-            $project->finance_analyst = $request->finance_analyst;
+            if(!$request->isQuickUpdate){
+                $project->project_number = $request->project_number;
+                $project->project_name = $request->project_name;
+                $project->project_type = $request->project_type;
+                $project->owner = $request->owner;
+                $project->sponsor = $request->sponsor;
+                $project->bc_presenter = $request->bc_presenter;
+                $project->project_category = $request->category;
+                $project->finance_analyst = $request->finance_analyst;
+            }
 
             $project->save();
             DB::commit();

@@ -194,7 +194,7 @@ class AssessmentController extends Controller
      * @param  \App\Models\Assessment  $assessment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Assessment $assessment)
+    public function update(Request $request, Project $project)
     {
         $this->authorize('update');
         $assessmentService = new AssessmentService();
@@ -203,7 +203,7 @@ class AssessmentController extends Controller
         DB::beginTransaction();
         $this->validation($request);
         try{
-            $assessment = Assessment::find($assessment->id);
+            $assessment = Assessment::find($project?->assessment?->id);
             $assessment->problems_statement = $request->problems_statement;
             $assessment->objective = $request->objective;
             $assessment->project_scope = $request->project_scope;
@@ -236,11 +236,15 @@ class AssessmentController extends Controller
             }
             $assessment->saveOrFail();
             DB::commit();
-            $request->session()->flash('alert-success', 'Data was successful updated!');
-            return redirect('assessment/'. $assessment->id);
+            $request->session()->flash('page-tab', 'assessment');
+            $request->session()->flash('alert-success', 'Assessment was successful updated!');
+            return response()->json([
+                'status' => 200,
+                'url' => '/project/' . $project->id
+            ]);
         } catch (\Exception $e){
             DB::rollBack();
-            return redirect('assessment/edit/'.$request->assessment->id)->withErrors($e->getMessage());
+            return response()->json($e->getMessage());
         }
     }
 

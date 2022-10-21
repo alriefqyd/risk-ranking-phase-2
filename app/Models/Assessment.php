@@ -33,4 +33,9 @@ class Assessment extends Model
     public function fel1(){
         return $this->belongsTo(Fel1::class,'assessment_id');
     }
+
+    public function checkInputValue($value){
+        if(isset($value) && $value == 1) return 'checked';
+        return '';
+    }
 }
