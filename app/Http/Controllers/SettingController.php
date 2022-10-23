@@ -113,7 +113,7 @@ class SettingController extends Controller
      *
      */
     public function setSession(Request $request){
-        $request->session()->flash('page-tab', 'assessment');
+        $request->session()->flash('page-tab', $request->tab);
         return response()->json('/project/'.$request->project_id);
     }
 }

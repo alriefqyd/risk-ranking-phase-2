@@ -1,0 +1,199 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Fel2;
+use App\Models\Project;
+use App\Models\User;
+use App\Service\Fel2Service;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+class Fel2Controller extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $this->authorize('read');
+        $project_id = $request->id;
+        $fel2 = Fel2::with(['project','user']);
+        if($project_id){
+            $fel2 = $fel2->orwhere('id',$project_id);
+            if(!$fel2->first()){
+                abort(404);
+            }
+        }
+        if(Auth::user()->role == User::ROLE['admin-dept']){
+            $fel2 = $fel2->whereHas('project',function($q){
+                return $q->where('owner', Auth::user()->department);
+            });
+        }
+        return view('fel2.index',[
+            'fel2' => $fel2->get()
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        $this->authorize('create');
+        $fel2Service = new Fel2Service();
+        $isFel2Exist = $fel2Service->isFel2ProjectExist($request->project_id);
+        if($isFel2Exist){
+            abort('403');
+        }
+        $project = Project::with(['createdBy','fel1','assessment'])->where('id',$request->project_id)->first();
+        if(!$project->assessment){
+            abort(403);
+        }
+        return view('fel2.create',[
+            'project' => $project
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->authorize('create');
+        $fel2Service = new Fel2Service();
+        DB::beginTransaction();
+        $data = $this->validate($request,[
+            'project_id' =>'required',
+        ]);
+
+        try{
+            $fel2 = new Fel2([
+                'project_id' => $request->project_id,
+                'project_scope' => $request->project_scope,
+                'identify_main_equipment' => $request->identify_main_equipment,
+                'boundary_and_assumption' => $request->boundary_and_assumption,
+                'analysis_of_option' => $request->analysis_of_option,
+                'permit_list' => $request->permit_list,
+                'schedule_project' => $request->schedule_project,
+                'cost_estimate' => $request->cost_estimate,
+                'department' => auth()->user()->department,
+                'created_by' => auth()->user()->id
+            ]);
+
+            if($request->has('publish')){
+                $fel2->status = 'PUBLISH';
+            }
+            if($request->has('draft')){
+                $fel2->status = 'DRAFT';
+            }
+
+            $fel2->saveOrFail();
+            $url = $fel2Service->getUrlRedirection($fel2);
+            DB::commit();
+            $request->session()->flash('alert-success', 'Data was successful added!');
+            return redirect('fel2/'.$url);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect('fel2/create/'.$request->project_id)->withErrors($e->getMessage());
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Fel2  $fel2
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Fel2 $fel2)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Fel2  $fel2
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Fel2 $fel2, Request $request)
+    {
+        $this->authorize('update');
+        $validId = Fel2::find($request->id);
+
+        if(!$validId){
+            abort(404);
+        }
+
+        $fel2 = Fel2::with(['project','user'])->where('id',$request->id)->first();
+
+        return view('fel2.edit',[
+            'fel2' => $fel2
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Fel2  $fel2
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Fel2 $fel2)
+    {
+        $this->authorize('update');
+        $fel2Service = new Fel2Service();
+        /*if($fel2->status == 'PUBLISH'){;
+            abort(403);
+        }*/
+
+        $url = $fel2Service->getUrlRedirection($fel2);
+        DB::beginTransaction();
+
+        try{
+            $fel2 = $fel2::find($fel2->id);
+            $fel2->project_scope = $request->project_scope;
+            $fel2->identify_main_equipment = $request->identify_main_equipment;
+            $fel2->boundary_and_assumption = $request->boundary_and_assumption;
+            $fel2->analysis_of_option = $request->analysis_of_option;
+            $fel2->schedule_project = $request->schedule_project;
+            $fel2->cost_estimate = $request->cost_estimate;
+            $fel2->permit_list = $request->permit_list;
+
+            if($request->has('publish')){
+                $fel2->status = 'PUBLISH';
+            }
+            if($request->has('draft')){
+                $fel2->status = 'DRAFT';
+            }
+
+            $fel2->saveOrFail();
+            DB::commit();
+            $request->session()->flash('alert-success', 'Data was successful updated!');
+            return redirect('fel2/'.$url);
+        } catch (\Exception $e){
+            DB::rollBack();
+            return redirect('fel2/edit'.$fel2->id)->withErrors($e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Fel2  $fel2
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Fel2 $fel2)
+    {
+        //
+    }
+}

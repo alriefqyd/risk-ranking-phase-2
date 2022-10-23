@@ -175,9 +175,9 @@
                                                 <a data-bs-toggle="modal" data-original-title="test"
                                                    data-id="{{$project->id}}"
                                                    data-bs-target="#projectDelete">
-                                        <span class="alert-note alert-color-red">
-                                             <x-feathericon-trash-2/>
-                                        </span>
+                                                <span class="alert-note alert-color-red">
+                                                     <x-feathericon-trash-2/>
+                                                </span>
                                                 </a>
                                             </td>
                                             @endcan

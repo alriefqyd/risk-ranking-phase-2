@@ -24,7 +24,7 @@
                         <ul class="nav nav-tabs m-20" id="myTab" role="tablist">
                             <li class="nav-item"><a class="nav-link {{!Session::has('page-tab') ? 'active' : ''}}" id="project-tab" data-bs-toggle="tab" href="#project" role="tab" aria-controls="project" aria-selected="true">Project</a></li>
                             <li class="nav-item"><a class="nav-link {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">Assessment</a></li>
-                            <li class="nav-item"><a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link {{Session::get('page-tab') == 'fel1' ? 'active' : ''}}" id="fel1-tabs" data-bs-toggle="tab" href="#fel1" role="tab" aria-controls="fel1" aria-selected="false">FEL 1</a></li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane js-tab-parent fade show {{!Session::has('page-tab') ? 'active show' : ''}}" id="project" role="tabpanel" aria-labelledby="project-tab">
@@ -107,8 +107,8 @@
                             <div class="tab-pane fade js-tab-parent {{Session::get('page-tab') == 'assessment' ? 'active show' : ''}}" id="assessment" role="tabpanel" aria-labelledby="assessment-tab">
                                 @include('page.assessment.assessment_tab')
                             </div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                <p class="mb-0 m-t-30">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+                            <div class="tab-pane fade js-tab-parent {{Session::get('page-tab') == 'fel1' ? 'active show' : ''}}" id="fel1" role="tabpanel" aria-labelledby="fel1-tab">
+                                @include('page.fel1.fel1_tab')
                             </div>
                         </div>
                     </div>

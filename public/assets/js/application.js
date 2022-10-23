@@ -310,6 +310,7 @@ $(function() {
         $(this).addClass('d-none');
         _parent.find('.js-title-form').removeClass('d-none')
         _parent.find('.js-title-detail').addClass('d-none')
+        console.log(_parent.find('.js-btn-view_project').text())
         _parent.find('.js-btn-view_project').removeClass('d-none')
     })
 
@@ -369,11 +370,20 @@ $(function() {
         var _btn_submit_assessment = $('.js-create-assessment');
         _this.on('change',function (){
             var __this = $((this))
-            checkDisableButton(__this, _btn_submit_assessment)
+            checkDisableButton(__this, _btn_submit_assessment, true)
         })
     })
 
-    function checkDisableButton(__this, _btn_submit_assessment){
+    $('.js-checkbox-fel1').each(function(){
+        var _this = $(this)
+        var _btn_submit_fel1 = $('.js-create-fel1');
+        _this.on('change',function (){
+            var __this = $((this))
+            checkDisableButton(__this, _btn_submit_fel1,false)
+        })
+    })
+
+    function checkDisableButton(__this, _btn_submit_assessment, isHaveFroala){
         var _editor = __this.closest('tr').find('.froala')
         if(__this.is(':checked')){
             _editor.removeClass('d-none')
@@ -469,7 +479,6 @@ $(function() {
                 status:_status,
             },
             success:function (data){
-                console.log(data)
                 window.location.href = data.url;
             }
         })
@@ -678,6 +687,45 @@ $(function() {
                     },3000)
                 }
             })
+        })
+    })
+
+    /**
+     * Fel 1 Section
+     */
+    var _fel1_submit_form = $('.js-create-fel1')
+
+    _fel1_submit_form.on('click',function(e){
+        e.preventDefault();
+        var _this = $(this)
+        var _form = _this.closest('.js-fel1-form');
+        var _project_scope = $('#checkbox-project_scope');
+        var _identified_parameter = $('#checkbox-identified_parameter');
+        var _alternative = $('#checkbox-alternatives');
+        var _list_of_stakeholder = $('#checkbox-list_of_stakeholder')
+        var _schedule_project = $('#checkbox-schedule');
+        var _project_id = _form.find('.js-project-id').val();
+        var _url = _form.attr('action')
+        var _type = _form.attr('method')
+        var _status = _this.data('status') ? _this.data('status') : 'draft';
+
+        _this.find('.loader-34').removeClass('d-none')
+        _this.attr('disabled');
+        $.ajax({
+            url:_url,
+            type:_type,
+            data:{
+                project_id:_project_id,
+                project_scope:setBooleanNumber(_project_scope.is(':checked')),
+                identified_parameter_requirement_regulation:setBooleanNumber(_identified_parameter.is(':checked')),
+                alternatives:setBooleanNumber(_alternative.is(':checked')),
+                list_of_stakeholder:setBooleanNumber(_list_of_stakeholder.is(':checked')),
+                schedule_project:setBooleanNumber(_schedule_project.is(':checked')),
+                status : _status
+            },
+            success:function (data){
+                window.location.href = data.url;
+            }
         })
     })
 })

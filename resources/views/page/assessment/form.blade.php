@@ -88,10 +88,7 @@
                 </div>
             </td>
             <td>
-                <div class="froala js-key-project-risk
-                {{$project?->assessment?->key_project_risk_mitigants != 1 ? 'd-none' : ''}}">
-                    {!! $project?->assessment?->key_project_risk_and_mitigants_text !!}
-                </div>
+                <div class="froala js-key-project-risk d-none"></div>
                 <input type="hidden" class="js-hidden-validate" name="validate_prm">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
@@ -107,9 +104,7 @@
                 </div>
             </td>
             <td>
-                <div class="froala js-impact
-                {{$project?->assessment?->impact_if_not_executed != 1 ? 'd-none' : ''}}">
-                    {!! $project?->assessment?->impact_if_not_executed_text !!}</div>
+                <div class="froala js-impact d-none"></div>
                 <input type="hidden" class="js-hidden-validate" name="validate_iie">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
@@ -125,9 +120,7 @@
                 </div>
             </td>
             <td>
-                <div class="froala js-alternative
-                    {{$project?->assessment?->alternative_to_proposal != 1 ? 'd-none' : ''}}">
-                    {!! $project?->assessment?->alternatives_to_proposal_text !!}</div>
+                <div class="froala js-alternative d-none"></div>
                 <input type="hidden" class="js-hidden-validate" name="validate_alternative">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
@@ -143,9 +136,7 @@
                 </div>
             </td>
             <td>
-                <div class="froala js-cost-estimate
-                    {{$project?->assessment?->cost_estimate != 1 ? 'd-none' : ''}}">
-                    {!! $project?->assessment?->cost_estimate_text !!}</div>
+                <div class="froala js-cost-estimate d-none"></div>
                 <input type="hidden" class="js-hidden-validate" name="validate_cost_estimate">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
@@ -178,9 +169,7 @@
                 </div>
             </td>
             <td>
-                <div class="froala js-text-level
-                    {{$project?->assessment?->level_project != 1 ? 'd-none' : ''}}">
-                    {!! $project?->assessment?->level_project_text !!}</div>
+                <div class="froala js-text-level d-none"></div>
                 <input type="hidden" class="js-hidden-validate" name="validate_level">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
@@ -197,9 +186,7 @@
                 </div>
             </td>
             <td>
-                <div class="froala js-text-detail-cost
-                    {{$project?->assessment?->detail_estimate_cost != 1 ? 'd-none' : ''}}">
-                    {!! $project?->assessment?->detail_estimate_cost_text !!}</div>
+                <div class="froala js-text-detail-cost d-none"></div>
                 <input type="hidden" class="js-hidden-validate" name="validate_detail_estimate">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>

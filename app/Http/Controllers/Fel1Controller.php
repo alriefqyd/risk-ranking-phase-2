@@ -1,0 +1,231 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Fel1;
+use App\Models\Project;
+use App\Service\Fel1Service;
+use App\Service\ProjectService;
+use App\Service\UserService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
+class Fel1Controller extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $this->authorize('read');
+        $userService = new UserService();
+        $projectService = new ProjectService();
+        $project_id = $request->id;
+        $fel1 = Fel1::with(['project.assessment','user']);
+        if($project_id){
+            $fel1 = $fel1->orwhere('id',$project_id);
+            $fel1ByProjectId = $fel1->first();
+            if(!$fel1ByProjectId){
+                abort(404);
+            }
+        }
+        if(Auth::user()->role == User::ROLE['admin-dept']){
+            $fel1 = $fel1->whereHas('project',function($q){
+                return $q->where('owner',Auth::user()->department);
+            });
+        }
+        return view('fel1.index',[
+           'fel1' => $fel1->get()
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        $this->authorize('create');
+        $fel1Service = new Fel1Service();
+        $projectService = new ProjectService();
+        $isFel1Exist = $fel1Service->isFel1ProjectExist($request->project_id);
+        $project = Project::with(['createdBy','fel1','assessment'])->where('id',$request->project_id)->first();
+        $validProjectId = $fel1Service->isValidProject($request);
+        if(!$validProjectId){
+            abort(404);
+        }
+        if($isFel1Exist){
+            abort('403');
+        }
+        if(!$project->assessment){
+            abort(403,'Please Input Assessment First');
+        }
+        if($project && $projectService->projectNotAuthorized($project)){
+            abort(404);
+        }
+
+        return view('fel1.create',[
+            'project' => $project
+        ]);
+    }
+
+    /*
+     * Temporary Not Used
+     */
+    public function createByAssessment(Request $request)
+    {
+        $project = Project::with('createdBy')->where('id',$request->project_id)->first();
+        return view('fel1.create',[
+            'project' => $project
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $this->authorize('create');
+        $fel1Service = new Fel1Service();
+        DB::beginTransaction();
+        $data = $this->validate($request,[
+            'project_id' =>'required',
+        ]);
+
+        try{
+            $fel1 = new Fel1([
+                'project_id' => $request->project_id,
+                'project_scope' => $request->project_scope,
+                'identified_parameter_requirement_regulation' => $request->identified_parameter_requirement_regulation,
+                'alternatives' => $request->alternatives,
+                'list_of_stakeholder' => $request->list_of_stakeholder,
+                'schedule_project' => $request->schedule_project,
+                'department' => auth()->user()->department,
+                'created_by' => auth()->user()->id
+            ]);
+
+            if($request?->status == 'publish'){
+                $fel1->status = 'PUBLISH';
+            }
+            if($request?->status == 'draft'){
+                $fel1->status = 'DRAFT';
+            }
+
+            $fel1->saveOrFail();
+            DB::commit();
+            $request->session()->flash('page-tab', 'fel1');
+            $request->session()->flash('alert-success', 'FEL 1 was saved');
+            return response()->json([
+                'status' => 200,
+                'url' => '/project/' . $request->project_id,
+                'req' => $request->project_scope
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($request);
+            return response()->json($e->getMessage());
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Fel1  $fel1
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Fel1 $fel1)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Fel1  $fel1
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Fel1 $fel1, Request $request)
+    {
+        $this->authorize('update');
+        $projectService = new ProjectService();
+        $validId = Fel1::find($request->id);
+
+        if(!$validId){
+            abort(404);
+        }
+
+        $fel1 = Fel1::with(['project','user'])->where('id',$request->id)->first();
+        if($fel1->project && $projectService->projectNotAuthorized($fel1->project)){
+            abort(404);
+        }
+        return view('fel1.edit',[
+            'fel1' => $fel1
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Fel1  $fel1
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Project $project)
+    {
+        $this->authorize('update');
+        $fel1Service = new Fel1Service();
+        /*if($fel1->status == 'PUBLISH'){;
+            abort(403);
+        }*/
+
+        DB::beginTransaction();
+
+        try{
+            $fel1 = Fel1::find($project?->fel1?->id);
+            $fel1->project_scope = $request->project_scope;
+            $fel1->identified_parameter_requirement_regulation = $request->identified_parameter_requirement_regulation;
+            $fel1->alternatives = $request->alternatives;
+            $fel1->list_of_stakeholder = $request->list_of_stakeholder;
+            $fel1->schedule_project = $request->schedule_project;
+            if($request->status == 'publish'){
+                $fel1->status = 'PUBLISH';
+            }
+            if($request->status == 'draft'){
+                $fel1->status = 'DRAFT';
+            }
+
+            $fel1->saveOrFail();
+            DB::commit();
+            $request->session()->flash('page-tab', 'fel1');
+            $request->session()->flash('alert-success', 'FEL 1 was successful updated!');
+            return response()->json([
+                'status' => 200,
+                'url' => '/project/' . $project->id
+            ]);
+        } catch (\Exception $e){
+            DB::rollBack();
+            return response()->json($e->getMessage());
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Fel1  $fel1
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Fel1 $fel1)
+    {
+        //
+    }
+}

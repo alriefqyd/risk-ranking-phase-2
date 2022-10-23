@@ -62,7 +62,9 @@
                                     @foreach($assessments as $assessment)
                                         <tr>
                                             <td class="text-center">
-                                                {!! $assessment?->project?->project_name !!}
+                                                <a class="js-set-session" data-id="{{$assessment?->project->id}}" href="/project/{{$assessment?->project->id}}">
+                                                    <p class="alert-color-green">{{$assessment?->project->project_name}}</p>
+                                                </a>
                                             </td>
                                             <td class="text-center">
                                                 {!! $assessment?->project?->project_type !!}

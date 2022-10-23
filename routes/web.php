@@ -16,11 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->middleware(['auth'])->name('dashboard.default');
 Route::get('/dashboard', [\App\Http\Controllers\HomeController::class,'index'])->middleware(['auth'])->name('dashboard');
 Route::get('/getDataGraph',[\App\Http\Controllers\HomeController::class,'getDataGraph'])->name('getDataGraph ')->middleware('auth');
+
 Route::get('/project',[\App\Http\Controllers\ProjectController::class,'index'])->name('project ')->middleware('auth');
 Route::post('/project',[\App\Http\Controllers\ProjectController::class,'store'])->name('project.store ')->middleware('auth');
-Route::get('/project/create',[\App\Http\Controllers\ProjectController::class,'create'])->name('project ')->middleware('auth');
+Route::get('/project/create',[\App\Http\Controllers\ProjectController::class,'create'])->name('project.create ')->middleware('auth');
 Route::put('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'update'])->name('project.update ')->middleware('auth');
-Route::get('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'edit'])->name('project.update ')->middleware('auth');
+Route::get('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'edit'])->name('project.edit ')->middleware('auth');
 Route::delete('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'delete'])->name('project.delete ')->middleware('auth');
 Route::get('/project/getProjectNote/{project:id}',[\App\Http\Controllers\ProjectController::class,'getProjectNote'])->name('project.get-project-note ')->middleware('auth');
 Route::get('/export',[\App\Http\Controllers\ExportController::class,'export'])->name('export')->middleware(['auth']);
@@ -28,8 +29,12 @@ Route::get('/export',[\App\Http\Controllers\ExportController::class,'export'])->
 Route::post('/assessment',[\App\Http\Controllers\AssessmentController::class,'store'])->middleware('auth');
 Route::get('/assessment',[\App\Http\Controllers\AssessmentController::class,'index'])->middleware('auth');
 Route::put('/assessment/{project:id}',[\App\Http\Controllers\AssessmentController::class,'update'])->middleware('auth');
-Route::get('/setSession',[\App\Http\Controllers\SettingController::class,'setSession'])->middleware('auth');
 
+Route::get('/fel1',[\App\Http\Controllers\Fel1Controller::class,'index'])->middleware('auth');
+Route::post('/fel1',[\App\Http\Controllers\Fel1Controller::class,'store'])->middleware('auth');
+Route::put('/fel1/{project:id}',[\App\Http\Controllers\Fel1Controller::class,'update'])->middleware('auth');
+
+Route::get('/setSession',[\App\Http\Controllers\SettingController::class,'setSession'])->middleware('auth');
 Route::get('/getProjectType',[\App\Http\Controllers\SettingController::class,'getProjectType'])->middleware('auth');
 Route::get('/getSponsorByOwner',[\App\Http\Controllers\ProjectController::class,'getSponsorByOwner'])->middleware('auth');
 require __DIR__.'/auth.php';
