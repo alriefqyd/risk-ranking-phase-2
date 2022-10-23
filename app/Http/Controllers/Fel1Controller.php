@@ -22,10 +22,10 @@ class Fel1Controller extends Controller
     public function index(Request $request)
     {
         $this->authorize('read');
-        $userService = new UserService();
-        $projectService = new ProjectService();
         $project_id = $request->id;
-        $fel1 = Fel1::with(['project.assessment','user']);
+        $fel1 = Fel1::with(['project.assessment','user'])->whereHas('project',function ($q){
+            return $q->filter(request(['q','owner','sponsor','category','type']));
+        });
         if($project_id){
             $fel1 = $fel1->orwhere('id',$project_id);
             $fel1ByProjectId = $fel1->first();
@@ -38,8 +38,8 @@ class Fel1Controller extends Controller
                 return $q->where('owner',Auth::user()->department);
             });
         }
-        return view('fel1.index',[
-           'fel1' => $fel1->get()
+        return view('page.fel1.fel1_list',[
+           'fels1' => $fel1->paginate(10)
         ]);
     }
 
