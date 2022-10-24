@@ -34,6 +34,10 @@ Route::get('/fel1',[\App\Http\Controllers\Fel1Controller::class,'index'])->middl
 Route::post('/fel1',[\App\Http\Controllers\Fel1Controller::class,'store'])->middleware('auth');
 Route::put('/fel1/{project:id}',[\App\Http\Controllers\Fel1Controller::class,'update'])->middleware('auth');
 
+Route::get('/fel2',[\App\Http\Controllers\Fel2Controller::class,'index'])->middleware('auth');
+Route::post('/fel2',[\App\Http\Controllers\Fel2Controller::class,'store'])->middleware('auth');
+Route::put('/fel2/{project:id}',[\App\Http\Controllers\Fel2Controller::class,'update'])->middleware('auth');
+
 Route::get('/setSession',[\App\Http\Controllers\SettingController::class,'setSession'])->middleware('auth');
 Route::get('/getProjectType',[\App\Http\Controllers\SettingController::class,'getProjectType'])->middleware('auth');
 Route::get('/getSponsorByOwner',[\App\Http\Controllers\ProjectController::class,'getSponsorByOwner'])->middleware('auth');

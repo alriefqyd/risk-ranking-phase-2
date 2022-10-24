@@ -127,12 +127,10 @@ class Fel1Controller extends Controller
             return response()->json([
                 'status' => 200,
                 'url' => '/project/' . $request->project_id,
-                'req' => $request->project_scope
             ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($request);
             return response()->json($e->getMessage());
         }
     }

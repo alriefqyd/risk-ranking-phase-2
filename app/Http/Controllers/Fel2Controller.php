@@ -21,20 +21,17 @@ class Fel2Controller extends Controller
     {
         $this->authorize('read');
         $project_id = $request->id;
-        $fel2 = Fel2::with(['project','user']);
-        if($project_id){
-            $fel2 = $fel2->orwhere('id',$project_id);
-            if(!$fel2->first()){
-                abort(404);
-            }
-        }
+        $fel2 = Fel2::with(['project','user'])->whereHas('project',function($q){
+            $q->filter(request(['q','owner','sponsor','category','type']));
+        });
+
         if(Auth::user()->role == User::ROLE['admin-dept']){
             $fel2 = $fel2->whereHas('project',function($q){
                 return $q->where('owner', Auth::user()->department);
             });
         }
-        return view('fel2.index',[
-            'fel2' => $fel2->get()
+        return view('page.fel2.fel2_list',[
+            'fels2' => $fel2->paginate(10)
         ]);
     }
 
@@ -89,22 +86,25 @@ class Fel2Controller extends Controller
                 'created_by' => auth()->user()->id
             ]);
 
-            if($request->has('publish')){
+            if($request->status == 'publish'){
                 $fel2->status = 'PUBLISH';
             }
-            if($request->has('draft')){
+            if($request->status == 'draft'){
                 $fel2->status = 'DRAFT';
             }
 
             $fel2->saveOrFail();
-            $url = $fel2Service->getUrlRedirection($fel2);
             DB::commit();
-            $request->session()->flash('alert-success', 'Data was successful added!');
-            return redirect('fel2/'.$url);
+            $request->session()->flash('page-tab', 'fel2');
+            $request->session()->flash('alert-success', 'FEL 2 was saved');
+            return response()->json([
+                'status' => 200,
+                'url' => '/project/' . $request->project_id,
+            ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect('fel2/create/'.$request->project_id)->withErrors($e->getMessage());
+            return response()->json($e->getMessage());
         }
     }
 
@@ -148,7 +148,7 @@ class Fel2Controller extends Controller
      * @param  \App\Models\Fel2  $fel2
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fel2 $fel2)
+    public function update(Request $request, Project $project)
     {
         $this->authorize('update');
         $fel2Service = new Fel2Service();
@@ -156,11 +156,10 @@ class Fel2Controller extends Controller
             abort(403);
         }*/
 
-        $url = $fel2Service->getUrlRedirection($fel2);
         DB::beginTransaction();
 
         try{
-            $fel2 = $fel2::find($fel2->id);
+            $fel2 = Fel2::find($project?->fel2?->id);
             $fel2->project_scope = $request->project_scope;
             $fel2->identify_main_equipment = $request->identify_main_equipment;
             $fel2->boundary_and_assumption = $request->boundary_and_assumption;
@@ -169,20 +168,24 @@ class Fel2Controller extends Controller
             $fel2->cost_estimate = $request->cost_estimate;
             $fel2->permit_list = $request->permit_list;
 
-            if($request->has('publish')){
+            if($request->status == 'publish'){
                 $fel2->status = 'PUBLISH';
             }
-            if($request->has('draft')){
+            if($request->status == 'draft'){
                 $fel2->status = 'DRAFT';
             }
 
             $fel2->saveOrFail();
             DB::commit();
-            $request->session()->flash('alert-success', 'Data was successful updated!');
-            return redirect('fel2/'.$url);
+            $request->session()->flash('page-tab', 'fel2');
+            $request->session()->flash('alert-success', 'FEL 2 was successful updated!');
+            return response()->json([
+                'status' => 200,
+                'url' => '/project/' . $project->id
+            ]);
         } catch (\Exception $e){
             DB::rollBack();
-            return redirect('fel2/edit'.$fel2->id)->withErrors($e->getMessage());
+            return response()->json($e->getMessage());
         }
     }
 

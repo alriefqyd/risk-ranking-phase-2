@@ -26,6 +26,7 @@
                             <li><a class="{{request()->is('project*') ? 'active' : ''}}" href="/project">Project List</a></li>
                             <li><a class="{{request()->is('assessment*') ? 'active' : ''}}" href="/assessment">Project Level Assessment</a></li>
                             <li><a class="{{request()->is('fel1*') ? 'active' : ''}}" href="/fel1">FEL 1</a></li>
+                            <li><a class="{{request()->is('fel2*') ? 'active' : ''}}" href="/fel2">FEL 2</a></li>
                         </ul>
                     </li>
                 </ul>
