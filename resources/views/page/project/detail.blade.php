@@ -26,6 +26,8 @@
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">Assessment</a></li>
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel1' ? 'active' : ''}}" id="fel1-tabs" data-bs-toggle="tab" href="#fel1" role="tab" aria-controls="fel1" aria-selected="false">FEL 1</a></li>
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel2' ? 'active' : ''}}" id="fel2-tabs" data-bs-toggle="tab" href="#fel2" role="tab" aria-controls="fel2" aria-selected="false">FEL 2</a></li>
+                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel3' ? 'active' : ''}}" id="fel3-tabs" data-bs-toggle="tab" href="#fel3" role="tab" aria-controls="fel3" aria-selected="false">FEL 3</a></li>
+                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'bc' ? 'active' : ''}}" id="fel3-tabs" data-bs-toggle="tab" href="#bc" role="tab" aria-controls="bc" aria-selected="false">Business Case</a></li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane js-tab-parent fade show {{!Session::has('page-tab') ? 'active show' : ''}}" id="project" role="tabpanel" aria-labelledby="project-tab">
@@ -39,6 +41,9 @@
                             </div>
                             <div class="tab-pane fade js-tab-parent {{Session::get('page-tab') == 'fel2' ? 'active show' : ''}}" id="fel2" role="tabpanel" aria-labelledby="fel2-tab">
                                 @include('page.fel2.fel2_tab')
+                            </div>
+                            <div class="tab-pane fade js-tab-parent {{Session::get('page-tab') == 'fel3' ? 'active show' : ''}}" id="fel3" role="tabpanel" aria-labelledby="fel3-tab">
+                                @include('page.fel3.fel3_tab')
                             </div>
                         </div>
                     </div>

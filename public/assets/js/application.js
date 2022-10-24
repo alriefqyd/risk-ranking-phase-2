@@ -785,6 +785,64 @@ $(function() {
             checkDisableButton(__this, _btn_submit_fel2,false, false)
         })
     })
+
+    /**
+     * Fel 3 Section
+     */
+    var _fel3_submit_form = $('.js-create-fel3')
+
+    _fel3_submit_form.on('click',function(e){
+        e.preventDefault();
+        var _this = $(this)
+        var _form = _this.closest('.js-fel3-form');
+        var _executive_summary = _form.find('#checkbox-executive_summary');
+        var _problem_statement = _form.find('#checkbox-problem_statement_fel3');
+        var _project_scope = _form.find('#checkbox-project_scope_fel_3');
+        var _alternatives = _form.find('#checkbox-alternatives_best_option')
+        var _project_schedule = _form.find('#checkbox-project_schedule_fel_3');
+        var _list_of_equipment = _form.find('#checkbox-list_of_equipment');
+        var _hazop = _form.find('#checkbox-hazop');
+        var _cost_estimate = _form.find('#checkbox-cost_estimate_fel3');
+
+        var _project_id = _form.find('.js-project-id').val();
+
+        var _url = _form.attr('action')
+        var _type = _form.attr('method')
+        var _status = _this.data('status') ? _this.data('status') : 'draft';
+
+        _this.find('.loader-34').removeClass('d-none')
+        _this.attr('disabled');
+        $.ajax({
+            url:_url,
+            type:_type,
+            data:{
+                project_id:_project_id,
+                executive_summary:setBooleanNumber(_executive_summary.is(':checked')),
+                problem_statement:setBooleanNumber(_problem_statement.is(':checked')),
+                project_scope:setBooleanNumber(_project_scope.is(':checked')),
+                alternatives_and_best_option:setBooleanNumber(_alternatives.is(':checked')),
+                project_schedule:setBooleanNumber(_project_schedule.is(':checked')),
+                list_of_equipment_and_specification:setBooleanNumber(_list_of_equipment.is(':checked')),
+                hazop_study:setBooleanNumber(_hazop.is(':checked')),
+                cost_estimate:setBooleanNumber(_cost_estimate.is(':checked')),
+                status : _status
+            },
+            success:function (data){
+                window.location.href = data.url;
+            }
+        })
+    })
+
+
+    $('.js-checkbox-fel3').each(function(){
+        var _this = $(this)
+        var _btn_submit_fel3 = $('.js-create-fel3');
+        checkDisableButton(_this,_btn_submit_fel3,false,true, true)
+        _this.on('change',function (){
+            var __this = $((this))
+            checkDisableButton(__this, _btn_submit_fel3,false, false)
+        })
+    })
 })
 
 

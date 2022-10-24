@@ -31,7 +31,7 @@ class Fel2Controller extends Controller
             });
         }
         return view('page.fel2.fel2_list',[
-            'fels2' => $fel2->paginate(10)
+            'fels2' => $fel2->paginate(10)->withQueryString()
         ]);
     }
 
@@ -42,19 +42,7 @@ class Fel2Controller extends Controller
      */
     public function create(Request $request)
     {
-        $this->authorize('create');
-        $fel2Service = new Fel2Service();
-        $isFel2Exist = $fel2Service->isFel2ProjectExist($request->project_id);
-        if($isFel2Exist){
-            abort('403');
-        }
-        $project = Project::with(['createdBy','fel1','assessment'])->where('id',$request->project_id)->first();
-        if(!$project->assessment){
-            abort(403);
-        }
-        return view('fel2.create',[
-            'project' => $project
-        ]);
+
     }
 
     /**
@@ -127,18 +115,7 @@ class Fel2Controller extends Controller
      */
     public function edit(Fel2 $fel2, Request $request)
     {
-        $this->authorize('update');
-        $validId = Fel2::find($request->id);
 
-        if(!$validId){
-            abort(404);
-        }
-
-        $fel2 = Fel2::with(['project','user'])->where('id',$request->id)->first();
-
-        return view('fel2.edit',[
-            'fel2' => $fel2
-        ]);
     }
 
     /**

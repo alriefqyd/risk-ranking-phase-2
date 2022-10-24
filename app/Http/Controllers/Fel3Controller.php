@@ -21,7 +21,10 @@ class Fel3Controller extends Controller
     {
         $this->authorize('read');
         $project_id = $request->id;
-        $fel3 = Fel3::with(['project','user']);
+        $fel3 = Fel3::with(['project','user'])->whereHas('project',function($q){
+            $q->filter(request(['q','owner','sponsor','category','type']));
+        });
+
         if($project_id){
             $fel3 = $fel3->orwhere('id',$project_id);
             if(!$fel3->first()){
@@ -33,8 +36,8 @@ class Fel3Controller extends Controller
                 return $q->where('owner', Auth::user()->department);
             });
         }
-        return view('fel3.index',[
-            'fel3' => $fel3->get()
+        return view('page.fel3.fel3_list',[
+            'fels3' => $fel3->paginate(10)->withQueryString()
         ]);
     }
 
@@ -69,7 +72,6 @@ class Fel3Controller extends Controller
     public function store(Request $request)
     {
         $this->authorize('create');
-        $fel3Service = new Fel3Service();
         DB::beginTransaction();
         $data = $this->validate($request,[
             'project_id' =>'required',
@@ -90,18 +92,21 @@ class Fel3Controller extends Controller
                 'created_by' => auth()->user()->id
             ]);
 
-            if($request->has('publish')){
+            if($request->status == 'publish'){
                 $fel3->status = 'PUBLISH';
             }
-            if($request->has('draft')){
+            if($request->status == 'draft'){
                 $fel3->status = 'DRAFT';
             }
 
             $fel3->saveOrFail();
-            $url = $fel3Service->getUrlRedirection($fel3);
             DB::commit();
-            $request->session()->flash('alert-success', 'Data was successful added!');
-            return redirect('fel3/'.$url);
+            $request->session()->flash('page-tab', 'fel3');
+            $request->session()->flash('alert-success', 'FEL 3 was saved');
+            return response()->json([
+                'status' => 200,
+                'url' => '/project/' . $request->project_id,
+            ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -149,19 +154,17 @@ class Fel3Controller extends Controller
      * @param  \App\Models\Fel3  $fel3
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fel3 $fel3)
+    public function update(Request $request, Project $project)
     {
         $this->authorize('update');
-        $fel3Service = new Fel3Service();
         /*if($fel3->status == 'PUBLISH'){;
             abort(403);
         }*/
 
-        $url = $fel3Service->getUrlRedirection($fel3);
         DB::beginTransaction();
 
         try{
-            $fel3 = $fel3::find($fel3->id);
+            $fel3 = Fel3::find($project?->fel3?->id);
             $fel3->executive_summary = $request->executive_summary;
             $fel3->problem_statement = $request->problem_statement;
             $fel3->project_scope = $request->project_scope;
@@ -172,20 +175,24 @@ class Fel3Controller extends Controller
             $fel3->cost_estimate = $request->cost_estimate;
             $fel3->project_id = $request->project_id;
 
-            if($request->has('publish')){
+            if($request->status == 'publish'){
                 $fel3->status = 'PUBLISH';
             }
-            if($request->has('draft')){
+            if($request->status == 'draft'){
                 $fel3->status = 'DRAFT';
             }
 
             $fel3->saveOrFail();
             DB::commit();
-            $request->session()->flash('alert-success', 'Data was successful updated!');
-            return redirect('fel3/'.$url);
+            $request->session()->flash('page-tab', 'fel3');
+            $request->session()->flash('alert-success', 'FEL 3 was saved');
+            return response()->json([
+                'status' => 200,
+                'url' => '/project/' . $request->project_id,
+            ]);
         } catch (\Exception $e){
             DB::rollBack();
-            return redirect('fel3/edit'.$fel3->id)->withErrors($e->getMessage());
+            return redirect('fel3/create/'.$request->project_id)->withErrors($e->getMessage());
         }
     }
 

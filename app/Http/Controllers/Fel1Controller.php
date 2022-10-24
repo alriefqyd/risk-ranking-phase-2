@@ -6,7 +6,6 @@ use App\Models\Fel1;
 use App\Models\Project;
 use App\Service\Fel1Service;
 use App\Service\ProjectService;
-use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +38,7 @@ class Fel1Controller extends Controller
             });
         }
         return view('page.fel1.fel1_list',[
-           'fels1' => $fel1->paginate(10)
+           'fels1' => $fel1->paginate(10)->withQueryString()
         ]);
     }
 

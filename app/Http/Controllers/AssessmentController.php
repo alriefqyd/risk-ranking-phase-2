@@ -12,7 +12,6 @@ use App\service\ProjectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class AssessmentController extends Controller
 {
@@ -45,7 +44,7 @@ class AssessmentController extends Controller
 
 
         return view('page.assessment.assessment_list',[
-            'assessments' => $assessment->paginate(10)
+            'assessments' => $assessment->paginate(10)->withQueryString()
         ]);
     }
 
