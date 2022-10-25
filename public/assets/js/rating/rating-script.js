@@ -1,18 +1,31 @@
 'use strict';
 $(function() {
     function ratingEnable() {
-        $('#u-rating-1to10').barrating('show', {
-            theme: 'bars-1to10'
+        $('.u-rating-1to10').each(function(){
+            var _this = $(this);
+            _this.barrating('show', {
+                theme: 'bars-1to10',
+                readonly:_this.data('readonly'),
+            });
         });
-        $('#u-rating-movie').barrating('show', {
-            theme: 'bars-movie'
+
+        $('.rating-custom').each(function(index,el){
+            var _this = $(this)
+            _this.barrating('show', {
+                theme: 'bars-movie',
+                readonly:_this.data('readonly')
+            });
+        })
+
+        $('.rating-bar-custom').each(function () {
+            var _this = $(this);
+            _this.barrating('show', {
+                theme: 'bars-square',
+                showValues: true,
+                showSelectedRating: false,
+            });
         });
-        $('#u-rating-movie').barrating('set', 'Mediocre');
-        $('#u-rating-square').barrating('show', {
-            theme: 'bars-square',
-            showValues: true,
-            showSelectedRating: false,
-        });
+
         $('#u-rating-pill').barrating('show', {
             theme: 'bars-pill',
             initialRating: 'A',

@@ -843,6 +843,162 @@ $(function() {
             checkDisableButton(__this, _btn_submit_fel3,false, false)
         })
     })
+
+    /**
+     * Business Case Handle Here
+     */
+    $('.js-bc-risk-assessment-expand').on('click', function (){
+        var _this = $(this);
+        _this.siblings('ul').removeClass('d-none');
+        _this.siblings('.js-bc-risk-assessment-hide').removeClass('d-none');
+        _this.addClass('d-none');
+
+    })
+
+    $('.js-bc-risk-assessment-hide').on('click', function (){
+        var _this = $(this);
+        _this.siblings('ul').addClass('d-none');
+        _this.siblings('.js-bc-risk-assessment-expand').removeClass('d-none');
+        _this.addClass('d-none');
+
+    })
+
+    $('.js-checkbox-business_case').each(function(){
+        var _this = $(this)
+        var _btn_submit_bc = $('.js-create-bc');
+        checkDisableButton(_this,_btn_submit_bc,false,true, true)
+        _this.on('change',function (){
+            var __this = $((this))
+            checkDisableButton(__this, _btn_submit_bc,false, false)
+        })
+    })
+
+    var _bc_submit_form = $('.js-create-bc')
+
+    _bc_submit_form.on('click',function(e){
+        e.preventDefault();
+        var _this = $(this)
+        var _form = _this.closest('.js-bc-form');
+        var _problem_and_objective = _form.find('#checkbox-problem_and_objective');
+        var _project_alternatives = _form.find('#checkbox-project_alternative');
+        var _scope_of_work = _form.find('#checkbox-scope_of_work');
+        var _major_equipment = _form.find('#checkbox-major_equipment')
+        var _utility_requirement = _form.find('#checkbox-utility_requirement');
+        var _permitting = _form.find('#checkbox-permitting');
+        var _social_community = _form.find('#checkbox-social_community');
+        var _financial_evaluation = _form.find('#checkbox-financial_evaluation');
+        var _risk_assessment = _form.find('#checkbox-risk_assessment');
+        var _additional_information = _form.find('#checkbox-additional_information');
+
+        var _project_id = _form.find('.js-project-id').val();
+
+        var _url = _form.attr('action')
+        var _type = _form.attr('method')
+        var _status = _this.data('status') ? _this.data('status') : 'draft';
+
+        _this.find('.loader-34').removeClass('d-none')
+        _this.attr('disabled');
+
+        $.ajax({
+            url:_url,
+            type:_type,
+            data:{
+                project_id:_project_id,
+                problem_statement_and_objective:setBooleanNumber(_problem_and_objective.is(':checked')),
+                project_alternatives:setBooleanNumber(_project_alternatives.is(':checked')),
+                project_scope_of_work:setBooleanNumber(_scope_of_work.is(':checked')),
+                major_equipment:setBooleanNumber(_major_equipment.is(':checked')),
+                utility_requirements:setBooleanNumber(_utility_requirement.is(':checked')),
+                permitting:setBooleanNumber(_permitting.is(':checked')),
+                social_community_and_government:setBooleanNumber(_social_community.is(':checked')),
+                financial_evaluation:setBooleanNumber(_financial_evaluation.is(':checked')),
+                risk_assessment:setBooleanNumber(_risk_assessment.is(':checked')),
+                additional_information:setBooleanNumber(_additional_information.is(':checked')),
+                status : _status
+            },
+            success:function (data){
+                // console.log(data)
+                window.location.href = data.url;
+            }
+        })
+    })
+
+    $('#checkbox-risk_assessment').on('change',function(){
+        var _this = $(this);
+        var _parent = _this.closest('td');
+        var _risk_assessment_detail = _parent.find('.js-risk-assessment-bc')
+        _parent.find('.loader-box').removeClass('d-none')
+        if(_this.is(':checked')){
+            setTimeout(function (){
+                _parent.find('.loader-box').addClass('d-none')
+                _risk_assessment_detail.removeClass('d-none')
+            },500)
+
+        } else {
+            _parent.find('.loader-box').addClass('d-none')
+            _risk_assessment_detail.addClass('d-none')
+        }
+    });
+
+    $('.js-risk-assessment-field').each(function(){
+        var _this = $(this);
+        _this.on('change', function(){
+            var risk_level_values = [
+                $('.js-risk-people').val(),
+                $('.js-risk-finance').val(),
+                $('.js-risk-environment').val(),
+                $('.js-risk-reputation').val(),
+                $('.js-risk-human-rights').val(),
+            ]
+            var _final_impact_score_value = Math.max.apply(Math, risk_level_values)
+            $('.js-risk-assessment-bc').find('.u-rating-1to10').barrating('set', _final_impact_score_value);
+
+            var _priority_level = setPriorityLevel(_final_impact_score_value,$('.js-risk-probability').val());
+            $('.js-set-label-priority-level').text(_priority_level);
+            setBackgroundPriority(_priority_level);
+        })
+    })
+
+
+    var _existing_priority_element = $('.js-set-label-priority-level');
+    if(_existing_priority_element.length > 0) {
+        setBackgroundPriority(_existing_priority_element.text(),_existing_priority_element)
+    }
+    function setPriorityLevel(_final_impact_score, _probability){
+
+        var _risk_matrix = [
+            [30,27,25,23,22],
+            [29,26,24,17,16],
+            [28,20,18,10,9],
+            [21,19,11,7,4],
+            [15,13,8,5,2],
+            [14,12,6,3,1]
+        ]
+
+        return _risk_matrix[_final_impact_score - 1][_probability - 1] // min 1 because index array is start from 0
+    }
+
+    function setBackgroundPriority(_value,element){
+        var _background = 'white';
+        if(element){
+            _value = parseInt(element.text());
+        }
+
+        if(_value > 0 && _value < 9){
+            _background = 'red';
+        }
+        if(_value > 8 && _value < 16){
+            _background = 'orange';
+        }
+        if(_value > 15 && _value < 22){
+            _background = 'yellow';
+        }
+        if(_value > 21 && _value < 31){
+            _background = 'green';
+        }
+
+        $('.js-set-label-priority-level').css('background-color',_background);
+    }
 })
 
 

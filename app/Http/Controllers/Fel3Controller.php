@@ -110,7 +110,7 @@ class Fel3Controller extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect('fel3/create/'.$request->project_id)->withErrors($e->getMessage());
+            return response()->json($e->getMessage());
         }
     }
 

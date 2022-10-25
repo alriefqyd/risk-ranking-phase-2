@@ -9,6 +9,9 @@
 <!-- Bootstrap js-->
 <script src="{{asset('assets/js/bootstrap/popper.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap/bootstrap.min.js')}}"></script>
+
+<script src="{{asset('assets/js/rating/jquery.barrating.js')}}"></script>
+<script src="{{asset('assets/js/rating/rating-script.js')}}"></script>
 <!-- Plugins JS start-->
 <script src="{{asset('assets/js/custom/chart.min.js')}}"></script>
 <script src="{{asset('assets/js/chart/chartist/chartist.js')}}"></script>

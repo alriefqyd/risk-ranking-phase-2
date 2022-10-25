@@ -12,6 +12,8 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/flag-icon.css')}}">
 <!-- Feather icon-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/feather-icon.css')}}">
+<!-- Ratings -->
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/rating.css')}}">
 <!-- Plugins css start-->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/animate.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/chartist.css')}}">

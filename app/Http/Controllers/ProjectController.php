@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assessment;
 use App\Models\Department;
 use App\Models\Project;
+use App\Models\RiskAssessments;
 use App\Models\Setting;
 use App\Service\ProjectService;
 use App\Service\SettingService;
@@ -151,6 +152,9 @@ class ProjectController extends Controller
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
 
         $complexityScore = Assessment::COMPLEXITY_SCORE;
+        $riskLevel = RiskAssessments::SEVERITY;
+        $riskMatrix = RiskAssessments::RISK_MATRIX;
+        $probability = RiskAssessments::PROBABILITY;
 
         return view('page.project.detail',[
             'project' => $project,
@@ -160,6 +164,9 @@ class ProjectController extends Controller
             'subDepartment' => $subDepartment,
             'userDepartment' => $this->userDepartment,
             'complexityScore' => $complexityScore,
+            'riskLevel' => $riskLevel,
+            'riskMatrix' => $riskMatrix,
+            'probability' => $probability,
             'sessionUpdate' => Session::get('projectUpdate')
         ]);
     }

@@ -117,3 +117,11 @@
     z-index: 9999999999;
 }
 
+.br-theme-bars-movie .br-widget a {
+    height: 16px !important;
+    background-color: rgb(4 4 4 / 20%);
+}
+.br-theme-bars-1to10  .br-widget a {
+    background-color: rgb(4 4 4 / 20%);
+}
+
