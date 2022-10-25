@@ -9,7 +9,7 @@
             <div class="loader-box">
                 <div class="loader-3"></div>
             </div>
-            @can('update')
+            @if($isAdmin)
                 <div class="modal-body d-none">
                     <input type="hidden" class="js-project_id" name="project_id" value=""/>
                     <textarea class="form-control js-project_note" id="editor1" name="note" cols="30"
@@ -29,7 +29,6 @@
                     <span class="js-project_note"></span>
                 </div>
             @endcan
-
         </div>
     </div>
 </div>
