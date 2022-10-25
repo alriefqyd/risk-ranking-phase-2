@@ -46,8 +46,12 @@
                     <td>Risk Assessment :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->risk_assessment) !!}</td>
                     <td>
-                        <a class="js-bc-risk-assessment-expand alert-note {{$project?->business_case?->risk_assessment == 1 ? 'd-none' : ''}}">View Detail <i class="fa fa-arrow-right"></i></a>
-                        <a class="js-bc-risk-assessment-hide alert-note
+                            @if($project?->business_case?->risk_assessment == 1)
+                                <a class="js-bc-risk-assessment-expand alert-note d-none">
+                                    View Detail <i class="fa fa-arrow-right"></i>
+                                </a>
+                            @endif
+                            <a class="js-bc-risk-assessment-hide alert-note
                             {{$project?->business_case?->risk_assessment != 1 ? 'd-none' : ''}}">
                             Hide Detail
                             <i class="fa fa-arrow-left"></i></a>
@@ -103,7 +107,7 @@
                                 <select id="u-rating-movie" data-readonly="true" class="rating-custom" name="rating" autocomplete="off">
                                     @foreach($riskLevel as $index => $value)
                                         @if($index > 0)
-                                            <option {{$index == $project?->business_case?->riskAssessment?->social_and_human_rights ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
+                                            <option {{$index == $project?->business_case?->riskAssessment?->finance ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -122,7 +126,7 @@
                                 Probability :
                                 <select id="u-rating-movie" data-readonly="true" class="rating-custom" name="rating" autocomplete="off">
                                     @foreach($probability as $index => $value)
-                                        <option {{$index == $project?->business_case->riskAssessment->probability ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
+                                        <option {{$index == $project?->business_case?->riskAssessment?->probability ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
                                     @endforeach
                                 </select>
                             </li>

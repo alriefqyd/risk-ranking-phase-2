@@ -267,6 +267,31 @@ class ProjectService
         return $tempFull;
     }
 
+    public function getPriorityTemplate($value){
+        if(!$value){
+            return '';
+        }
+
+        $bg = '#d3e1de';
+        if($value > 0 && $value < 9){
+            $bg = '#d22d3d';
+        }
+        if($value > 8 && $value < 16){
+            $bg = '#f89618';
+        }
+        if($value > 15 && $value < 22){
+            $bg = '#efe342';
+        }
+        if($value > 21 && $value < 31){
+            $bg = '#45bb6a';
+        }
+        $template = '<span class="setting-primary" style="background-color:'.$bg.';color:white">
+                        '.$value.'
+                     </span>';
+
+        return $template;
+
+    }
 
 }
 

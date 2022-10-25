@@ -110,6 +110,7 @@
                                     <thead class="bg-primary">
                                     <tr class="text-center">
                                         <th scope="col">BC Status</th>
+                                        <th scope="col">Priority Level</th>
                                         <th scope="col" >Project No</th>
                                         <th scope="col" >Project Name</th>
                                         <th scope="col">Project Level Assessment</th>
@@ -132,6 +133,9 @@
                                         <tr>
                                             <td class="text-center js-row-bc_status">
                                                 {!! $project->getBcStatus() !!}
+                                            </td>
+                                            <td>
+                                                {!! $project?->getPriorityTemplate($project?->business_case?->riskAssessment?->priority_level)!!}
                                             </td>
                                             <td>
                                                 {{$project->project_number ?: '-'}}

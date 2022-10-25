@@ -181,4 +181,9 @@ class Project extends Model
         return $projectService->getTemplateExpandChar($value);
     }
 
+    public function getPriorityTemplate($value){
+        $projectService = new ProjectService();
+        return $projectService->getPriorityTemplate($value);
+    }
+
 }

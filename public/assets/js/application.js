@@ -94,16 +94,13 @@ $(function() {
         var _url = 'project/'+_id;
         var _modalNote = $('#detail_note_project');
 
-        console.log(_note)
         try{
             $.ajax({
                 url:_url,
                 data:{project_id:_id,note:_note,isQuickUpdate:true},
                 type:'put',
                 success:function(data){
-                    console.log(data)
                     if(data.status === 200){
-                        console.log(data)
                         _modalNote.modal('toggle');
                         notification('','Note Successfully Added','')
                     }
@@ -237,7 +234,6 @@ $(function() {
                     }
                 },
                 processResults: function (resp) {
-                    console.log(resp);
                     return {
                         results: resp
                     }
@@ -892,6 +888,14 @@ $(function() {
 
         var _project_id = _form.find('.js-project-id').val();
 
+        var _risk_people = $('.js-risk-people').val();
+        var _risk_finance = $('.js-risk-finance').val();
+        var _risk_environment = $('.js-risk-environment').val();
+        var _risk_reputation = $('.js-risk-reputation').val();
+        var _risk_human_rights = $('.js-risk-human-rights').val();
+        var _risk_priority = _form.find('.js-set-label-priority-level').text();
+        var _risk_probability = $('.js-risk-probability').val();
+
         var _url = _form.attr('action')
         var _type = _form.attr('method')
         var _status = _this.data('status') ? _this.data('status') : 'draft';
@@ -914,6 +918,13 @@ $(function() {
                 financial_evaluation:setBooleanNumber(_financial_evaluation.is(':checked')),
                 risk_assessment:setBooleanNumber(_risk_assessment.is(':checked')),
                 additional_information:setBooleanNumber(_additional_information.is(':checked')),
+                people:_risk_people,
+                environment:_risk_environment,
+                social_and_human_rights:_risk_human_rights,
+                reputation:_risk_reputation,
+                finance:_risk_finance,
+                probability:_risk_probability,
+                priority_level:parseInt(_risk_priority),
                 status : _status
             },
             success:function (data){

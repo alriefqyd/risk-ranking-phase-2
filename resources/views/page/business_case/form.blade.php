@@ -164,7 +164,7 @@
                             <option value></option>
                             @foreach($riskLevel as $index => $value)
                                 @if($index > 0)
-                                    <option {{$index == $project?->business_case?->riskAssessment?->social_and_human_rights ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
+                                    <option {{$index == $project?->business_case?->riskAssessment?->finance ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
                                 @endif
                             @endforeach
                         </select>
