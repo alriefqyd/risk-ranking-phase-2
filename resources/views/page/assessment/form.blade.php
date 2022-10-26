@@ -136,7 +136,11 @@
                 </div>
             </td>
             <td>
-                <div class="froala js-cost-estimate d-none"></div>
+                <div class="input-group js-cost-estimate {{$project?->assessment?->cost_estimate != 1 ? 'd-none' : ''}} mb-3">
+                    <span class="input-group-text">$  </span>
+                    <input type="number" value="{{$project?->assessment?->cost_estimate_text}}" name="cost_estimate" class="form-control  js-cost_estimate_assessment" data-default="{{$project?->assessment?->cost_estimate_text}}">
+                    <span class="input-group-text">.00  </span>
+                </div>
                 <input type="hidden" class="js-hidden-validate" name="validate_cost_estimate">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>

@@ -373,6 +373,7 @@ $(function() {
     function checkDisableButton(__this, _btn_submit_assessment, isHaveFroala, _checkAll, _checkCount){
         var _editor = __this.closest('tr').find('.froala')
         if(__this.is(':checked')){
+            if(_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) __this.closest('tr').find('.js-cost-estimate').removeClass('d-none')
             _editor.removeClass('d-none')
             _check_count += 1
         } else {
@@ -380,6 +381,10 @@ $(function() {
                 _check_count -=1;
             }
 
+            if(_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) {
+                __this.closest('tr').find('.js-cost-estimate').addClass('d-none')
+                __this.closest('tr').find('.js-cost_estimate_assessment').val("")
+            }
             _editor.find('.fr-element').text('')
             _editor.addClass('d-none')
 
@@ -399,6 +404,7 @@ $(function() {
      */
 
     $('.js-create-assessment').on('click',function (e){
+        e.preventDefault();
         var _this = $(this);
         var _form = _this.closest('.js-assessment-form');
         var _check_problem_statement = $('#checkbox-problem-statement')
@@ -418,16 +424,15 @@ $(function() {
         var _text_project_risk = editor[4].html.get()
         var _text_impact = editor[5].html.get()
         var _text_alternative = editor[6].html.get()
-        var _text_cost_estimate = editor[7].html.get()
+        var _text_cost_estimate = _form.find('.js-cost_estimate_assessment').val()
         var _text_complexity_score = $('.js-select-score').val()
-        var _text_level_project = editor[8].html.get()
-        var _text_detail_estimate = editor[9].html.get()
+        var _text_level_project = editor[7].html.get()
+        var _text_detail_estimate = editor[8].html.get()
         var _project_id = $('.js-project-id').val();
         var _url_submit = _form.attr('action')
         var _type = _form.attr('method');
         var _status = _this.data('status') ? _this.data('status') : 'draft';
 
-        e.preventDefault();
         _this.attr('disabled','disabled')
         _this.find('.loader-34').removeClass('d-none')
 
@@ -571,7 +576,8 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-cost-estimate').is(':checked') &&
-                            removeHtmlTag(editor[7].html.get()) === ''){
+                            !$('.js-cost_estimate_assessment').val()
+                            ){
                             return true
                         }
                         return false;
@@ -896,6 +902,8 @@ $(function() {
         var _risk_priority = _form.find('.js-set-label-priority-level').text();
         var _risk_probability = $('.js-risk-probability').val();
 
+        var _cost_estimate = $('.js-cost_estimate_bc').val();
+
         var _url = _form.attr('action')
         var _type = _form.attr('method')
         var _status = _this.data('status') ? _this.data('status') : 'draft';
@@ -925,7 +933,8 @@ $(function() {
                 finance:_risk_finance,
                 probability:_risk_probability,
                 priority_level:parseInt(_risk_priority),
-                status : _status
+                status : _status,
+                cost_estimate: _cost_estimate
             },
             success:function (data){
                 // console.log(data)
@@ -1010,6 +1019,16 @@ $(function() {
 
         $('.js-set-label-priority-level').css('background-color',_background);
     }
+
+    $('#checkbox-same-cost-estimate').on('change',function (){
+        var _this = $(this);
+        var _input = _this.closest('td').find('.js-cost_estimate_bc');
+        if(_this.is(':checked')){
+            _input.val(_input.data('default'))
+        } else {
+            _input.val(0)
+        }
+    })
 })
 
 

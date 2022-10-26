@@ -108,6 +108,5 @@
                 </div>
             </div>
         </div>
-        @include('components.modal')
     </div>
 @endsection

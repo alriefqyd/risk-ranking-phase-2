@@ -201,6 +201,23 @@
             </td>
         </tr>
         <tr>
+            <td>Cost Estimate :<br/></td>
+            <td style="width: 100px">
+                <div class="checkbox checkbox-primary">
+                    <div class="input-group">
+                        <span class="input-group-text">$  </span>
+                        <input type="number" value="{{$project?->business_case?->cost_estimate}}" name="cost_estimate" class="form-control js-cost_estimate_bc" data-default="{{$project?->assessment?->cost_estimate_text}}">
+                        <span class="input-group-text">.00  </span>
+                    </div>
+
+                    @if($project?->assessment?->cost_estimate_text)
+                        <input id="checkbox-same-cost-estimate" type="checkbox">
+                        <label for="checkbox-same-cost-estimate">same as cost estimate project level assessment</label>
+                    @endif
+                </div>
+            </td>
+        </tr>
+        <tr>
             <td>Additional Information :</td>
             <td style="width: 100px">
                 <div class="checkbox checkbox-primary">

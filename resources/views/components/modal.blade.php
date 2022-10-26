@@ -28,7 +28,7 @@
                 <div class="modal-body d-none js-note-viewer">
                     <span class="js-project_note"></span>
                 </div>
-            @endcan
+            @endcan`
         </div>
     </div>
 </div>

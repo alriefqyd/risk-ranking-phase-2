@@ -8,7 +8,7 @@
             'errors' => $errors
         ])
     <div class="card-footer">
-        <button class="btn btn-secondary js-create-assessment" disabled="disabled">
+        <button class="btn btn-secondary js-create-assessment" data-status="draft" disabled="disabled">
            <span class="text-button loader-box loader-box-custom"  style="height: 21px">
                 Save As Draft <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
             </span>

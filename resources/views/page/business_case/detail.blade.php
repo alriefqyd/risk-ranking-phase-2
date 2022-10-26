@@ -147,7 +147,7 @@
                 <tr>
                     <td>Cost Estimate :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->cost_estimate > 0 ? 1 : 0) !!}</td>
-                    <td></td>
+                    <td>$ {{number_format($project?->business_case?->cost_estimate,0,',','.') ?: 0}}</td>
                 </tr>
                 <tr>
                     <td>Financial Evaluation :</td>

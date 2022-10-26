@@ -56,7 +56,7 @@
                     <td>Cost Estimate :</td>
                     <td>{!! $project->getCheckTemplate($project->assessment->cost_estimate) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->cost_estimate_text) !!}
+                        $ {{ number_format($project->assessment->cost_estimate_text , 0, ',', '.') }}
                     </td>
                 </tr>
                 <tr>
