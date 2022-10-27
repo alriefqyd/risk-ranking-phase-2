@@ -23,12 +23,39 @@
                     <div class="card-body p-0 b-b-info-custom">
                         <ul class="nav nav-tabs m-20" id="myTab" role="tablist">
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{!Session::has('page-tab') ? 'active' : ''}}" id="project-tab" data-bs-toggle="tab" href="#project" role="tab" aria-controls="project" aria-selected="true">Project</a></li>
-                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">Assessment</a></li>
-                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel1' ? 'active' : ''}}" id="fel1-tabs" data-bs-toggle="tab" href="#fel1" role="tab" aria-controls="fel1" aria-selected="false">FEL 1</a></li>
-                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel2' ? 'active' : ''}}" id="fel2-tabs" data-bs-toggle="tab" href="#fel2" role="tab" aria-controls="fel2" aria-selected="false">FEL 2</a></li>
-                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel3' ? 'active' : ''}}" id="fel3-tabs" data-bs-toggle="tab" href="#fel3" role="tab" aria-controls="fel3" aria-selected="false">FEL 3</a></li>
-                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'business-case' ? 'active' : ''}}" id="business-case-tabs" data-bs-toggle="tab" href="#business-case" role="tab" aria-controls="business-case" aria-selected="false">Business Case</a></li>
-                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'cost-benefit' ? 'active' : ''}}" id="cost-benefit-tabs" data-bs-toggle="tab" href="#cost-benefit" role="tab" aria-controls="cost-benefit" aria-selected="false">Cost Benefit</a></li>
+                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">
+                                    Assessment {!!$project?->assessment ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                </a>
+                            </li>
+                            @if($project?->checkPermissionRelatedData(\App\Models\Setting::RELATED_DATA['assessment']))
+                                <li class="nav-item">
+                                    <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel1' ? 'active' : ''}}" id="fel1-tabs" data-bs-toggle="tab" href="#fel1" role="tab" aria-controls="fel1" aria-selected="false">FEL 1
+                                        {!! $project?->fel1 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel2' ? 'active' : ''}}" id="fel2-tabs" data-bs-toggle="tab" href="#fel2" role="tab" aria-controls="fel2" aria-selected="false">FEL 2
+                                        {!!$project?->fel2 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel3' ? 'active' : ''}}" id="fel3-tabs" data-bs-toggle="tab" href="#fel3" role="tab" aria-controls="fel3" aria-selected="false">
+                                        FEL 3{!!$project?->fel3 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                    </a>
+                                </li>
+                            @endif
+                            @if($project?->checkPermissionRelatedData(\App\Models\Setting::RELATED_DATA['felData']))
+                                <li class="nav-item">
+                                    <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'business-case' ? 'active' : ''}}" id="business-case-tabs" data-bs-toggle="tab" href="#business-case" role="tab" aria-controls="business-case" aria-selected="false">
+                                        Business Case {!!$project?->business_case ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'cost-benefit' ? 'active' : ''}}" id="cost-benefit-tabs" data-bs-toggle="tab" href="#cost-benefit" role="tab" aria-controls="cost-benefit" aria-selected="false">
+                                        Cost Benefit {!!$project?->cost_benefits ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane js-tab-parent fade show {{!Session::has('page-tab') ? 'active show' : ''}}" id="project" role="tabpanel" aria-labelledby="project-tab">

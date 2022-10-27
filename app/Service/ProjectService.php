@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\Department;
 use App\Models\Project;
+use App\Models\Setting;
 use App\Models\User;
 use App\Service\UserService;
 use Illuminate\Support\Facades\Auth;
@@ -291,6 +292,18 @@ class ProjectService
 
         return $template;
 
+    }
+
+    public function checkPermissionRelatedData(Project $project,$relatedData){
+        $arrayAccess = [];
+        if($project?->assessment) array_push($arrayAccess,Setting::RELATED_DATA['assessment']);
+        if($project?->fel1) array_push($arrayAccess,Setting::RELATED_DATA['felData']);
+        if($project?->fel2) array_push($arrayAccess,Setting::RELATED_DATA['felData']);
+        if($project?->fel3) array_push($arrayAccess,Setting::RELATED_DATA['felData']);
+        if($project?->business_case) array_push($arrayAccess,Setting::RELATED_DATA['business_case']);
+        if($project?->cost_benefits) array_push($arrayAccess,Setting::RELATED_DATA['cost_benefit']);
+
+        return in_array($relatedData,$arrayAccess);
     }
 
 }

@@ -21,6 +21,16 @@ class Setting extends Model
         'publish' => 'PUBLISH'
     ];
 
+    public const RELATED_DATA = [
+        'assessment' => 'assessment',
+        'felData' => 'felData',
+        'fel1' => 'fel1',
+        'fel2' => 'fel2',
+        'fel3' => 'fel3',
+        'business_case' => 'business_case',
+        'cost_benefit' => 'cost_benefit'
+    ];
+
     public const PROJECT_TYPE = 'PROJECT TYPE';
 
     public const PROJECT_TYPE_BETTERMENT = 'betterment';

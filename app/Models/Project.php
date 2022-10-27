@@ -186,4 +186,9 @@ class Project extends Model
         return $projectService->getPriorityTemplate($value);
     }
 
+    public function checkPermissionRelatedData($relatedData){
+        $projectService = new ProjectService();
+        return $projectService->checkPermissionRelatedData($this,$relatedData);
+    }
+
 }
