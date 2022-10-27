@@ -11,7 +11,8 @@
     <div class="table-responsive mt-3">
         <table class="table table-striped text-center">
             <tbody class="js-table-body-cost-benefit">
-            @foreach($project->getCostBenefit(false) as $bc)
+            @if($project?->getCostBenefit(false))
+            @foreach($project?->getCostBenefit(false) as $bc)
                 <tr data-id="1">
                     <td class="col-md-2">
                         <select name="year[]" class="form-select js-cost-benefit-year" style="width:100% !important;">
@@ -37,6 +38,7 @@
                     </td>
                 </tr>
             @endforeach
+            @endif
             </tbody>
         </table>
     </div>

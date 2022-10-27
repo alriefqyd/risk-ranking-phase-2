@@ -1056,7 +1056,8 @@ $(function() {
      * @private
      */
     var _table_no = 1;
-    $('.js-add-new-cost-benefit').on('click',function (){
+    $(document).on('click','.js-add-new-cost-benefit', function (){
+    // $('.js-add-new-cost-benefit').on('click',function (){
         var template = $('#js-template-cost-benefit').html();
         Mustache.parse(template);
         var data = {
@@ -1078,22 +1079,19 @@ $(function() {
         _form.submit()
     })
 
-    $('.js-cost-benefit').each(function(){
-        var _this = $(this);
-        _this.on('keyup',function(){
-            var _parent = $(this).closest('tr')
-            var _initial_and_sustaining = _parent.find('.js-initial-and-sustaining')
-            var _js_additional_revenue = _parent.find('.js-additional-revenue')
-            var _js_increment_operating = _parent.find('.js-increment-operating-cost')
-            var _js_cost_saving = _parent.find('.js-cost-savings')
+    $(document).on('keyup','.js-cost-benefit',function(){
+        var _parent = $(this).closest('tr')
+        var _initial_and_sustaining = _parent.find('.js-initial-and-sustaining')
+        var _js_additional_revenue = _parent.find('.js-additional-revenue')
+        var _js_increment_operating = _parent.find('.js-increment-operating-cost')
+        var _js_cost_saving = _parent.find('.js-cost-savings')
 
-            var _js_cost_saving_val = _js_cost_saving.val() ? parseInt(_js_cost_saving.val()) : 0
-            var _js_increment_operating_val = _js_increment_operating.val() ? parseInt(_js_increment_operating.val()) : 0
-            var _js_additional_revenue_val = _js_additional_revenue.val() ? parseInt(_js_additional_revenue.val()) : 0
+        var _js_cost_saving_val = _js_cost_saving.val() ? parseInt(_js_cost_saving.val()) : 0
+        var _js_increment_operating_val = _js_increment_operating.val() ? parseInt(_js_increment_operating.val()) : 0
+        var _js_additional_revenue_val = _js_additional_revenue.val() ? parseInt(_js_additional_revenue.val()) : 0
 
-            var _total = _js_cost_saving_val + _js_increment_operating_val + _js_additional_revenue_val
-            _this.closest('tr').find('.js-net-incremental-benefits').val(_total)
-        })
+        var _total = _js_cost_saving_val + _js_increment_operating_val + _js_additional_revenue_val
+        _parent.find('.js-net-incremental-benefits').val(_total)
     })
 
 })
