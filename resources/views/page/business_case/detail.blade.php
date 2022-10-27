@@ -59,10 +59,13 @@
                             <li>
                                 <div class="rating-container">
                                     People :
-                                    <select id="u-rating-movie" data-readonly="true" class="rating-custom" name="rating" autocomplete="off">
+                                    <select id="u-rating-movie"
+                                            data-readonly="true"
+                                            class="rating-custom js-risk-people js-risk-assessment-field" name="rating" autocomplete="off">
                                         @foreach($riskLevel as $index => $value)
+                                            <option value></option>
                                             @if($index > 0)
-                                                <option {{$index == $project?->business_case?->riskAssessment?->people ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
+                                                <option {{$project?->business_case?->riskAssessment?->people == $index ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
                                             @endif
                                         @endforeach
                                     </select>
@@ -71,7 +74,8 @@
                             <li>
                                 <div class="rating-container">
                                     Environment :
-                                    <select id="u-rating-movie" data-readonly="true" class="rating-custom" name="rating" autocomplete="off">
+                                    <select id="u-rating-movie" data-readonly="true" class="rating-custom js-risk-environment js-risk-assessment-field" name="rating" autocomplete="off">
+                                        <option value></option>
                                         @foreach($riskLevel as $index => $value)
                                             @if($index > 0)
                                                 <option {{$index == $project?->business_case?->riskAssessment?->environment ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
@@ -83,7 +87,8 @@
                             <li>
                                 <div class="rating-container">
                                     Social and Human Rights :
-                                    <select id="u-rating-movie" data-readonly="true" class="rating-custom" name="rating" autocomplete="off">
+                                    <select id="u-rating-movie" data-readonly="true" class="rating-custom js-risk-human-rights" autocomplete="off">
+                                        <option value></option>
                                         @foreach($riskLevel as $index => $value)
                                             @if($index > 0)
                                                 <option {{$index == $project?->business_case?->riskAssessment?->social_and_human_rights ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
@@ -94,7 +99,8 @@
                             </li>
                             <li>
                                 Reputation
-                                <select id="u-rating-movie" data-readonly="true" class="rating-custom" name="rating" autocomplete="off">
+                                <select id="u-rating-movie" data-readonly="true" class="rating-custom js-risk-reputation" autocomplete="off">
+                                    <option value></option>
                                     @foreach($riskLevel as $index => $value)
                                         @if($index > 0)
                                             <option {{$index == $project?->business_case?->riskAssessment?->reputation ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
@@ -104,7 +110,8 @@
                             </li>
                             <li>
                                 Finance :
-                                <select id="u-rating-movie" data-readonly="true" class="rating-custom" name="rating" autocomplete="off">
+                                <select id="u-rating-movie" data-readonly="true" class="rating-custom js-risk-finance" autocomplete="off">
+                                    <option value></option>
                                     @foreach($riskLevel as $index => $value)
                                         @if($index > 0)
                                             <option {{$index == $project?->business_case?->riskAssessment?->finance ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
@@ -115,7 +122,7 @@
                             <li>
                                 Final Impact Score :
                                 <div class="rating-container digits">
-                                    <select class="u-rating-1to10" data-readonly="true" class="" name="rating" autocomplete="off">
+                                    <select class="u-rating-1to10" data-readonly="true" class="js-risk-final-impact" autocomplete="off">
                                         @for($i=1;$i<7;$i++)
                                             <option value="{{$i}}" {{$i == $project?->business_case?->riskAssessment?->final_impact_score ? 'selected' : ''}}>{{$i}}</option>
                                         @endfor
@@ -124,7 +131,8 @@
                             </li>
                             <li>
                                 Probability :
-                                <select id="u-rating-movie" data-readonly="true" class="rating-custom" name="rating" autocomplete="off">
+                                <select id="u-rating-movie" data-readonly="true" class="rating-custom js-risk-probability" name="rating" autocomplete="off">
+                                    <option value></option>
                                     @foreach($probability as $index => $value)
                                         <option {{$index == $project?->business_case?->riskAssessment?->probability ? 'selected' : ''}} value="{{$index}}">{{$value}}</option>
                                     @endforeach
@@ -152,7 +160,22 @@
                 <tr>
                     <td>Financial Evaluation :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->financial_evaluation) !!}</td>
-                    <td></td>
+                    <td>
+                        <div class="col-md-6 js-financial_evaluation_detail d-none">
+                            <div>
+                                <label class="col-form-label">NPV : </label>
+                                $ {{number_format($project?->business_case?->npv,0,',','.')}}
+                            </div>
+                            <div>
+                                <label class="col-form-label">IRR :</label>
+                                {{$project?->business_case?->irr}} %
+                            </div>
+                            <div>
+                                <label class="col-form-label">Payback Period :</label>
+                                {{$project?->business_case?->payback_period}} {{$project?->business_case?->payback_period > 1 ? 'Years' : 'Year'}}
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

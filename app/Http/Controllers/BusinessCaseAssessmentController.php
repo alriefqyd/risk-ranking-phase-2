@@ -23,7 +23,10 @@ class BusinessCaseAssessmentController extends Controller
     {
         $this->authorize('read');
         $project_id = $request->id;
-        $business_case = BusinessCaseAssessment::with(['project','user']);
+        $business_case = BusinessCaseAssessment::with(['project','user'])->whereHas('project',function($q){
+            $q->filter(request(['q','owner','sponsor','category','type']));
+        });
+
         if($project_id){
             $business_case = $business_case->orwhere('id',$project_id);
             if(!$business_case->first()){
@@ -35,8 +38,8 @@ class BusinessCaseAssessmentController extends Controller
                 return $q->where('owner', Auth::user()->department);
             });
         }
-        return view('business_case.index',[
-            'business_case' => $business_case->get()
+        return view('page.business_case.business_case_list',[
+            'business_cases' => $business_case->paginate(10)->withQueryString()
         ]);
     }
 
@@ -116,9 +119,9 @@ class BusinessCaseAssessmentController extends Controller
             ]);
 
             $riskAssessment = array(
-                'people' => $request->people,
-                'environment' => $request->environment,
-                'social_and_human_rights' => $request->social_and_human_rights,
+                'people' => $request->people ?: 0,
+                'environment' => $request->environment ?: 0,
+                'social_and_human_rights' => $request->social_and_human_rights ?: 0,
                 'reputation' => $request->reputation,
                 'finance' => $request->finance,
                 'final_impact_score' => $this->getFinalImpactScore($request),
@@ -145,12 +148,15 @@ class BusinessCaseAssessmentController extends Controller
             $request->session()->flash('alert-success', 'Business Case 3 was saved');
             return response()->json([
                 'status' => 200,
+                'req' => $request->people,
                 'url' => '/project/' . $request->project_id,
             ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json($e->getMessage());
+            return response()->json([
+                'req' => $request->people,
+            ]);
         }
     }
 
@@ -230,9 +236,9 @@ class BusinessCaseAssessmentController extends Controller
             $businessCaseAssessment->payback_period = $request->payback_period;
 
             $businessCaseAssessment->riskAssessment()->update([
-                'people' => $request->people,
-                'environment' => $request->environment,
-                'social_and_human_rights' => $request->social_and_human_rights,
+                'people' => $request->people ?: 0,
+                'environment' => $request->environment ?: 0,
+                'social_and_human_rights' => $request->social_and_human_rights ?: 0,
                 'reputation' => $request->reputation,
                 'finance' => $request->finance,
                 'final_impact_score' => $this->getFinalImpactScore($request),

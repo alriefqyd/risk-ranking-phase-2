@@ -57,8 +57,9 @@ class CostBenefitController extends Controller
             'value' => $costBenefitCollection
         ]);
         $cb->saveOrFail();
-        $request->session()->flash('alert-success', 'Data was successful added!');
-        return redirect('project');
+        $request->session()->flash('alert-success', 'Cost Benefit was successful added!');
+        $request->session()->flash('page-tab', 'cost-benefit');
+        return redirect('project/'. $project_id);
     }
 
     /**

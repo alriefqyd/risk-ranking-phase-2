@@ -28,6 +28,7 @@
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel2' ? 'active' : ''}}" id="fel2-tabs" data-bs-toggle="tab" href="#fel2" role="tab" aria-controls="fel2" aria-selected="false">FEL 2</a></li>
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel3' ? 'active' : ''}}" id="fel3-tabs" data-bs-toggle="tab" href="#fel3" role="tab" aria-controls="fel3" aria-selected="false">FEL 3</a></li>
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'business-case' ? 'active' : ''}}" id="business-case-tabs" data-bs-toggle="tab" href="#business-case" role="tab" aria-controls="business-case" aria-selected="false">Business Case</a></li>
+                            <li class="nav-item"><a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'cost-benefit' ? 'active' : ''}}" id="cost-benefit-tabs" data-bs-toggle="tab" href="#cost-benefit" role="tab" aria-controls="cost-benefit" aria-selected="false">Cost Benefit</a></li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane js-tab-parent fade show {{!Session::has('page-tab') ? 'active show' : ''}}" id="project" role="tabpanel" aria-labelledby="project-tab">
@@ -47,6 +48,9 @@
                             </div>
                             <div class="tab-pane fade js-tab-parent {{Session::get('page-tab') == 'business-case' ? 'active show' : ''}}" id="business-case" role="tabpanel" aria-labelledby="business-case-tab">
                                 @include('page.business_case.bc_tab')
+                            </div>
+                            <div class="tab-pane fade js-tab-parent {{Session::get('page-tab') == 'cost-benefit' ? 'active show' : ''}}" id="cost-benefit" role="tabpanel" aria-labelledby="cost-benefit-tab">
+                                @include('page.cost_benefit.cost_benefit_tab')
                             </div>
                         </div>
                     </div>

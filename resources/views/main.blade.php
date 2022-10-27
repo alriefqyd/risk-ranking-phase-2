@@ -50,6 +50,7 @@
 </div>
 </div>
 @include('components.js')
+@include('page.mustache')
 {{--<script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script>--}}
 <!-- login js-->
 <!-- Plugin used-->

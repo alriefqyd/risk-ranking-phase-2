@@ -47,6 +47,8 @@
 <script src="{{asset('assets/js/chart/morris-chart/morris-script.js')}}"></script>
 
 <script src="{{asset('assets/js/jquery.ui.min.js')}}"></script>
+
+<script src="{{asset('assets/js/mustache.min.js')}}"></script>
 {{--<script src="{{asset('assets/summernote/summernote.min.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/editor/summernote/summernote.js')}}"></script>--}}
 {{--<script src="{{asset('assets/js/editor/summernote/summernote.custom.js')}}"></script>--}}

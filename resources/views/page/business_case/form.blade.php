@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive js-table-cost-benefit">
     <input type="hidden" class="js-project-id" value="{{$project->id}}">
     <table class="table table-striped js-table-assessment">
         <tbody>

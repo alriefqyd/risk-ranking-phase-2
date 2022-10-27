@@ -903,6 +903,9 @@ $(function() {
         var _risk_probability = $('.js-risk-probability').val();
 
         var _cost_estimate = $('.js-cost_estimate_bc').val();
+        var _npv = $('.js-npv_bc').val();
+        var _payback_period = $('.js-payback_bc').val();
+        var _irr = $('.js-irr_bc').val();
 
         var _url = _form.attr('action')
         var _type = _form.attr('method')
@@ -932,13 +935,16 @@ $(function() {
                 reputation:_risk_reputation,
                 finance:_risk_finance,
                 probability:_risk_probability,
-                priority_level:parseInt(_risk_priority),
+                priority_level: !isNaN(parseInt(_risk_priority)) ? parseInt(_risk_priority) : '',
                 status : _status,
-                cost_estimate: _cost_estimate
+                cost_estimate: _cost_estimate,
+                npv:_npv ? parseInt(_npv) : 0,
+                irr:_irr ? parseInt(_irr) : 0,
+                payback_period:_payback_period ? parseInt(_payback_period) : 0
             },
             success:function (data){
-                // console.log(data)
-                window.location.href = data.url;
+                if(data.status === 200) window.location.href = data.url;
+                else notification('alert',data,'','')
             }
         })
     })
@@ -1029,6 +1035,67 @@ $(function() {
             _input.val(0)
         }
     })
+    var _check_finance_ev = $('#checkbox-financial_evaluation');
+    _check_finance_ev.on('click',function(){
+        financialDetail($(this))
+    })
+    financialDetail(_check_finance_ev)
+
+    function financialDetail(_element){
+        var _this = _element;
+        if(_this.is(':checked')){
+            $('.js-financial_evaluation_detail').removeClass('d-none');
+        } else {
+            $('.js-financial_evaluation_detail').addClass('d-none');
+        }
+    }
+
+    /**
+     * Cost Benefit
+     * @type {number}
+     * @private
+     */
+    var _table_no = 1;
+    $('.js-add-new-cost-benefit').on('click',function (){
+        var template = $('#js-template-cost-benefit').html();
+        Mustache.parse(template);
+        var data = {
+            "no" : _table_no+=1
+        }
+        var _temp = Mustache.render(template, data)
+        $('.js-table-cost-benefit').find('.js-table-body-cost-benefit').append(_temp)
+    })
+
+    $('.select2-temp').each(function(){
+        var _this = $(this)
+        _this.select2();
+    })
+
+    $('.js-create-cb').on('click',function(e){
+        $(this).find('.loader-34').removeClass('d-none')
+        e.preventDefault();
+        var _form = $('.js-cb-form');
+        _form.submit()
+    })
+
+    $('.js-cost-benefit').each(function(){
+        var _this = $(this);
+        _this.on('keyup',function(){
+            var _parent = $(this).closest('tr')
+            var _initial_and_sustaining = _parent.find('.js-initial-and-sustaining')
+            var _js_additional_revenue = _parent.find('.js-additional-revenue')
+            var _js_increment_operating = _parent.find('.js-increment-operating-cost')
+            var _js_cost_saving = _parent.find('.js-cost-savings')
+
+            var _js_cost_saving_val = _js_cost_saving.val() ? parseInt(_js_cost_saving.val()) : 0
+            var _js_increment_operating_val = _js_increment_operating.val() ? parseInt(_js_increment_operating.val()) : 0
+            var _js_additional_revenue_val = _js_additional_revenue.val() ? parseInt(_js_additional_revenue.val()) : 0
+
+            var _total = _js_cost_saving_val + _js_increment_operating_val + _js_additional_revenue_val
+            _this.closest('tr').find('.js-net-incremental-benefits').val(_total)
+        })
+    })
+
 })
 
 
