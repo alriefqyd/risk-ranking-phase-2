@@ -363,6 +363,7 @@ $(function() {
     $('.js-checkbox-assessment').each(function(){
         var _this = $(this)
         var _btn_submit_assessment = $('.js-create-assessment');
+        checkDisableButton(_this,_btn_submit_assessment,true);
         _this.on('change',function (){
             var __this = $((this))
             checkDisableButton(__this, _btn_submit_assessment, true)
@@ -588,7 +589,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-level').is(':checked') &&
-                            removeHtmlTag(editor[8].html.get()) === ''){
+                            removeHtmlTag(editor[7].html.get()) === ''){
                             return true
                         }
                         return false;
@@ -599,7 +600,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-detail-estimate').is(':checked') &&
-                            removeHtmlTag(editor[9].html.get()) === ''){
+                            removeHtmlTag(editor[8].html.get()) === ''){
                             return true
                         }
                         return false;

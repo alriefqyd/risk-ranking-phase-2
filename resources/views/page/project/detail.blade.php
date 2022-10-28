@@ -40,7 +40,7 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'fel3' ? 'active' : ''}}" id="fel3-tabs" data-bs-toggle="tab" href="#fel3" role="tab" aria-controls="fel3" aria-selected="false">
-                                        FEL 3{!!$project?->fel3 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                        FEL 3 {!!$project?->fel3 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
                                     </a>
                                 </li>
                             @endif

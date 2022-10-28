@@ -125,3 +125,7 @@
     background-color: rgb(4 4 4 / 20%);
 }
 
+.fr-wrapper a {
+    display: none !important;
+}
+
