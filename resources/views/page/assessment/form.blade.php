@@ -1,3 +1,4 @@
+
 <div class="table-responsive">
     <input type="hidden" class="js-project-id" value="{{$project->id}}">
     <table class="table table-striped js-table-assessment">
@@ -13,10 +14,9 @@
                 </div>
             </td>
             <td style="max-width: 100%">
-                <div class="froala js-text-problem-statement
-                {{$project?->assessment?->problems_statement != 1 ? 'd-none' : ''}}">
+                <textarea class="tinymce js-text-problem-statement {{$project?->assessment?->problems_statement != 1 ? 'd-none' : ''}}">
                     {!! $project?->assessment?->problem_statement_text !!}
-                </div>
+                </textarea>
                 <input type="hidden" class="js-hidden-validate" name="validate_problem_statement">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
@@ -32,10 +32,10 @@
                 </div>
             </td>
             <td>
-                <div class="froala js-text-objective
+                <textarea class="js-text-objective
                 {{$project?->assessment?->objective != 1 ? 'd-none' : ''}}">
                     {!! $project?->assessment?->objective_text !!}
-                </div>
+                </textarea>
                 <input type="hidden" class="js-hidden-validate" name="validate_objective">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>

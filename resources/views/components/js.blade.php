@@ -65,6 +65,8 @@
 <script src="{{asset('assets/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{asset('assets/froala/js/froala_editor.pkgd.min.js')}}"></script>
 <script src="{{asset('assets/jquery-validation/dist/jquery.validate.min.js')}}"></script>
+<script src="{{asset('assets/tinymce/tinymce.min.js')}}"></script>
+<script src="https://cdn.tiny.cloud/1/v40ov1kx8ufxesasyu8imd5a9bl5h6vvi7iulph996cjgrtb/tinymce/6/plugins.min.js" referrerpolicy="origin"></script>
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
 <script src="{{asset('assets/js/script.js')}}"></script>
