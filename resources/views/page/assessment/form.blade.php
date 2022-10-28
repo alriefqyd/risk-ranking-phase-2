@@ -32,7 +32,7 @@
                 </div>
             </td>
             <td>
-                <textarea class="js-text-objective
+                <textarea class="tinymce js-text-objective
                 {{$project?->assessment?->objective != 1 ? 'd-none' : ''}}">
                     {!! $project?->assessment?->objective_text !!}
                 </textarea>
