@@ -14,44 +14,11 @@
 <script src="{{asset('assets/js/rating/rating-script.js')}}"></script>
 <!-- Plugins JS start-->
 <script src="{{asset('assets/js/custom/chart.min.js')}}"></script>
-<script src="{{asset('assets/js/chart/chartist/chartist.js')}}"></script>
-<script src="{{asset('assets/js/chart/chartist/chartist-plugin-tooltip.js')}}"></script>
-<script src="{{asset('assets/js/chart/knob/knob.min.js')}}"></script>
-<script src="{{asset('assets/js/chart/knob/knob-chart.js')}}"></script>
-<script src="{{asset('assets/js/chart/apex-chart/apex-chart.js')}}"></script>
-<script src="{{asset('assets/js/chart/apex-chart/stock-prices.js')}}"></script>
-<script src="{{asset('assets/js/prism/prism.min.js')}}"></script>
-<script src="{{asset('assets/js/clipboard/clipboard.min.js')}}"></script>
-<script src="{{asset('assets/js/counter/jquery.waypoints.min.js')}}"></script>
-<script src="{{asset('assets/js/counter/jquery.counterup.min.js')}}"></script>
-<script src="{{asset('assets/js/counter/counter-custom.js')}}"></script>
-<script src="{{asset('assets/js/custom-card/custom-card.js')}}"></script>
-<script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
-<script src="{{asset('assets/js/vector-map/jquery-jvectormap-2.0.2.min.js')}}"></script>
-<script src="{{asset('assets/js/vector-map/map/jquery-jvectormap-world-mill-en.js')}}"></script>
-<script src="{{asset('assets/js/vector-map/map/jquery-jvectormap-us-aea-en.js')}}"></script>
-<script src="{{asset('assets/js/vector-map/map/jquery-jvectormap-uk-mill-en.js')}}"></script>
-<script src="{{asset('assets/js/vector-map/map/jquery-jvectormap-au-mill.js')}}"></script>
-<script src="{{asset('assets/js/vector-map/map/jquery-jvectormap-chicago-mill-en.js')}}"></script>
-<script src="{{asset('assets/js/vector-map/map/jquery-jvectormap-in-mill.js')}}"></script>
-<script src="{{asset('assets/js/vector-map/map/jquery-jvectormap-asia-mill.js')}}"></script>
 <script src="{{asset('assets/js/dashboard/default.js')}}"></script>
-{{--<script src="{{asset('assets/js/notify/index.js')}}"></script>--}}
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.js')}}"></script>
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.en.js')}}"></script>
-<script src="{{asset('assets/js/datepicker/date-picker/datepicker.custom.js')}}"></script>
-<script src="{{asset('assets/js/chart/morris-chart/raphael.js')}}"></script>
-<script src="{{asset('assets/js/chart/morris-chart/morris.js')}}"> </script>
-<script src="{{asset('assets/js/chart/morris-chart/prettify.min.js')}}"></script>
-<script src="{{asset('assets/js/chart/morris-chart/morris.min.js')}}"></script>
-<script src="{{asset('assets/js/chart/morris-chart/morris-script.js')}}"></script>
 
 <script src="{{asset('assets/js/jquery.ui.min.js')}}"></script>
 
 <script src="{{asset('assets/js/mustache.min.js')}}"></script>
-{{--<script src="{{asset('assets/summernote/summernote.min.js')}}"></script>--}}
-{{--<script src="{{asset('assets/js/editor/summernote/summernote.js')}}"></script>--}}
-{{--<script src="{{asset('assets/js/editor/summernote/summernote.custom.js')}}"></script>--}}
 <script src="{{asset('assets/js/tooltip-init.js')}}"></script>
 <script src="{{asset('assets/js/custom/graph.js')}}"></script>
 <script src="{{asset('assets/js/editor/ckeditor/ckeditor.js')}}"></script>
@@ -62,8 +29,6 @@
 <script src="{{asset('assets/select2/dist/js/select2.min.js')}}"></script>
 <script src="{{asset('assets/js/notification.js')}}"></script>
 <script src="{{asset('assets/js/application.js')}}"></script>
-<script src="{{asset('assets/summernote/summernote-bs4.min.js')}}"></script>
-<script src="{{asset('assets/froala/js/froala_editor.pkgd.min.js')}}"></script>
 <script src="{{asset('assets/jquery-validation/dist/jquery.validate.min.js')}}"></script>
 <script src="{{asset('assets/tinymce/tinymce.min.js')}}"></script>
 <script src="https://cdn.tiny.cloud/1/v40ov1kx8ufxesasyu8imd5a9bl5h6vvi7iulph996cjgrtb/tinymce/6/plugins.min.js" referrerpolicy="origin"></script>

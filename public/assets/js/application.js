@@ -291,8 +291,13 @@ $(function() {
      */
     var _notif = $('.check-notification');
     if(_notif.length > 0){
-        var _message = _notif.data('msg')
-        notification('',_message,'')
+        try {
+            var _message = _notif.data('msg')
+            notification('',_message,'')
+        }catch (e){
+            console.log(e)
+        }
+
     }
 
     /**
@@ -340,30 +345,30 @@ $(function() {
     })
 
     /**
-     * Froala Editor
+     * TinyMce
      */
-    var editor = new FroalaEditor('div.froala',{
-        heightMin: 100,
-        heightMax: 200,
-        lineHeights: {
-            '1.15': '1.15',
-            '1.5': '1.5',
-            Double: '2'
-        },
-        toolbarButtons:['undo', 'redo' , 'bold', 'italic', 'underline','lineHeights','insert','formatOL', 'formatUL', 'outdent', 'indent', 'clearFormatting', 'insertTable', 'insertImage']
-    }, function (){
-        // Block Function for froala
-    });
 
+    tinymce.init({
+        selector: '.tinymce',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        menubar: false,
+        tinycomments_author: 'Author name',
+        mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+        ]
+    });
     /**
      * Handle Hide Show Editor Form
      */
-    var _check_count = 0;
 
-    $('.js-checkbox-assessment').each(function(){
+
+    var _check_count = 0;
+    $('tr').find('.js-checkbox-assessment').each(function(i,e){
         var _this = $(this)
         var _btn_submit_assessment = $('.js-create-assessment');
-        checkDisableButton(_this,_btn_submit_assessment,true);
         _this.on('change',function (){
             var __this = $((this))
             checkDisableButton(__this, _btn_submit_assessment, true)
@@ -371,11 +376,13 @@ $(function() {
     })
 
 
-    function checkDisableButton(__this, _btn_submit_assessment, isHaveFroala, _checkAll, _checkCount){
-        var _editor = __this.closest('tr').find('.froala')
+    function checkDisableButton(__this, _btn_submit_assessment, isHaveFroala, _checkAll){
+        var _editor = __this.closest('tr').find('.tinymce')
         if(__this.is(':checked')){
-            if(_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) __this.closest('tr').find('.js-cost-estimate').removeClass('d-none')
-            _editor.removeClass('d-none')
+            if(_editor.length > 0 ) tinymce.get(_editor.attr('id')).show()
+            if(_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) {
+                __this.closest('tr').find('.js-cost-estimate').removeClass('d-none');
+            }
             _check_count += 1
         } else {
             if(_check_count > 0 && !_checkAll){
@@ -383,11 +390,12 @@ $(function() {
             }
 
             if(_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) {
-                __this.closest('tr').find('.js-cost-estimate').addClass('d-none')
-                __this.closest('tr').find('.js-cost_estimate_assessment').val("")
+                __this.closest('tr').find('.js-cost-estimate').addClass('d-none');
             }
-            _editor.find('.fr-element').text('')
-            _editor.addClass('d-none')
+            _editor.addClass('d-none');
+            if(_editor.length > 0 ){
+                tinymce.get(_editor.attr('id')).hide()
+            }
 
         }
 
@@ -399,13 +407,15 @@ $(function() {
             _btn_submit_assessment.removeAttr('disabled')
         }
     }
-
     /**
      * Save Assessment Using AJAX
      */
 
+    var _assessment_form = $('.js-assessment-form')
+
     $('.js-create-assessment').on('click',function (e){
         e.preventDefault();
+        tinyMCE.triggerSave();
         var _this = $(this);
         var _form = _this.closest('.js-assessment-form');
         var _check_problem_statement = $('#checkbox-problem-statement')
@@ -418,17 +428,17 @@ $(function() {
         var _check_cost_estimate = $('#checkbox-cost-estimate')
         var _check_level = $('#checkbox-level')
         var _check_detail_cost = $('#checkbox-detail-estimate')
-        var _text_problem_statement = editor[0].html.get()
-        var _text_objective = editor[1].html.get()
-        var _text_project_scope = editor[2].html.get()
-        var _text_key_performance = editor[3].html.get()
-        var _text_project_risk = editor[4].html.get()
-        var _text_impact = editor[5].html.get()
-        var _text_alternative = editor[6].html.get()
-        var _text_cost_estimate = _form.find('.js-cost_estimate_assessment').val()
+        var _text_problem_statement = _check_problem_statement.is(':checked') ? $('.js-text-problem-statement').val() : ''
+        var _text_objective = _check_objective.is(':checked') ? $('.js-text-objective').val() : ''
+        var _text_project_scope = _check_project_scope.is(':checked') ? $('.js-text-project-scope').val() : ''
+        var _text_key_performance = _check_key_performance.is(':checked') ? $('.js-key-performance').val() : ''
+        var _text_project_risk = _check_project_risk.is(':checked') ? $('.js-key-project-risk').val() : ''
+        var _text_impact = _check_impact_not_executed.is(':checked') ? $('.js-impact').val() : ''
+        var _text_alternative = _check_alternative.is(':checked') ? $('.js-alternative').val() : ''
+        var _text_cost_estimate = _check_cost_estimate.is(':checked') ? _assessment_form.find('.js-cost_estimate_assessment').val() : ''
         var _text_complexity_score = $('.js-select-score').val()
-        var _text_level_project = editor[7].html.get()
-        var _text_detail_estimate = editor[8].html.get()
+        var _text_level_project = _check_level.is(':checked') ? $('.js-text-level').val() : ''
+        var _text_detail_estimate = _check_detail_cost.is(':checked') ? $('.js-text-detail-cost').val() : ''
         var _project_id = $('.js-project-id').val();
         var _url_submit = _form.attr('action')
         var _type = _form.attr('method');
@@ -500,7 +510,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-problem-statement').is(':checked') &&
-                        removeHtmlTag(editor[0].html.get()) === ''){
+                        removeHtmlTag($('.js-text-problem-statement').val()) === ''){
                             return true
                         }
                         return false;
@@ -511,7 +521,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-objective').is(':checked') &&
-                            removeHtmlTag(editor[1].html.get()) === ''){
+                            removeHtmlTag($('.js-text-objective').val()) === ''){
                             return true
                         }
                         return false;
@@ -522,7 +532,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-project-scope').is(':checked') &&
-                            removeHtmlTag(editor[2].html.get()) === ''){
+                            removeHtmlTag($('.js-text-project-scope').val()) === ''){
                             return true
                         }
                         return false;
@@ -533,7 +543,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-kpm').is(':checked') &&
-                            removeHtmlTag(editor[3].html.get()) === ''){
+                            removeHtmlTag($('.js-key-performance').val()) === ''){
                             return true
                         }
                         return false;
@@ -544,7 +554,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-prm').is(':checked') &&
-                            removeHtmlTag(editor[4].html.get()) === ''){
+                            removeHtmlTag($('.js-key-project-risk').val()) === ''){
                             return true
                         }
                         return false;
@@ -555,7 +565,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-iie').is(':checked') &&
-                            removeHtmlTag(editor[5].html.get()) === ''){
+                            removeHtmlTag($('.js-impact').val()) === ''){
                             return true
                         }
                         return false;
@@ -566,7 +576,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-alternative').is(':checked') &&
-                            removeHtmlTag(editor[6].html.get()) === ''){
+                            removeHtmlTag($('.js-alternative').val()) === ''){
                             return true
                         }
                         return false;
@@ -589,7 +599,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-level').is(':checked') &&
-                            removeHtmlTag(editor[7].html.get()) === ''){
+                            removeHtmlTag($('.js-text-level').val()) === ''){
                             return true
                         }
                         return false;
@@ -600,7 +610,7 @@ $(function() {
                 required: {
                     depends: function (){
                         if($('#checkbox-detail-estimate').is(':checked') &&
-                            removeHtmlTag(editor[8].html.get()) === ''){
+                            removeHtmlTag($('.js-text-detail-cost').val()) === ''){
                             return true
                         }
                         return false;
@@ -1094,18 +1104,6 @@ $(function() {
         var _total = _js_cost_saving_val + _js_increment_operating_val + _js_additional_revenue_val
         _parent.find('.js-net-incremental-benefits').val(_total)
     })
-
-    tinymce.init({
-        selector: '.tinymce',
-        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-        tinycomments_mode: 'embedded',
-        tinycomments_author: 'Author name',
-        mergetags_list: [
-            { value: 'First.Name', title: 'First Name' },
-            { value: 'Email', title: 'Email' },
-        ]
-    });
 
 })
 
