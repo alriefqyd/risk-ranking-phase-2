@@ -435,7 +435,7 @@ $(function() {
         var _text_project_risk = _check_project_risk.is(':checked') ? $('.js-key-project-risk').val() : ''
         var _text_impact = _check_impact_not_executed.is(':checked') ? $('.js-impact').val() : ''
         var _text_alternative = _check_alternative.is(':checked') ? $('.js-alternative').val() : ''
-        var _text_cost_estimate = _check_cost_estimate.is(':checked') ? _assessment_form.find('.js-cost_estimate_assessment').val() : ''
+        var _text_cost_estimate = _check_cost_estimate.is(':checked') ? _form.find('.js-cost_estimate_assessment').val() : ''
         var _text_complexity_score = $('.js-select-score').val()
         var _text_level_project = _check_level.is(':checked') ? $('.js-text-level').val() : ''
         var _text_detail_estimate = _check_detail_cost.is(':checked') ? $('.js-text-detail-cost').val() : ''
@@ -453,36 +453,50 @@ $(function() {
             return false
         }
 
+        var files = $('.js-fel1-attachment')[0].files;
+
+        var formData = new FormData();
+        formData.append('document',files[0])
+        formData.append('project_name', _form.data('name'))
+        if(_form.data('method') === 'put') formData.append('_method','put')
+        formData.append('file_category','assessment')
+        formData.append('project_id',_project_id)
+        formData.append('problems_statement',setBooleanNumber(_check_problem_statement.is(':checked')))
+        formData.append('objective', setBooleanNumber(_check_objective.is(':checked')))
+        formData.append('project_scope',setBooleanNumber(_check_project_scope.is(':checked')))
+        formData.append('key_performance_metric',setBooleanNumber(_check_key_performance.is(':checked')))
+        formData.append('key_project_risk_mitigants',setBooleanNumber(_check_project_risk.is(':checked')))
+        formData.append('impact_if_not_executed',setBooleanNumber(_check_impact_not_executed.is(':checked')))
+        formData.append('cost_estimate',setBooleanNumber(_check_cost_estimate.is(':checked')))
+        formData.append('level_project',setBooleanNumber(_check_level.is(':checked')))
+        formData.append('alternative_to_proposal',setBooleanNumber(_check_alternative.is(':checked')))
+        formData.append('detail_estimate_cost',setBooleanNumber(_check_detail_cost.is(':checked')))
+        formData.append('problem_statement_text',_text_problem_statement)
+        formData.append('objective_text',_text_objective)
+        formData.append('project_scope_text',_text_project_scope)
+        formData.append('key_performance_metric_text',_text_key_performance)
+        formData.append('key_project_risk_mitigants_text',_text_project_risk)
+        formData.append('impact_if_not_executed_text',_text_impact)
+        formData.append('alternatives_to_proposal_text',_text_alternative)
+        formData.append('cost_estimate_text',_text_cost_estimate)
+        formData.append('level_project_text',_text_level_project)
+        formData.append('detail_estimate_cost_text',_text_detail_estimate)
+        formData.append('complexity_score_assessment',_text_complexity_score)
+        formData.append('status',_status)
+
         $.ajax({
             url: _url_submit,
             type:_type,
-            data:{
-                project_id : _project_id,
-                problems_statement : setBooleanNumber(_check_problem_statement.is(':checked')),
-                objective : setBooleanNumber(_check_objective.is(':checked')),
-                project_scope: setBooleanNumber(_check_project_scope.is(':checked')),
-                key_performance_metric: setBooleanNumber(_check_key_performance.is(':checked')),
-                key_project_risk_mitigants:setBooleanNumber(_check_project_risk.is(':checked')),
-                impact_if_not_executed:setBooleanNumber(_check_impact_not_executed.is(':checked')),
-                cost_estimate:setBooleanNumber(_check_cost_estimate.is(':checked')),
-                level_project:setBooleanNumber(_check_level.is(':checked')),
-                alternative_to_proposal:setBooleanNumber(_check_alternative.is(':checked')),
-                detail_estimate_cost:setBooleanNumber(_check_detail_cost.is(':checked')),
-                problem_statement_text:_text_problem_statement,
-                objective_text:_text_objective,
-                project_scope_text:_text_project_scope,
-                key_performance_metric_text:_text_key_performance,
-                key_project_risk_mitigants_text:_text_project_risk,
-                impact_if_not_executed_text:_text_impact,
-                alternatives_to_proposal_text:_text_alternative,
-                cost_estimate_text:_text_cost_estimate,
-                level_project_text:_text_level_project,
-                detail_estimate_cost_text:_text_detail_estimate,
-                complexity_score_assessment:_text_complexity_score,
-                status:_status,
-            },
+            data: formData,
+            processData: false,
+            contentType: false,
             success:function (data){
-                window.location.href = data.url;
+                if(data.status === 200) window.location.href = data.url;
+                else {
+                    notification('danger',data,'fa fa-time','Error')
+                    _this.removeAttr('disabled')
+                    _this.find('.loader-34').addClass('d-none')
+                }
             }
         })
     })

@@ -160,7 +160,7 @@
                 <div class="input-group mb-3 js-cost-estimate
                     {{$project?->assessment?->cost_estimate == 0 ? 'd-none' : ''}}"
                 ><span class="input-group-text">$  </span>
-                    <input class="form-control cold-md-12" type="number"
+                    <input class="form-control js-cost_estimate_assessment cold-md-12" type="number"
                            value="{{$project?->assessment?->cost_estimate_text}}"
                            aria-label="Amount (to the nearest dollar)"><span class="input-group-text">.00  </span>
                 </div>
@@ -223,6 +223,27 @@
                     </select>
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Attachment File
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <input class="form-control js-fel1-attachment" value="{{$project?->project_name}}" name="file_assesment" id="inputFile" multiple type="file">
+                @if($project?->assessment?->attachment)
+                    <div class="row">
+                        <div class="col-md-10">
+                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->assessment?->attachment}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->assessment?->attachment}}
+                            </a>
+                        </div>
+                    </div>
+                @endif
             </td>
         </tr>
         </tbody>

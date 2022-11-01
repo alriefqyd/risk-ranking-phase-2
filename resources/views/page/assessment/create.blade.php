@@ -1,4 +1,7 @@
 <form method="post" action="/assessment/"
+      enctype="multipart/form-data"
+      id="form-assessment-data"
+      data-name="{{$project->project_name}}"
       class="theme-form js-assessment-create js-assessment-form">
         @csrf
         @include('page.assessment.form',[

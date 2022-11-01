@@ -9,6 +9,7 @@
 <!-- Bootstrap js-->
 <script src="{{asset('assets/js/bootstrap/popper.min.js')}}"></script>
 <script src="{{asset('assets/js/bootstrap/bootstrap.min.js')}}"></script>
+<script src="{{asset('assets/js/notify/bootstrap-notify.min.js')}}"></script>
 
 <script src="{{asset('assets/js/rating/jquery.barrating.js')}}"></script>
 <script src="{{asset('assets/js/rating/rating-script.js')}}"></script>

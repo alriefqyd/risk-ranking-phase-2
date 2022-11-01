@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Livewire\Project;
 use App\Models\Department;
 use App\Models\Document;
 use App\services\ProjectService;
 use App\services\UserService;
+use Cassandra\Date;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -35,44 +37,44 @@ class DocumentController extends Controller
         ]);
     }
 
-    public function store(Request $request){
-        $userService = new UserService();
-        if($userService->isAdminDept()){
-            abort(403);
-        }
-        $upload = $this->uploadDocument($request,null);
-        $documents = new Document([
-            'description' => $request->description,
-            'document_name' => $upload,
-            'owner' => $request->owner,
-            'set_home' => $request->set_home ? true : false,
-            'upload_by' => auth()->user()->id,
-        ]);
+//    public function store(Request $request){
+//        $userService = new UserService();
+//        if($userService->isAdminDept()){
+//            abort(403);
+//        }
+//        $upload = $this->uploadDocument($request,null);
+//        $documents = new Document([
+//            'description' => $request->description,
+//            'document_name' => $upload,
+//            'owner' => $request->owner,
+//            'set_home' => $request->set_home ? true : false,
+//            'upload_by' => auth()->user()->id,
+//        ]);
+//
+//        $documents->save();
+//        $request->session()->flash('alert-success', 'Data was successful created!');
+//        return redirect('document');
+//    }
 
-        $documents->save();
-        $request->session()->flash('alert-success', 'Data was successful created!');
-        return redirect('document');
-    }
-
-    public function update(Document $document, Request $request){
-        $this->authorize('update');
-        $userService = new UserService();
-        if($userService->isAdminDept()){
-            abort(403);
-        }
-        $url = url()->previous();
-        if(!isset($request->isDocumentList)){
-            $url = 'document';
-            $documentUpload = $this->uploadDocument($request, $document);
-            $document->document_name = $documentUpload;
-        }
-        $document->description = $request->description;
-        $document->set_home = isset($request->set_home) ? true : false;
-        $document->owner = $request->owner;
-        $document->save();
-        $request->session()->flash('alert-success', 'Data was successful updated!');
-        return redirect($url);
-    }
+//    public function update(Document $document, Request $request){
+//        $this->authorize('update');
+//        $userService = new UserService();
+//        if($userService->isAdminDept()){
+//            abort(403);
+//        }
+//        $url = url()->previous();
+//        if(!isset($request->isDocumentList)){
+//            $url = 'document';
+//            $documentUpload = $this->uploadDocument($request, $document);
+//            $document->document_name = $documentUpload;
+//        }
+//        $document->description = $request->description;
+//        $document->set_home = isset($request->set_home) ? true : false;
+//        $document->owner = $request->owner;
+//        $document->save();
+//        $request->session()->flash('alert-success', 'Data was successful updated!');
+//        return redirect($url);
+//    }
 
     public function show(Document $document){
         $this->authorize('update');
@@ -89,34 +91,30 @@ class DocumentController extends Controller
     }
 
     public function preview(Request $request){
-        $data =  Document::where('id',$request->document_id)->first();
-        $userService = new UserService();
-        if(!($userService->isAdmin() || $userService->isViewer()) &
-            auth()->user()->department != $data->owner){
-            return 404;
-        }
-        return response()->file(storage_path('app/documents/').$data->document_name);
+        return response()->file(storage_path('app/documents/'.$request->dir.'/'.$request->file));
     }
 
-    public function uploadDocument(Request $request, $existingDocument){
+    public function uploadDocument(Request $request, $existingDocument, $project_name){
         $document_name = null;
-        $dep = Department::where('id',$request->owner)->first();
+        //$dep = Department::where('id',$request->owner)->first();
         if($request->hasfile('document')) {
             $request->validate([
-                'document' => 'required|mimes:doc,docx,pdf|max:2048'
+                'document' => 'required|mimes:doc,docx,pdf|max:10240'
             ]);
 
-            if (isset($existingDocument)) {
-                $this->deleteDocument($existingDocument);
-            }
 
             $file = $request->file('document');
-            $name = uniqid() . '_' . (isset($dep) ? $dep->name : 'All_Dept') . '_' . $file->getClientOriginalName();
-            Storage::disk('local')->putFileAs('documents', $file, $name);
+            $name = $request->file_category .'-' . $project_name . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $dir = 'documents/'.$project_name;
+            Storage::disk('local')->putFileAs($dir, $file, $name);
             $document_name = $name;
+
+            if (isset($existingDocument)) {
+                $this->deleteDocument($existingDocument, $project_name);
+            }
         }
 
-        return $document_name ?: $existingDocument->document_name;
+        return $document_name ?? $existingDocument;
     }
 
     public function destroy(Document $document, Request $request){
@@ -131,8 +129,8 @@ class DocumentController extends Controller
         return redirect('/document');
     }
 
-    private function deleteDocument($document){
-        $existDocumentName = storage_path('app\\documents\\') . $document->document_name;
+    private function deleteDocument($document, $path){
+        $existDocumentName = storage_path('app\\documents\\') . $path .'\\' . $document;
         if (File::exists($existDocumentName)) {
             File::delete($existDocumentName);
         }

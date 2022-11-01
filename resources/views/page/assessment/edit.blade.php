@@ -1,4 +1,6 @@
-<form method="put" action="/assessment/{{$project->id}}/"
+<form method="post" action="/assessment/{{$project->id}}/"
+      enctype="multipart/form-data"
+      data-method="put"
       class="theme-form js-assessment-create js-assessment-form">
         @csrf
         @include('page.assessment.form',[

@@ -12,6 +12,7 @@ use App\service\ProjectService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class AssessmentController extends Controller
 {
@@ -88,6 +89,7 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
+        $documentController = new DocumentController();
         $this->authorize('create');
         $projectService = new ProjectService();
         DB::beginTransaction();
@@ -128,13 +130,19 @@ class AssessmentController extends Controller
                 $assessment->status = 'DRAFT';
             }
 
+
+            $attachName = $documentController->uploadDocument($request, null, $request->project_name);
+            if($attachName){
+                $assessment->attachment = $attachName;
+            }
+
             $assessment->saveOrFail();
             DB::commit();
             $request->session()->flash('page-tab', 'assessment');
             $request->session()->flash('alert-success', 'Assessment was saved');
             return response()->json([
                 'status' => 200,
-                'url' => '/project/' . $request->project_id
+                'url' => '/project/' . $request->project_id,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -197,6 +205,8 @@ class AssessmentController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+
+        $documentController = new DocumentController();
         $this->authorize('update');
         $assessmentService = new AssessmentService();
         $projectService = new ProjectService();
@@ -235,13 +245,20 @@ class AssessmentController extends Controller
             if($request?->status == 'draft'){
                 $assessment->status = 'DRAFT';
             }
+
+            $attachName = $documentController->uploadDocument($request, $assessment->attachment, $project->project_name);
+
+            if($attachName){
+                $assessment->attachment = $attachName;
+            }
+
             $assessment->saveOrFail();
             DB::commit();
             $request->session()->flash('page-tab', 'assessment');
             $request->session()->flash('alert-success', 'Assessment was successful updated!');
             return response()->json([
                 'status' => 200,
-                'url' => '/project/' . $project->id
+                'url' => '/project/' . $project->id,
             ]);
         } catch (\Exception $e){
             DB::rollBack();
