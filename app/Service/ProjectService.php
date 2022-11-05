@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Models\CapexInvestment;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\Setting;
@@ -9,6 +10,7 @@ use App\Models\User;
 use App\Service\UserService;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Assessment;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Nette\Utils\Html;
@@ -304,6 +306,28 @@ class ProjectService
         if($project?->cost_benefits) array_push($arrayAccess,Setting::RELATED_DATA['cost_benefit']);
 
         return in_array($relatedData,$arrayAccess);
+    }
+
+    public function getCapexCategory($type,$parentId){
+        if($type == CapexInvestment::type['capex_investment']) {
+            return CapexInvestment::where('type','CAPEX_INVESTMENT')->get();
+        }
+
+        if($type == CapexInvestment::type['basket'] && isset($parentId)){
+            return CapexInvestment::where('type',CapexInvestment::type['basket'])
+                ->where('parent_id',$parentId)->get();
+        }
+
+        if($type == CapexInvestment::type['sub_basket']){
+            return CapexInvestment::where('type',CapexInvestment::type['sub_basket']);
+        }
+    }
+
+    public function getBasketList(){
+        return DB::table('capex_investment_categories as cic')->
+            select('cic.id as category_id', 'cic.name as category_name','cic2.name as basket_name','cic2.code as basket_code','cic3.name as sub_basket')->
+            join('capex_investment_categories as cic2','cic.id', '=', 'cic2.parent_id')->
+            join('capex_investment_categories as cic3','cic2.id', '=', 'cic3.parent_id');
     }
 
 }

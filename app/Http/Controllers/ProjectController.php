@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assessment;
+use App\Models\CapexInvestment;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\RiskAssessments;
@@ -73,6 +74,7 @@ class ProjectController extends Controller
             'department' => $department,
             'subDepartment' => $subDepartment,
             'bcStatus' => $bcStatus,
+
         ]);
     }
 
@@ -85,13 +87,20 @@ class ProjectController extends Controller
 
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
-
-        return view('page.project.create',[
+        $capexCategory = $projectService->getCapexCategory(CapexInvestment::type['capex_investment'],null);
+        $sustaining = $projectService->getCapexCategory(CapexInvestment::type['basket'],1);
+        $randd = $projectService->getCapexCategory(CapexInvestment::type['basket'], 2);
+        $growth = $projectService->getCapexCategory(CapexInvestment::type['basket'], 3);
+         return view('page.project.create',[
             'projectCategory' => $this->projectCategory,
             'projectType' => $this->projectType,
             'department' => $department,
             'subDepartment' => $subDepartment,
-            'userDepartment' => $this->userDepartment
+            'userDepartment' => $this->userDepartment,
+            'capexCategory' => $capexCategory,
+            'sustainingList' => $sustaining,
+            'randdList' => $randd,
+            'growthList' => $growth,
         ]);
     }
 
@@ -128,6 +137,8 @@ class ProjectController extends Controller
                 'bc_status' => $request->bc_status,
                 'note' => $request->note,
                 'finance_analyst' => $request->finance_analyst,
+                'basket' => $request->basket,
+                'sub_basket' => $request->sub_basket,
                 'created_by' => Auth::user()->id
             ]);
 

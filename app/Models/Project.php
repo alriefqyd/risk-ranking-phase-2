@@ -55,6 +55,18 @@ class Project extends Model
         return $this->hasOne(CostBenefit::class,'project_id');
     }
 
+    public function baskets(){
+        return $this->belongsTo(CapexInvestment::class,'basket');
+    }
+
+    public function subBaskets(){
+        return $this->belongsTo(CapexInvestment::class,'sub_basket');
+    }
+
+    public function features(){
+        return $this->belongsTo(CapexInvestment::class,'feature');
+    }
+
     /*
      * Method to auto delete relation
      */
@@ -189,6 +201,13 @@ class Project extends Model
     public function checkPermissionRelatedData($relatedData){
         $projectService = new ProjectService();
         return $projectService->checkPermissionRelatedData($this,$relatedData);
+    }
+
+    public function getSubBasket(){
+        $projectService = new ProjectService();
+
+//        $projectService->getCapexCategory(CapexInvestment::type['basket'],$this);
+
     }
 
 }

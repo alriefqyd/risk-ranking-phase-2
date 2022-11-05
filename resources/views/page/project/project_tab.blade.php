@@ -42,6 +42,14 @@
         <table class="table table-striped">
             <tbody>
             <tr>
+                <td style="width: 200px">Basket : </td>
+                <td>{{$project?->baskets?->name}}</td>
+            </tr>
+            <tr>
+                <td style="width: 200px">Sub Basket : </td>
+                <td>{{$project?->subBaskets?->name}}</td>
+            </tr>
+            <tr>
                 <td style="width: 200px">Project Number : </td>
                 <td>{{$project->project_number}}</td>
             </tr>

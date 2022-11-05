@@ -24,3 +24,14 @@
     </td>
 </tr>
 </script>
+<script id="js-template-capex-investment" type="x-tmpl-mustache">
+
+    <div class="checkbox checkbox-primary">
+        <input id="checkbox-"
+               data-id=""
+               class="js-checkbox-margin js-checkbox-open-bucket"
+               type="checkbox">
+        <label for="checkbox-"></label>
+    </div>
+
+</script>
