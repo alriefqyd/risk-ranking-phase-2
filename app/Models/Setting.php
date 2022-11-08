@@ -31,6 +31,20 @@ class Setting extends Model
         'cost_benefit' => 'cost_benefit'
     ];
 
+    public const COMPLEXITY_ANALYSIS = [
+        'investment_just_purchase' => 'investment_just_purchase',
+        'needs_engineering_development' => 'needs_engineering_development',
+        'require_more_two' => 'require_more_two',
+        'require_more_two_simultant' => 'require_more_two_simultant',
+        'num_work_one_hundred' => 'num_work_one_hundred',
+        'transportation_under_vale' => 'transportation_under_vale',
+        'require_shutdown' => 'require_shutdown',
+        'interferences_delay' => 'interferences_delay',
+        'require_environmental_license' => 'require_environmental_license',
+        'require_community_involvement' => 'require_community_involvement',
+        'require_purchase' => 'require_purchase'
+    ];
+
     public const PROJECT_TYPE = 'PROJECT TYPE';
 
     public const PROJECT_TYPE_BETTERMENT = 'betterment';
@@ -46,4 +60,9 @@ class Setting extends Model
     public const SOCIAL_COMMUNITY_REPUTATION = 'Social / Community / Reputation';
     public const TECHNOLOGY_AND_PROCESS_DEVELOPMENT = 'Technology And Process Development';
     public const GEOLOGICAL_RESEARCH = 'Geological Research';
+
+    public const MODERATE = 'Moderate';
+    public const HIGH = 'High';
+    public const LOW = 'Low';
+
 }

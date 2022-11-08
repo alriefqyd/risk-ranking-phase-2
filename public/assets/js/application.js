@@ -444,6 +444,23 @@ $(function() {
         var _url_submit = _form.attr('action')
         var _type = _form.attr('method');
         var _status = _this.data('status') ? _this.data('status') : 'draft';
+        var _complexity_sore = $('.js-complexity-score-label-val').val();
+        var _complexity_analysis_type = $('.js-complexity-label-val').val();
+
+        var _new_text_level_project = $('.js-complexity-label-val').val();
+        var _new_score = $('.js-complexity-score-label-val') .val();
+
+        var _investment_just_purchase = $('input[name="investment_just_purchase"]:checked').val();
+        var _needs_engineering_development = $('input[name="needs_engineering_development"]:checked').val();
+        var _require_more_two = $('input[name="require_more_two"]:checked').val();
+        var _require_more_two_simultant = $('input[name="require_more_two_simultant"]:checked').val();
+        var _num_work_one_hundred = $('input[name="num_work_one_hundred"]:checked').val();
+        var _transportation_under_vale = $('input[name="transportation_under_vale"]:checked').val();
+        var _require_shutdown = $('input[name="require_shutdown"]:checked').val();
+        var _interferences_delay = $('input[name="interferences_delay"]:checked').val();
+        var _require_environmental_license = $('input[name="require_environmental_license"]:checked').val();
+        var _require_community_involvement = $('input[name="require_community_involvement"]:checked').val();
+        var _require_purchase = $('input[name="require_purchase"]:checked').val();
 
         _this.attr('disabled', 'disabled')
         _this.find('.loader-34').removeClass('d-none')
@@ -486,10 +503,23 @@ $(function() {
         formData.append('impact_if_not_executed_text', _text_impact)
         formData.append('alternatives_to_proposal_text', _text_alternative)
         formData.append('cost_estimate_text', _text_cost_estimate)
-        formData.append('level_project_text', _text_level_project)
+        formData.append('level_project_text', _new_text_level_project)
         formData.append('detail_estimate_cost_text', _text_detail_estimate)
-        formData.append('complexity_score_assessment', _text_complexity_score)
+        formData.append('complexity_score_assessment', _new_score)
         formData.append('status', _status)
+        formData.append('investment_just_purchase',_investment_just_purchase ?? '');
+        formData.append('needs_engineering_development',_needs_engineering_development ?? '');
+        formData.append('require_more_two',_require_more_two ?? '');
+        formData.append('require_more_two_simultant',_require_more_two_simultant ?? '');
+        formData.append('num_work_one_hundred',_num_work_one_hundred ?? '');
+        formData.append('require_shutdown',_require_shutdown ?? '');
+        formData.append('interferences_delay',_interferences_delay ?? '');
+        formData.append('require_environmental_license',_require_environmental_license ?? '');
+        formData.append('require_community_involvement',_require_community_involvement ?? '');
+        formData.append('require_purchase',_require_purchase ?? '');
+        formData.append('transportation_under_vale',_transportation_under_vale ?? '');
+        formData.append('score',_complexity_sore ?? '');
+        formData.append('complexity_analysis_type',_complexity_analysis_type ?? '')
 
         $.ajax({
             url: _url_submit,
@@ -682,6 +712,90 @@ $(function() {
     function removeHtmlTag(text) {
         if (!text) return '';
         return text.replace(/(<([^>]+)>)/ig, "").trim()
+    }
+
+    /**
+     * Handle Accordion Button to Submit in Assessment
+     */
+    $('.js-btn-complexity-score-accordion').on('click',function(e){
+        e.preventDefault();
+    });
+
+
+    var _complexity_score = 0;
+    var _complexity = null
+    var _complexity_analysis = [
+        {'key' : 'investment_just_purchase', value:0},
+        {'key' : 'needs_engineering_development', value:0},
+        {'key' : 'require_more_two', value:15},
+        {'key' : 'require_more_two_simultant', value:15},
+        {'key' : 'num_work_one_hundred', value:12},
+        {'key' : 'transportation_under_vale', value:8},
+        {'key' : 'require_shutdown', value:12},
+        {'key' : 'interferences_delay', value:8},
+        {'key' : 'require_environmental_license', value:10},
+        {'key' : 'require_community_involvement', value:10},
+        {'key' : 'require_purchase', value:10},
+    ]
+    var _array_value = [0,0,0,0,0,0,0,0,0,0,0];
+
+    $('.js-complexity-analysis').each(function (i,v){
+        var _this = $(this)
+
+        _this.on('change',function(){
+            var __this = $(this);
+            var _idx = __this.data('idx')
+            var _attr_name = __this.attr('name');
+            var _investment_just_purchase = $('input[name="investment_just_purchase"]:checked').val();
+            var _needs_engineering_development = $('input[name="needs_engineering_development"]:checked').val();
+            var _score = _complexity_analysis.find(x => x.key === _attr_name).value;
+            var _sum = 0;
+            if(_investment_just_purchase == 1
+                && _needs_engineering_development == 0){
+                _complexity = 'Simple Purchase'
+                _complexity_score = 0;
+                $('.js-disable-step').attr('disabled','disabled')
+                $('.js-disable-step').prop('checked', false);
+                _sum = 0;
+
+            } else {
+                if(__this.attr('value') == 1){
+                    _array_value[_idx] = _score;
+                }
+                if(__this.attr('value') == 0){
+                    _array_value[_idx] = 0;
+                }
+
+                var _sum_last_three_array = countSumArray([_array_value[8],_array_value[9],_array_value[10]])
+                _sum = countSumArray(_array_value)
+                $('.js-disable-step').removeAttr('disabled')
+
+                if(_sum_last_three_array >= 10 && _sum <= 57){
+                    _complexity = 'Moderate'
+                } else {
+                    _complexity = ''
+                    if(_sum > 30 && _sum <= 57){
+                        _complexity = 'Moderate'
+                    }
+                    if(_sum > 57 && _sum <= 100){
+                        _complexity = 'High'
+                    }
+                    if(_sum <= 30 && _sum > 0){
+                        _complexity = 'Low'
+                    }
+                }
+
+            }
+
+            $('.js-complexity-label').text(_complexity)
+            $('.js-complexity-score-label').text(_sum)
+            $('.js-complexity-label-val').val(_complexity)
+            $('.js-complexity-score-label-val').val(_sum)
+        })
+    });
+
+    function countSumArray(_array){
+        return _array.reduce((partialSum, a) => partialSum + a, 0)
     }
 
     /**

@@ -1,3 +1,4 @@
+@inject('setting',App\Models\Setting::class)
 <div class="table-responsive">
     <input type="hidden" class="js-project-id" value="{{$project->id}}">
     <table class="table table-striped js-table-assessment">
@@ -167,26 +168,6 @@
             </td>
         </tr>
         <tr>
-            <td>Assessment of Level Project :</td>
-            <td style="width: 100px">
-                <div class="checkbox checkbox-primary">
-                    <input id="checkbox-level"
-                           {{$project?->assessment?->level_project == 1 ? 'checked' : ''}}
-                           class="js-checkbox-assessment" type="checkbox">
-                    <label for="checkbox-level"></label>
-                </div>
-            </td>
-            <td>
-                <small>(According to cost estimate $ …… and complexity score…….., that this categorize as (Complex/Moderate/Light) project). </small>
-                <textarea class="tinymce js-text-level"
-                    {!! $project?->assessment?->level_project != 1 ? 'style="display: none"' : '' !!}>
-                    {{$project?->assessment?->level_project_text}}
-                </textarea>
-                <input type="hidden" class="js-hidden-validate" name="validate_level">
-                <div class="col-md-12 txt-danger js-error-message"></div>
-            </td>
-        </tr>
-        <tr>
             <td>Detail Estimate Cost :</td>
             <td style="width: 100px">
                 <div class="checkbox checkbox-primary">
@@ -207,12 +188,179 @@
             </td>
         </tr>
         <tr>
-            <td>Complexity Score Assessment :</td>
+            <td>Complexity Score :</td>
+            <td style="width: 100px">
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox-level"
+                           {{$project?->assessment?->level_project == 1 ? 'checked' : ''}}
+                           class="js-checkbox-assessment" type="checkbox">
+                    <label for="checkbox-level"></label>
+                </div>
+            </td>
+            <td>
+                <small>(According to complexity assessment, this project has score ……).</small>
+                {{--<textarea class="tinymce js-text-level"
+                    {!! $project?->assessment?->level_project != 1 ? 'style="display: none"' : '' !!}>
+                    {{$project?->assessment?->level_project_text}}
+                </textarea>
+                <input type="hidden" class="js-hidden-validate" name="validate_level">
+                <div class="col-md-12 txt-danger js-error-message"></div>--}}
+                <div class="default-according style-1" id="accordionoc">
+                    <h5 class="mb-3">
+                        <button class="p-0 btn btn-link js-btn-complexity-score-accordion text-primary-template" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><i class="icofont icofont-briefcase-alt-2"></i>
+                            <span>Complexity Analyzes Questions</span>
+                        </button>
+                    </h5>
+                </div>
+                <div class="collapse show mb-4" id="collapseicon" aria-labelledby="collapseicon" data-bs-parent="#accordionoc">
+                   <table>
+                       <tr>
+                           <td>1</td>
+                           <td>Is the investment just a purchase of materials, components, operational eqiupments (shelf or catalog) and / or service?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis" data-idx="0" name={{$setting::COMPLEXITY_ANALYSIS['investment_just_purchase']}} value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis" data-idx="0" name="{{$setting::COMPLEXITY_ANALYSIS['investment_just_purchase']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>2</td>
+                           <td>Does the investment needs engineering development?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis" data-idx="1" name="{{$setting::COMPLEXITY_ANALYSIS['needs_engineering_development']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis" data-idx="1" name="{{$setting::COMPLEXITY_ANALYSIS['needs_engineering_development']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>3</td>
+                           <td>Does the project require requires 3 or more engineering disciplines? (mechanical, electrical, chemical, civil, automation, geotechnics)</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="2" name="{{$setting::COMPLEXITY_ANALYSIS['require_more_two']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="2" name="{{$setting::COMPLEXITY_ANALYSIS['require_more_two']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>4</td>
+                           <td>Does the investment require 3 or more contracts simultaneously?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="3" name="{{$setting::COMPLEXITY_ANALYSIS['require_more_two_simultant']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="3" name="{{$setting::COMPLEXITY_ANALYSIS['require_more_two_simultant']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>5</td>
+                           <td>Will the number of workers (internal and external) during deployment exceed 100 people?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="4" name="{{$setting::COMPLEXITY_ANALYSIS['num_work_one_hundred']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="4" name="{{$setting::COMPLEXITY_ANALYSIS['num_work_one_hundred']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>6</td>
+                           <td>Does the investment involve the transportation hiring or special equipment under Vale's responsibility?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="5" name="{{$setting::COMPLEXITY_ANALYSIS['transportation_under_vale']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="5" name="{{$setting::COMPLEXITY_ANALYSIS['transportation_under_vale']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>7</td>
+                           <td>Does the project require operational shutdowns on operating systems?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="6" name="{{$setting::COMPLEXITY_ANALYSIS['require_shutdown']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="6" name="{{$setting::COMPLEXITY_ANALYSIS['require_shutdown']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>8</td>
+                           <td>Are there interferences that may delay the project (e.g. na asset needs to be moved to start a project?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="7" name="{{$setting::COMPLEXITY_ANALYSIS['interferences_delay']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="7" name="{{$setting::COMPLEXITY_ANALYSIS['interferences_delay']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>9</td>
+                           <td>Does the investment require environmental licensing or involvement of other regulatory bodies?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="8" name="{{$setting::COMPLEXITY_ANALYSIS['require_environmental_license']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="8" name="{{$setting::COMPLEXITY_ANALYSIS['require_environmental_license']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>10</td>
+                           <td>Does the investment require community involvement?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="9" name="{{$setting::COMPLEXITY_ANALYSIS['require_community_involvement']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="9" name="{{$setting::COMPLEXITY_ANALYSIS['require_community_involvement']}}" value="0">
+                           </td>
+                       </tr>
+                       <tr>
+                           <td>11</td>
+                           <td>Does the investment require the purchase or lease of third party land?</td>
+                           <td>
+                               Yes
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="10" name="{{$setting::COMPLEXITY_ANALYSIS['require_purchase']}}" value="1">
+                           </td>
+                           <td>
+                               No
+                               <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="10" name="{{$setting::COMPLEXITY_ANALYSIS['require_purchase']}}" value="0">
+                           </td>
+                       </tr>
+                   </table>
+                </div>
+                <input type="hidden" name="score" class="js-complexity-score-label-val">
+                <input type="hidden" name="complexity_analysis_type" class="js-complexity-label-val">
+                Score : <span class="js-complexity-score-label"></span></br>
+                Complexity : <span class="js-complexity-label"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Assessment of Level Project :</td>
             <td style="width: 100px">
 
             </td>
             <td>
-                <small>(According to complexity assessment, this project has score ……).</small>
+                <small>(According to cost estimate $ …… and complexity score…….., that this categorize as (Complex/Moderate/Light) project). </small>
                 <div class="js-select2">
                     <select class="select2 js-select-score" style="width: 100%" name="complexity_score_assessment">
                         @foreach($complexityScore as $key => $value)
