@@ -753,6 +753,12 @@ $(function() {
             _array_value[_this.data('idx')] = _existscore
         }
 
+        if($('input[name="investment_just_purchase"]:checked').val() == 1 &&
+            $('input[name="needs_engineering_development"]:checked').val() == 0){
+            $('.js-disable-step').attr('disabled','disabled')
+            $('.js-disable-step').prop('checked', false);
+        }
+
         _this.on('change',function(){
             var __this = $(this);
             var _idx = __this.data('idx')

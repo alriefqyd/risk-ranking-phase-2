@@ -60,6 +60,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>Detail Estimate Cost :</td>
+                    <td>{!! $project->getCheckTemplate($project->assessment->detail_estimate_cost) !!}</td>
+                    <td>
+                        {!! $project->getTemplateExpandChar($project->assessment->detail_estimate_cost_text) !!}
+                    </td>
+                </tr>
+                <tr>
                     <td>Complexity Score Assessment :</td>
                     <td>
                         {!! $project->assessment->complexity_score_assessment !!}
@@ -74,20 +81,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Detail Estimate Cost :</td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->detail_estimate_cost) !!}</td>
-                    <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->detail_estimate_cost_text) !!}
-                    </td>
-                </tr>
-                <tr>
                     <td>Document <br/>Attachment :</td>
                     <td>{!! $project->getCheckTemplate($project?->assessment?->attachment ? 1 : 0) !!}</td>
                     <td>
-                        <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->assessment?->attachment}}">
-                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                            {{$project?->assessment?->attachment}}
-                        </a>
+                        @if($project?->assessment?->attachment)
+                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->assessment?->attachment}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->assessment?->attachment}}
+                            </a>
+                        @endif
                     </td>
                 </tr>
                 </tbody>
