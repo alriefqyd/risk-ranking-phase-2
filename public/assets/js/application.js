@@ -383,6 +383,9 @@ $(function() {
             if (_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) {
                 __this.closest('tr').find('.js-cost-estimate').removeClass('d-none');
             }
+            if (_editor.length < 1 && __this.closest('tr').find('.js-complexity-analysis-head').length > 0) {
+                __this.closest('tr').find('.js-complexity-analysis-head').removeClass('d-none')
+            }
             _check_count += 1
         } else {
             if (_check_count > 0 && !_checkAll) {
@@ -391,6 +394,9 @@ $(function() {
 
             if (_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) {
                 __this.closest('tr').find('.js-cost-estimate').addClass('d-none');
+            }
+            if (_editor.length < 1 && __this.closest('tr').find('.js-complexity-analysis-head').length > 0) {
+                __this.closest('tr').find('.js-complexity-analysis-head').addClass('d-none')
             }
             _editor.addClass('d-none');
             if (_editor.length > 0) {

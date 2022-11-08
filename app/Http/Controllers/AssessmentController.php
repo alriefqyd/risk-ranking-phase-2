@@ -136,17 +136,6 @@ class AssessmentController extends Controller
                 $assessment->attachment = $attachName;
             }
 
-            //will save as a json,
-//            [
-//                {'investment_just_purchase':'1'},
-//                {'needs_engineer':'1'},
-//                ....,
-//                ....,
-//                {'assessment_id':''},
-//                {'score':''},//also save in its column
-//                {'complexity':''}
-//            ]
-
             $complexityAnalysis = collect([]);
 
             if(isset($request->investment_just_purchase)) $complexityAnalysis->put('investment_jus_purchase' , $request->investment_just_purchase);
