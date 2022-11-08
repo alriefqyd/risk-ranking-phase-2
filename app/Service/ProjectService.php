@@ -18,6 +18,9 @@ use function Termwind\render;
 
 class ProjectService
 {
+    /**
+     * Constructor to Initialize
+     */
     public function __construct()
     {
         $userService = new UserService();
@@ -26,6 +29,12 @@ class ProjectService
         $this->isAdminDept = $userService->isAdminDept();
     }
 
+    /**
+     * Get Department in All Area
+     * @param $type
+     * @param $id
+     * @return mixed
+     */
     public function getDepartment($type,$id){
         $dep =  Department::where('type',$type);
         if($id && $type == Department::TYPE['sub-department']){
@@ -232,6 +241,11 @@ class ProjectService
         return '<i class="fa fa-times-circle-o text-time text-small-custom"></i>';
     }
 
+    /**
+     * Render Template for Expand Text in Assessment Tab
+     * @param $value
+     * @return string
+     */
     public function getTemplateExpandChar($value){
         $valueString = strip_tags($value);
         $valueLimit = Str::limit($valueString,255);
@@ -270,6 +284,11 @@ class ProjectService
         return $tempFull;
     }
 
+    /**
+     * Get Priority Template in Project Detail Page
+     * @param $value
+     * @return string
+     */
     public function getPriorityTemplate($value){
         if(!$value){
             return '';
@@ -296,6 +315,12 @@ class ProjectService
 
     }
 
+    /**
+     * Set Permission to Tab on Project Detail Page
+     * @param Project $project
+     * @param $relatedData
+     * @return bool
+     */
     public function checkPermissionRelatedData(Project $project,$relatedData){
         $arrayAccess = [];
         if($project?->assessment) array_push($arrayAccess,Setting::RELATED_DATA['assessment']);
@@ -308,6 +333,12 @@ class ProjectService
         return in_array($relatedData,$arrayAccess);
     }
 
+    /**
+     * Get Capex Category to Use in Capex Investment Form
+     * @param $type
+     * @param $parentId
+     * @return null
+     */
     public function getCapexCategory($type,$parentId){
         if($type == CapexInvestment::type['capex_investment']) {
             return CapexInvestment::where('type','CAPEX_INVESTMENT')->get();
@@ -321,13 +352,34 @@ class ProjectService
         if($type == CapexInvestment::type['sub_basket']){
             return CapexInvestment::where('type',CapexInvestment::type['sub_basket']);
         }
+
+        return null;
     }
 
+    /**
+     * Get Basket List
+     * @return \Illuminate\Database\Query\Builder
+     */
     public function getBasketList(){
         return DB::table('capex_investment_categories as cic')->
             select('cic.id as category_id', 'cic.name as category_name','cic2.name as basket_name','cic2.code as basket_code','cic3.name as sub_basket')->
             join('capex_investment_categories as cic2','cic.id', '=', 'cic2.parent_id')->
             join('capex_investment_categories as cic3','cic2.id', '=', 'cic3.parent_id');
+    }
+
+    public function getComplexityAnalysis(Project $project,$key){
+        $data = $project?->assessment?->complexity_analysis;
+        if(!$data){
+            return null;
+        }
+
+        $complexity_analysis = json_decode($data,true);
+        if(isset($complexity_analysis[$key])){
+            return $complexity_analysis[$key];
+        }
+
+        return null;
+
     }
 
 }

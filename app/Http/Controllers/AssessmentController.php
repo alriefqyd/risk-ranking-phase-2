@@ -136,20 +136,7 @@ class AssessmentController extends Controller
                 $assessment->attachment = $attachName;
             }
 
-            $complexityAnalysis = collect([]);
-
-            if(isset($request->investment_just_purchase)) $complexityAnalysis->put('investment_jus_purchase' , $request->investment_just_purchase);
-            if(isset($request->needs_engineering_development)) $complexityAnalysis->put('needs_engineering_development' , $request->needs_engineering_development);
-            if(isset($request->require_more_two)) $complexityAnalysis->put('require_more_two' , $request->require_more_two);
-            if(isset($request->require_more_two_simultant)) $complexityAnalysis->put('require_more_two_simultant' , $request->require_more_two_simultant);
-            if(isset($request->num_work_one_hundred)) $complexityAnalysis->put('num_work_one_hundred' , $request->num_work_one_hundred);
-            if(isset($request->transportation_under_vale)) $complexityAnalysis->put('transportation_under_vale' , $request->transportation_under_vale);
-            if(isset($request->require_shutdown)) $complexityAnalysis->put('require_shutdown' , $request->require_shutdown);
-            if(isset($request->interferences_delay)) $complexityAnalysis->put('interferences_delay' , $request->interferences_delay);
-            if(isset($request->require_environmental_license)) $complexityAnalysis->put('require_environmental_license' , $request->require_environmental_license);
-            if(isset($request->require_community_involvement)) $complexityAnalysis->put('require_community_involvement' , $request->require_community_involvement);
-            if(isset($request->require_purchase)) $complexityAnalysis->put('require_purchase' , $request->require_purchase);
-            if(isset($request->score)) $complexityAnalysis->put('score' , $request->score);
+            $complexityAnalysis = $this->saveComplexityAnalysis($request);
 
             $assessment->complexity_analysis_type = $request->complexity_analysis_type;
             $assessment->complexity_analysis = $complexityAnalysis;
@@ -270,6 +257,11 @@ class AssessmentController extends Controller
                 $assessment->attachment = $attachName;
             }
 
+            $complexityAnalysis = $this->saveComplexityAnalysis($request);
+
+            $assessment->complexity_analysis_type = $request->complexity_analysis_type;
+            $assessment->complexity_analysis = $complexityAnalysis;
+
             $assessment->saveOrFail();
             DB::commit();
             $request->session()->flash('page-tab', 'assessment');
@@ -309,4 +301,28 @@ class AssessmentController extends Controller
             'detail_estimate_cost_text' => new summernoteRequired($request->detail_estimate_cost, 'Detail Estimate Cost')
         ]);
     }
+
+    /**
+     * Save Complexity Analysis
+     * @return \Illuminate\Support\Collection
+     */
+    public function saveComplexityAnalysis(Request $request){
+        $complexityAnalysis = collect([]);
+
+        if(isset($request->investment_just_purchase)) $complexityAnalysis->put('investment_just_purchase' , $request->investment_just_purchase);
+        if(isset($request->needs_engineering_development)) $complexityAnalysis->put('needs_engineering_development' , $request->needs_engineering_development);
+        if(isset($request->require_more_two)) $complexityAnalysis->put('require_more_two' , $request->require_more_two);
+        if(isset($request->require_more_two_simultant)) $complexityAnalysis->put('require_more_two_simultant' , $request->require_more_two_simultant);
+        if(isset($request->num_work_one_hundred)) $complexityAnalysis->put('num_work_one_hundred' , $request->num_work_one_hundred);
+        if(isset($request->transportation_under_vale)) $complexityAnalysis->put('transportation_under_vale' , $request->transportation_under_vale);
+        if(isset($request->require_shutdown)) $complexityAnalysis->put('require_shutdown' , $request->require_shutdown);
+        if(isset($request->interferences_delay)) $complexityAnalysis->put('interferences_delay' , $request->interferences_delay);
+        if(isset($request->require_environmental_license)) $complexityAnalysis->put('require_environmental_license' , $request->require_environmental_license);
+        if(isset($request->require_community_involvement)) $complexityAnalysis->put('require_community_involvement' , $request->require_community_involvement);
+        if(isset($request->require_purchase)) $complexityAnalysis->put('require_purchase' , $request->require_purchase);
+        if(isset($request->score)) $complexityAnalysis->put('score' , $request->score);
+
+        return $complexityAnalysis;
+    }
+
 }

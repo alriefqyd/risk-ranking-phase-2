@@ -32,17 +32,17 @@ class Setting extends Model
     ];
 
     public const COMPLEXITY_ANALYSIS = [
-        'investment_just_purchase' => 'investment_just_purchase',
-        'needs_engineering_development' => 'needs_engineering_development',
-        'require_more_two' => 'require_more_two',
-        'require_more_two_simultant' => 'require_more_two_simultant',
-        'num_work_one_hundred' => 'num_work_one_hundred',
-        'transportation_under_vale' => 'transportation_under_vale',
-        'require_shutdown' => 'require_shutdown',
-        'interferences_delay' => 'interferences_delay',
-        'require_environmental_license' => 'require_environmental_license',
-        'require_community_involvement' => 'require_community_involvement',
-        'require_purchase' => 'require_purchase'
+        '1' => 'investment_just_purchase',
+        '2' => 'needs_engineering_development',
+        '3' => 'require_more_two',
+        '4' => 'require_more_two_simultant',
+        '5' => 'num_work_one_hundred',
+        '6' => 'transportation_under_vale',
+        '7' => 'require_shutdown',
+        '8' => 'interferences_delay',
+        '9' => 'require_environmental_license',
+        '10' => 'require_community_involvement',
+        '11' => 'require_purchase'
     ];
 
     public const PROJECT_TYPE = 'PROJECT TYPE';

@@ -748,6 +748,11 @@ $(function() {
     $('.js-complexity-analysis').each(function (i,v){
         var _this = $(this)
 
+        if(_this.prop('checked') && _this.val() == 1) {
+            var _existscore = _complexity_analysis.find(x => x.key === _this.attr('name')).value;
+            _array_value[_this.data('idx')] = _existscore
+        }
+
         _this.on('change',function(){
             var __this = $(this);
             var _idx = __this.data('idx')

@@ -221,11 +221,15 @@
                                 <td>Is the investment just a purchase of materials, components, operational eqiupments (shelf or catalog) and / or service?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis" data-idx="0" name={{$setting::COMPLEXITY_ANALYSIS['investment_just_purchase']}} value="1">
+                                    <input type="radio" class="js-complexity-analysis" data-idx="0"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['1']) ? 'checked' : ''}}
+                                           name={{$setting::COMPLEXITY_ANALYSIS['1']}} value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis" data-idx="0" name="{{$setting::COMPLEXITY_ANALYSIS['investment_just_purchase']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis" data-idx="0"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['1']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['1']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -233,11 +237,15 @@
                                 <td>Does the investment needs engineering development?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis" data-idx="1" name="{{$setting::COMPLEXITY_ANALYSIS['needs_engineering_development']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis" data-idx="1"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['2']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['2']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis" data-idx="1" name="{{$setting::COMPLEXITY_ANALYSIS['needs_engineering_development']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis" data-idx="1"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['2']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['2']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -245,11 +253,15 @@
                                 <td>Does the project require requires 3 or more engineering disciplines? (mechanical, electrical, chemical, civil, automation, geotechnics)</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="2" name="{{$setting::COMPLEXITY_ANALYSIS['require_more_two']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="2"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['3']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['3']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="2" name="{{$setting::COMPLEXITY_ANALYSIS['require_more_two']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="2"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['3']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['3']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -257,11 +269,15 @@
                                 <td>Does the investment require 3 or more contracts simultaneously?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="3" name="{{$setting::COMPLEXITY_ANALYSIS['require_more_two_simultant']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="3"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['4']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['4']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="3" name="{{$setting::COMPLEXITY_ANALYSIS['require_more_two_simultant']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="3"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['4']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['4']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -269,11 +285,15 @@
                                 <td>Will the number of workers (internal and external) during deployment exceed 100 people?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="4" name="{{$setting::COMPLEXITY_ANALYSIS['num_work_one_hundred']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="4"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['5']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['5']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="4" name="{{$setting::COMPLEXITY_ANALYSIS['num_work_one_hundred']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="4"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['5']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['5']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -281,11 +301,15 @@
                                 <td>Does the investment involve the transportation hiring or special equipment under Vale's responsibility?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="5" name="{{$setting::COMPLEXITY_ANALYSIS['transportation_under_vale']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="5"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['6']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['6']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="5" name="{{$setting::COMPLEXITY_ANALYSIS['transportation_under_vale']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="5"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['6']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['6']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -293,11 +317,15 @@
                                 <td>Does the project require operational shutdowns on operating systems?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="6" name="{{$setting::COMPLEXITY_ANALYSIS['require_shutdown']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="6"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['7']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['7']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="6" name="{{$setting::COMPLEXITY_ANALYSIS['require_shutdown']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="6"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['7']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['7']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -305,11 +333,15 @@
                                 <td>Are there interferences that may delay the project (e.g. na asset needs to be moved to start a project?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="7" name="{{$setting::COMPLEXITY_ANALYSIS['interferences_delay']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="7"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['8']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['8']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="7" name="{{$setting::COMPLEXITY_ANALYSIS['interferences_delay']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="7"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['8']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['8']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -317,11 +349,15 @@
                                 <td>Does the investment require environmental licensing or involvement of other regulatory bodies?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="8" name="{{$setting::COMPLEXITY_ANALYSIS['require_environmental_license']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="8"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['9']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['9']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="8" name="{{$setting::COMPLEXITY_ANALYSIS['require_environmental_license']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="8"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['9']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['9']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -329,11 +365,15 @@
                                 <td>Does the investment require community involvement?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="9" name="{{$setting::COMPLEXITY_ANALYSIS['require_community_involvement']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="9"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['10']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['10']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="9" name="{{$setting::COMPLEXITY_ANALYSIS['require_community_involvement']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="9"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['10']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['10']}}" value="0">
                                 </td>
                             </tr>
                             <tr>
@@ -341,19 +381,23 @@
                                 <td>Does the investment require the purchase or lease of third party land?</td>
                                 <td>
                                     Yes
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="10" name="{{$setting::COMPLEXITY_ANALYSIS['require_purchase']}}" value="1">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="10"
+                                           {{$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['11']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['11']}}" value="1">
                                 </td>
                                 <td>
                                     No
-                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="10" name="{{$setting::COMPLEXITY_ANALYSIS['require_purchase']}}" value="0">
+                                    <input type="radio" class="js-complexity-analysis js-disable-step" data-idx="10"
+                                           {{!$project?->getComplexityAnalysis($setting::COMPLEXITY_ANALYSIS['11']) ? 'checked' : ''}}
+                                           name="{{$setting::COMPLEXITY_ANALYSIS['11']}}" value="0">
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <input type="hidden" name="score" class="js-complexity-score-label-val">
-                    <input type="hidden" name="complexity_analysis_type" class="js-complexity-label-val">
-                    Score : <span class="js-complexity-score-label"></span></br>
-                    Complexity : <span class="js-complexity-label"></span>
+                    <input type="hidden" name="score" value="{{$project?->assessment?->complexity_score_assessment}}" class="js-complexity-score-label-val">
+                    <input type="hidden" name="complexity_analysis_type" value="{{$project?->assessment?->complexity_analysis_type}}" class="js-complexity-label-val">
+                    Score : <span class="js-complexity-score-label">{{$project?->assessment?->complexity_score_assessment}}</span></br>
+                    Complexity : <span class="js-complexity-label">{{$project?->assessment?->complexity_analysis_type}}</span>
                 </div>
             </td>
         </tr>

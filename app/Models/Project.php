@@ -203,11 +203,11 @@ class Project extends Model
         return $projectService->checkPermissionRelatedData($this,$relatedData);
     }
 
-    public function getSubBasket(){
+    public function getComplexityAnalysis($key){
         $projectService = new ProjectService();
-
-//        $projectService->getCapexCategory(CapexInvestment::type['basket'],$this);
-
+        return $projectService->getComplexityAnalysis($this, $key);
     }
+
+
 
 }
