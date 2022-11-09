@@ -208,6 +208,11 @@ class Project extends Model
         return $projectService->getComplexityAnalysis($this, $key);
     }
 
+    public function getAllAttachment($value,$identifier){
+        $projectService = new ProjectService();
+        return $projectService->getAllAttachment($value,$identifier);
+    }
+
 
 
 }

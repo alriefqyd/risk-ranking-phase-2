@@ -54,4 +54,5 @@ Route::post('/cost_benefit',[\App\Http\Controllers\CostBenefitController::class,
 
 Route::get('/preview',[\App\Http\Controllers\DocumentController::class,'preview'])->name('preview_document')->middleware(['auth']);
 
+Route::post('/cekUpload',[\App\Http\Controllers\DocumentController::class,'cekUpload'])->name('cek')->middleware(['auth']);
 require __DIR__.'/auth.php';

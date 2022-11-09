@@ -367,6 +367,12 @@ class ProjectService
             join('capex_investment_categories as cic3','cic2.id', '=', 'cic3.parent_id');
     }
 
+    /**
+     * Get Value Complexity Analysis Base on Key
+     * @param Project $project
+     * @param $key
+     * @return mixed|null
+     */
     public function getComplexityAnalysis(Project $project,$key){
         $data = $project?->assessment?->complexity_analysis;
         if(!$data){
@@ -381,6 +387,15 @@ class ProjectService
         return null;
 
     }
+
+    public function getAllAttachment($value,$identifier){
+        $attachments = json_decode($value,true);
+        if(isset($attachments[$identifier])){
+            return $attachments[$identifier];
+        }
+        return null;
+    }
+    
 
 }
 

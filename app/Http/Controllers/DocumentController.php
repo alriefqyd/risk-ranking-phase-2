@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Livewire\Project;
 use App\Models\Department;
 use App\Models\Document;
+use App\Models\Setting;
 use App\services\ProjectService;
 use App\services\UserService;
 use Cassandra\Date;
@@ -96,7 +97,6 @@ class DocumentController extends Controller
 
     public function uploadDocument(Request $request, $existingDocument, $project_name){
         $document_name = null;
-        //$dep = Department::where('id',$request->owner)->first();
         if($request->hasfile('document')) {
             $request->validate([
                 'document' => 'required|mimes:doc,docx,pdf|max:10240'
@@ -115,6 +115,37 @@ class DocumentController extends Controller
         }
 
         return $document_name ?? $existingDocument;
+    }
+
+    public function cekUpload(Request $request){
+        $this->multipleUploadDocument($request,null,'JJ');
+    }
+
+    public function multipleUploadDocument($request, $existingDocument, $project_name){
+        $document_name = null;
+        $documents = collect([]);
+        if($request->hasfile('document')) {
+
+            $allowedFileExtension = ['docx','doc','pdf','xlsx','csv','xlx'];
+
+            $files = $request->file('document');
+            foreach ($files as $key => $file){
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $check = in_array($extension, $allowedFileExtension);
+                if($check){
+                    $name = $request->file_category .'-' . $project_name . '-' . uniqid() . '.' . $extension;
+                    $documents->put(Setting::ASSESSMENT_ATTACHMENT[$key] ,$filename);
+                    $dir = 'documents/'.$project_name;
+                    Storage::disk('local')->putFileAs($dir, $file, $filename);
+                }
+            }
+
+//            if (isset($existingDocument)) {
+//                $this->deleteDocument($existingDocument, $project_name);
+//            }
+        }
+        return $documents;
     }
 
     public function destroy(Document $document, Request $request){

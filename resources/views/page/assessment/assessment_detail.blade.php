@@ -1,3 +1,4 @@
+@inject('setting',App\Models\Setting::class)
 <div class="row js-form-project-detail m-b-30 {{!$errors->any() ? '' : 'd-none'}}">
     @if($project->assessment)
         <div class="table-responsive">
@@ -69,9 +70,12 @@
                 <tr>
                     <td>Complexity Score Assessment :</td>
                     <td>
-                        {!! $project->assessment->complexity_score_assessment !!}
+
                     </td>
-                    <td></td>
+                    <td>
+                        <p>Score : {!! $project->assessment->complexity_score_assessment !!}</p>
+                        <p>Complexity : {!! $project?->assessment?->complexity_analysis_type !!}</p>
+                    </td>
                 </tr>
                 <tr>
                     <td>Level Project :</td>
@@ -83,11 +87,19 @@
                 <tr>
                     <td>Document <br/>Attachment :</td>
                     <td>{!! $project->getCheckTemplate($project?->assessment?->attachment ? 1 : 0) !!}</td>
-                    <td>
-                        @if($project?->assessment?->attachment)
+                    <td>Initial Cost Estimate :
+                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['0']))
                             <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->assessment?->attachment}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                {{$project?->assessment?->attachment}}
+                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['0'])}}
+                            </a>
+                        @endif
+                        <br>
+                        Complexity Matrix :
+                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['1']))
+                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->assessment?->attachment}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['1'])}}
                             </a>
                         @endif
                     </td>

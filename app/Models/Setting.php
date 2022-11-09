@@ -45,6 +45,11 @@ class Setting extends Model
         '11' => 'require_purchase'
     ];
 
+    public const ASSESSMENT_ATTACHMENT = [
+        '0' => 'initial_cost_estimate',
+        '1' => 'complexity_matrix'
+    ];
+
     public const PROJECT_TYPE = 'PROJECT TYPE';
 
     public const PROJECT_TYPE_BETTERMENT = 'betterment';

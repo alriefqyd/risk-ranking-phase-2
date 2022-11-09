@@ -120,7 +120,7 @@ class AssessmentController extends Controller
                 'cost_estimate_text' => $request->cost_estimate_text,
                 //'cost_estimate_text' => $projectService->priceToText($request->cost_estimate_text), //temporary not used until phase 2 start
                 'level_project_text' => $request->level_project_text,
-                'detail_estimate_cost_text' => $request->detail_estimate_cost_text
+                'detail_estimate_cost_text' => $request->detail_estimate_cost_text,
             ]);
 
             if($request?->status == 'publish'){
@@ -130,10 +130,10 @@ class AssessmentController extends Controller
                 $assessment->status = 'DRAFT';
             }
 
+            $documents = $documentController->multipleUploadDocument($request, null, $request->project_name);
 
-            $attachName = $documentController->uploadDocument($request, null, $request->project_name);
-            if($attachName){
-                $assessment->attachment = $attachName;
+            if(sizeof($documents) > 0){
+               $assessment->attachment = $documents;
             }
 
             $complexityAnalysis = $this->saveComplexityAnalysis($request);
