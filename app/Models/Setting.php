@@ -46,8 +46,8 @@ class Setting extends Model
     ];
 
     public const ASSESSMENT_ATTACHMENT = [
-        '0' => 'initial_cost_estimate',
-        '1' => 'complexity_matrix'
+        'initial_cost_estimate' => 'initial_cost_estimate',
+        'complexity_matrix' => 'complexity_matrix'
     ];
 
     public const PROJECT_TYPE = 'PROJECT TYPE';

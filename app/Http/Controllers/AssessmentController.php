@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //use App\Exports\AssessmentExport;
 use App\Models\Assessment;
 use App\Models\Project;
+use App\Models\Setting;
 use App\Models\User;
 use App\Rules\summernoteRequired;
 use App\service\AssessmentService;
@@ -130,10 +131,15 @@ class AssessmentController extends Controller
                 $assessment->status = 'DRAFT';
             }
 
-            $documents = $documentController->multipleUploadDocument($request, null, $request->project_name);
+            $documentsRequest = collect([]);
+            if(isset($request->document_initial_cost_estimate)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'],$request->document_initial_cost_estimate);
+            if(isset($request->document_complexity_matrix)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['complexity_matrix'],$request->document_complexity_matrix);
 
-            if(sizeof($documents) > 0){
-               $assessment->attachment = $documents;
+            if(sizeof($documentsRequest) > 0){
+                $documents = $documentController->multipleUploadDocument($request, $documentsRequest, null, $request->project_name);
+                if(sizeof($documents) > 0){
+                    $assessment->attachment = $documents;
+                }
             }
 
             $complexityAnalysis = $this->saveComplexityAnalysis($request);
@@ -251,10 +257,20 @@ class AssessmentController extends Controller
                 $assessment->status = 'DRAFT';
             }
 
-            $attachName = $documentController->uploadDocument($request, $assessment->attachment, $project->project_name);
+            $documentsRequest = collect([]);
+            $existingDocument = collect([]);
+            $existingDocuments = json_decode($assessment?->attachment,true);
+            foreach ($existingDocuments as $key => $value){
+                $existingDocument->put($key,$value);
+            }
 
-            if($attachName){
-                $assessment->attachment = $attachName;
+            if($request->document_initial_cost_estimate) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'],$request->document_initial_cost_estimate);
+            if($request->document_complexity_matrix) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['complexity_matrix'],$request->document_complexity_matrix);
+
+            $documents = $documentController->multipleUploadDocument($request, $documentsRequest, $existingDocument, $request->project_name);
+
+            if(sizeof($documents) > 0){
+                $assessment->attachment = $documents;
             }
 
             $complexityAnalysis = $this->saveComplexityAnalysis($request);

@@ -1,5 +1,6 @@
 <form method="post" action="/assessment/{{$project->id}}/"
       enctype="multipart/form-data"
+      data-name="{{$project->project_name}}"
       data-method="put"
       class="theme-form js-assessment-create js-assessment-form">
         @csrf

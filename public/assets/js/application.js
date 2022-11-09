@@ -479,6 +479,7 @@ $(function() {
 
         var files = $('.js-fel1-attachment_initial_cost_estimate')[0].files;
         var files_complexity = $('.js-fel1-attachment_complexity_matrix')[0].files;
+
         var sub_basket = null;
         $('.js-checkbox-sub-basket').each(function(){
            if($(this).is(':checked')){
@@ -487,8 +488,8 @@ $(function() {
         });
 
         var formData = new FormData();
-        formData.append('document[]', files[0])
-        formData.append('document[]', files_complexity[0])
+        if(files.length > 0) formData.append('document_initial_cost_estimate', files[0])
+        if(files_complexity.length > 0) formData.append('document_complexity_matrix', files_complexity[0])
         formData.append('project_name', _form.data('name'))
         if (_form.data('method') === 'put') formData.append('_method', 'put')
         formData.append('file_category', 'assessment')
@@ -511,7 +512,7 @@ $(function() {
         formData.append('impact_if_not_executed_text', _text_impact)
         formData.append('alternatives_to_proposal_text', _text_alternative)
         formData.append('cost_estimate_text', _text_cost_estimate)
-        formData.append('level_project_text', _text_level_project)
+        formData.append('level_project_text', _new_text_level_project)
         formData.append('detail_estimate_cost_text', _text_detail_estimate)
         formData.append('complexity_score_assessment', _new_score)
         formData.append('status', _status)

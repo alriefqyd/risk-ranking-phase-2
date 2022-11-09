@@ -4,7 +4,6 @@ $(function (){
         $.ajax({
             url:'/getDataGraph',
             success:function (result){
-                console.log(result)
                 setGraph(result)
             }
         })

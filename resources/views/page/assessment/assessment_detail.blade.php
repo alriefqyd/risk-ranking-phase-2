@@ -88,18 +88,18 @@
                     <td>Document <br/>Attachment :</td>
                     <td>{!! $project->getCheckTemplate($project?->assessment?->attachment ? 1 : 0) !!}</td>
                     <td>Initial Cost Estimate :
-                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['0']))
-                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->assessment?->attachment}}">
+                        @if($project?->getAllAttachment($project->assessment?->attachment, $setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
+                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['0'])}}
+                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
                             </a>
                         @endif
                         <br>
                         Complexity Matrix :
-                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['1']))
-                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->assessment?->attachment}}">
+                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
+                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['1'])}}
+                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
                             </a>
                         @endif
                     </td>

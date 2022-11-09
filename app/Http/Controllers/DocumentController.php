@@ -6,7 +6,7 @@ use App\Http\Livewire\Project;
 use App\Models\Department;
 use App\Models\Document;
 use App\Models\Setting;
-use App\services\ProjectService;
+use App\Service\ProjectService;
 use App\services\UserService;
 use Cassandra\Date;
 use Illuminate\Http\Request;
@@ -117,18 +117,15 @@ class DocumentController extends Controller
         return $document_name ?? $existingDocument;
     }
 
-    public function cekUpload(Request $request){
-        $this->multipleUploadDocument($request,null,'JJ');
-    }
-
-    public function multipleUploadDocument($request, $existingDocument, $project_name){
+    public function multipleUploadDocument($request, $documentRequests, $existingDocument, $project_name){
+        $projectService = new ProjectService();
         $document_name = null;
         $documents = collect([]);
-        if($request->hasfile('document')) {
+        if($documentRequests) {
 
             $allowedFileExtension = ['docx','doc','pdf','xlsx','csv','xlx'];
 
-            $files = $request->file('document');
+            $files = $documentRequests;
             foreach ($files as $key => $file){
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
@@ -141,9 +138,11 @@ class DocumentController extends Controller
                 }
             }
 
-//            if (isset($existingDocument)) {
-//                $this->deleteDocument($existingDocument, $project_name);
-//            }
+            if (isset($existingDocument)) {
+                foreach ($existingDocument as $ed){
+                    $this->deleteDocument($ed, $project_name);
+                }
+            }
         }
         return $documents;
     }

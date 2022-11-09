@@ -432,11 +432,11 @@
                     <div class="col-md-12">
                         <label>Initial Cost Estimate : </label>
                         <input class="form-control js-fel1-attachment_initial_cost_estimate col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
-                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['0']))
+                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
                             <a target="_blank"
-                               href="/preview?dir={{$project->project_name}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['0'])}}">
+                               href="/preview?dir={{$project->project_name}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['0'])}}
+                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
                             </a>
                         @endif
                     </div>
@@ -446,11 +446,11 @@
                     <div class="col-md-12">
                         <label>Complexity Matrix :</label>
                         <input class="form-control js-fel1-attachment_complexity_matrix col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
-                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['1']))
+                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
                             <a target="_blank"
-                               href="/preview?dir={{$project->project_name}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['1'])}}">
+                               href="/preview?dir={{$project->project_name}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['1'])}}
+                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
                             </a>
                         @endif
                     </div>
