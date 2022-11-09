@@ -259,10 +259,13 @@ class AssessmentController extends Controller
 
             $documentsRequest = collect([]);
             $existingDocument = collect([]);
-            $existingDocuments = json_decode($assessment?->attachment,true);
-            foreach ($existingDocuments as $key => $value){
-                $existingDocument->put($key,$value);
+            if($assessment->attachment){
+                $existingDocuments = json_decode($assessment?->attachment,true);
+                foreach ($existingDocuments as $key => $value){
+                    $existingDocument->put($key,$value);
+                }
             }
+
 
             if($request->document_initial_cost_estimate) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'],$request->document_initial_cost_estimate);
             if($request->document_complexity_matrix) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['complexity_matrix'],$request->document_complexity_matrix);
