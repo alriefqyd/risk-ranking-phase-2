@@ -50,6 +50,13 @@ class Setting extends Model
         'complexity_matrix' => 'complexity_matrix'
     ];
 
+    public const CAPITAL_VALUE = [
+        'THIRTY_MILLION' => 30000000,
+        'FIVE_MILLION' => 5000000,
+        'ONE_MILLION' => 1000000,
+        'THREE_HUNDRED_THOUSAND' => 300000,
+    ];
+
     public const PROJECT_TYPE = 'PROJECT TYPE';
 
     public const PROJECT_TYPE_BETTERMENT = 'betterment';

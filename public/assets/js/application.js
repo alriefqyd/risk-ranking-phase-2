@@ -443,7 +443,7 @@ $(function() {
         var _text_impact = _check_impact_not_executed.is(':checked') ? $('.js-impact').val() : ''
         var _text_alternative = _check_alternative.is(':checked') ? $('.js-alternative').val() : ''
         var _text_cost_estimate = _check_cost_estimate.is(':checked') ? _form.find('.js-cost_estimate_assessment').val() : ''
-        var _text_complexity_score = $('.js-select-score').val()
+        var _text_complexity_level = $('.js-select-score').val()
         var _text_level_project = _check_level.is(':checked') ? $('.js-text-level').val() : ''
         var _text_detail_estimate = _check_detail_cost.is(':checked') ? $('.js-text-detail-cost').val() : ''
         var _project_id = $('.js-project-id').val();
@@ -512,7 +512,7 @@ $(function() {
         formData.append('impact_if_not_executed_text', _text_impact)
         formData.append('alternatives_to_proposal_text', _text_alternative)
         formData.append('cost_estimate_text', _text_cost_estimate)
-        formData.append('level_project_text', _new_text_level_project)
+        formData.append('level_project_text', _text_complexity_level)
         formData.append('detail_estimate_cost_text', _text_detail_estimate)
         formData.append('complexity_score_assessment', _new_score)
         formData.append('status', _status)
@@ -731,6 +731,10 @@ $(function() {
     });
 
 
+    $('.js-cost_estimate_assessment').on('change keyup',function (){
+        setAssessmentLevelProject($(this).val(),$('.js-complexity-score-label-val').val())
+    })
+
     var _complexity_score = 0;
     var _complexity = null
     var _complexity_analysis = [
@@ -770,6 +774,7 @@ $(function() {
             var _needs_engineering_development = $('input[name="needs_engineering_development"]:checked').val();
             var _score = _complexity_analysis.find(x => x.key === _attr_name).value;
             var _sum = 0;
+            var _budget_value = __this.closest('.js-table-assessment').find('.js-cost_estimate_assessment').val()
             if(_investment_just_purchase == 1
                 && _needs_engineering_development == 0){
                 _complexity = 'Simple Purchase'
@@ -811,11 +816,55 @@ $(function() {
             $('.js-complexity-score-label').text(_sum)
             $('.js-complexity-label-val').val(_complexity)
             $('.js-complexity-score-label-val').val(_sum)
+
+            setAssessmentLevelProject(_budget_value,_sum)
         })
     });
 
     function countSumArray(_array){
         return _array.reduce((partialSum, a) => partialSum + a, 0)
+    }
+
+    var _thirty_million = 30000000
+    var _five_million = 5000000
+    var _one_million = 1000000
+    var _three_hundred_thousand = 300000
+
+
+    var _matrix_level = [
+        ['PDS','PDS','PDS'],
+        ['COMPLEX','COMPLEX','COMPLEX'],
+        ['MODERATE','MODERATE','COMPLEX'],
+        ['LIGHT','MODERATE','MODERATE'],
+        ['LIGHT','LIGHT','MODERATE']
+    ]
+
+    function setAssessmentLevelProject(_budget,_score){
+       var _level_score = getIntervalScore(_score);
+       var _level_capital_value = getIntervalCapital(_budget);
+       if(_level_score !== null && _level_capital_value !== null){
+           $('.js-cost-estimate-label-assessment').text(_budget)
+           $('.js-complexity-score-label-assessment').text(_score)
+           $('.js-assessment-level-status-auto').text(_matrix_level[_level_capital_value][_level_score])
+           $('.js-select-score').val(_matrix_level[_level_capital_value][_level_score])
+       }
+    }
+
+    function getIntervalScore(_val){
+        if(_val > 3 && _val < 11) return 0;
+        if(_val > 10 && _val < 17) return 1;
+        if(_val > 17) return 2;
+        return null;
+    }
+
+    function getIntervalCapital(_val){
+        if(_val < _three_hundred_thousand) return 4;
+        if(_val >= _three_hundred_thousand && _val <= _one_million) return 3;
+        if(_val >= _one_million && _val <= _five_million) return 2;
+        if(_val >= _five_million && _val <= _thirty_million) return 1;
+        if(_val > _thirty_million) return 0;
+        return null
+
     }
 
     /**

@@ -407,15 +407,15 @@
 
             </td>
             <td>
-                <small>(According to cost estimate $ …… and complexity score…….., that this categorize as (Complex/Moderate/Light) project). </small>
+                <small>(According to cost estimate $ <span class="text-danger js-cost-estimate-label-assessment">
+                        {{$project?->assessment?->cost_estimate_text}}
+                    </span> and complexity score
+                    <span class="text-danger js-complexity-score-label-assessment">
+                        {{$project?->assessment?->complexity_score_assessment}}
+                    </span> , that this categorize as
+                    <span class="text-danger text-large-custom js-assessment-level-status-auto">{{$project?->assessment?->level_project_text}}</span> project). </small>
                 <div class="js-select2">
-                    <select class="select2 js-select-score" style="width: 100%" name="complexity_score_assessment">
-                        @foreach($complexityScore as $key => $value)
-                            <option {{(old('complexity_score_assessment') == $value ||
-                            $project?->assessment?->complexity_score_assessment == $value
-                            ? "selected" : "" )}} value="{{$value}}">{{$value}}</option>
-                        @endforeach
-                    </select>
+                    <input type="hidden" class="form-control js-select-score" style="width: 100%" name="complexity_score_assessment">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </div>
             </td>
