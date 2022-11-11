@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fel1;
 use App\Models\Project;
+use App\Models\Setting;
 use App\Service\Fel1Service;
 use App\Service\ProjectService;
 use Illuminate\Http\Request;
@@ -92,14 +93,15 @@ class Fel1Controller extends Controller
      */
     public function store(Request $request)
     {
-
+        $documentController = new DocumentController();
         $this->authorize('create');
+
         $fel1Service = new Fel1Service();
         DB::beginTransaction();
         $data = $this->validate($request,[
             'project_id' =>'required',
         ]);
-
+//        return response()->json($request->parameer_regulation);
         try{
             $fel1 = new Fel1([
                 'project_id' => $request->project_id,
@@ -108,6 +110,11 @@ class Fel1Controller extends Controller
                 'alternatives' => $request->alternatives,
                 'list_of_stakeholder' => $request->list_of_stakeholder,
                 'schedule_project' => $request->schedule_project,
+                'project_scope_text' => $request->project_scope_text,
+                'identified_parameter_requirement_regulation_text' => $request->identified_parameter_requirement_regulation_text,
+                'alternatives_text' => $request->alternatives_text,
+                'list_of_stakeholder_text' => $request->list_of_stakeholder_text,
+                'schedule_project_text' => $request->schedule_project_text,
                 'department' => auth()->user()->department,
                 'created_by' => auth()->user()->id
             ]);
@@ -118,6 +125,18 @@ class Fel1Controller extends Controller
             if($request?->status == 'draft'){
                 $fel1->status = 'DRAFT';
             }
+
+
+            $documentRequest = collect([]);
+
+            if(isset($request->parameter_regulation)) $documentRequest->put(Setting::FEL1_ATTACHMENT['parameter_regulation_requirement'],$request->parameter_regulation);
+            if(sizeof($documentRequest) > 0){
+                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name);
+                if(sizeof($documents) > 0){
+                    $fel1->attachment = $documents;
+                }
+            }
+
 
             $fel1->saveOrFail();
             DB::commit();
@@ -194,6 +213,11 @@ class Fel1Controller extends Controller
             $fel1->alternatives = $request->alternatives;
             $fel1->list_of_stakeholder = $request->list_of_stakeholder;
             $fel1->schedule_project = $request->schedule_project;
+            $fel1->project_scope_text = $request->project_scope_text;
+            $fel1->identified_parameter_requirement_regulation_text = $request->identified_parameter_requirement_regulation_text;
+            $fel1->alternatives_text = $request->alternatives_text;
+            $fel1->list_of_stakeholder_text = $request->list_of_stakeholder_text;
+            $fel1->schedule_project_text = $request->schedule_project_text;
             if($request->status == 'publish'){
                 $fel1->status = 'PUBLISH';
             }

@@ -1,4 +1,6 @@
 <form method="post" action="/fel1/"
+      enctype="multipart/form-data"
+      data-name="{{$project->project_name}}"
       class="theme-form js-fel1-form">
         @csrf
         @include('page.fel1.form',[

@@ -132,8 +132,8 @@ class DocumentController extends Controller
                 $check = in_array($extension, $allowedFileExtension);
                 if($check){
                     $name = $request->file_category .'-' . $project_name . '-' . uniqid() . '.' . $extension;
-                    $documents->put(Setting::ASSESSMENT_ATTACHMENT[$key] ,$filename);
-                    $dir = 'documents/'.$project_name;
+                    $documents->put($key ,$filename);
+                    $dir = 'documents/'.$project_name.'/'.$request->file_category;
                     Storage::disk('local')->putFileAs($dir, $file, $filename);
                 }
             }

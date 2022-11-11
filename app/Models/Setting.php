@@ -50,6 +50,15 @@ class Setting extends Model
         'complexity_matrix' => 'complexity_matrix'
     ];
 
+    public const FEL1_ATTACHMENT = [
+        'parameter_regulation_requirement' => 'parameter_regulation_requirement',
+        'initial_process_diagram' => 'initial_process_diagram',
+        'data_of_alternatives' => 'data_of_alternatives',
+        'initial_schedule' => 'initial_schedule',
+        'project_level_assessment' => 'project_level_assessment',
+        'stakeholder_list' => 'stakeholder_list'
+    ];
+
     public const CAPITAL_VALUE = [
         'THIRTY_MILLION' => 30000000,
         'FIVE_MILLION' => 5000000,
