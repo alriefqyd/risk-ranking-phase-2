@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Livewire\Project;
 use App\Models\Department;
 use App\Models\Document;
-use App\Models\Setting;
 use App\Service\ProjectService;
-use App\services\UserService;
-use Cassandra\Date;
+use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -38,45 +35,6 @@ class DocumentController extends Controller
         ]);
     }
 
-//    public function store(Request $request){
-//        $userService = new UserService();
-//        if($userService->isAdminDept()){
-//            abort(403);
-//        }
-//        $upload = $this->uploadDocument($request,null);
-//        $documents = new Document([
-//            'description' => $request->description,
-//            'document_name' => $upload,
-//            'owner' => $request->owner,
-//            'set_home' => $request->set_home ? true : false,
-//            'upload_by' => auth()->user()->id,
-//        ]);
-//
-//        $documents->save();
-//        $request->session()->flash('alert-success', 'Data was successful created!');
-//        return redirect('document');
-//    }
-
-//    public function update(Document $document, Request $request){
-//        $this->authorize('update');
-//        $userService = new UserService();
-//        if($userService->isAdminDept()){
-//            abort(403);
-//        }
-//        $url = url()->previous();
-//        if(!isset($request->isDocumentList)){
-//            $url = 'document';
-//            $documentUpload = $this->uploadDocument($request, $document);
-//            $document->document_name = $documentUpload;
-//        }
-//        $document->description = $request->description;
-//        $document->set_home = isset($request->set_home) ? true : false;
-//        $document->owner = $request->owner;
-//        $document->save();
-//        $request->session()->flash('alert-success', 'Data was successful updated!');
-//        return redirect($url);
-//    }
-
     public function show(Document $document){
         $this->authorize('update');
         $userService = new UserService();
@@ -92,7 +50,7 @@ class DocumentController extends Controller
     }
 
     public function preview(Request $request){
-        return response()->file(storage_path('app/documents/'.$request->dir.'/'.$request->file));
+        return response()->file(storage_path('app/documents/'.$request->dir.'/'. $request->category .'/'.$request->file));
     }
 
     public function uploadDocument(Request $request, $existingDocument, $project_name){
@@ -139,8 +97,12 @@ class DocumentController extends Controller
             }
 
             if (isset($existingDocument)) {
-                foreach ($existingDocument as $ed){
-                    $this->deleteDocument($ed, $project_name);
+                foreach ($existingDocument as $k => $v){
+                    if(isset($documentRequests[$k])) {
+                        $this->deleteDocument($v, $project_name);
+                    } else {
+                        $documents->put($k,$v);
+                    }
                 }
             }
         }

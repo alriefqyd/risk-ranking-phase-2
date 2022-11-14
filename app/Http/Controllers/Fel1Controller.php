@@ -101,7 +101,7 @@ class Fel1Controller extends Controller
         $data = $this->validate($request,[
             'project_id' =>'required',
         ]);
-//        return response()->json($request->parameer_regulation);
+
         try{
             $fel1 = new Fel1([
                 'project_id' => $request->project_id,
@@ -130,6 +130,12 @@ class Fel1Controller extends Controller
             $documentRequest = collect([]);
 
             if(isset($request->parameter_regulation)) $documentRequest->put(Setting::FEL1_ATTACHMENT['parameter_regulation_requirement'],$request->parameter_regulation);
+            if(isset($request->initial_process_diagram)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_process_diagram'],$request->initial_process_diagram);
+            if(isset($request->data_of_alternatives)) $documentRequest->put(Setting::FEL1_ATTACHMENT['data_of_alternatives'],$request->data_of_alternatives);
+            if(isset($request->initial_schedule)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_schedule'],$request->initial_schedule);
+            if(isset($request->project_level_assessment)) $documentRequest->put(Setting::FEL1_ATTACHMENT['project_level_assessment'],$request->project_level_assessment);
+            if(isset($request->stakeholder_list)) $documentRequest->put(Setting::FEL1_ATTACHMENT['stakeholder_list'],$request->stakeholder_list);
+
             if(sizeof($documentRequest) > 0){
                 $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name);
                 if(sizeof($documents) > 0){
@@ -198,6 +204,7 @@ class Fel1Controller extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        $documentController = new DocumentController();
         $this->authorize('update');
         $fel1Service = new Fel1Service();
         /*if($fel1->status == 'PUBLISH'){;
@@ -225,6 +232,28 @@ class Fel1Controller extends Controller
                 $fel1->status = 'DRAFT';
             }
 
+            $documentRequest = collect([]);
+            $existingDocument = collect([]);
+
+            if(isset($request->parameter_regulation)) $documentRequest->put(Setting::FEL1_ATTACHMENT['parameter_regulation_requirement'],$request->parameter_regulation);
+            if(isset($request->initial_process_diagram)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_process_diagram'],$request->initial_process_diagram);
+            if(isset($request->data_of_alternatives)) $documentRequest->put(Setting::FEL1_ATTACHMENT['data_of_alternatives'],$request->data_of_alternatives);
+            if(isset($request->initial_schedule)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_schedule'],$request->initial_schedule);
+            if(isset($request->project_level_assessment)) $documentRequest->put(Setting::FEL1_ATTACHMENT['project_level_assessment'],$request->project_level_assessment);
+            if(isset($request->stakeholder_list)) $documentRequest->put(Setting::FEL1_ATTACHMENT['stakeholder_list'],$request->stakeholder_list);
+
+            if($fel1?->attachment){
+                $existingDocuments = json_decode($fel1?->attachment,true);
+                foreach ($existingDocuments as $key => $value){
+                    $existingDocument->put($key,$value);
+                }
+            }
+
+            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name);
+//            return response($request->parameter_regulation);
+            if(sizeof($documents) > 0){
+                $fel1->attachment = $documents;
+            }
             $fel1->saveOrFail();
             DB::commit();
             $request->session()->flash('page-tab', 'fel1');

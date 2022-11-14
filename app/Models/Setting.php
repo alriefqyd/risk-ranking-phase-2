@@ -45,6 +45,14 @@ class Setting extends Model
         '11' => 'require_purchase'
     ];
 
+    public const FOLDER_TYPE = [
+        'assessment' => 'Project Level Assessment',
+        'fel1' => 'FEL 1',
+        'fel2' => 'FEL 2',
+        'fel3' => 'FEL 3',
+        'bc' => 'Business Case',
+    ];
+
     public const ASSESSMENT_ATTACHMENT = [
         'initial_cost_estimate' => 'initial_cost_estimate',
         'complexity_matrix' => 'complexity_matrix'

@@ -89,7 +89,7 @@
                     <td>{!! $project->getCheckTemplate($project?->assessment?->attachment ? 1 : 0) !!}</td>
                     <td>Initial Cost Estimate :
                         @if($project?->getAllAttachment($project->assessment?->attachment, $setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
-                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}">
+                            <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
                             </a>
@@ -97,7 +97,7 @@
                         <br>
                         Complexity Matrix :
                         @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
-                            <a target="_blank" href="/preview?dir={{$project->project_name}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}">
+                            <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
                             </a>

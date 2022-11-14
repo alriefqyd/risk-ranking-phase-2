@@ -1,5 +1,7 @@
-<form method="put" action="/fel1/{{$project->id}}/"
+<form method="post" action="/fel1/{{$project->id}}/"
       enctype="multipart/form-data"
+      data-name="{{$project->project_name}}"
+      data-method="put"
       class="theme-form js-fel1-form">
         @csrf
         @include('page.fel1.form',[

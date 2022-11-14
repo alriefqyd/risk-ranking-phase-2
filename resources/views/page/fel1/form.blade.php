@@ -1,3 +1,4 @@
+@inject('setting',App\Models\Setting::class)
 <div class="table-responsive">
     <input type="hidden" class="js-project-id" value="{{$project->id}}">
     <table class="table table-striped js-table-assessment">
@@ -82,7 +83,7 @@
                           {!! $project?->fel1?->list_of_stakeholder != 1 ? 'style="display: none"' : '' !!}>
                     {!! $project?->fel1?->list_of_stakeholder_text !!}
                 </textarea>
-                <input type="text" class="js-hidden-validate" name="validate_fel1_list_stakeholder">
+                <input type="hidden" class="js-hidden-validate" name="validate_fel1_list_stakeholder">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
         </tr>
@@ -119,10 +120,13 @@
                     <div class="col-md-12">
                         <label>Parameter, Regulation, Requirement</label>
                         <input class="form-control js-fel1-attachment_parameter_regulation_requirement col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement']))
                             <a target="_blank"
-                               href="/preview?dir=">
+                               href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement'])}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement'])}}
                             </a>
+                        @endif
                     </div>
                 </div>
                 <hr>
@@ -130,10 +134,13 @@
                     <div class="col-md-12">
                         <label>Initial Process Diagram (Alur)</label>
                         <input class="form-control js-fel1-attachment_initial_progress_diagram col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
-                        <a target="_blank"
-                           href="/preview?dir=">
-                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                        </a>
+                        @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_process_diagram']))
+                            <a target="_blank"
+                               href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_process_diagram'])}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_process_diagram'])}}
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <hr>
@@ -141,10 +148,13 @@
                     <div class="col-md-12">
                         <label>Data of Alternatives (drawing/figure, cost of investment & operation, maintenance, etc.)</label>
                         <input class="form-control js-fel1-attachment_data_of_alternatives col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
-                        <a target="_blank"
-                           href="/preview?dir=">
-                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                        </a>
+                        @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['data_of_alternatives']))
+                            <a target="_blank"
+                               href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['data_of_alternatives'])}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['data_of_alternatives'])}}
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <hr>
@@ -152,10 +162,13 @@
                     <div class="col-md-12">
                         <label>Initial schedule until level 1</label>
                         <input class="form-control js-fel1-attachment_initial_schedule col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
-                        <a target="_blank"
-                           href="/preview?dir=">
-                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                        </a>
+                        @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_schedule']))
+                            <a target="_blank"
+                               href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_schedule'])}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_schedule'])}}
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <hr>
@@ -163,10 +176,13 @@
                     <div class="col-md-12">
                         <label>Project level assessment</label>
                         <input class="form-control js-fel1-attachment_project_level_assessment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
-                        <a target="_blank"
-                           href="/preview?dir=">
-                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                        </a>
+                        @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment']))
+                            <a target="_blank"
+                               href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment'])}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment'])}}
+                            </a>
+                        @endif
                     </div>
                 </div>
                 <hr>
@@ -174,10 +190,13 @@
                     <div class="col-md-12">
                         <label>Stakeholder list </label>
                         <input class="form-control js-fel1-attachment_stakeholder_list col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
-                        <a target="_blank"
-                           href="/preview?dir=">
-                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                        </a>
+                        @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list']))
+                            <a target="_blank"
+                               href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list'])}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list'])}}
+                            </a>
+                        @endif
                     </div>
                 </div>
             </td>

@@ -537,6 +537,7 @@ $(function() {
             processData: false,
             contentType: false,
             success: function (data) {
+                // console.log(data)
                 if (data.status === 200) window.location.href = data.url;
                 else {
                     notification('danger', data, 'fa fa-time', 'Error')
@@ -941,9 +942,8 @@ $(function() {
         var _project_level_assessment = $('.js-fel1-attachment_project_level_assessment')[0].files;
         var _stakeholder_list = $('.js-fel1-attachment_stakeholder_list')[0].files;
 
-        _parameter_regulation = _parameter_regulation.length > 0 ? _parameter_regulation[0] : null
-
         var formData = new FormData();
+        if (_form.data('method') === 'put') formData.append('_method', 'put')
         formData.append('file_category','FEL 1')
         formData.append('project_id',_project_id)
         formData.append('project_scope',setBooleanNumber(_project_scope.is(':checked')))
@@ -958,20 +958,24 @@ $(function() {
         formData.append('schedule_project_text',_schedule_project_text.val())
         formData.append('list_of_stakeholder_text',_status)
         formData.append('status',_list_of_stakeholder_text.val())
-        formData.append('parameter_regulation',_parameter_regulation)
+        if(_parameter_regulation.length > 0) formData.append('parameter_regulation',_parameter_regulation[0])
+        if(_initial_process_diagram.length > 0) formData.append('initial_process_diagram',_initial_process_diagram[0])
+        if(_data_of_alternatives.length > 0) formData.append('data_of_alternatives',_data_of_alternatives[0])
+        if(_initial_schedule.length > 0) formData.append('initial_schedule',_initial_schedule[0])
+        if(_project_level_assessment.length > 0) formData.append('project_level_assessment',_project_level_assessment[0])
+        if(_stakeholder_list.length > 0) formData.append('stakeholder_list',_stakeholder_list[0])
         formData.append('project_name',_form.data('name'))
-
-        // return false
         if($('.js-fel1-form').valid()){
             _this.find('.loader-34').removeClass('d-none')
             _this.attr('disabled');
             $.ajax({
                 url: _url,
                 type: _type,
+                data: formData,
                 processData: false,
                 contentType: false,
-                data: formData,
                 success: function (data) {
+                    // console.log(data)
                     window.location.href = data.url;
                 }
             })
