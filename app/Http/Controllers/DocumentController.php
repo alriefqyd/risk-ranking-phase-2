@@ -97,9 +97,10 @@ class DocumentController extends Controller
             }
 
             if (isset($existingDocument)) {
+                $dirName = $project_name . '/' . $request->file_category;
                 foreach ($existingDocument as $k => $v){
                     if(isset($documentRequests[$k])) {
-                        $this->deleteDocument($v, $project_name);
+                        $this->deleteDocument($v, $dirName);
                     } else {
                         $documents->put($k,$v);
                     }
