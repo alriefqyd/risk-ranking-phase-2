@@ -213,6 +213,13 @@ class Project extends Model
         return $projectService->getAllAttachment($value,$identifier);
     }
 
+    public function getCleanProjectName(){
+        $name = $this->project_name;
+        $name = str_replace('&','and', $name);
+        $name = str_replace('#',' ',$name);
+        return $name;
+    }
+
 
 
 }

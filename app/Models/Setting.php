@@ -67,6 +67,21 @@ class Setting extends Model
         'stakeholder_list' => 'stakeholder_list'
     ];
 
+    public const FEL2_ATTACHMENT = [
+        'reference_of_capacity' => 'reference_of_capacity',
+        'data_of_survey_parameter' => 'data_survey_parameter',
+        'diagram_process' => 'diagram_process',
+        'initial_risk_assessment' => 'initial_risk_assessment',
+        'initial_utility_diagram' => 'initial_utility_diagram',
+        'project_level_assessment' => 'project_level_assessment',
+        'quotation_main_equipment' => 'quotation_main_equipment',
+        'fel1' => 'fel1',
+        'technical_evaluation' => 'technical_evaluation',
+        'financial_evaluation' => 'financial_evaluation',
+        'schedule_level_2' => 'schedule_level_2',
+        'cost_estimate' => 'cost_estimate'
+    ];
+
     public const CAPITAL_VALUE = [
         'THIRTY_MILLION' => 30000000,
         'FIVE_MILLION' => 5000000,

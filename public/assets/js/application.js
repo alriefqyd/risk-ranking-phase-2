@@ -956,8 +956,8 @@ $(function() {
         formData.append('alternatives_text',_alternative_text.val())
         formData.append('list_of_stakeholder_text',_list_of_stakeholder_text.val())
         formData.append('schedule_project_text',_schedule_project_text.val())
-        formData.append('list_of_stakeholder_text',_status)
-        formData.append('status',_list_of_stakeholder_text.val())
+        formData.append('list_of_stakeholder_text',_list_of_stakeholder_text.val())
+        formData.append('status',_status)
         if(_parameter_regulation.length > 0) formData.append('parameter_regulation',_parameter_regulation[0])
         if(_initial_process_diagram.length > 0) formData.append('initial_process_diagram',_initial_process_diagram[0])
         if(_data_of_alternatives.length > 0) formData.append('data_of_alternatives',_data_of_alternatives[0])
@@ -1095,6 +1095,7 @@ $(function() {
 
     _fel2_submit_form.on('click', function (e) {
         e.preventDefault();
+        tinyMCE.triggerSave();
         var _this = $(this)
         var _form = _this.closest('.js-fel2-form');
         var _project_scope = _form.find('#checkbox-project_scope-fel2');
@@ -1103,40 +1104,214 @@ $(function() {
         var _analysis_of_option = _form.find('#checkbox-analysis_of_option')
         var _permit_list = _form.find('#checkbox-permit_list');
         var _schedule_project = _form.find('#checkbox-schedule_project');
-        var _cost_estimate = _form.find('#checkbox-cost_estimate');
+        var _cost_estimate = _form.find('#checkbox-cost_estimate_fel2');
         var _project_id = _form.find('.js-project-id').val();
+
+        var _project_scope_text = _form.find('.js-fel2-text-project-scope');
+        var _identify_main_equipment_text = _form.find('.js-text-identify_main_equipment');
+        var _boundary_assumption_text = _form.find('.js-text-boundary_and_assumption_text');
+        var _analysis_of_option_text = _form.find('.js-text-analysis_of_option_text')
+        var _permit_list_text = _form.find('.js-text-permit_list_text');
+        var _schedule_project_text = _form.find('.js-text-fel2-schedule_project_text');
+        var _cost_estimate_text = _form.find('.js-cost_estimate_assessment');
+        var _status = _this.data('status') ? _this.data('status') : 'draft';
+
+        var _file_calculation_of_capacity = $('.js-fel2-attachment_calculation_of_capacity')[0].files;
+        var _file_data_of_survey_parameter = $('.js-fel2-attachment_data_of_survey_parameter')[0].files;
+        var _file_diagram_process = $('.js-fel2-attachment_diagram_process')[0].files;
+        var _file_initial_risk_assessment = $('.js-fel2-attachment_initial_risk_assessment')[0].files;
+        var _file_initial_utility_diagram = $('.js-fel2-attachment_initial_utility_diagram')[0].files;
+        var _file_quotation_main_equipment = $('.js-fel2-attachment_quotation_main_equipment')[0].files;
+        var _file_project_level_assessment = $('.js-fel2-attachment_project_level_assessment')[0].files;
+        var _file_fel1 = $('.js-fel2-attachment_fel1')[0].files;
+        var _file_technical_evaluation = $('.js-fel2-attachment_technical_evaluation')[0].files;
+        var _file_financial_evaluation = $('.js-fel2-attachment_financial_evaluation')[0].files;
+        var _file_schedule_level2 = $('.js-fel2-attachment_schedule_level-2')[0].files;
+        var _file_cost_estimate = $('.js-fel2-attachment_cost_estimate')[0].files;
+
+        var formData = new FormData();
+        if (_form.data('method') === 'put') formData.append('_method', 'put')
+        formData.append('file_category','FEL 2')
+        if(_file_calculation_of_capacity.length > 0) formData.append('reference_of_capacity',_file_calculation_of_capacity[0])
+        if(_file_data_of_survey_parameter.length > 0) formData.append('data_of_survey_parameter',_file_data_of_survey_parameter[0])
+        if(_file_diagram_process.length > 0) formData.append('diagram_process',_file_diagram_process[0])
+        if(_file_initial_risk_assessment.length > 0) formData.append('initial_risk_assessment',_file_initial_risk_assessment[0])
+        if(_file_initial_utility_diagram.length > 0) formData.append('initial_utility_diagram',_file_initial_utility_diagram[0])
+        if(_file_quotation_main_equipment.length > 0) formData.append('quotation_main_equipment',_file_quotation_main_equipment[0])
+        if(_file_project_level_assessment.length > 0) formData.append('project_level_assessment',_file_project_level_assessment[0])
+        if(_file_fel1.length > 0) formData.append('fel1',_file_fel1[0])
+        if(_file_technical_evaluation.length > 0) formData.append('technical_evaluation',_file_technical_evaluation[0])
+        if(_file_financial_evaluation.length > 0) formData.append('financial_evaluation',_file_financial_evaluation[0])
+        if(_file_schedule_level2.length > 0) formData.append('schedule_level_2',_file_schedule_level2[0])
+        if(_file_cost_estimate.length > 0) formData.append('file_cost_estimate',_file_cost_estimate[0])
+
+        formData.append('project_id',_project_id)
+        formData.append('project_name',_form.data('name'))
+        formData.append('project_scope',setBooleanNumber(_project_scope.is(':checked')))
+        formData.append('identify_main_equipment',setBooleanNumber(_identify_main_equipment.is(':checked')))
+        formData.append('boundary_and_assumption',setBooleanNumber(_boundary_assumption.is(':checked')))
+        formData.append('analysis_of_option',setBooleanNumber(_analysis_of_option.is(':checked')))
+        formData.append('permit_list',setBooleanNumber(_permit_list.is(':checked')))
+        formData.append('schedule_project',setBooleanNumber(_schedule_project.is(':checked')))
+        formData.append('cost_estimate',setBooleanNumber(_cost_estimate.is(':checked')))
+        formData.append('project_scope_text',_project_scope_text.val())
+        formData.append('identify_main_equipment_text',_identify_main_equipment_text.val())
+        formData.append('boundary_and_assumption_text',_boundary_assumption_text.val())
+        formData.append('analysis_of_option_text',_analysis_of_option_text.val())
+        formData.append('permit_list_text',_permit_list_text.val())
+        formData.append('schedule_project_text',_schedule_project_text.val())
+        formData.append('cost_estimate_text',_cost_estimate_text.val())
+        formData.append('status',_status)
 
         var _url = _form.attr('action')
         var _type = _form.attr('method')
-        var _status = _this.data('status') ? _this.data('status') : 'draft';
 
-        _this.find('.loader-34').removeClass('d-none')
-        _this.attr('disabled');
-        $.ajax({
-            url: _url,
-            type: _type,
-            data: {
-                project_id: _project_id,
-                project_scope: setBooleanNumber(_project_scope.is(':checked')),
-                identify_main_equipment: setBooleanNumber(_identify_main_equipment.is(':checked')),
-                boundary_and_assumption: setBooleanNumber(_boundary_assumption.is(':checked')),
-                analysis_of_option: setBooleanNumber(_analysis_of_option.is(':checked')),
-                permit_list: setBooleanNumber(_permit_list.is(':checked')),
-                schedule_project: setBooleanNumber(_schedule_project.is(':checked')),
-                cost_estimate: setBooleanNumber(_cost_estimate.is(':checked')),
-                status: _status
+        if($('.js-fel2-form').valid()){
+            _this.find('.loader-34').removeClass('d-none')
+            _this.attr('disabled');
+            $.ajax({
+                url: _url,
+                type: _type,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    // console.log(data)
+                    window.location.href = data.url;
+                }
+            })
+        }
+    })
+
+    $('.js-fel2-form').validate({
+        ignore: [],
+        focusInvalid: true,
+        invalidHandler: function (form, validator) {
+
+            if (!validator.numberOfInvalids()) return;
+
+            $('html, body').animate({
+                scrollTop: $(validator.errorList[0].element).offset().top
+            }, 100);
+
+        },
+        rules: {
+            validate_fel2_project_scope: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-project_scope-fel2').is(':checked') &&
+                            removeHtmlTag($('.js-fel2-text-project-scope').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
             },
-            success: function (data) {
-                window.location.href = data.url;
+            validate_fel2_identify_main_equipment: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-identify_main_equipment').is(':checked') &&
+                            removeHtmlTag($('.js-text-identify_main_equipment').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel2_boundary_and_assumption_text: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-boundary_assumption').is(':checked') &&
+                            removeHtmlTag($('.js-text-boundary_and_assumption_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel2_analysis_of_option: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-analysis_of_option').is(':checked') &&
+                            removeHtmlTag($('.js-text-analysis_of_option_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel2_permit_list: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-schedule').is(':checked') &&
+                            removeHtmlTag($('.js-text-permit_list_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel2_schedule: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-schedule').is(':checked') &&
+                            removeHtmlTag($('.js-text-permit_list_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            fel2_cost_estimate: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-cost_estimate_fel2').is(':checked') &&
+                            removeHtmlTag($('.js-cost_estimate_fel2').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+        },
+        messages: {
+            validate_fel2_project_scope: {
+                required: "Since you check Project Scope this field is required"
+            },
+            validate_fel2_identify_main_equipment: {
+                required: "Since you check Identify Main Equipment, Requirement & Regulation this field is required"
+            },
+            validate_fel2_boundary_and_assumption_text: {
+                required: "Since you check Boundary and Assumption this field is required"
+            },
+            validate_fel2_analysis_of_option: {
+                required: "Since you check Analysis of Option this field is required"
+            },
+            validate_fel2_schedule: {
+                required: "Since you check Schedule this field is required"
+            },
+            validate_fel2_permit_list: {
+                required: "Since you check Permit List this field is required"
+            },
+            fel2_cost_estimate: {
+                required: "Since you check Cost Estimate this field is required"
+            },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            if (element.hasClass('js-hidden-validate')) {
+                element.siblings('.js-error-message').html(error)
             }
-        })
+            if(element.hasClass('js-cost_estimate_fel2')){
+                error.insertAfter(element.closest('.js-cost-estimate'))
+            }
+        }
     })
 
 
     $('.js-checkbox-fel2').each(function () {
         var _this = $(this)
         var _btn_submit_fel2 = $('.js-create-fel2');
-        checkDisableButton(_this, _btn_submit_fel2, false, true, true)
         _this.on('change', function () {
             var __this = $((this))
             checkDisableButton(__this, _btn_submit_fel2, false, false)

@@ -50,7 +50,8 @@ class DocumentController extends Controller
     }
 
     public function preview(Request $request){
-        return response()->file(storage_path('app/documents/'.$request->dir.'/'. $request->category .'/'.$request->file));
+        $dir = urldecode($request->dir);
+        return response()->file(storage_path('app/documents/'.$dir.'/'. $request->category .'/'.$request->file));
     }
 
     public function uploadDocument(Request $request, $existingDocument, $project_name){

@@ -250,7 +250,6 @@ class Fel1Controller extends Controller
             }
 
             $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name);
-//            return response($request->parameter_regulation);
             if(sizeof($documents) > 0){
                 $fel1->attachment = $documents;
             }
