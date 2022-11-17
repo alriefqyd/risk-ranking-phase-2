@@ -20,7 +20,7 @@
                     {!! $project?->fel2?->project_scope != 1 ? 'style="display: none"' : '' !!}>
                     {!! $project?->fel2?->project_scope_text !!}
                 </textarea>
-                <input type="hidden" class="js-hidden-validate" name="validate_FEL2_project_scope">
+                <input type="hidden" class="js-hidden-validate" name="validate_fel2_project_scope">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
         </tr>
@@ -41,7 +41,7 @@
                           {!! $project?->fel2?->identify_main_equipment != 1 ? 'style="display: none"' : '' !!}>
                     {!! $project?->fel2?->identify_main_equipment_text !!}
                 </textarea>
-                <input type="hidden" class="js-hidden-validate" name="validate_FEL2_identify_main_equipment">
+                <input type="hidden" class="js-hidden-validate" name="validate_fel2_identify_main_equipment">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
         </tr>
@@ -62,7 +62,7 @@
                           {!! $project?->fel2?->boundary_and_assumption != 1 ? 'style="display: none"' : '' !!}>
                     {!! $project?->fel2?->boundary_and_assumption_text !!}
                 </textarea>
-                <input type="hidden" class="js-hidden-validate" name="validate_FEL2_boundary_and_assumption_text">
+                <input type="hidden" class="js-hidden-validate" name="validate_fel2_boundary_and_assumption_text">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
         </tr>
@@ -83,7 +83,7 @@
                           {!! $project?->fel2?->analysis_of_option != 1 ? 'style="display: none"' : '' !!}>
                     {!! $project?->fel2?->analysis_of_option_text !!}
                 </textarea>
-                <input type="hidden" class="js-hidden-validate" name="validate_FEL2_analysis_of_option">
+                <input type="hidden" class="js-hidden-validate" name="validate_fel2_analysis_of_option">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
         </tr>
@@ -104,7 +104,7 @@
                           {!! $project?->fel2?->permit_list != 1 ? 'style="display: none"' : '' !!}>
                     {!! $project?->fel2?->permit_list_text !!}
                 </textarea>
-                <input type="hidden" class="js-hidden-validate" name="validate_FEL2_permit_list">
+                <input type="hidden" class="js-hidden-validate" name="validate_fel2_permit_list">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
         </tr>
@@ -125,7 +125,7 @@
                           {!! $project?->fel2?->schedule_project != 1 ? 'style="display: none"' : '' !!}>
                     {!! $project?->fel2?->schedule_project_text !!}
                 </textarea>
-                <input type="hidden" class="js-hidden-validate" name="validate_FEL2_schedule">
+                <input type="hidden" class="js-hidden-validate" name="validate_fel2_schedule">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
         </tr>
@@ -145,7 +145,7 @@
                     {{$project?->fel2?->cost_estimate == 0 ? 'd-none' : ''}}"
                 ><span class="input-group-text">$  </span>
                     <input class="form-control js-cost_estimate_assessment js-cost_estimate_fel2 cold-md-12" type="number"
-                           name="FEL2_cost_estimate"
+                           name="fel2_cost_estimate"
                            value="{{$project?->fel2?->cost_estimate_text}}"
                            aria-label="Amount (to the nearest dollar)"><span class="input-group-text">.00  </span>
                 </div>
@@ -332,5 +332,5 @@
     </table>
 </div>
 <div class="row">
-
+    <input type="hidden" name="validate_check_empty_count" class="js-validate-checkbox-count">
 </div>

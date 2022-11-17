@@ -371,12 +371,13 @@ $(function() {
         var _btn_submit_assessment = $('.js-create-assessment');
         _this.on('change', function () {
             var __this = $((this))
-            checkDisableButton(__this, _btn_submit_assessment, true)
+            checkDisableButton(__this,_btn_submit_assessment,_check_count, false)
         })
     })
 
 
-    function checkDisableButton(__this, _btn_submit_assessment, isHaveFroala, _checkAll) {
+    function checkDisableButton(__this, _btn_submit_assessment, countCheck, _checkAll) {
+        var validCount = countCheck
         var _editor = __this.closest('tr').find('.tinymce')
         if (__this.is(':checked')) {
             if (_editor.length > 0) tinymce.get(_editor.attr('id')).show()
@@ -386,12 +387,7 @@ $(function() {
             if (_editor.length < 1 && __this.closest('tr').find('.js-complexity-analysis-head').length > 0) {
                 __this.closest('tr').find('.js-complexity-analysis-head').removeClass('d-none')
             }
-            _check_count += 1
         } else {
-            if (_check_count > 0 && !_checkAll) {
-                _check_count -= 1;
-            }
-
             if (_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) {
                 __this.closest('tr').find('.js-cost-estimate').addClass('d-none');
             }
@@ -402,15 +398,6 @@ $(function() {
             if (_editor.length > 0) {
                 tinymce.get(_editor.attr('id')).hide()
             }
-
-        }
-
-        if (_check_count < 1) {
-            _btn_submit_assessment.attr('disabled', 'disabled')
-            _btn_submit_assessment.find('.loader-34').addClass('d-none')
-            return false
-        } else {
-            _btn_submit_assessment.removeAttr('disabled')
         }
     }
 
@@ -468,9 +455,9 @@ $(function() {
         var _require_community_involvement = $('input[name="require_community_involvement"]:checked').val();
         var _require_purchase = $('input[name="require_purchase"]:checked').val();
 
-        // _this.attr('disabled', 'disabled')
-        // _this.find('.loader-34').removeClass('d-none')
-        //
+        _this.attr('disabled', 'disabled')
+        _this.find('.loader-34').removeClass('d-none')
+
         // if (!_form.valid()) {
         //     _this.removeAttr('disabled')
         //     _this.find('.loader-34').addClass('d-none')
@@ -530,22 +517,26 @@ $(function() {
         formData.append('score',_complexity_sore ?? '');
         formData.append('complexity_analysis_type',_complexity_analysis_type ?? '')
 
-        $.ajax({
-            url: _url_submit,
-            type: _type,
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                // console.log(data)
-                if (data.status === 200) window.location.href = data.url;
-                else {
-                    notification('danger', data, 'fa fa-time', 'Error')
-                    _this.removeAttr('disabled')
-                    _this.find('.loader-34').addClass('d-none')
+        if(_form.valid()){
+            $.ajax({
+                url: _url_submit,
+                type: _type,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status === 200) window.location.href = data.url;
+                    else {
+                        notification('danger', data, 'fa fa-time', 'Error')
+                        _this.removeAttr('disabled')
+                        _this.find('.loader-34').addClass('d-none')
+                    }
                 }
-            }
-        })
+            })
+        } else {
+            _this.removeAttr('disabled')
+            _this.find('.loader-34').addClass('d-none')
+        }
     })
 
     function setBooleanNumber(val) {
@@ -678,6 +669,19 @@ $(function() {
                     }
                 }
             },
+            validate_check_empty_count:{
+                required: {
+                    depends:function(){
+                        var _count = 0;
+                        $('.js-checkbox-assessment').each(function(){
+                            if($(this).is(':checked')){
+                                _count += 1;
+                            }
+                        })
+                        return _count < 1;
+                    }
+                }
+            }
         },
         messages: {
             validate_problem_statement: {
@@ -710,11 +714,18 @@ $(function() {
             validate_detail_estimate: {
                 required: "Since you check Detail Estimate Cost this field is required"
             },
+            validate_check_empty_count: {
+                required: "Please fill the checkbox form"
+            }
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
             if (element.hasClass('js-hidden-validate')) {
                 element.siblings('.js-error-message').html(error)
+            } else if(element.hasClass('js-validate-checkbox-count')){
+                element.closest('.js-assessment-form').find('.error-msg-checkbox').append(error)
+            } else {
+                error.insertAfter(element)
             }
         }
     })
@@ -917,19 +928,22 @@ $(function() {
 
     _fel1_submit_form.on('click', function (e) {
         e.preventDefault();
-        tinyMCE.triggerSave();
         var _this = $(this)
+        _this.attr('disabled', 'disabled')
+        _this.find('.loader-34').removeClass('d-none')
+        tinyMCE.triggerSave();
+
         var _form = _this.closest('.js-fel1-form');
         var _project_scope = $('#checkbox-project_scope');
         var _identified_parameter = $('#checkbox-identified_parameter');
         var _alternative = $('#checkbox-alternatives');
         var _list_of_stakeholder = $('#checkbox-list_of_stakeholder')
         var _schedule_project = $('#checkbox-schedule');
-        var _project_scope_text = $('.js-fel1-text-project-scope');
-        var _identified_parameter_text = $('.js-text-identified_parameter_text');
-        var _alternative_text = $('.js-text-alternatives_text');
-        var _list_of_stakeholder_text = $('.js-text-list_of_stakeholder_text')
-        var _schedule_project_text = $('.js-text-schedule_project_text');
+        var _project_scope_text = $('#checkbox-project_scope').is(':checked') ? $('.js-fel1-text-project-scope').val() : '';
+        var _identified_parameter_text = $('#checkbox-identified_parameter').is(':checked') ? $('.js-text-identified_parameter_text').val() : '';
+        var _alternative_text = $('#checkbox-alternatives').is(':checked') ? $('.js-text-alternatives_text').val() : '';
+        var _list_of_stakeholder_text = $('#checkbox-list_of_stakeholder').is(':checked') ? $('.js-text-list_of_stakeholder_text').val() : '';
+        var _schedule_project_text = $('#checkbox-schedule').is(':checked') ? $('.js-text-schedule_project_text').val() : '';
         var _project_id = _form.find('.js-project-id').val();
         var _url = _form.attr('action')
         var _type = _form.attr('method')
@@ -951,12 +965,12 @@ $(function() {
         formData.append('alternatives',setBooleanNumber(_alternative.is(':checked')))
         formData.append('list_of_stakeholder',setBooleanNumber(_list_of_stakeholder.is(':checked')))
         formData.append('schedule_project',setBooleanNumber(_schedule_project.is(':checked')))
-        formData.append('project_scope_text',_project_scope_text.val())
-        formData.append('identified_parameter_requirement_regulation_text',_identified_parameter_text.val())
-        formData.append('alternatives_text',_alternative_text.val())
-        formData.append('list_of_stakeholder_text',_list_of_stakeholder_text.val())
-        formData.append('schedule_project_text',_schedule_project_text.val())
-        formData.append('list_of_stakeholder_text',_list_of_stakeholder_text.val())
+        formData.append('project_scope_text',_project_scope_text)
+        formData.append('identified_parameter_requirement_regulation_text',_identified_parameter_text)
+        formData.append('alternatives_text',_alternative_text)
+        formData.append('list_of_stakeholder_text',_list_of_stakeholder_text)
+        formData.append('schedule_project_text',_schedule_project_text)
+        formData.append('list_of_stakeholder_text',_list_of_stakeholder_text)
         formData.append('status',_status)
         if(_parameter_regulation.length > 0) formData.append('parameter_regulation',_parameter_regulation[0])
         if(_initial_process_diagram.length > 0) formData.append('initial_process_diagram',_initial_process_diagram[0])
@@ -965,9 +979,8 @@ $(function() {
         if(_project_level_assessment.length > 0) formData.append('project_level_assessment',_project_level_assessment[0])
         if(_stakeholder_list.length > 0) formData.append('stakeholder_list',_stakeholder_list[0])
         formData.append('project_name',_form.data('name'))
+
         if($('.js-fel1-form').valid()){
-            _this.find('.loader-34').removeClass('d-none')
-            _this.attr('disabled');
             $.ajax({
                 url: _url,
                 type: _type,
@@ -979,6 +992,9 @@ $(function() {
                     window.location.href = data.url;
                 }
             })
+        } else {
+            _this.removeAttr('disabled')
+            _this.find('.loader-34').addClass('d-none')
         }
     })
 
@@ -1060,6 +1076,19 @@ $(function() {
                     }
                 }
             },
+            validate_check_empty_count:{
+                required: {
+                    depends:function(){
+                        var _count = 0;
+                        $('.js-checkbox-fel1').each(function(){
+                            if($(this).is(':checked')){
+                                _count += 1;
+                            }
+                        })
+                        return _count < 1;
+                    }
+                }
+            }
         },
         messages: {
             validate_fel1_project_scope: {
@@ -1077,11 +1106,18 @@ $(function() {
             validate_fel1_schedule: {
                 required: "Since you check Schedule Project this field is required"
             },
+            validate_check_empty_count: {
+                required: "Please fill the checkbox form"
+            }
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
             if (element.hasClass('js-hidden-validate')) {
                 element.siblings('.js-error-message').html(error)
+            } else if(element.hasClass('js-validate-checkbox-count')){
+                element.closest('.js-fel1-form').find('.error-msg-checkbox').append(error)
+            } else {
+                error.insertAfter(element)
             }
         }
     })
@@ -1107,13 +1143,13 @@ $(function() {
         var _cost_estimate = _form.find('#checkbox-cost_estimate_fel2');
         var _project_id = _form.find('.js-project-id').val();
 
-        var _project_scope_text = _form.find('.js-fel2-text-project-scope');
-        var _identify_main_equipment_text = _form.find('.js-text-identify_main_equipment');
-        var _boundary_assumption_text = _form.find('.js-text-boundary_and_assumption_text');
-        var _analysis_of_option_text = _form.find('.js-text-analysis_of_option_text')
-        var _permit_list_text = _form.find('.js-text-permit_list_text');
-        var _schedule_project_text = _form.find('.js-text-fel2-schedule_project_text');
-        var _cost_estimate_text = _form.find('.js-cost_estimate_assessment');
+        var _project_scope_text = _project_scope.is(':checked') ? _form.find('.js-fel2-text-project-scope').val() : '';
+        var _identify_main_equipment_text = _identify_main_equipment.is(':checked') ? _form.find('.js-text-identify_main_equipment').val() : '';
+        var _boundary_assumption_text = _boundary_assumption.is(':checked') ? _form.find('.js-text-boundary_and_assumption_text').val() : '';
+        var _analysis_of_option_text = _analysis_of_option.is(':checked') ? _form.find('.js-text-analysis_of_option_text').val() : '';
+        var _permit_list_text = _permit_list.is(':checked') ? _form.find('.js-text-permit_list_text').val() : '';
+        var _schedule_project_text = _schedule_project.is(':checked') ? _form.find('.js-text-fel2-schedule_project_text') : '';
+        var _cost_estimate_text = _cost_estimate.is(':checked') ? _form.find('.js-cost_estimate_assessment').val() : '';
         var _status = _this.data('status') ? _this.data('status') : 'draft';
 
         var _file_calculation_of_capacity = $('.js-fel2-attachment_calculation_of_capacity')[0].files;
@@ -1154,13 +1190,13 @@ $(function() {
         formData.append('permit_list',setBooleanNumber(_permit_list.is(':checked')))
         formData.append('schedule_project',setBooleanNumber(_schedule_project.is(':checked')))
         formData.append('cost_estimate',setBooleanNumber(_cost_estimate.is(':checked')))
-        formData.append('project_scope_text',_project_scope_text.val())
-        formData.append('identify_main_equipment_text',_identify_main_equipment_text.val())
-        formData.append('boundary_and_assumption_text',_boundary_assumption_text.val())
-        formData.append('analysis_of_option_text',_analysis_of_option_text.val())
-        formData.append('permit_list_text',_permit_list_text.val())
-        formData.append('schedule_project_text',_schedule_project_text.val())
-        formData.append('cost_estimate_text',_cost_estimate_text.val())
+        formData.append('project_scope_text',_project_scope_text)
+        formData.append('identify_main_equipment_text',_identify_main_equipment_text)
+        formData.append('boundary_and_assumption_text',_boundary_assumption_text)
+        formData.append('analysis_of_option_text',_analysis_of_option_text)
+        formData.append('permit_list_text',_permit_list_text)
+        formData.append('schedule_project_text',_schedule_project_text)
+        formData.append('cost_estimate_text',_cost_estimate_text)
         formData.append('status',_status)
 
         var _url = _form.attr('action')
@@ -1176,7 +1212,6 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    // console.log(data)
                     window.location.href = data.url;
                 }
             })
@@ -1273,6 +1308,19 @@ $(function() {
                     }
                 }
             },
+            validate_check_empty_count:{
+                required: {
+                    depends:function(){
+                        var _count = 0;
+                        $('.js-checkbox-fel2').each(function(){
+                            if($(this).is(':checked')){
+                                _count += 1;
+                            }
+                        })
+                        return _count < 1;
+                    }
+                }
+            }
         },
         messages: {
             validate_fel2_project_scope: {
@@ -1296,14 +1344,20 @@ $(function() {
             fel2_cost_estimate: {
                 required: "Since you check Cost Estimate this field is required"
             },
+            validate_check_empty_count: {
+                required: "Please fill the checkbox form"
+            }
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
             if (element.hasClass('js-hidden-validate')) {
                 element.siblings('.js-error-message').html(error)
-            }
-            if(element.hasClass('js-cost_estimate_fel2')){
+            } else if(element.hasClass('js-cost_estimate_fel2')){
                 error.insertAfter(element.closest('.js-cost-estimate'))
+            } else if(element.hasClass('js-validate-checkbox-count')){
+                element.closest('.js-fel2-form').find('.error-msg-checkbox').append(error)
+            } else {
+                error.insertAfter(element)
             }
         }
     })
@@ -1325,51 +1379,227 @@ $(function() {
 
     _fel3_submit_form.on('click', function (e) {
         e.preventDefault();
+        tinymce.triggerSave()
         var _this = $(this)
         var _form = _this.closest('.js-fel3-form');
-        var _executive_summary = _form.find('#checkbox-executive_summary');
+        var _executive_summary = _form.find('#checkbox-executive_summary-fel3');
         var _problem_statement = _form.find('#checkbox-problem_statement_fel3');
-        var _project_scope = _form.find('#checkbox-project_scope_fel_3');
-        var _alternatives = _form.find('#checkbox-alternatives_best_option')
-        var _project_schedule = _form.find('#checkbox-project_schedule_fel_3');
-        var _list_of_equipment = _form.find('#checkbox-list_of_equipment');
+        var _project_scope = _form.find('#checkbox-project_scope_fel3');
+        var _alternatives = _form.find('#checkbox-alternatives_best_option_fel3')
+        var _project_schedule = _form.find('#checkbox-project_schedule_fel3');
+        var _list_of_equipment = _form.find('#checkbox-list_of_equipment_fel3');
         var _hazop = _form.find('#checkbox-hazop');
         var _cost_estimate = _form.find('#checkbox-cost_estimate_fel3');
 
+        var _executive_summary_text = _executive_summary.is(':checked') ? _form.find('.js-fel3-executive_summary_text').val() : '';
+        var _problem_statement_text = _problem_statement.is(':checked') ? _form.find('.js-fel3-problem_statement_text').val() : '';
+        var _project_scope_text = _project_scope.is(':checked') ? _form.find('.js-fel3-project_scope_text').val() : '';
+        var _alternatives_text = _alternatives.is(':checked') ? _form.find('.js-fel3-alternatives_and_best_option_text').val() : '';
+        var _project_schedule_text = _project_schedule.is(':checked') ? _form.find('.js-fel3-project_schedule_text').val() : '';
+        var _list_of_equipment_text = _list_of_equipment.is(':checked') ? _form.find('.js-fel3-list_of_equipment_text').val() : '';
+        var _hazop_text = _hazop.is(':checked') ? _form.find('.js-fel3-hazop_study_text').val() : '';
+        var _cost_estimate_text = _cost_estimate.is(':checked') ? _form.find('.js-fel3-cost_estimate_text').val() : '';
         var _project_id = _form.find('.js-project-id').val();
 
         var _url = _form.attr('action')
         var _type = _form.attr('method')
         var _status = _this.data('status') ? _this.data('status') : 'draft';
 
-        _this.find('.loader-34').removeClass('d-none')
-        _this.attr('disabled');
-        $.ajax({
-            url: _url,
-            type: _type,
-            data: {
-                project_id: _project_id,
-                executive_summary: setBooleanNumber(_executive_summary.is(':checked')),
-                problem_statement: setBooleanNumber(_problem_statement.is(':checked')),
-                project_scope: setBooleanNumber(_project_scope.is(':checked')),
-                alternatives_and_best_option: setBooleanNumber(_alternatives.is(':checked')),
-                project_schedule: setBooleanNumber(_project_schedule.is(':checked')),
-                list_of_equipment_and_specification: setBooleanNumber(_list_of_equipment.is(':checked')),
-                hazop_study: setBooleanNumber(_hazop.is(':checked')),
-                cost_estimate: setBooleanNumber(_cost_estimate.is(':checked')),
-                status: _status
-            },
-            success: function (data) {
-                window.location.href = data.url;
-            }
-        })
+        var _preliminary_design =  $('.js-fel3-attachment_preliminary_design')[0].files;
+        var _utility_infrastructure_facilities_diagram =  $('.js-fel3-attachment_utility_infrastructure_facilities_diagram')[0].files;
+        var _hazop_file =  $('.js-fel3-attachment_hazop')[0].files;
+        var _moc_document =  $('.js-fel3-attachment_moc_document')[0].files;
+        var _cost_estimate_file =  $('.js-fel3-cost_estimate')[0].files;
+        var _quotation_of_equipment =  $('.js-fe3-attachment_quotation_of_equipment')[0].files;
+        var _project_level_assessment =  $('.js-fel3-attachment_project_level_assessment')[0].files;
+        var _fel1 =  $('.js-fel3-attachment_fel1')[0].files;
+        var _fel2 =  $('.js-fel3-attachment_fel2 ')[0].files;
+
+
+        var formData = new FormData()
+        formData.append('file_category','FEL 3')
+        formData.append('project_id',_project_id)
+        if (_form.data('method') === 'put') formData.append('_method', 'put')
+        formData.append('project_name',_form.data('name'));
+        formData.append('executive_summary',setBooleanNumber(_executive_summary.is(':checked')))
+        formData.append('problem_statement',setBooleanNumber(_problem_statement.is(':checked')))
+        formData.append('project_scope',setBooleanNumber(_project_scope.is(':checked')))
+        formData.append('alternatives_and_best_option',setBooleanNumber(_alternatives.is(':checked')))
+        formData.append('project_schedule',setBooleanNumber(_project_schedule.is(':checked')))
+        formData.append('list_of_equipment_and_specification',setBooleanNumber(_list_of_equipment.is(':checked')))
+        formData.append('hazop_study',setBooleanNumber(_hazop.is(':checked')))
+        formData.append('cost_estimate',setBooleanNumber(_cost_estimate.is(':checked')))
+        formData.append('executive_summary_text',_executive_summary_text)
+        formData.append('problem_statement_text',_problem_statement_text)
+        formData.append('project_scope_text',_project_scope_text)
+        formData.append('alternatives_and_best_option_text',_alternatives_text)
+        formData.append('project_schedule_text',_project_schedule_text)
+        formData.append('list_of_equipment_and_specification_text',_list_of_equipment_text)
+        formData.append('hazop_study_text',_hazop_text)
+        formData.append('cost_estimate_text',_cost_estimate_text)
+        formData.append('status',_status)
+        formData.append('project_name',_form.data('name'))
+        if(_preliminary_design.length > 0) formData.append('preliminary_design',_preliminary_design[0])
+        if(_utility_infrastructure_facilities_diagram.length > 0) formData.append('utility_infrastructure_facilities_diagram',_utility_infrastructure_facilities_diagram[0])
+        if(_hazop_file.length > 0) formData.append('hazop',_hazop_file[0])
+        if(_moc_document.length > 0) formData.append('moc_document',_moc_document[0])
+        if(_cost_estimate_file.length > 0) formData.append('cost_estimate_file',_cost_estimate_file[0])
+        if(_quotation_of_equipment.length > 0) formData.append('quotation_of_equipment',_quotation_of_equipment[0])
+        if(_project_level_assessment.length > 0) formData.append('project_level_assessment',_project_level_assessment[0])
+        if(_fel1.length > 0) formData.append('fel1',_fel1[0])
+        if(_fel2.length > 0) formData.append('fel2',_fel2[0])
+
+        if(_form.valid()){
+            _this.find('.loader-34').removeClass('d-none')
+            _this.attr('disabled');
+            $.ajax({
+                url: _url,
+                type: _type,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    window.location.href = data.url;
+                }
+            })
+        }
     })
 
+    $('.js-fel3-form').validate({
+        ignore: [],
+        focusInvalid: true,
+        invalidHandler: function (form, validator) {
+
+            if (!validator.numberOfInvalids()) return;
+
+            $('html, body').animate({
+                scrollTop: $(validator.errorList[0].element).offset().top
+            }, 100);
+
+        },
+        rules: {
+            validate_fel3_executive_summary: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-executive_summary-fel3').is(':checked') &&
+                            removeHtmlTag($('.js-fel3-executive_summary_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel3_problem_statement: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-problem_statement_fel3').is(':checked') &&
+                            removeHtmlTag($('.js-fel3-problem_statement_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel3_project_scope: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-project_scope_fel_3').is(':checked') &&
+                            removeHtmlTag($('.js-fel3-project_scope_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel3_alternatives_and_best_option: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-alternatives_best_option').is(':checked') &&
+                            removeHtmlTag($('.js-fel3-alternatives_and_best_option_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel3_project_schedule: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-project_schedule_fel_3').is(':checked') &&
+                            removeHtmlTag($('.js-fel3-project_schedule_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel3_list_of_equipment: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-list_of_equipment_fel3').is(':checked') &&
+                            removeHtmlTag($('.js-fel3-list_of_equipment_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_fel3_hazop_study: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-hazop').is(':checked') &&
+                            removeHtmlTag($('.js-fel3-hazop_study_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            fel3_cost_estimate: {
+                required: {
+                    depends: function () {
+                        return !!($('#checkbox-cost_estimate_fel3').is(':checked') &&
+                            removeHtmlTag($('.js-fel3-cost_estimate_text').val()) === '');
+
+                    }
+                }
+            },
+            validate_check_empty_count:{
+                required: {
+                    depends:function(){
+                        var _count = 0;
+                        $('.js-checkbox-fel3').each(function(){
+                            if($(this).is(':checked')){
+                                _count += 1;
+                            }
+                        })
+                        return _count < 1;
+                    }
+                }
+            }
+        },
+        messages:{
+            validate_check_empty_count: {
+                required: "Please fill the checkbox form"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            if (element.hasClass('js-hidden-validate')) {
+                element.siblings('.js-error-message').html(error)
+            } else if(element.hasClass('js-fel3-cost_estimate_text')){
+                error.insertAfter(element.closest('.js-cost-estimate'))
+            } else if(element.hasClass('js-validate-checkbox-count')){
+                element.closest('.js-fel3-form').find('.error-msg-checkbox').append(error)
+            } else {
+                error.insertAfter(element)
+            }
+        }
+    })
 
     $('.js-checkbox-fel3').each(function () {
         var _this = $(this)
         var _btn_submit_fel3 = $('.js-create-fel3');
-        checkDisableButton(_this, _btn_submit_fel3, false, true, true)
         _this.on('change', function () {
             var __this = $((this))
             checkDisableButton(__this, _btn_submit_fel3, false, false)
@@ -1398,7 +1628,6 @@ $(function() {
     $('.js-checkbox-business_case').each(function () {
         var _this = $(this)
         var _btn_submit_bc = $('.js-create-bc');
-        checkDisableButton(_this, _btn_submit_bc, false, true, true)
         _this.on('change', function () {
             var __this = $((this))
             checkDisableButton(__this, _btn_submit_bc, false, false)

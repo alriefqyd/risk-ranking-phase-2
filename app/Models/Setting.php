@@ -82,6 +82,18 @@ class Setting extends Model
         'cost_estimate' => 'cost_estimate'
     ];
 
+    public const FEL3_ATTACHMENT = [
+        'preliminary_design' => 'preliminary_design',
+        'utility_infrastructure_facilities_diagram' => 'utility_infrastructure_facilities_diagram',
+        'hazop' => 'hazop',
+        'moc_document' => 'moc_document',
+        'cost_estimate' => 'cost_estimate',
+        'quotation_of_equipment' => 'quotation_of_equipment',
+        'project_level_assessment' => 'project_level_assessment',
+        'fel1' => 'fel1',
+        'fel2' => 'fel2'
+    ];
+
     public const CAPITAL_VALUE = [
         'THIRTY_MILLION' => 30000000,
         'FIVE_MILLION' => 5000000,

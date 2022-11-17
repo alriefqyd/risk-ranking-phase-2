@@ -1,4 +1,7 @@
-<form method="put" action="/fel3/{{$project->id}}/"
+<form method="post" action="/fel3/{{$project->id}}/"
+      data-method="put"
+      enctype="multipart/form-data"
+      data-name="{{$project->project_name}}"
       class="theme-form js-fel3-form">
         @csrf
         @include('page.fel3.form',[
@@ -18,5 +21,6 @@
                 Publish <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
             </span>
         </button>
+        <p class="error-msg-checkbox"></p>
     </div>
 </form>

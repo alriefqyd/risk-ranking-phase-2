@@ -461,5 +461,5 @@
     </table>
 </div>
 <div class="row">
-
+<input type="hidden" name="validate_check_empty_count" class="js-validate-checkbox-count">
 </div>

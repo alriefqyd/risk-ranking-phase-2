@@ -21,5 +21,6 @@
                 Publish <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
             </span>
         </button>
+        <p class="error-msg-checkbox"></p>
     </div>
 </form>
