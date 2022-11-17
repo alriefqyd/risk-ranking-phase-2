@@ -1726,21 +1726,144 @@ $(function() {
         formData.append('irr',_irr ? parseInt(_irr) : 0)
         formData.append('payback_period',_payback_period ? parseInt(_payback_period) : 0)
 
-        _this.find('.loader-34').removeClass('d-none')
-        _this.attr('disabled');
-
-        $.ajax({
-            url: _url,
-            type: _type,
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                if (data.status === 200) window.location.href = data.url;
-                else notification('alert', data, '', '')
-            }
-        })
+        if($('.js-bc-form').valid()){
+            _this.find('.loader-34').removeClass('d-none')
+            _this.attr('disabled');
+            $.ajax({
+                url: _url,
+                type: _type,
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status === 200) window.location.href = data.url;
+                    else notification('alert', data, '', '')
+                }
+            })
+        }
     })
+
+    $('.js-bc-form').validate({
+        ignore: [],
+        focusInvalid: false,
+        invalidHandler: function (form, validator) {
+
+            if (!validator.numberOfInvalids()) return;
+
+            $('html, body').animate({
+                scrollTop: $(validator.errorList[0].element).offset().top
+            }, 100);
+
+        },
+        rules: {
+            validate_bc_problem_and_objective: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-problem_and_objective').is(':checked') &&
+                            removeHtmlTag($('.js-bc_problem_and_objective').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_bc_project_alternative: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-project_alternative').is(':checked') &&
+                            removeHtmlTag($('.js-bc_project_alternative_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_bc_project_scope_of_work: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-scope_of_work').is(':checked') &&
+                            removeHtmlTag($('.js-bc_scope_of_work').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_bc_utility_requirement: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-utility_requirement').is(':checked') &&
+                            removeHtmlTag($('.js-bc_utility_requirement_text').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_bc_permitting: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-permitting').is(':checked') &&
+                            removeHtmlTag($('.js-bc_permitting').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_bc_social_community_and_government: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-social_community').is(':checked') &&
+                            removeHtmlTag($('.js-bc_social_community').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_bc_additional: {
+                required: {
+                    depends: function () {
+                        if ($('#checkbox-additional_information').is(':checked') &&
+                            removeHtmlTag($('.js-bc_additional_information').val()) === '') {
+                            return true
+                        }
+                        return false;
+                    }
+                }
+            },
+            validate_check_empty_count:{
+                required: {
+                    depends:function(){
+                        var _count = 0;
+                        $('.js-checkbox-business_case').each(function(){
+                            if($(this).is(':checked')){
+                                _count += 1;
+                            }
+                        })
+                        return _count < 1;
+                    }
+                }
+            }
+        },
+        messages: {
+            validate_check_empty_count: {
+                required: "Please fill the checkbox form"
+            }
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            if (element.hasClass('js-hidden-validate')) {
+                element.siblings('.js-error-message').html(error)
+            } else if(element.hasClass('js-validate-checkbox-count')){
+                element.closest('.js-bc-form').find('.error-msg-checkbox').append(error)
+            } else {
+                error.insertAfter(element)
+            }
+        }
+    })
+
 
     $('#checkbox-risk_assessment').on('change', function () {
         var _this = $(this);

@@ -18,7 +18,7 @@
                     {!! $project?->business_case?->problem_statement_and_objective != 1 ? 'style="display: none"' : '' !!}>
                     {!! $project?->business_case?->problem_statement_and_objective_text !!}
                 </textarea>
-                <input type="hidden" class="js-hidden-validate" name="validate_bc-problem_and_objective">
+                <input type="hidden" class="js-hidden-validate" name="validate_bc_problem_and_objective">
                 <div class="col-md-12 txt-danger js-error-message"></div>
             </td>
         </tr>
