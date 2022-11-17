@@ -1,4 +1,7 @@
-<form method="put" action="/business-case/{{$project->id}}/"
+<form method="post" action="/business-case/{{$project->id}}/"
+      enctype="multipart/form-data"
+      data-method="put"
+      data-name="{{$project->project_name}}"
       class="theme-form js-bc-form">
         @csrf
         @include('page.business_case.form',[

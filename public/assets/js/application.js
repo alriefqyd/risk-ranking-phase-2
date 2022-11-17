@@ -1625,6 +1625,15 @@ $(function() {
 
     })
 
+    $('#checkbox-financial_evaluation').on('change',function(){
+        var _this = $(this)
+        if(_this.is(':checked')){
+            _this.closest('tr').find('.js-table-financial-evaluation').removeClass('d-none')
+        } else {
+            _this.closest('tr').find('.js-table-financial-evaluation').addClass('d-none')
+        }
+    });
+
     $('.js-checkbox-business_case').each(function () {
         var _this = $(this)
         var _btn_submit_bc = $('.js-create-bc');
@@ -1638,6 +1647,7 @@ $(function() {
 
     _bc_submit_form.on('click', function (e) {
         e.preventDefault();
+        tinymce.triggerSave();
         var _this = $(this)
         var _form = _this.closest('.js-bc-form');
         var _problem_and_objective = _form.find('#checkbox-problem_and_objective');
@@ -1662,13 +1672,59 @@ $(function() {
         var _risk_probability = $('.js-risk-probability').val();
 
         var _cost_estimate = $('.js-cost_estimate_bc').val();
-        var _npv = $('.js-npv_bc').val();
-        var _payback_period = $('.js-payback_bc').val();
-        var _irr = $('.js-irr_bc').val();
+        var _npv = $('.js_bc_npv').val();
+        var _payback_period = $('.js_bc_payback_period').val();
+        var _irr = $('.js_bc_irr').val();
 
         var _url = _form.attr('action')
         var _type = _form.attr('method')
         var _status = _this.data('status') ? _this.data('status') : 'draft';
+
+        var _problem_statement_text = $('.js-bc_problem_and_objective').val();
+        var _project_alternative_text = $('.js-bc_project_alternative_text').val();
+        var _scope_of_work_text = $('.js-bc_scope_of_work').val();
+        var _major_equipment_text = $('.js-bc_major_equipment_text').val();
+        var _utility_requirement_text = $('.js-bc_utility_requirement_text').val();
+        var _permitting_text = $('.js-bc_permitting').val();
+        var _social_community_text = $('.js-bc_social_community').val();
+        var _financial_evaluation_text = $('.js-bc_financial_evaluation').val();
+        var _additional_information_text = $('.js-bc_additional_information').val();
+
+        var formData = new FormData();
+        formData.append('problem_statement_and_objective_text',_problem_statement_text)
+        if (_form.data('method') === 'put') formData.append('_method', 'put')
+        formData.append('project_alternatives_text',_project_alternative_text)
+        formData.append('project_scope_of_work_text',_scope_of_work_text)
+        formData.append('major_equipment_text',_major_equipment_text)
+        formData.append('utility_requirements_text',_utility_requirement_text)
+        formData.append('permitting_text',_permitting_text)
+        formData.append('social_community_and_government_text',_social_community_text)
+        formData.append('financial_evaluation_text',_financial_evaluation_text)
+        formData.append('additional_information_text',_additional_information_text)
+
+        formData.append('project_id',_project_id)
+        formData.append('problem_statement_and_objective',setBooleanNumber(_problem_and_objective.is(':checked')))
+        formData.append('project_alternatives',setBooleanNumber(_project_alternatives.is(':checked')))
+        formData.append('project_scope_of_work',setBooleanNumber(_scope_of_work.is(':checked')))
+        formData.append('major_equipment',setBooleanNumber(_major_equipment.is(':checked')))
+        formData.append('utility_requirements',setBooleanNumber(_utility_requirement.is(':checked')))
+        formData.append('permitting',setBooleanNumber(_permitting.is(':checked')))
+        formData.append('social_community_and_government',setBooleanNumber(_social_community.is(':checked')))
+        formData.append('financial_evaluation',setBooleanNumber(_financial_evaluation.is(':checked')))
+        formData.append('risk_assessment',setBooleanNumber(_risk_assessment.is(':checked')))
+        formData.append('additional_information',setBooleanNumber(_additional_information.is(':checked')))
+        formData.append('people',_risk_people)
+        formData.append('environment',_risk_environment)
+        formData.append('social_and_human_rights',_risk_human_rights)
+        formData.append('reputation',_risk_reputation)
+        formData.append('finance',_risk_finance)
+        formData.append('probability',_risk_probability)
+        formData.append('priority_level',!isNaN(parseInt(_risk_priority)) ? parseInt(_risk_priority) : '')
+        formData.append('status',_status)
+        formData.append('cost_estimate',_cost_estimate)
+        formData.append('npv',_npv ? parseInt(_npv) : 0)
+        formData.append('irr',_irr ? parseInt(_irr) : 0)
+        formData.append('payback_period',_payback_period ? parseInt(_payback_period) : 0)
 
         _this.find('.loader-34').removeClass('d-none')
         _this.attr('disabled');
@@ -1676,31 +1732,9 @@ $(function() {
         $.ajax({
             url: _url,
             type: _type,
-            data: {
-                project_id: _project_id,
-                problem_statement_and_objective: setBooleanNumber(_problem_and_objective.is(':checked')),
-                project_alternatives: setBooleanNumber(_project_alternatives.is(':checked')),
-                project_scope_of_work: setBooleanNumber(_scope_of_work.is(':checked')),
-                major_equipment: setBooleanNumber(_major_equipment.is(':checked')),
-                utility_requirements: setBooleanNumber(_utility_requirement.is(':checked')),
-                permitting: setBooleanNumber(_permitting.is(':checked')),
-                social_community_and_government: setBooleanNumber(_social_community.is(':checked')),
-                financial_evaluation: setBooleanNumber(_financial_evaluation.is(':checked')),
-                risk_assessment: setBooleanNumber(_risk_assessment.is(':checked')),
-                additional_information: setBooleanNumber(_additional_information.is(':checked')),
-                people: _risk_people,
-                environment: _risk_environment,
-                social_and_human_rights: _risk_human_rights,
-                reputation: _risk_reputation,
-                finance: _risk_finance,
-                probability: _risk_probability,
-                priority_level: !isNaN(parseInt(_risk_priority)) ? parseInt(_risk_priority) : '',
-                status: _status,
-                cost_estimate: _cost_estimate,
-                npv: _npv ? parseInt(_npv) : 0,
-                irr: _irr ? parseInt(_irr) : 0,
-                payback_period: _payback_period ? parseInt(_payback_period) : 0
-            },
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function (data) {
                 if (data.status === 200) window.location.href = data.url;
                 else notification('alert', data, '', '')
@@ -1710,7 +1744,7 @@ $(function() {
 
     $('#checkbox-risk_assessment').on('change', function () {
         var _this = $(this);
-        var _parent = _this.closest('td');
+        var _parent = _this.closest('tr');
         var _risk_assessment_detail = _parent.find('.js-risk-assessment-bc')
         _parent.find('.loader-box').removeClass('d-none')
         if (_this.is(':checked')) {

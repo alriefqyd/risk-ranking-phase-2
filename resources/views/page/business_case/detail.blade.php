@@ -6,41 +6,71 @@
                 <tr>
                     <td style="width: 200px">Problem Statement And Objective  : </td>
                     <td style="width: 50px">{!! $project->getCheckTemplate($project?->business_case?->problem_statement_and_objective) !!}</td>
-                    <td style="width: 100px"></td>
+                    <td style="width: 69%">
+                        {!! $project?->business_case?->problem_statement_and_objective_text !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Project Alternatives</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->project_alternatives) !!}</td>
-                    <td></td>
+                    <td>
+                        {!! $project?->business_case?->project_alternatives_text !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Project Scope of Work :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->project_scope_of_work) !!}</td>
-                    <td></td>
+                    <td>
+                        {!! $project?->business_case?->project_scope_of_work_text !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Major Equipment :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->major_equipment) !!}</td>
+                    <td>
+                        {!! $project?->business_case?->major_equipment_text !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Utility Requirements :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->utility_requirements) !!}</td>
-                    <td></td>
+                    <td>
+                        {!! $project?->business_case?->utility_requirements_text !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Permitting :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->permitting) !!}</td>
-                    <td></td>
+                    <td>
+                        {!! $project?->business_case?->permitting_text !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Social Community And Government :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->social_community_and_government) !!}</td>
-                    <td></td>
+                    <td>
+                        {!! $project?->business_case?->social_community_and_government_text !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Financial Evaluation :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->financial_evaluation) !!}</td>
-                    <td></td>
+                    <td>
+                        <div class="col-md-6 js-financial_evaluation_detail d-none">
+                            <div>
+                                <label class="col-form-label">NPV : </label>
+                                $ {{number_format($project?->business_case?->npv,0,',','.')}}
+                            </div>
+                            <div>
+                                <label class="col-form-label">IRR :</label>
+                                {{$project?->business_case?->irr}} %
+                            </div>
+                            <div>
+                                <label class="col-form-label">Payback Period :</label>
+                                {{$project?->business_case?->payback_period}} {{$project?->business_case?->payback_period > 1 ? 'Years' : 'Year'}}
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Risk Assessment :</td>
@@ -150,32 +180,14 @@
                 <tr>
                     <td>Additional Information :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->additional_information) !!}</td>
-                    <td></td>
+                    <td>
+                        {!! $project?->business_case?->additional_information_text !!}
+                    </td>
                 </tr>
                 <tr>
                     <td>Cost Estimate :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->cost_estimate > 0 ? 1 : 0) !!}</td>
                     <td>$ {{number_format($project?->business_case?->cost_estimate,0,',','.') ?: 0}}</td>
-                </tr>
-                <tr>
-                    <td>Financial Evaluation :</td>
-                    <td>{!! $project->getCheckTemplate($project?->business_case?->financial_evaluation) !!}</td>
-                    <td>
-                        <div class="col-md-6 js-financial_evaluation_detail d-none">
-                            <div>
-                                <label class="col-form-label">NPV : </label>
-                                $ {{number_format($project?->business_case?->npv,0,',','.')}}
-                            </div>
-                            <div>
-                                <label class="col-form-label">IRR :</label>
-                                {{$project?->business_case?->irr}} %
-                            </div>
-                            <div>
-                                <label class="col-form-label">Payback Period :</label>
-                                {{$project?->business_case?->payback_period}} {{$project?->business_case?->payback_period > 1 ? 'Years' : 'Year'}}
-                            </div>
-                        </div>
-                    </td>
                 </tr>
                 </tbody>
             </table>
