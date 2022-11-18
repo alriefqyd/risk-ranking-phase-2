@@ -16,7 +16,7 @@
     </div>
     <form method="post" action="/project" class="theme-form js-project-form">
     @csrf
-        <div class="container-fluid js-capex-investment-form">
+        <div class="container-fluid js-capex-investment-form {{!$errors->isEmpty() ? 'd-none' : ''}}">
             <div class="row">
                 <div class="col-sm-12 col-xl-12">
                        <div class="row">
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid js-project-form-card d-none">
+        <div class="container-fluid js-project-form-card {{$errors->isEmpty() ? 'd-none' : ''}}">
             <div class="row">
                 <div class="col-sm-12 col-xl-12">
                     <div class="row">
@@ -56,7 +56,9 @@
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                     <button class="btn btn-secondary">Cancel</button>
-                                    <button class="btn btn-secondary js-back-capex-investment-form">Back To Capex Investment</button>
+                                    @if($errors->isEmpty())
+                                        <button class="btn btn-secondary js-back-capex-investment-form">Back To Capex Investment</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>

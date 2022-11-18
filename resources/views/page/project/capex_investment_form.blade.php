@@ -27,12 +27,15 @@
                         <input id="checkbox-{{$sustaining->code}}"
                                data-id="{{$sustaining->id}}"
                                name="checkbox_basket"
+                               value="{{$sustaining->id}}"
+                               {{old('checkbox_basket') == $sustaining->id ? 'checked' : ''}}
                                class="js-checkbox-{{$sustaining->code}} js-checkbox-open-bucket"
                                type="checkbox">
 
                         <label for="checkbox-{{$sustaining->code}}">{{$sustaining->name}}</label>
                     </div>
-                    <div class="m-l-25 m-b-0 js-sub-basket-list d-none">
+                    <div class="m-l-25 m-b-0 js-sub-basket-list
+                        {{old('checkbox_basket') != $sustaining->id ? 'd-none' : ''}}">
                         @foreach($getSubBasket?->where('parent_id','=',$sustaining?->id)->get() as $index => $subBasket)
                             <div class="row mt-1 mb-1">
                                 <div class="col-md-3">
@@ -41,6 +44,8 @@
                                                data-id="{{$subBasket->id}}"
                                                data-idx="{{$index}}"
                                                name="checkbox_sub_basket"
+                                               {{old('checkbox_sub_basket') == $subBasket->id ? 'checked' : ''}}
+                                               value="{{$subBasket->id}}"
                                                class="js-checkbox-{{$subBasket->code}}
                                                    js-checkbox-sub-basket"
                                                type="checkbox">

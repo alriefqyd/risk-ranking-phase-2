@@ -2068,15 +2068,21 @@ $(function() {
             _this.closest('.card').find('.js-next-capex-investment-form').attr('disabled','disabled')
         }
     }
+    var _checkbox_sub_basket = $('.js-checkbox-sub-basket');
+    _checkbox_sub_basket.each(function(){
+        $(this).on('change',function(){
+            processCheckboxSubBasket($(this));
+        })
+    })
 
-    $('.js-checkbox-sub-basket').on('change',function(){
-        var _this = $(this)
+    function processCheckboxSubBasket(_this){
         if(_this.is(':checked')){
             _check_capex_investment += 1;
-        }else {
+        } else {
             if(_check_capex_investment > 0) _check_capex_investment = 0
         }
 
+        console.log(_check_capex_investment)
         if(_check_capex_investment > 0){
             var _data_id = _this.closest('.js-basket-list-detail').find('.js-checkbox-open-bucket').data('id')
             disabledCheckbox(_data_id)
@@ -2087,7 +2093,7 @@ $(function() {
             $('.js-hidden-sub-basket').val('')
             _this.closest('.card').find('.js-next-capex-investment-form').attr('disabled','disabled')
         }
-    })
+    }
 
     function disabledCheckbox(_id){
         $('.js-checkbox-open-bucket').each(function(){
