@@ -158,6 +158,9 @@ class ProjectController extends Controller
         $this->authorize('read');
 
         $projectService = new ProjectService();
+        if($projectService->projectNotAuthorized($project)){
+            abort(404);
+        }
 
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);

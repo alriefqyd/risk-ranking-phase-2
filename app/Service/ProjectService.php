@@ -125,7 +125,7 @@ class ProjectService
                             </div>
                         </div>';
         } else {
-            return '-';
+            return $templateLabel;
         }
 
         return $template;
