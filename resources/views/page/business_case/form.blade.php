@@ -1,3 +1,4 @@
+@inject('setting',App\Models\Setting::class)
 <div class="table-responsive js-table-cost-benefit">
     <input type="hidden" class="js-project-id" value="{{$project->id}}">
     <table class="table table-striped js-table-assessment">
@@ -135,7 +136,7 @@
                 <textarea class="tinymce js-bc_social_community"
                           name="social_community_text"
                     {!! $project?->business_case?->social_community_and_government != 1 ? 'style="display: none"' : '' !!}>
-                    {!! $project?->business_case?->social_community_and_government !!}
+                    {!! $project?->business_case?->social_community_and_government_text !!}
                 </textarea>
                 <input type="hidden" class="js-hidden-validate" name="validate_bc_social_community_and_government">
                 <div class="col-md-12 txt-danger js-error-message"></div>
@@ -333,6 +334,26 @@
                 </textarea>
                 <input type="hidden" class="js-hidden-validate" name="validate_bc_additional_information">
                 <div class="col-md-12 txt-danger js-error-message"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Attachment File
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <div class="col-md-12">
+                    <input class="form-control js-bc-attachment_file col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                    @if($project?->getAllAttachment($project->business_case?->attachment,'business_case'))
+                        <a target="_blank"
+                           href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}">
+                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                            {{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}
+                        </a>
+                    @endif
+                </div>
             </td>
         </tr>
         </tbody>

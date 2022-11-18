@@ -1,3 +1,4 @@
+@inject('setting',App\Models\Setting::class)
 <div class="row js-form-project-detail m-b-30 {{!$errors->any() ? '' : 'd-none'}}">
     @if($project?->business_case)
         <div class="table-responsive">
@@ -188,6 +189,24 @@
                     <td>Cost Estimate :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->cost_estimate > 0 ? 1 : 0) !!}</td>
                     <td>$ {{number_format($project?->business_case?->cost_estimate,0,',','.') ?: 0}}</td>
+                </tr>
+                <tr>
+                    <td>Attachment</td>
+                    <td>
+                        {!! $project?->getCheckTemplate($project?->business_case?->attachment ? 1 : 0) !!}
+                    </td>
+                    <td>
+                        <ul>
+                            @if($project?->getAllAttachment($project->business_case?->attachment, 'business_case'))
+                                <li>
+                                    <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}">
+                                        <i class="fa mb-2 fa-file-text-o txt-info"></i>
+                                        {{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BusinessCaseAssessment;
 use App\Models\Project;
 use App\Models\RiskAssessments;
+use App\Models\Setting;
 use App\Models\User;
 use App\Service\BusinessCaseService;
 use App\Service\ProjectService;
@@ -88,6 +89,7 @@ class BusinessCaseAssessmentController extends Controller
      */
     public function store(Request $request)
     {
+        $documentController = new DocumentController();
         $this->authorize('create');
         $businessCaseService = new BusinessCaseService();
         $projectService = new ProjectService();
@@ -145,6 +147,16 @@ class BusinessCaseAssessmentController extends Controller
                 $business_case->status = 'DRAFT';
             }
 
+            $documentRequest = collect([]);
+            if(isset($request->attachment)) $documentRequest->put('business_case',$request->attachment);
+
+            if(sizeof($documentRequest) > 0){
+                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name);
+                if(sizeof($documents) > 0){
+                    $business_case->attachment = $documents;
+                }
+            }
+
             $business_case->saveOrFail();
             if($riskAssessment){
                 $business_case->riskAssessment()->save(
@@ -163,9 +175,7 @@ class BusinessCaseAssessmentController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'req' => $request->people,
-            ]);
+            return response()->json($e->getMessage());
         }
     }
 
@@ -219,6 +229,7 @@ class BusinessCaseAssessmentController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        $documentController = new DocumentController();
         $this->authorize('update');
         $businessCaseService = new BusinessCaseService();
         $projectService = new ProjectService();
@@ -269,6 +280,23 @@ class BusinessCaseAssessmentController extends Controller
             }
             if($request->status == 'draft'){
                 $businessCaseAssessment->status = 'DRAFT';
+            }
+
+            $documentRequest = collect([]);
+            $existingDocument = collect([]);
+
+            if(isset($request->attachment)) $documentRequest->put('business_case',$request->attachment);
+
+            if($businessCaseAssessment?->attachment){
+                $existingDocuments = json_decode($businessCaseAssessment?->attachment,true);
+                foreach ($existingDocuments as $key => $value){
+                    $existingDocument->put($key,$value);
+                }
+            }
+
+            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name);
+            if(sizeof($documents) > 0){
+                $businessCaseAssessment->attachment = $documents;
             }
 
             $businessCaseAssessment->saveOrFail();

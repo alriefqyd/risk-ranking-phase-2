@@ -82,7 +82,7 @@ class DocumentController extends Controller
         $documents = collect([]);
         if($documentRequests) {
 
-            $allowedFileExtension = ['docx','doc','pdf','xlsx','csv','xlx'];
+            $allowedFileExtension = ['docx','doc','pdf','xlsx','csv','xlx','ppt','pptx'];
 
             $files = $documentRequests;
             foreach ($files as $key => $file){

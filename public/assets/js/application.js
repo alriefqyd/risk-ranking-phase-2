@@ -1690,9 +1690,14 @@ $(function() {
         var _financial_evaluation_text = $('.js-bc_financial_evaluation').val();
         var _additional_information_text = $('.js-bc_additional_information').val();
 
+        var _attachment = $('.js-bc-attachment_file')[0].files
+
         var formData = new FormData();
         formData.append('problem_statement_and_objective_text',_problem_statement_text)
         if (_form.data('method') === 'put') formData.append('_method', 'put')
+        if(_attachment.length > 0) formData.append('attachment',_attachment[0])
+        formData.append('file_category','Business Case')
+
         formData.append('project_alternatives_text',_project_alternative_text)
         formData.append('project_scope_of_work_text',_scope_of_work_text)
         formData.append('major_equipment_text',_major_equipment_text)
@@ -1701,6 +1706,7 @@ $(function() {
         formData.append('social_community_and_government_text',_social_community_text)
         formData.append('financial_evaluation_text',_financial_evaluation_text)
         formData.append('additional_information_text',_additional_information_text)
+        formData.append('project_name',_form.data('name'));
 
         formData.append('project_id',_project_id)
         formData.append('problem_statement_and_objective',setBooleanNumber(_problem_and_objective.is(':checked')))
@@ -1736,6 +1742,7 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    // console.log(data)
                     if (data.status === 200) window.location.href = data.url;
                     else notification('alert', data, '', '')
                 }
