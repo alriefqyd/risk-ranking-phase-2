@@ -7,7 +7,7 @@
         <div class="col-md-7 m-l-50 m-b-10">
             <button class="btn btn-sm btn-success m-t-10 float-end {{!$errors->any() ? '' : 'd-none'}}
                 js-btn-edit_project">
-                {{$project?->business_case ? 'Update' : 'Create'}} <i style="width: 20px; height: 15px;" data-feather="edit"></i>
+                {{$project?->cost_benefits ? 'Update' : 'Create'}} <i style="width: 20px; height: 15px;" data-feather="edit"></i>
             </button>
 
             <button class="btn btn-sm btn-success m-t-10 float-end {{!$errors->any() ? 'd-none' : ''}}

@@ -352,8 +352,8 @@ $(function() {
 
     tinymce.init({
         selector: '.tinymce',
-        plugins: 'table image',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        plugins: 'table image fullscreen lists',
+        toolbar: 'fullscreen | undo redo | fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
         tinycomments_mode: 'embedded',
         menubar: false,
         tinycomments_author: 'Author name',

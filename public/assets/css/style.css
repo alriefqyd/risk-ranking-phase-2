@@ -4294,7 +4294,7 @@ table tbody .border-bottom-warning td {
 .page-wrapper .page-main-header {
   position: fixed;
   top: 0;
-  z-index: 2147483640;
+  z-index: 9;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
