@@ -293,7 +293,9 @@ $(function() {
     if (_notif.length > 0) {
         try {
             var _message = _notif.data('msg')
-            notification('', _message, '')
+            var _status = _notif.data('status')
+            var _template = _notif.data('template') === 'danger' ? 'danger' : ''
+            notification(_template, _message, '',_status)
         } catch (e) {
             console.log(e)
         }
@@ -1131,8 +1133,11 @@ $(function() {
 
     _fel2_submit_form.on('click', function (e) {
         e.preventDefault();
-        tinyMCE.triggerSave();
         var _this = $(this)
+        _this.attr('disabled', 'disabled')
+        _this.find('.loader-34').removeClass('d-none')
+        tinyMCE.triggerSave();
+
         var _form = _this.closest('.js-fel2-form');
         var _project_scope = _form.find('#checkbox-project_scope-fel2');
         var _identify_main_equipment = _form.find('#checkbox-identify_main_equipment');
@@ -1381,6 +1386,9 @@ $(function() {
         e.preventDefault();
         tinymce.triggerSave()
         var _this = $(this)
+        _this.attr('disabled', 'disabled')
+        _this.find('.loader-34').removeClass('d-none')
+
         var _form = _this.closest('.js-fel3-form');
         var _executive_summary = _form.find('#checkbox-executive_summary-fel3');
         var _problem_statement = _form.find('#checkbox-problem_statement_fel3');
@@ -1649,6 +1657,10 @@ $(function() {
         e.preventDefault();
         tinymce.triggerSave();
         var _this = $(this)
+
+        _this.attr('disabled', 'disabled')
+        _this.find('.loader-34').removeClass('d-none')
+
         var _form = _this.closest('.js-bc-form');
         var _problem_and_objective = _form.find('#checkbox-problem_and_objective');
         var _project_alternatives = _form.find('#checkbox-project_alternative');
@@ -2082,7 +2094,6 @@ $(function() {
             if(_check_capex_investment > 0) _check_capex_investment = 0
         }
 
-        console.log(_check_capex_investment)
         if(_check_capex_investment > 0){
             var _data_id = _this.closest('.js-basket-list-detail').find('.js-checkbox-open-bucket').data('id')
             disabledCheckbox(_data_id)

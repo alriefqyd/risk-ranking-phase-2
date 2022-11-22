@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Document;
+use App\Models\Setting;
 use App\Service\ProjectService;
 use App\Service\UserService;
 use Illuminate\Http\Request;
@@ -50,8 +51,28 @@ class DocumentController extends Controller
     }
 
     public function preview(Request $request){
-        $dir = urldecode($request->dir);
-        return response()->file(storage_path('app/documents/'.$dir.'/'. $request->category .'/'.$request->file));
+        try {
+            $dir = urldecode($request->dir);
+            return response()->file(storage_path('app/documents/'.$dir.'/'. $request->category .'/'.$request->file));
+        } catch (\Exception $e){
+            if($request->category == Setting::FOLDER_TYPE['assessment']){
+                $request->session()->flash('page-tab','assessment');
+            }
+            if($request->category == Setting::FOLDER_TYPE['fel1']){
+                $request->session()->flash('page-tab','fel1');
+            }
+            if($request->category == Setting::FOLDER_TYPE['fel2']){
+                $request->session()->flash('page-tab','fel2');
+            }
+            if($request->category == Setting::FOLDER_TYPE['fel3']){
+                $request->session()->flash('page-tab','fel3');
+            }
+            if($request->category == Setting::FOLDER_TYPE['bc']){
+                $request->session()->flash('page-tab','business-case');
+            }
+            $request->session()->flash('alert-error-download', $e->getMessage());
+            return redirect('/project/'.+ $request->id);
+        }
     }
 
     public function uploadDocument(Request $request, $existingDocument, $project_name){

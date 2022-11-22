@@ -7,12 +7,12 @@
                 <tr>
                     <td style="width: 200px">Project Scope : </td>
                     <td style="width: 10px">{!! $project->getCheckTemplate($project?->fel2?->project_scope) !!}</td>
-                    <td style="width: 270px">{!! $project?->fel2?->project_scope_text !!}</td>
+                    <td style="width: 67%">{!! $project?->fel2?->project_scope_text !!}</td>
                 </tr>
                 <tr>
                     <td>Identify Main Equipment  : </td>
                     <td>{!! $project->getCheckTemplate($project?->fel2?->identify_main_equipment) !!}</td>
-                    <td style="width: 270px">{!! $project?->fel2?->identify_main_equipment_text !!}</td>
+                    <td>{!! $project?->fel2?->identify_main_equipment_text !!}</td>
                 </tr>
                 <tr>
                     <td>Boundary and Assumption</td>
@@ -45,7 +45,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Attachment List</td>
+                    <td>Attachment List : </td>
                     <td>
                         {!! $project?->getCheckTemplate($project?->fel2?->attachment ? 1 : 0) !!}
                     </td>
@@ -135,7 +135,7 @@
                             @endif
                             @if($project?->getAllAttachment($project->fel2?->attachment, $setting::FEL2_ATTACHMENT['schedule_level_2']))
                                 <li><p class="m-b-0">Schedule level 2 :</p>
-                                    <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['schedule_level_2'])}}">
+                                    <a target="_blank" href="/preview?id={{$project->id}}&dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['schedule_level_2'])}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['schedule_level_2'])}}
                                     </a>
@@ -143,7 +143,7 @@
                             @endif
                             @if($project?->getAllAttachment($project->fel2?->attachment, $setting::FEL2_ATTACHMENT['cost_estimate']))
                                 <li><p class="m-b-0">Cost Estimate :</p>
-                                    <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate'])}}">
+                                    <a target="_blank" href="/preview?id={{$project->id}}&dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate'])}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate'])}}
                                     </a>

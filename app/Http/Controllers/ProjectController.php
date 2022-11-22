@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -194,6 +195,7 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project){
         $this->authorize('update');
         $projectService = new ProjectService();
+        $path = 'documents/'.$project->project_name;
 
         if($projectService->projectNotAuthorized($project)){
             abort(404);
@@ -229,6 +231,11 @@ class ProjectController extends Controller
 
             $project->save();
             DB::commit();
+
+            if(Storage::exists($path)){
+                rename(Storage::path($path),Storage::path('documents/'.$project->project_name));
+            }
+
         } catch(Exception $e){
             DB::rollback();
             if($request->ajax()) return response()->json($e);

@@ -75,7 +75,7 @@
                         @endif
                         @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['project_level_assessment']))
                             <li><p class="m-b-0">Project level assessment</p>
-                                    <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment'])}}">
+                                    <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment'])}}&dir={{urlencode($project->project_name)}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment'])}}
                                     </a>
@@ -83,7 +83,7 @@
                         @endif
                         @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['stakeholder_list']))
                             <li><p class="m-b-0">Stakeholder list</p>
-                                    <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list'])}}">
+                                    <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list'])}}&dir={{urlencode($project->project_name)}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list'])}}
                                     </a>

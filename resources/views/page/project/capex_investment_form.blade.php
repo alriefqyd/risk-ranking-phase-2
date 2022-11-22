@@ -64,8 +64,8 @@
                     </div>
                 </div>
             @endforeach
-            <input type="hidden" class="js-hidden-sub-basket" name="sub_basket">
-            <input type="hidden" class="js-hidden-basket" name="basket">
+            <input type="hidden" class="js-hidden-sub-basket" value="{{old('sub_basket')}}" name="sub_basket">
+            <input type="hidden" class="js-hidden-basket" value="{{old('basket')}}" name="basket">
         </div>
     </div>
     <div class="col-md-4 js-checkbox-basket-list">

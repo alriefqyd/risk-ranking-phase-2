@@ -72,7 +72,7 @@ class Fel2Controller extends Controller
                 'permit_list' => $request->permit_list,
                 'schedule_project' => $request->schedule_project,
                 'cost_estimate' => $request->cost_estimate,
-                'project_scope_text' => $request->project_scope,
+                'project_scope_text' => $request->project_scope_text,
                 'identify_main_equipment_text' => $request->identify_main_equipment_text,
                 'boundary_and_assumption_text' => $request->boundary_and_assumption_text,
                 'analysis_of_option_text' => $request->analysis_of_option_text,
