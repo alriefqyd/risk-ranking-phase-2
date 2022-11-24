@@ -85,5 +85,22 @@
             </div>
         </div>
     </div>
+    @if(!$isAdmin)
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header pb-0">
+                            <h6>Remark</h6>
+                        </div>
+                        <hr>
+                        <div class="card-body">
+                            <p>{!! $project?->note !!}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     @include('page.project.notification')
 @endsection

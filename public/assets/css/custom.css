@@ -137,3 +137,25 @@
     margin:0 !important;
 }
 
+.custom-notification {
+    top: 80px;
+    position: absolute;
+    z-index: 8;
+    background-color: #fff;
+    border: 1px solid #f5f7fb;
+    -webkit-transition: all linear 0.3s;
+    transition: all linear 0.3s; }
+.custom-notification li a svg {
+    margin-top: 0 !important; }
+.custom-notification li a svg path, .onhover-show-div li a svg line {
+    color: #242934 !important; }
+
+.noti-danger {
+    /*cursor: pointer;*/
+}
+
+.custom-notification {
+    overflow: auto;
+    height: auto;
+    max-height: 400px;
+}

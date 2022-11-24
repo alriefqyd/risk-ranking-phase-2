@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\Setting;
+use App\Models\User;
+use App\Notifications\ProjectNote;
 use App\service\Fel2Service;
 use App\Service\ProjectService;
 use App\Service\UserService;
@@ -11,8 +13,10 @@ use App\service\Fel1Service;
 use App\service\Fel3Service;
 use App\service\BusinessCaseService;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Service\AssessmentService;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -60,80 +64,6 @@ class HomeController extends Controller
            'countBCDraft' => $countBCDraft,
            'countBCPublish' => $countBCPublish,
        ]);
-
-
-
-//       $filters = request(['q','owner','sponsor','project_category','project_type']);
-//       $project = Project::with(['createdBy','assessment','fel1','fel2','fel3','business_case','cost_benefits']);
-//       /*
-//       if(Auth::user()->role == User::ROLE['admin-dept']){
-//           $project = $project->orwhere('owner',Auth::user()->department);
-//       }*/
-//       $userId = auth()->user()->id;
-//       $department = auth()->user()->department;
-//       $assessments = Assessment::with(['project']);
-//       $fel1 = Fel1::with('project');
-//       $fel2 = Fel2::with('project');
-//       $fel3 = Fel3::with('project');
-//       $bc = BusinessCaseAssessment::with('project');
-//       $projectCategory = Setting::PROJECT_CATEGORY;
-//       $projectType = Setting::where('setting_type',Setting::PROJECT_TYPE)->get();
-//       $documents = Document::with('owners')->where('set_home',1);
-//       if(!$userService->isAdmin() && !$userService->isViewer()){
-//           $project = $project->where('owner',$department);
-//           $assessments = $assessments->whereHas('project',function($q){
-//               return $q->where('owner',Auth::user()->department);
-//           });
-//           $fel1 = $fel1->whereHas('project',function($q){
-//               return $q->where('owner',Auth::user()->department);
-//           });
-//           $fel2 = $fel2->whereHas('project',function($q){
-//               return $q->where('owner',Auth::user()->department);
-//           });
-//           $fel3 = $fel3->whereHas('project',function($q){
-//               return $q->where('owner',Auth::user()->department);
-//           });
-//           $bc = $bc->whereHas('project',function($q){
-//               return $q->where('owner',Auth::user()->department);
-//           });
-//           $documents = $documents->where('owner',auth()->user()->department)
-//               ->orWhere('owner','*');
-//       }
-//       $assessment = $assessments->get();
-//       $sponsorId = auth()->user()->department;
-//       if($userService->isAdmin()){
-//           $sponsorId = null;
-//       }
-//
-//       $documents = $documents->limit(4)->orderBy('updated_at','desc')->get();
-//       $projectCount = $project->count();
-//       $projects = $project->filter($filters)->orderBy('created_at', 'DESC')->paginate(10)->withQueryString();
-//       return view('home.index',[
-//           'projectCount' => $projectCount,
-//           'projects' => $projects,
-//           'assessment' => $assessment,
-//           'draft_assessment' => $this->getDraft($assessments),
-//           'publish_assessment' => $this->getPublish($assessments),
-//           'fel1' => $fel1->get(),
-//           'publish_fel1'=> $this->getPublish($fel1),
-//           'draft_fel1' => $this->getDraft($fel1),
-//           'fel2' => $fel2->get(),
-//           'publish_fel2'=> $this->getPublish($fel2),
-//           'draft_fel2' => $this->getDraft($fel2),
-//           'fel3' => $fel3->get(),
-//           'publish_fel3'=> $this->getPublish($fel3),
-//           'draft_fel3' => $this->getDraft($fel3),
-//           'bc' => $bc->get(),
-//           'publish_bc'=> $this->getPublish($bc),
-//           'draft_bc' => $this->getDraft($bc),
-//           'department' => $projectService->getDepartment(Department::TYPE['department'],null),
-//           'subDepartment' => $projectService->getDepartment(Department::TYPE['sub-department'], null),
-//           'projectCategory' => $projectCategory,
-//           'project_type' => $projectType,
-//           'isAdmin' => $userService->isAdmin(),
-//           'bc_status' => Project::BC_STATUS,
-//           'documents' => $documents
-//       ]);
    }
 
    public function getDraft($data){
@@ -166,7 +96,6 @@ class HomeController extends Controller
             array_push($social_community,$this->getDataByProjectType(Setting::SOCIAL_COMMUNITY_REPUTATION,$l));
         }
 
-//       dd($productive);
         $result = array(
             'label' => $label,
             'productive' => $productive,

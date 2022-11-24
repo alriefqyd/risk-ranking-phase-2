@@ -53,5 +53,5 @@ Route::get('/getSponsorByOwner',[\App\Http\Controllers\ProjectController::class,
 Route::post('/cost_benefit',[\App\Http\Controllers\CostBenefitController::class,'store'])->name('cost_benefit_post')->middleware(['auth']);
 
 Route::get('/preview',[\App\Http\Controllers\DocumentController::class,'preview'])->name('preview_document')->middleware(['auth']);
-
+Route::post('/markNotification', [\App\Http\Controllers\ProjectController::class,'markNotification'])->name('notif')->middleware(['auth']);
 require __DIR__.'/auth.php';

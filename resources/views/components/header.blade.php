@@ -7,6 +7,9 @@
         </div>
         <div class="nav-right col pull-right right-menu p-0">
             <ul class="nav-menus">
+                @if(auth()->user()->role != \App\Models\User::ROLE['admin'])
+                    @livewire('notifications')
+                @endif
                 <li class="onhover-dropdown p-0">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

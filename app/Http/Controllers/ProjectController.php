@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Sending;
 use App\Models\Assessment;
 use App\Models\CapexInvestment;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\RiskAssessments;
 use App\Models\Setting;
+use App\Notifications\ProjectNote;
 use App\Service\ProjectService;
 use App\Service\SettingService;
 use App\Service\UserService;
 use Exception;
+use \App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -182,7 +187,8 @@ class ProjectController extends Controller
             'riskLevel' => $riskLevel,
             'riskMatrix' => $riskMatrix,
             'probability' => $probability,
-            'sessionUpdate' => Session::get('projectUpdate')
+            'sessionUpdate' => Session::get('projectUpdate'),
+            'isAdmin' => auth()->user()->role == User::ROLE['admin'],
         ]);
     }
     /**
@@ -196,6 +202,8 @@ class ProjectController extends Controller
         $this->authorize('update');
         $projectService = new ProjectService();
         $path = 'documents/'.$project->project_name;
+        $userService = new UserService();
+        $user = $userService->getCurrentUser();
 
         if($projectService->projectNotAuthorized($project)){
             abort(404);
@@ -215,7 +223,15 @@ class ProjectController extends Controller
 
         DB::beginTransaction();
         try{
-            if($request->has('note')) $project->note = $request->note;
+            if($request->has('note')) {
+                $pn = new ProjectNote(null);
+                $project->note = $request->note;
+                DB::table('notifications')->where('project_id',$project->id)
+                    ->where('notifiable_id',$project->created_by)
+                    ->where('type',get_class($pn))
+                    ->whereNull('read_at')->delete();
+                event(new Sending($project));
+            }
             if($request->has('bc_status')) $project->bc_status = $request->bc_status;
 
             if(!$request->isQuickUpdate){
@@ -238,7 +254,7 @@ class ProjectController extends Controller
 
         } catch(Exception $e){
             DB::rollback();
-            if($request->ajax()) return response()->json($e);
+            if($request->ajax()) return response()->json($e->getMessage());
             return redirect('project/create')->withErrors($e->getMessage());
         }
 
@@ -302,5 +318,32 @@ class ProjectController extends Controller
             );
         }
         return response()->json($response);
+    }
+
+    public function sendNotification(Request $request){
+        $user = User::first();
+        $details = [
+            'greeting' => 'Hi Artisan',
+            'body' => 'This is my first notification from ItSolutionStuff.com',
+            'thanks' => 'Thank you for using ItSolutionStuff.com tuto!',
+            'actionText' => 'View My Site',
+            'actionURL' => url('/'),
+            'order_id' => 101
+        ];
+
+        Notification::send($user, new ProjectNote($details));
+        dd($user->notifications);
+
+    }
+
+    /**
+     * Unread Notification
+     */
+    public function markNotification(Request $request){
+        auth()->user()->unreadNotifications
+            ->when($request->input('id'), function ($query) use ($request){
+                return $query->where('id',$request->input('id'));
+            })->markAsRead();
+        return response()->noContent();
     }
 }

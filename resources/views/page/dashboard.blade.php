@@ -1,6 +1,11 @@
 @extends('main')
 @section('main')
     <div class="container-fluid dashboard-default-sec">
+        <div class="col-sm-12">
+{{--            @foreach($notifications as $notification)--}}
+{{--                <li>{{$notification->data['note']}}</li>--}}
+{{--            @endforeach--}}
+        </div>
         <div class="col-sm-12 col-xl-12">
             <div class="card card-absolute">
                 <div class="card-header bg-primary">

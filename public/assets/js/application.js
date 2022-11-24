@@ -40,9 +40,22 @@ $(function() {
         $('#detail_note_project').find('#editor1').attr('data-note', _val);
     });
 
-    $('#detail_note_project .modal-note').click(function (e) {
-        // start here
-    });
+    /**
+     * Handle for open notifications
+     */
+    $('.js-notification-box').on('click',function(){
+        var _this = $(this)
+        var _dropdown_notification =  _this.siblings('.notification-dropdown')
+        if(_dropdown_notification.hasClass('d-none')){
+            _dropdown_notification.removeClass('d-none')
+            _this.closest('.onhover-dropdown-custom').css('padding','9px')
+            _this.closest('.onhover-dropdown-custom').css('background-color','#e9f0ee')
+        } else {
+            _dropdown_notification.addClass('d-none')
+            _this.closest('.onhover-dropdown-custom').css('padding','9px')
+            _this.closest('.onhover-dropdown-custom').css('background-color','white')
+        }
+    })
 
     /**
      * handle for open modal note
@@ -2169,6 +2182,34 @@ $(function() {
             }
         }
     })
+
+    /**
+     * Notification
+     */
+    function disabledViewNotification(){
+        $('.js-read-notification').each(function(){
+            $(this).click(false)
+        })
+    }
+
+    $(document).on('click', '.js-read-notification', function (e) {
+        e.preventDefault();
+        disabledViewNotification()
+        var _this = $(this)
+        var _id = _this.data('notif-id')
+        $(this).closest('.row').find('.js-loader-notification').removeClass('d-none')
+        $.ajax({
+            url:'/markNotification',
+            method:'post',
+            data:{
+                id:_id
+            },
+            success:function(){
+                window.location.href=_this.attr('href');
+            }
+        })
+    })
+
 })
 
 

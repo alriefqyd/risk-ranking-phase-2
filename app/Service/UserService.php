@@ -49,4 +49,9 @@ class UserService
     public function isAdminDept(){
         return Auth::user()->role == User::ROLE['admin-dept'];
     }
+
+    public function getCurrentUser(){
+        $user = User::where('id', auth()->user()->id);
+        return $user;
+    }
 }
