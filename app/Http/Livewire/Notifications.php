@@ -10,11 +10,13 @@ class Notifications extends Component
     public function render()
     {
         $user = User::find(auth()->user()->id);
-        $notifications = $user->unreadNotifications;
+        $unreadNotifications = $user->unreadNotifications;
+        $notifications = $user->notifications;
         return view('livewire.notifications',[
             'notifications' => $notifications,
             'user' => $user,
-            'numOfNotification' => sizeof($notifications)
+            'numOfNotification' => sizeof($notifications),
+            'unreadNotification' => sizeof($unreadNotifications)
         ]);
     }
 }
