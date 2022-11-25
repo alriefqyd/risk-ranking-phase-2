@@ -101,6 +101,13 @@ class Setting extends Model
         'THREE_HUNDRED_THOUSAND' => 300000,
     ];
 
+    public const COMPLEXITY_ASSESSMENT_CATEGORY = [
+        'technology_characteristic' => 'Technology Characteristic',
+        'engineering_characteristic' => 'Engineering Characteristic',
+        'owner_business_impact_characteristic' => 'Owner Business Impact Characteristic',
+        'external_approval_characteristic' => 'External Approval Characteristic',
+    ];
+
     public const PROJECT_TYPE = 'PROJECT TYPE';
 
     public const PROJECT_TYPE_BETTERMENT = 'betterment';

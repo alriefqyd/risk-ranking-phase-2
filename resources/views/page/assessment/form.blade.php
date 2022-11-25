@@ -188,7 +188,7 @@
             </td>
         </tr>
         <tr>
-            <td>Complexity Score :</td>
+            <td>Complexity Analyzis :</td>
             <td style="width: 100px">
                 <div class="checkbox checkbox-primary">
                     <input id="checkbox-level"
@@ -198,7 +198,6 @@
                 </div>
             </td>
             <td>
-                <small>(According to complexity assessment, this project has score ……).</small>
                 {{--<textarea class="tinymce js-text-level"
                     {!! $project?->assessment?->level_project != 1 ? 'style="display: none"' : '' !!}>
                     {{$project?->assessment?->level_project_text}}
@@ -394,10 +393,104 @@
                             </tr>
                         </table>
                     </div>
-                    <input type="hidden" name="score" value="{{$project?->assessment?->complexity_score_assessment}}" class="js-complexity-score-label-val">
+                    <input type="hidden" name="score" value="{{$project?->assessment?->complexity_analyzis_score}}" class="js-complexity-analyzis-score-label-val">
                     <input type="hidden" name="complexity_analysis_type" value="{{$project?->assessment?->complexity_analysis_type}}" class="js-complexity-label-val">
-                    Score : <span class="js-complexity-score-label">{{$project?->assessment?->complexity_score_assessment}}</span></br>
+                    Score : <span class="js-complexity-score-label">{{$project?->assessment?->complexity_analyzis_score}}</span></br>
                     Complexity : <span class="js-complexity-label">{{$project?->assessment?->complexity_analysis_type}}</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Project Complexity Assessment : </td>
+            <td>
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox-complexity-assessment"
+                           {{$project?->assessment?->complexity_assessment_checkbox == 1 ? 'checked' : ''}}
+                           class="js-checkbox-assessment" type="checkbox">
+                    <label for="checkbox-complexity-assessment"></label>
+                </div>
+            </td>
+            <td>
+                <small>(According to complexity assessment, this project has score ……).</small>
+                <div class="js-complexity-assessment-head
+                    {!! $project?->assessment?->complexity_assessment_checkbox != 1 ? 'd-none' : '' !!}">
+                <table style="width: 100%">
+                    <tr>
+                        <td>
+                            Technology Characteristic
+                        </td>
+                        <td>
+                            <select id="u-rating-movie" data-idx="0" class="rating-custom js-complexity-assessment-technology js-complexity-assessment-score" name="rating" autocomplete="off">
+                                @for($i=1;$i<6;$i++)
+                                    <option value></option>
+                                    @if($i > 0)
+                                        <option
+                                            {{$project?->getProjectAssessmentComplexity('complexity_assessment_technology') == $i ? 'selected' : ''}}
+                                            value="{{$i}}">{{$i}}</option>
+                                    @endif
+                                @endfor
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Engineering Characteristic
+                        </td>
+                        <td>
+                            <select id="u-rating-movie" data-idx="1" class="rating-custom js-complexity-assessment-engineering js-complexity-assessment-score" name="rating" autocomplete="off">
+                                @for($i=1;$i<6;$i++)
+                                    <option value></option>
+                                    @if($i > 0)
+                                        <option
+                                            {{$project?->getProjectAssessmentComplexity('complexity_assessment_engineering') == $i ? 'selected' : ''}}
+                                            value="{{$i}}">{{$i}}</option>
+                                    @endif
+                                @endfor
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Owner Business Impact Characteristic
+                        </td>
+                        <td>
+                            <select id="u-rating-movie" data-idx="2" class="rating-custom js-complexity-assessment-owner_business js-complexity-assessment-score" name="rating" autocomplete="off">
+                                @for($i=1;$i<6;$i++)
+                                    <option value></option>
+                                    @if($i > 0)
+                                        <option
+                                            {{$project?->getProjectAssessmentComplexity('complexity_assessment_owner_business') == $i ? 'selected' : ''}}
+                                            value="{{$i}}">{{$i}}</option>
+                                    @endif
+                                @endfor
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            External Approval Characteristic
+                        </td>
+                        <td>
+                            <select id="u-rating-movie" data-idx="3" class="rating-custom js-complexity-assessment-external-approval js-complexity-assessment-score" name="rating" autocomplete="off">
+                                @for($i=1;$i<6;$i++)
+                                    <option value></option>
+                                    @if($i > 0)
+                                        <option
+                                            {{$project?->getProjectAssessmentComplexity('complexity_assessment_external_approval') == $i ? 'selected' : ''}}
+                                            value="{{$i}}">{{$i}}</option>
+                                    @endif
+                                @endfor
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>
+                            <p class="f-w-700 js-label-project-complexity-score">{{$project?->assessment?->complexity_score_assessment ?: 0}}</p>
+                            <input type="hidden" class="js-hidden-project-level-assessment-score" value="{{$project?->assessment?->complexity_score_assessment ?: 0}}">
+                        </td>
+                    </tr>
+                </table>
                 </div>
             </td>
         </tr>

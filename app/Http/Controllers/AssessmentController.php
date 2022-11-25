@@ -107,9 +107,11 @@ class AssessmentController extends Controller
                 'cost_estimate' => $request->cost_estimate,
                 'level_project' => $request->level_project,
                 'alternative_to_proposal' => $request->alternative_to_proposal,
+                'complexity_assessment_checkbox' => $request->complexity_assessment_checkbox,
                 'note'  => $request->note,
                 'detail_estimate_cost' => $request->detail_estimate_cost,
                 'complexity_score_assessment' => $request->complexity_score_assessment,
+                'complexity_analyzis_score' => $request->complexity_analyzis_score,
                 'user_id' => Auth::user()->id,
                 'problem_statement_text' => $request->problem_statement_text,
                 'objective_text' => $request->objective_text,
@@ -143,9 +145,17 @@ class AssessmentController extends Controller
             }
 
             $complexityAnalysis = $this->saveComplexityAnalysis($request);
+            $complexity_assessment = $this->saveComplexityAssessment($request);
+            if(!$request->complexity_assessment_checkbox) {
+                $complexity_assessment = NULL;
+                $assessment->complexity_score_assessment = NULL;
+                $assessment->level_project_text = NULL;
+            }
+
 
             $assessment->complexity_analysis_type = $request->complexity_analysis_type;
             $assessment->complexity_analysis = $complexityAnalysis;
+            $assessment->complexity_assessment = $complexity_assessment;
 
             $assessment->saveOrFail();
             DB::commit();
@@ -234,12 +244,14 @@ class AssessmentController extends Controller
             $assessment->impact_if_not_executed = $request->impact_if_not_executed;
             $assessment->cost_estimate = $request->cost_estimate;
             $assessment->level_project = $request->level_project;
+            $assessment->complexity_assessment_checkbox = $request->complexity_assessment_checkbox;
             $assessment->note = $request->note;
             $assessment->status = $assessmentService->getStatus($request);
             $assessment->alternative_to_proposal = $request->alternative_to_proposal;
             $assessment->user_id = Auth::user()->id;
             $assessment->detail_estimate_cost = $request->detail_estimate_cost;
             $assessment->complexity_score_assessment = $request->complexity_score_assessment;
+            $assessment->complexity_analyzis_score = $request->complexity_analyzis_score;
             $assessment->problem_statement_text = $request->problem_statement_text;
             $assessment->objective_text = $request->objective_text;
             $assessment->level_project_text = $request->level_project_text;
@@ -277,9 +289,20 @@ class AssessmentController extends Controller
             }
 
             $complexityAnalysis = $this->saveComplexityAnalysis($request);
+            $complexity_assessment = $this->saveComplexityAssessment($request);
 
             $assessment->complexity_analysis_type = $request->complexity_analysis_type;
             $assessment->complexity_analysis = $complexityAnalysis;
+
+
+            if(!$request->complexity_assessment_checkbox) {
+                $complexity_assessment = NULL;
+                $assessment->complexity_score_assessment = NULL;
+                $assessment->level_project_text = NULL;
+            }
+
+            $assessment->complexity_assessment= $complexity_assessment;
+
 
             $assessment->saveOrFail();
             DB::commit();
@@ -339,7 +362,22 @@ class AssessmentController extends Controller
         if(isset($request->require_environmental_license)) $complexityAnalysis->put('require_environmental_license' , $request->require_environmental_license);
         if(isset($request->require_community_involvement)) $complexityAnalysis->put('require_community_involvement' , $request->require_community_involvement);
         if(isset($request->require_purchase)) $complexityAnalysis->put('require_purchase' , $request->require_purchase);
-        if(isset($request->score)) $complexityAnalysis->put('score' , $request->score);
+        if(isset($request->complexity_analyzis_score)) $complexityAnalysis->put('score' , $request->complexity_analyzis_score);
+
+        return $complexityAnalysis;
+    }
+
+    /**
+     * Save Complexity Assessment
+     * @return \Illuminate\Support\Collection
+     */
+    public function saveComplexityAssessment(Request $request){
+        $complexityAnalysis = collect([]);
+
+        if(isset($request->complexity_assessment_technology)) $complexityAnalysis->put('complexity_assessment_technology' , $request->complexity_assessment_technology);
+        if(isset($request->complexity_assessment_engineering)) $complexityAnalysis->put('complexity_assessment_engineering' , $request->complexity_assessment_engineering);
+        if(isset($request->complexity_assessment_owner_business)) $complexityAnalysis->put('complexity_assessment_owner_business' , $request->complexity_assessment_owner_business);
+        if(isset($request->complexity_assessment_external_approval)) $complexityAnalysis->put('complexity_assessment_external_approval' , $request->complexity_assessment_external_approval);
 
         return $complexityAnalysis;
     }

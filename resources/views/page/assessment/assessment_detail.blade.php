@@ -68,13 +68,98 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Complexity Score Assessment :</td>
+                    <td>Complexity Analysis :</td>
                     <td>
 
                     </td>
                     <td>
-                        <p>Score : {!! $project->assessment->complexity_score_assessment !!}</p>
+                        <p>Score : {!! $project->assessment->complexity_analyzis_score !!}</p>
                         <p>Complexity : {!! $project?->assessment?->complexity_analysis_type !!}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Complexity Score Assessment :</td>
+                    <td>
+                        {!! $project->getCheckTemplate($project->assessment->complexity_assessment_checkbox) !!}</td>
+                    </td>
+                    <td>
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    Technology Characteristic
+                                </td>
+                                <td>
+                                    <select data-readonly="true" id="u-rating-movie" data-idx="0" class="rating-custom js-complexity-assessment-technology js-complexity-assessment-score" name="rating" autocomplete="off">
+                                        @for($i=1;$i<6;$i++)
+                                            <option value></option>
+                                            @if($i > 0)
+                                                <option
+                                                    {{$project?->getProjectAssessmentComplexity('complexity_assessment_technology') == $i ? 'selected' : ''}}
+                                                    value="{{$i}}">{{$i}}</option>
+                                            @endif
+                                        @endfor
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Engineering Characteristic
+                                </td>
+                                <td>
+                                    <select data-readonly="true" id="u-rating-movie" data-idx="1" class="rating-custom js-complexity-assessment-engineering js-complexity-assessment-score" name="rating" autocomplete="off">
+                                        @for($i=1;$i<6;$i++)
+                                            <option value></option>
+                                            @if($i > 0)
+                                                <option
+                                                    {{$project?->getProjectAssessmentComplexity('complexity_assessment_engineering') == $i ? 'selected' : ''}}
+                                                    value="{{$i}}">{{$i}}</option>
+                                            @endif
+                                        @endfor
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Owner Business Impact Characteristic
+                                </td>
+                                <td>
+                                    <select data-readonly="true" id="u-rating-movie" data-idx="2" class="rating-custom js-complexity-assessment-owner_business js-complexity-assessment-score" name="rating" autocomplete="off">
+                                        @for($i=1;$i<6;$i++)
+                                            <option value></option>
+                                            @if($i > 0)
+                                                <option
+                                                    {{$project?->getProjectAssessmentComplexity('complexity_assessment_owner_business') == $i ? 'selected' : ''}}
+                                                    value="{{$i}}">{{$i}}</option>
+                                            @endif
+                                        @endfor
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    External Approval Characteristic
+                                </td>
+                                <td>
+                                    <select data-readonly="true" id="u-rating-movie" data-idx="3" class="rating-custom js-complexity-assessment-external-approval js-complexity-assessment-score" name="rating" autocomplete="off">
+                                        @for($i=1;$i<6;$i++)
+                                            <option value></option>
+                                            @if($i > 0)
+                                                <option
+                                                    {{$project?->getProjectAssessmentComplexity('complexity_assessment_external_approval') == $i ? 'selected' : ''}}
+                                                    value="{{$i}}">{{$i}}</option>
+                                            @endif
+                                        @endfor
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>
+                                    <p class="f-w-700 js-label-project-complexity-score">{{$project?->assessment?->complexity_score_assessment ?: 0}}</p>
+                                    <input type="hidden" class="js-hidden-project-level-assessment-score" value="{{$project?->assessment?->complexity_score_assessment ?: 0}}">
+                                </td>
+                            </tr>
+                        </table>
                     </td>
                 </tr>
                 <tr>

@@ -220,6 +220,13 @@ class Project extends Model
         return $name;
     }
 
+    public function getProjectAssessmentComplexity($key){
+        $data = $this?->assessment?->complexity_assessment;
+        if(!$data) return '';
+        $data = json_decode($data,true);
+        return $data[$key];
+    }
+
 
 
 }

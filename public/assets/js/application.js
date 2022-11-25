@@ -402,12 +402,18 @@ $(function() {
             if (_editor.length < 1 && __this.closest('tr').find('.js-complexity-analysis-head').length > 0) {
                 __this.closest('tr').find('.js-complexity-analysis-head').removeClass('d-none')
             }
+            if (_editor.length < 1 && __this.closest('tr').find('.js-complexity-assessment-head').length > 0) {
+                __this.closest('tr').find('.js-complexity-assessment-head').removeClass('d-none')
+            }
         } else {
             if (_editor.length < 1 && __this.closest('tr').find('.js-cost-estimate').length > 0) {
                 __this.closest('tr').find('.js-cost-estimate').addClass('d-none');
             }
             if (_editor.length < 1 && __this.closest('tr').find('.js-complexity-analysis-head').length > 0) {
                 __this.closest('tr').find('.js-complexity-analysis-head').addClass('d-none')
+            }
+            if (_editor.length < 1 && __this.closest('tr').find('.js-complexity-assessment-head').length > 0) {
+                __this.closest('tr').find('.js-complexity-assessment-head').addClass('d-none')
             }
             _editor.addClass('d-none');
             if (_editor.length > 0) {
@@ -437,6 +443,7 @@ $(function() {
         var _check_cost_estimate = $('#checkbox-cost-estimate')
         var _check_level = $('#checkbox-level')
         var _check_detail_cost = $('#checkbox-detail-estimate')
+        var _check_project_complexity_assessment = $('#checkbox-complexity-assessment')
         var _text_problem_statement = _check_problem_statement.is(':checked') ? $('.js-text-problem-statement').val() : ''
         var _text_objective = _check_objective.is(':checked') ? $('.js-text-objective').val() : ''
         var _text_project_scope = _check_project_scope.is(':checked') ? $('.js-text-project-scope').val() : ''
@@ -452,11 +459,11 @@ $(function() {
         var _url_submit = _form.attr('action')
         var _type = _form.attr('method');
         var _status = _this.data('status') ? _this.data('status') : 'draft';
-        var _complexity_sore = $('.js-complexity-score-label-val').val();
+        var _complexity_score_analysis = $('.js-complexity-analyzis-score-label-val').val();
         var _complexity_analysis_type = $('.js-complexity-label-val').val();
 
         var _new_text_level_project = $('.js-complexity-label-val').val();
-        var _new_score = $('.js-complexity-score-label-val') .val();
+        var _complexity_score_assessment = $('.js-hidden-project-level-assessment-score').val();
 
         var _investment_just_purchase = $('input[name="investment_just_purchase"]:checked').val();
         var _needs_engineering_development = $('input[name="needs_engineering_development"]:checked').val();
@@ -469,6 +476,11 @@ $(function() {
         var _require_environmental_license = $('input[name="require_environmental_license"]:checked').val();
         var _require_community_involvement = $('input[name="require_community_involvement"]:checked').val();
         var _require_purchase = $('input[name="require_purchase"]:checked').val();
+
+        var _complexity_assessment_technology = $('.js-complexity-assessment-technology').val()
+        var _complexity_assessment_engineering = $('.js-complexity-assessment-engineering').val()
+        var _complexity_assessment_owner_business = $('.js-complexity-assessment-owner_business').val()
+        var _complexity_assessment_external_approval = $('.js-complexity-assessment-external-approval').val()
 
         _this.attr('disabled', 'disabled')
         _this.find('.loader-34').removeClass('d-none')
@@ -506,6 +518,7 @@ $(function() {
         formData.append('level_project', setBooleanNumber(_check_level.is(':checked')))
         formData.append('alternative_to_proposal', setBooleanNumber(_check_alternative.is(':checked')))
         formData.append('detail_estimate_cost', setBooleanNumber(_check_detail_cost.is(':checked')))
+        formData.append('complexity_assessment_checkbox', setBooleanNumber(_check_project_complexity_assessment.is(':checked')))
         formData.append('problem_statement_text', _text_problem_statement)
         formData.append('objective_text', _text_objective)
         formData.append('project_scope_text', _text_project_scope)
@@ -516,7 +529,8 @@ $(function() {
         formData.append('cost_estimate_text', _text_cost_estimate)
         formData.append('level_project_text', _text_complexity_level)
         formData.append('detail_estimate_cost_text', _text_detail_estimate)
-        formData.append('complexity_score_assessment', _new_score)
+        formData.append('complexity_score_assessment', _complexity_score_assessment)
+        formData.append('complexity_analyzis_score', _complexity_score_analysis)
         formData.append('status', _status)
         formData.append('investment_just_purchase',_investment_just_purchase ?? '');
         formData.append('needs_engineering_development',_needs_engineering_development ?? '');
@@ -529,8 +543,12 @@ $(function() {
         formData.append('require_community_involvement',_require_community_involvement ?? '');
         formData.append('require_purchase',_require_purchase ?? '');
         formData.append('transportation_under_vale',_transportation_under_vale ?? '');
-        formData.append('score',_complexity_sore ?? '');
+        // formData.append('score',_complexity_sore ?? '');
         formData.append('complexity_analysis_type',_complexity_analysis_type ?? '')
+        formData.append('complexity_assessment_technology',_complexity_assessment_technology ?? '')
+        formData.append('complexity_assessment_engineering',_complexity_assessment_engineering ?? '')
+        formData.append('complexity_assessment_owner_business',_complexity_assessment_owner_business ?? '')
+        formData.append('complexity_assessment_external_approval',_complexity_assessment_external_approval ?? '')
 
         if(_form.valid()){
             $.ajax({
@@ -757,12 +775,59 @@ $(function() {
         e.preventDefault();
     });
 
+    var _matrix_level = [
+        ['PDS','PDS','PDS'],
+        ['COMPLEX','COMPLEX','COMPLEX'],
+        ['MODERATE','MODERATE','COMPLEX'],
+        ['LIGHT','MODERATE','MODERATE'],
+        ['LIGHT','LIGHT','MODERATE']
+    ]
+
+    function setAssessmentLevelProject(_budget,_score){
+        var _level_score = getIntervalScore(_score);
+        var _level_capital_value = getIntervalCapital(_budget);
+        if(_level_score === null || _level_capital_value === null){
+            $('.js-complexity-score-label-assessment').text(_score)
+            $('.js-select-score').val('')
+            $('.js-assessment-level-status-auto').text('Null')
+        }
+        if(_level_score !== null && _level_capital_value !== null){
+            $('.js-cost-estimate-label-assessment').text(_budget)
+            $('.js-complexity-score-label-assessment').text(_score)
+            $('.js-assessment-level-status-auto').text(_matrix_level[_level_capital_value][_level_score])
+            $('.js-select-score').val(_matrix_level[_level_capital_value][_level_score])
+        }
+    }
+
+    function getIntervalScore(_val){
+        if(_val > 3 && _val < 11) return 0;
+        if(_val > 10 && _val < 17) return 1;
+        if(_val > 17) return 2;
+        return null;
+    }
+
+    function getIntervalCapital(_val){
+
+        var _thirty_million = 30000000
+        var _five_million = 5000000
+        var _one_million = 1000000
+        var _three_hundred_thousand = 300000
+
+        if(_val < _three_hundred_thousand && _val > 0) return 4;
+        if(_val >= _three_hundred_thousand && _val <= _one_million) return 3;
+        if(_val >= _one_million && _val <= _five_million) return 2;
+        if(_val >= _five_million && _val <= _thirty_million) return 1;
+        if(_val > _thirty_million) return 0;
+        console.log(_thirty_million)
+        return null
+
+    }
 
     $('.js-cost_estimate_assessment').on('change keyup',function (){
-        setAssessmentLevelProject($(this).val(),$('.js-complexity-score-label-val').val())
+        setAssessmentLevelProject($(this).val(),$('.js-hidden-project-level-assessment-score').val())
     })
 
-    var _complexity_score = 0;
+    var _complexity_analysis_score = 0;
     var _complexity = null
     var _complexity_analysis = [
         {'key' : 'investment_just_purchase', value:0},
@@ -810,7 +875,7 @@ $(function() {
             if(_investment_just_purchase == 1
                 && _needs_engineering_development == 0){
                 _complexity = 'Simple Purchase'
-                _complexity_score = 0;
+                _complexity_analysis_score = 0;
                 $('.js-disable-step').attr('disabled','disabled')
                 $('.js-disable-step').prop('checked', false);
                 _sum = 0;
@@ -848,9 +913,7 @@ $(function() {
             $('.js-complexity-label').text(_complexity)
             $('.js-complexity-score-label').text(_sum)
             $('.js-complexity-label-val').val(_complexity)
-            $('.js-complexity-score-label-val').val(_sum)
-
-            setAssessmentLevelProject(_budget_value,_sum)
+            $('.js-complexity-analyzis-score-label-val').val(_sum)
         })
     });
 
@@ -858,51 +921,29 @@ $(function() {
         return _array.reduce((partialSum, a) => partialSum + a, 0)
     }
 
-    var _thirty_million = 30000000
-    var _five_million = 5000000
-    var _one_million = 1000000
-    var _three_hundred_thousand = 300000
+    /**
+     * Handle Project Assessment Score
+     * @type {number}
+     * @private
+     */
 
+    var _complexity_score = [0,0,0,0]
+    $('.js-complexity-assessment-score').each(function(){
+        setAssessmentScore($(this))
+        $(this).on('change',function(){
+            setAssessmentScore($(this))
+        });
+    })
 
-    var _matrix_level = [
-        ['PDS','PDS','PDS'],
-        ['COMPLEX','COMPLEX','COMPLEX'],
-        ['MODERATE','MODERATE','COMPLEX'],
-        ['LIGHT','MODERATE','MODERATE'],
-        ['LIGHT','LIGHT','MODERATE']
-    ]
-
-    function setAssessmentLevelProject(_budget,_score){
-       var _level_score = getIntervalScore(_score);
-       var _level_capital_value = getIntervalCapital(_budget);
-       if(_level_score === null || _level_capital_value === null){
-           $('.js-complexity-score-label-assessment').text(0)
-           $('.js-select-score').val('')
-           $('.js-assessment-level-status-auto').text('Null')
-       }
-       if(_level_score !== null && _level_capital_value !== null){
-           $('.js-cost-estimate-label-assessment').text(_budget)
-           $('.js-complexity-score-label-assessment').text(_score)
-           $('.js-assessment-level-status-auto').text(_matrix_level[_level_capital_value][_level_score])
-           $('.js-select-score').val(_matrix_level[_level_capital_value][_level_score])
-       }
-    }
-
-    function getIntervalScore(_val){
-        if(_val > 3 && _val < 11) return 0;
-        if(_val > 10 && _val < 17) return 1;
-        if(_val > 17) return 2;
-        return null;
-    }
-
-    function getIntervalCapital(_val){
-        if(_val < _three_hundred_thousand && _val > 0) return 4;
-        if(_val >= _three_hundred_thousand && _val <= _one_million) return 3;
-        if(_val >= _one_million && _val <= _five_million) return 2;
-        if(_val >= _five_million && _val <= _thirty_million) return 1;
-        if(_val > _thirty_million) return 0;
-        return null
-
+    function setAssessmentScore(_this){
+        var _idx = _this.data('idx')
+        var _val = _this.val() ? _this.val() : 0
+        var _budget_value = _this.closest('.js-table-assessment').find('.js-cost_estimate_assessment').val()
+        _complexity_score[_idx] = parseInt(_val)
+        var _score = _complexity_score.reduce((a, b) => a + b)
+        $('.js-label-project-complexity-score').text(_score)
+        $('.js-hidden-project-level-assessment-score').val(_score)
+        setAssessmentLevelProject(_budget_value,_score)
     }
 
     /**
@@ -2209,7 +2250,6 @@ $(function() {
             }
         })
     })
-
 })
 
 
