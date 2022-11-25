@@ -5,9 +5,9 @@
             <table class="table table-striped js-table-assessment">
                 <tbody>
                 <tr>
-                    <td style="width: 200px">Problem Statement : </td>
-                    <td style="width: 100px">{!! $project->getCheckTemplate($project->assessment->problems_statement) !!}</td>
-                    <td>
+                    <td style="width: 15%">Problem Statement : </td>
+                    <td style="width: 10%">{!! $project->getCheckTemplate($project->assessment->problems_statement) !!}</td>
+                    <td style="width: 75%">
                         {!! $project->getTemplateExpandChar($project->assessment->problem_statement_text) !!}
                     </td>
                 </tr>

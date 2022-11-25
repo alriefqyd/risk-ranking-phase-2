@@ -4,8 +4,8 @@
     <table class="table table-striped js-table-assessment">
         <tbody>
         <tr>
-            <td>Problem Statement : </td>
-            <td style="width: 100px">
+            <td style="width: 15%">Problem Statement : </td>
+            <td style="width: 10%">
                 <div class="checkbox checkbox-primary">
                     <input id="checkbox-problem-statement"
                            {{$project?->assessment?->problems_statement == 1 ? 'checked' : ''}}
@@ -13,7 +13,7 @@
                     <label for="checkbox-problem-statement"></label>
                 </div>
             </td>
-            <td style="width: 69%">
+            <td style="width: 75%">
                 <small>(Provide a description of problems, restrictions, constraints. At this document should not be a description of a solution).</small>
                 <textarea class="tinymce js-text-problem-statement"
                           name="problem_statement"
