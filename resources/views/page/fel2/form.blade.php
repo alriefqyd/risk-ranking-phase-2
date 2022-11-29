@@ -144,10 +144,10 @@
                 <div class="input-group mb-3 js-cost-estimate
                     {{$project?->fel2?->cost_estimate == 0 ? 'd-none' : ''}}"
                 ><span class="input-group-text">$  </span>
-                    <input class="form-control js-cost_estimate_assessment js-cost_estimate_fel2 cold-md-12" type="number"
+                    <input class="form-control js-currency-format js-cost_estimate_assessment js-cost_estimate_fel2 cold-md-12" type="text"
                            name="fel2_cost_estimate"
                            value="{{$project?->fel2?->cost_estimate_text}}"
-                           aria-label="Amount (to the nearest dollar)"><span class="input-group-text">.00  </span>
+                           aria-label="Amount (to the nearest dollar)">
                 </div>
             </td>
         </tr>

@@ -8,19 +8,19 @@
         </select>
     </td>
     <td>
-        <input type="number" name="initial_and_sustaining_capex[]" class="form-control js-cost-benefit js-initial-and-sustaining">
+        <input type="text" name="initial_and_sustaining_capex[]" class="form-control js-currency-format js-cost-benefit js-initial-and-sustaining">
     </td>
     <td>
-        <input type="number" name="additional_revenue[]" class="form-control js-cost-benefit js-additional-revenue">
+        <input type="text" name="additional_revenue[]" class="form-control js-currency-format js-cost-benefit js-additional-revenue">
     </td>
     <td>
-        <input type="number" name="increment_operating_cost[]" class="form-control js-cost-benefit js-increment-operating-cost">
+        <input type="text" name="increment_operating_cost[]" class="form-control js-currency-format js-cost-benefit js-increment-operating-cost">
     </td>
     <td>
-        <input type="number" name="cost_savings[]" class="form-control js-cost-benefit js-cost-savings">
+        <input type="text" name="cost_savings[]" class="form-control js-currency-format js-cost-benefit js-cost-savings">
     </td>
     <td>
-        <input type="number" readonly="true" name="net_incremental_benefits[]" class="form-control js-cost-benefit js-net-incremental-benefits">
+        <input type="text" readonly="true" name="net_incremental_benefits[]" class="form-control js-cost-benefit js-net-incremental-benefits">
     </td>
 </tr>
 </script>

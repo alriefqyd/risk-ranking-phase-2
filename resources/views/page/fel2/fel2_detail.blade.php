@@ -37,7 +37,7 @@
                 <tr>
                     <td>Cost Estimate :</td>
                     <td>{!! $project->getCheckTemplate($project?->fel2?->cost_estimate) !!}</td>
-                    <td style="width: 270px">{!! $project?->fel2?->cost_estimate_text !!}</td>
+                    <td style="width: 270px">$ {!! $project?->fel2?->cost_estimate_text !!}</td>
                 </tr>
                 <tr>
                     <td>Status :</td>

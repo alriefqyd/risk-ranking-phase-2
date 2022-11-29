@@ -485,12 +485,6 @@ $(function() {
         _this.attr('disabled', 'disabled')
         _this.find('.loader-34').removeClass('d-none')
 
-        // if (!_form.valid()) {
-        //     _this.removeAttr('disabled')
-        //     _this.find('.loader-34').addClass('d-none')
-        //     return false
-        // }
-
         var files = $('.js-assessment-attachment_initial_cost_estimate')[0].files;
         var files_complexity = $('.js-assessment-attachment_complexity_matrix')[0].files;
 
@@ -792,7 +786,8 @@ $(function() {
             $('.js-assessment-level-status-auto').text('Null')
         }
         if(_level_score !== null && _level_capital_value !== null){
-            $('.js-cost-estimate-label-assessment').text(_budget)
+            var _currency_budget = currencyFormat(_budget)
+            $('.js-cost-estimate-label-assessment').text(_currency_budget)
             $('.js-complexity-score-label-assessment').text(_score)
             $('.js-assessment-level-status-auto').text(_matrix_level[_level_capital_value][_level_score])
             $('.js-select-score').val(_matrix_level[_level_capital_value][_level_score])
@@ -807,7 +802,6 @@ $(function() {
     }
 
     function getIntervalCapital(_val){
-
         var _thirty_million = 30000000
         var _five_million = 5000000
         var _one_million = 1000000
@@ -818,14 +812,25 @@ $(function() {
         if(_val >= _one_million && _val <= _five_million) return 2;
         if(_val >= _five_million && _val <= _thirty_million) return 1;
         if(_val > _thirty_million) return 0;
-        console.log(_thirty_million)
+
         return null
 
     }
 
     $('.js-cost_estimate_assessment').on('change keyup',function (){
-        setAssessmentLevelProject($(this).val(),$('.js-hidden-project-level-assessment-score').val())
+        var _this = $(this)
+        var _val = _this.val()
+        var _default_val = removeFormatCurrency(_val)
+        setAssessmentLevelProject(_default_val,$('.js-hidden-project-level-assessment-score').val())
     })
+
+    function removeFormatCurrency(_val){
+        _val = _val.toString()
+        var _split = _val.split('.')
+        var _join =  _split.join('');
+        var _split_comma = _join.split(',')
+        return  _split_comma[0]
+    }
 
     var _complexity_analysis_score = 0;
     var _complexity = null
@@ -929,13 +934,13 @@ $(function() {
 
     var _complexity_score = [0,0,0,0]
     $('.js-complexity-assessment-score').each(function(){
-        setAssessmentScore($(this))
+        setAssessmentScore($(this),false)
         $(this).on('change',function(){
-            setAssessmentScore($(this))
+            setAssessmentScore($(this),true)
         });
     })
 
-    function setAssessmentScore(_this){
+    function setAssessmentScore(_this,_setAssessment){
         var _idx = _this.data('idx')
         var _val = _this.val() ? _this.val() : 0
         var _budget_value = _this.closest('.js-table-assessment').find('.js-cost_estimate_assessment').val()
@@ -943,7 +948,9 @@ $(function() {
         var _score = _complexity_score.reduce((a, b) => a + b)
         $('.js-label-project-complexity-score').text(_score)
         $('.js-hidden-project-level-assessment-score').val(_score)
-        setAssessmentLevelProject(_budget_value,_score)
+        var _default_budget = _budget_value
+        if(_budget_value) _default_budget = removeFormatCurrency(_budget_value)
+        if(_setAssessment) setAssessmentLevelProject(_default_budget,_score)
     }
 
     /**
@@ -1198,7 +1205,7 @@ $(function() {
         var _boundary_assumption = _form.find('#checkbox-boundary_assumption');
         var _analysis_of_option = _form.find('#checkbox-analysis_of_option')
         var _permit_list = _form.find('#checkbox-permit_list');
-        var _schedule_project = _form.find('#checkbox-schedule_project');
+        var _schedule_project = _form.find('#checkbox_fel2-schedule_project');
         var _cost_estimate = _form.find('#checkbox-cost_estimate_fel2');
         var _project_id = _form.find('.js-project-id').val();
 
@@ -1207,7 +1214,7 @@ $(function() {
         var _boundary_assumption_text = _boundary_assumption.is(':checked') ? _form.find('.js-text-boundary_and_assumption_text').val() : '';
         var _analysis_of_option_text = _analysis_of_option.is(':checked') ? _form.find('.js-text-analysis_of_option_text').val() : '';
         var _permit_list_text = _permit_list.is(':checked') ? _form.find('.js-text-permit_list_text').val() : '';
-        var _schedule_project_text = _schedule_project.is(':checked') ? _form.find('.js-text-fel2-schedule_project_text') : '';
+        var _schedule_project_text = _schedule_project.is(':checked') ? _form.find('.js-text-fel2-schedule_project_text').val() : '';
         var _cost_estimate_text = _cost_estimate.is(':checked') ? _form.find('.js-cost_estimate_assessment').val() : '';
         var _status = _this.data('status') ? _this.data('status') : 'draft';
 
@@ -1794,7 +1801,7 @@ $(function() {
         formData.append('priority_level',!isNaN(parseInt(_risk_priority)) ? parseInt(_risk_priority) : '')
         formData.append('status',_status)
         formData.append('cost_estimate',_cost_estimate)
-        formData.append('npv',_npv ? parseInt(_npv) : 0)
+        formData.append('npv',_npv || 0)
         formData.append('irr',_irr ? parseInt(_irr) : 0)
         formData.append('payback_period',_payback_period ? parseInt(_payback_period) : 0)
 
@@ -2072,15 +2079,19 @@ $(function() {
     $(document).on('keyup', '.js-cost-benefit', function () {
         var _parent = $(this).closest('tr')
         var _initial_and_sustaining = _parent.find('.js-initial-and-sustaining')
-        var _js_additional_revenue = _parent.find('.js-additional-revenue')
-        var _js_increment_operating = _parent.find('.js-increment-operating-cost')
-        var _js_cost_saving = _parent.find('.js-cost-savings')
+        var _js_additional_revenue = _parent.find('.js-additional-revenue').val()
+        var _js_increment_operating = _parent.find('.js-increment-operating-cost').val()
+        var _js_cost_saving = _parent.find('.js-cost-savings').val();
+        _js_cost_saving = _js_cost_saving.replace(".","")
+        _js_increment_operating = _js_increment_operating.replace(".","")
+        _js_increment_operating = _js_increment_operating.replace(".","")
+        _js_additional_revenue = _js_additional_revenue.replace(".","")
 
-        var _js_cost_saving_val = _js_cost_saving.val() ? parseInt(_js_cost_saving.val()) : 0
-        var _js_increment_operating_val = _js_increment_operating.val() ? parseInt(_js_increment_operating.val()) : 0
-        var _js_additional_revenue_val = _js_additional_revenue.val() ? parseInt(_js_additional_revenue.val()) : 0
+        var _js_cost_saving_val = removeFormatCurrency(_js_cost_saving) || 0;
+        var _js_increment_operating_val = removeFormatCurrency(_js_increment_operating) || 0;
+        var _js_additional_revenue_val = removeFormatCurrency(_js_additional_revenue) || 0;
 
-        var _total = _js_cost_saving_val + _js_increment_operating_val + _js_additional_revenue_val
+        var _total = parseFloat(_js_cost_saving_val) + parseFloat(_js_increment_operating_val) + parseFloat(_js_additional_revenue_val)
         _parent.find('.js-net-incremental-benefits').val(_total)
     })
 
@@ -2250,6 +2261,44 @@ $(function() {
             }
         })
     })
+
+    /**
+     * Handle currency format
+     */
+
+    $(document).on('keypress keyup blur','.js-currency-format',function(e){
+    // $('.js-currency-format').on('keypress keyup blur',function(e){
+        var _this = $(this)
+        var _val = currencyFormat(_this.val());
+
+        _this.val(_val)
+        if(e.which === 44 || e.which === 45) return true
+        // if(!_val.match(/[\d,]+\.\d+/)){
+        //     console.log('false')
+        // }
+    })
+
+    function currencyFormat(_value){
+
+        var number_string = _value.replace(/[^,\d]/g, '').toString(),
+            split = number_string.split(','),
+            rest = split[0].length % 3,
+            currency = split[0].substr(0,rest),
+            currency_value = split[0].substr(rest).match(/\d{3}/gi)
+
+            if(currency_value){
+                var separator = rest ? '.' : '';
+                currency += separator + currency_value.join('.');
+            }
+
+            var sign = _value.charAt(0);
+
+            currency = split[1] != undefined ? currency + ',' + split[1] : currency;
+            if(sign == '-'){
+                return '-' + currency;
+            }
+            return currency
+    }
 })
 
 

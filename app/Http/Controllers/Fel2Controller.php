@@ -183,7 +183,6 @@ class Fel2Controller extends Controller
             $fel2->cost_estimate_text = $request->cost_estimate_text;
             $fel2->permit_list_text = $request->permit_list_text;
 
-
             $documentRequest = collect([]);
             $existingDocument = collect([]);
 

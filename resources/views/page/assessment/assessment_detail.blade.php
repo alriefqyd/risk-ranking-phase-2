@@ -5,8 +5,8 @@
             <table class="table table-striped js-table-assessment">
                 <tbody>
                 <tr>
-                    <td style="width: 15%">Problem Statement : </td>
-                    <td style="width: 10%">{!! $project->getCheckTemplate($project->assessment->problems_statement) !!}</td>
+                    <td style="width: 17%">Problem Statement : </td>
+                    <td style="width: 8%">{!! $project->getCheckTemplate($project->assessment->problems_statement) !!}</td>
                     <td style="width: 75%">
                         {!! $project->getTemplateExpandChar($project->assessment->problem_statement_text) !!}
                     </td>
@@ -57,7 +57,7 @@
                     <td>Cost Estimate :</td>
                     <td>{!! $project->getCheckTemplate($project->assessment->cost_estimate) !!}</td>
                     <td>
-                        $ {{ number_format($project->assessment->cost_estimate_text , 0, ',', '.') }}
+                        $ {{$project->assessment->cost_estimate_text }}
                     </td>
                 </tr>
                 <tr>

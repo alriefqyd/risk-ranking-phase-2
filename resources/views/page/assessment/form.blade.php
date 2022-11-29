@@ -4,8 +4,8 @@
     <table class="table table-striped js-table-assessment">
         <tbody>
         <tr>
-            <td style="width: 15%">Problem Statement : </td>
-            <td style="width: 10%">
+            <td style="width: 17%">Problem Statement : </td>
+            <td style="width: 8%">
                 <div class="checkbox checkbox-primary">
                     <input id="checkbox-problem-statement"
                            {{$project?->assessment?->problems_statement == 1 ? 'checked' : ''}}
@@ -161,9 +161,10 @@
                 <div class="input-group mb-3 js-cost-estimate
                     {{$project?->assessment?->cost_estimate == 0 ? 'd-none' : ''}}"
                 ><span class="input-group-text">$  </span>
-                    <input class="form-control js-cost_estimate_assessment cold-md-12" type="number"
+                    <input class="form-control js-currency-format js-cost_estimate_assessment cold-md-12" type="text"
+                           placeholder="xxx.xxx.xxx,xx"
                            value="{{$project?->assessment?->cost_estimate_text}}"
-                           aria-label="Amount (to the nearest dollar)"><span class="input-group-text">.00  </span>
+                           aria-label="Amount (to the nearest dollar)">
                 </div>
             </td>
         </tr>
@@ -508,7 +509,7 @@
                     </span> , that this categorize as
                     <span class="text-danger text-large-custom js-assessment-level-status-auto">{{$project?->assessment?->level_project_text}}</span> project). </small>
                 <div class="js-select2">
-                    <input type="hidden" value="{{$project?->assessment?->level_project_text}}" class="form-control js-select-score" style="width: 100%" name="complexity_score_assessment">
+                    <input type="text" value="{{$project?->assessment?->level_project_text}}" class="form-control js-select-score" style="width: 100%" name="complexity_score_assessment">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </div>
             </td>

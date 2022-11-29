@@ -160,8 +160,7 @@
                         <td>
                             <div class="input-group">
                                 <span class="input-group-text">$  </span>
-                                <input type="number" value="{{$project?->business_case?->npv}}" name="cost_estimate" class="form-control js_bc_npv" data-default="{{$project?->assessment?->cost_estimate_text}}">
-                                <span class="input-group-text">.00  </span>
+                                <input type="text" value="{{$project?->business_case?->npv}}" name="cost_estimate" class="js-currency-format form-control js_bc_npv" data-default="{{$project?->assessment?->cost_estimate_text}}">
                             </div>
                         </td>
                     </tr>
@@ -305,8 +304,9 @@
                 <div class="checkbox checkbox-primary">
                     <div class="input-group">
                         <span class="input-group-text">$  </span>
-                        <input type="number" value="{{$project?->business_case?->cost_estimate}}" name="cost_estimate" class="form-control js-cost_estimate_bc" data-default="{{$project?->assessment?->cost_estimate_text}}">
-                        <span class="input-group-text">.00  </span>
+                        <input type="text" value="{{$project?->business_case?->cost_estimate}}" name="cost_estimate"
+                               class="form-control js-cost_estimate_bc js-currency-format"
+                               data-default="{{$project?->assessment?->cost_estimate_text}}">
                     </div>
 
                     @if($project?->assessment?->cost_estimate_text)

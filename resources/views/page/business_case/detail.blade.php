@@ -60,7 +60,7 @@
                         <div class="col-md-6 js-financial_evaluation_detail d-none">
                             <div>
                                 <label class="col-form-label">NPV : </label>
-                                $ {{number_format($project?->business_case?->npv,0,',','.')}}
+                                $ {{$project?->business_case?->npv}}
                             </div>
                             <div>
                                 <label class="col-form-label">IRR :</label>
@@ -188,7 +188,7 @@
                 <tr>
                     <td>Cost Estimate :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->cost_estimate > 0 ? 1 : 0) !!}</td>
-                    <td>$ {{number_format($project?->business_case?->cost_estimate,0,',','.') ?: 0}}</td>
+                    <td>$ {{$project?->business_case?->cost_estimate ?: 0}}</td>
                 </tr>
                 <tr>
                     <td>Attachment</td>
