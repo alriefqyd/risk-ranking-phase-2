@@ -2076,22 +2076,51 @@ $(function() {
         _form.submit()
     })
 
+    //!!Alert
+    //will refactor soon
     $(document).on('keyup', '.js-cost-benefit', function () {
         var _parent = $(this).closest('tr')
         var _initial_and_sustaining = _parent.find('.js-initial-and-sustaining')
         var _js_additional_revenue = _parent.find('.js-additional-revenue').val()
         var _js_increment_operating = _parent.find('.js-increment-operating-cost').val()
         var _js_cost_saving = _parent.find('.js-cost-savings').val();
+
+        _js_cost_saving = currencyFormat(_js_cost_saving)
+        var _js_cost_saving_default = currencyFormat(_js_cost_saving)
+
+        _js_increment_operating = currencyFormat(_js_increment_operating)
+        var _js_increment_operating_default = currencyFormat(_js_increment_operating)
+
+        _js_additional_revenue = currencyFormat(_js_additional_revenue)
+        var _js_additional_revenue_default = currencyFormat(_js_additional_revenue)
+
+
         _js_cost_saving = _js_cost_saving.replace(".","")
         _js_increment_operating = _js_increment_operating.replace(".","")
         _js_increment_operating = _js_increment_operating.replace(".","")
         _js_additional_revenue = _js_additional_revenue.replace(".","")
 
-        var _js_cost_saving_val = removeFormatCurrency(_js_cost_saving) || 0;
-        var _js_increment_operating_val = removeFormatCurrency(_js_increment_operating) || 0;
-        var _js_additional_revenue_val = removeFormatCurrency(_js_additional_revenue) || 0;
+        _js_cost_saving = _js_cost_saving.replace(",",".")
+        _js_increment_operating = _js_increment_operating.replace(",",".")
+        _js_increment_operating = _js_increment_operating.replace(",",".")
+        _js_additional_revenue = _js_additional_revenue.replace(",",".")
+
+        var _js_cost_saving_val = _js_cost_saving || 0;
+        var _js_increment_operating_val = _js_increment_operating || 0;
+        var _js_additional_revenue_val = _js_additional_revenue || 0;
+
+        if($(this).hasClass('js-cost-savings')){
+            $(this).val(_js_cost_saving_default)
+        }
+        if($(this).hasClass('js-increment-operating-cost')){
+            $(this).val(_js_increment_operating_default)
+        }
+        if($(this).hasClass('js-additional-revenue')){
+            $(this).val(_js_additional_revenue_default)
+        }
 
         var _total = parseFloat(_js_cost_saving_val) + parseFloat(_js_increment_operating_val) + parseFloat(_js_additional_revenue_val)
+        _total = _total.toString().replace('.',',')
         _parent.find('.js-net-incremental-benefits').val(_total)
     })
 

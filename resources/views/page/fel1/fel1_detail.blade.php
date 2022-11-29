@@ -5,9 +5,9 @@
             <table class="table table-striped js-table-assessment">
                 <tbody>
                 <tr>
-                    <td style="width: 10px">Project Scope : </td>
-                    <td style="width: 10px">{!! $project->getCheckTemplate($project?->fel1?->project_scope) !!}</td>
-                    <td style="width: 270px">{!! $project?->fel1?->project_scope_text !!}</td>
+                    <td style="width: 15%">Project Scope : </td>
+                    <td style="width: 10%">{!! $project->getCheckTemplate($project?->fel1?->project_scope) !!}</td>
+                    <td style="width: 75%">{!! $project?->fel1?->project_scope_text !!}</td>
                 </tr>
                 <tr>
                     <td>Identified Parameter, <br> Requirement & Regulation  : </td>
@@ -39,57 +39,83 @@
                     {!! $project?->getCheckTemplate($project?->fel1?->attachment ? 1 : 0) !!}
                 </td>
                 <td>
-                    <ul>
-                        @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['parameter_regulation_requirement']))
-                            <li>
-                                <p class="m-b-0">Parameter, regulation, requirement : </p>
-                                    <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement'])}}">
-                                        <i class="fa mb-2 fa-file-text-o txt-info"></i>
-                                        {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement'])}}
-                                    </a>
-                            </li>
-                        @endif
-                        @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['initial_process_diagram']))
-                            <li><p class="m-b-0">Initial Process Diagram (Alur)</p>
+                    <table>
+                        <tr>
+                            <td style="width: 50%">
+                                <p class="m-b-0">Initial Process Diagram (Alur)</p>
+                            </td>
+                            <td style="width: 50%">
+                                @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['initial_process_diagram']))
                                     <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_process_diagram'])}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_process_diagram'])}}
                                     </a>
-                            </li>
-                        @endif
-                        @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['data_of_alternatives']))
-                            <li><p class="m-b-0">Data of alternatives (drawing/figure, cost of investment & operation, maintenance, etc.)</p>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="m-b-0">Data of alternatives (drawing/figure, cost of investment & operation, maintenance, etc.)</p>
+                            </td>
+                            <td>
+                                @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['data_of_alternatives']))
                                     <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['data_of_alternatives'])}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['data_of_alternatives'])}}
                                     </a>
-                            </li>
-                        @endif
-                        @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['initial_schedule']))
-                            <li><p class="m-b-0">Initial schedule until level 1</p>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="m-b-0">Initial schedule until level 1</p>
+                            </td>
+                            <td>
+                                @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['initial_schedule']))
                                     <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_schedule'])}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_schedule'])}}
                                     </a>
-                            </li>
-                        @endif
-                        @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['project_level_assessment']))
-                            <li><p class="m-b-0">Project level assessment</p>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="m-b-0">Project level assessment</p>
+                            </td>
+                            <td>
+                                @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['project_level_assessment']))
                                     <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment'])}}&dir={{urlencode($project->project_name)}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment'])}}
                                     </a>
-                            </li>
-                        @endif
-                        @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['stakeholder_list']))
-                            <li><p class="m-b-0">Stakeholder list</p>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               <p class="m-b-0">Stakeholder list</p>
+                            </td>
+                            <td>
+                                @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['stakeholder_list']))
                                     <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list'])}}&dir={{urlencode($project->project_name)}}">
                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list'])}}
                                     </a>
-                            </li>
-                        @endif
-                    </ul>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
                 </td>
                 </tbody>
             </table>

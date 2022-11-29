@@ -22,7 +22,7 @@
                                 Cost savings (positive if relevant) <br/><span class="txt-danger">$US (x000) </span>
                             </td>
                             <td>
-                                Net Incremental Benefits
+                                Net Incremental Benefits <br/><span class="txt-danger">$US</span>
                             </td>
                         </tr>
                     </thead>

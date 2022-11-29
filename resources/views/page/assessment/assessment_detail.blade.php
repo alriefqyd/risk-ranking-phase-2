@@ -172,21 +172,36 @@
                 <tr>
                     <td>Document <br/>Attachment :</td>
                     <td>{!! $project->getCheckTemplate($project?->assessment?->attachment ? 1 : 0) !!}</td>
-                    <td>Initial Cost Estimate :
-                        @if($project?->getAllAttachment($project->assessment?->attachment, $setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
-                            <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}&dir={{urlencode($project->project_name)}}">
-                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
-                            </a>
-                        @endif
+                    <td>
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    Initial Cost Estimate :
+                                </td>
+                                <td>
+                                    @if($project?->getAllAttachment($project->assessment?->attachment, $setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
+                                        <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}&dir={{urlencode($project->project_name)}}">
+                                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                            {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Complexity Matrix :
+                                </td>
+                                <td>
+                                    @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
+                                        <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}&dir={{urlencode($project->project_name)}}">
+                                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                            {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
                         <br>
-                        Complexity Matrix :
-                        @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
-                            <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}&dir={{urlencode($project->project_name)}}">
-                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
-                            </a>
-                        @endif
                     </td>
                 </tr>
                 </tbody>

@@ -34,7 +34,7 @@
                         <input type="text" name="cost_savings[]" value="{{$bc['cost_savings']}}" class="form-control js-currency-format js-cost-benefit js-cost-savings">
                     </td>
                     <td>
-                        $ <input type="text" name="net_incremental_benefits[]" readonly="true" value="{{$bc['net_incremental_benefits']}}" class="form-control js-currency-format js-cost-benefit js-net-incremental-benefits">
+                        <input type="text" name="net_incremental_benefits[]" readonly="true" value="{{$bc['net_incremental_benefits']}}" class="form-control js-currency-format js-cost-benefit js-net-incremental-benefits">
                     </td>
                 </tr>
             @endforeach
