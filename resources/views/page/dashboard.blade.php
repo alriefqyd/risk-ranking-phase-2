@@ -56,7 +56,7 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col-md-6 b-r-light text-center">
-                                Publish {{$countAssessmentDraft}}
+                                Draft {{$countAssessmentDraft}}
                             </div>
                             <div class="col-md-6 text-center">
                                 Publish {{$countAssessmentPublish}}
