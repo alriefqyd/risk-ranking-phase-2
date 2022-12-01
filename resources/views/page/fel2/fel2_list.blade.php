@@ -55,42 +55,48 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($fels2 as $fel2)
-                                        <tr>
-                                            <td class="text-center">
-                                                <a class="js-set-session" data-id="{{$fel2?->project->id}}" href="/project/{{$fel2?->project->id}}">
-                                                    <p class="alert-color-green">{{$fel2?->project->project_name}}</p>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $fel2?->project?->project_type !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $fel2?->project?->getCheckTemplate($fel2?->project_scope) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel2?->project?->getCheckTemplate($fel2?->identify_main_equipment) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel2?->project?->getCheckTemplate($fel2?->boundary_and_assumption) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel2?->project?->getCheckTemplate($fel2?->analysis_of_option) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel2?->project?->getCheckTemplate($fel2?->permit_list) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel2?->project?->getCheckTemplate($fel2?->schedule_project) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel2?->project?->getCheckTemplate($fel2?->cost_estimate) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{$fel2->status}}
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    @if(sizeof($fels2) > 0)
+                                        @foreach($fels2 as $fel2)
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a class="js-set-session" data-id="{{$fel2?->project->id}}" href="/project/{{$fel2?->project->id}}">
+                                                        <p class="alert-color-green">{{$fel2?->project->project_name}}</p>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $fel2?->project?->project_type !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->project_scope) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->identify_main_equipment) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->boundary_and_assumption) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->analysis_of_option) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->permit_list) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->schedule_project) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->cost_estimate) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{$fel2->status}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="10" class="text-center">Empty Data</td>
+                                            </tr>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -98,15 +104,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="card p-2">
-                    <nav aria-label="...">
-                        <ul class="pagination pagination-primary justify-content-end">
-                            {{$fels2->onEachSide(1)->links()}}
-                        </ul>
-                    </nav>
+            @if(sizeof($fels2) > 0)
+                <div class="col-sm-12">
+                    <div class="card p-2">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-primary justify-content-end">
+                                {{$fels2->onEachSide(1)->links()}}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection

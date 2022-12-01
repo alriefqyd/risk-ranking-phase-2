@@ -62,63 +62,69 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($business_cases as $business_case)
+                                    @if(sizeof($business_cases) > 0)
+                                        @foreach($business_cases as $business_case)
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a class="js-set-session" data-id="{{$business_case?->project->id}}" href="/project/{{$business_case?->project->id}}">
+                                                        <p class="alert-color-green">{{$business_case?->project->project_name}}</p>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $business_case?->project?->project_type !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->problem_statement_and_objective) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->project_alternatives) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->project_scope_of_work) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->major_equipment) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->utility_requirements) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->permitting) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->social_community_and_government) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->cost_estimate > 0 ? 1 : 0) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->financial_evaluation) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->risk_assessment) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->additional_information) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{ number_format($business_case?->npv,'0',',','.')}}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{$business_case->irr}}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{$business_case->payback_period}} Years
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{$business_case->status}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td class="text-center">
-                                                <a class="js-set-session" data-id="{{$business_case?->project->id}}" href="/project/{{$business_case?->project->id}}">
-                                                    <p class="alert-color-green">{{$business_case?->project->project_name}}</p>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $business_case?->project?->project_type !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->problem_statement_and_objective) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->project_alternatives) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->project_scope_of_work) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->major_equipment) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->utility_requirements) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->permitting) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->social_community_and_government) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->cost_estimate > 0 ? 1 : 0) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->financial_evaluation) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->risk_assessment) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $business_case?->project?->getCheckTemplate($business_case?->additional_information) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{ number_format($business_case?->npv,'0',',','.')}}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{$business_case->irr}}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{$business_case->payback_period}} Years
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{$business_case->status}}
-                                            </td>
+                                            <td colspan="17" class="text-center">Empty Data</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -126,15 +132,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="card p-2">
-                    <nav aria-label="...">
-                        <ul class="pagination pagination-primary justify-content-end">
-                            {{$business_cases->onEachSide(1)->links()}}
-                        </ul>
-                    </nav>
+            @if(sizeof($business_cases) > 0)
+                <div class="col-sm-12">
+                    <div class="card p-2">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-primary justify-content-end">
+                                {{$business_cases->onEachSide(1)->links()}}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection

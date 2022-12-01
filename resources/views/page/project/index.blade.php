@@ -129,64 +129,70 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($projectList as $project)
-                                        <tr>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $project->getBcStatus() !!}
-                                            </td>
-                                            <td>
-                                                {!! $project?->getPriorityTemplate($project?->business_case?->riskAssessment?->priority_level)!!}
-                                            </td>
-                                            <td>
-                                                {{$project->project_number ?: '-'}}
-                                            </td>
-                                            <td>
-                                                <a href="/project/{{$project->id}}">
-                                                    <p class="alert-color-green">{{$project->project_name}}</p>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectAssessment() !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectFel1() !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectFel2() !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectFel3() !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectBusinessCase() !!}
-                                            </td>
-                                            <td>{{$project->owners->name}}</td>
-                                            <td>{{$project->sponsors->name}}</td>
-                                            <td>{{$project->getProjectCategory()}}</td>
-                                            <td>{{$project->project_type}}</td>
-                                            <td>
-                                                <a data-bs-toggle="modal"
-                                                   class="modal-note"
-                                                   data-original-title="test"
-                                                   data-note="{{$project->note}}"
-                                                   data-id="{{$project->id}}"
-                                                   data-bs-target="#detail_note_project">
-                                                    {!! $project->getNoteTemplateForm() !!}
-                                                </a>
-                                            </td>
-                                            @can('delete')
-                                            <td>
-                                                <a data-bs-toggle="modal" data-original-title="test"
-                                                   data-id="{{$project->id}}"
-                                                   data-bs-target="#projectDelete">
-                                                <span class="alert-note alert-color-red">
-                                                     <x-feathericon-trash-2/>
-                                                </span>
-                                                </a>
-                                            </td>
-                                            @endcan
+                                    @if(sizeof($projectList) > 0)
+                                        @foreach($projectList as $project)
+                                            <tr>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $project->getBcStatus() !!}
+                                                </td>
+                                                <td>
+                                                    {!! $project?->getPriorityTemplate($project?->business_case?->riskAssessment?->priority_level)!!}
+                                                </td>
+                                                <td>
+                                                    {{$project->project_number ?: '-'}}
+                                                </td>
+                                                <td>
+                                                    <a href="/project/{{$project->id}}">
+                                                        <p class="alert-color-green">{{$project->project_name}}</p>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $project->getRelatedDataProjectAssessment() !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $project->getRelatedDataProjectFel1() !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $project->getRelatedDataProjectFel2() !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $project->getRelatedDataProjectFel3() !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $project->getRelatedDataProjectBusinessCase() !!}
+                                                </td>
+                                                <td>{{$project->owners->name}}</td>
+                                                <td>{{$project->sponsors->name}}</td>
+                                                <td>{{$project->getProjectCategory()}}</td>
+                                                <td>{{$project->project_type}}</td>
+                                                <td>
+                                                    <a data-bs-toggle="modal"
+                                                       class="modal-note"
+                                                       data-original-title="test"
+                                                       data-note="{{$project->note}}"
+                                                       data-id="{{$project->id}}"
+                                                       data-bs-target="#detail_note_project">
+                                                        {!! $project->getNoteTemplateForm() !!}
+                                                    </a>
+                                                </td>
+                                                @can('delete')
+                                                <td>
+                                                    <a data-bs-toggle="modal" data-original-title="test"
+                                                       data-id="{{$project->id}}"
+                                                       data-bs-target="#projectDelete">
+                                                    <span class="alert-note alert-color-red">
+                                                         <x-feathericon-trash-2/>
+                                                    </span>
+                                                    </a>
+                                                </td>
+                                                @endcan
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr class="text-center">
+                                            <td colspan="15">Empty Data</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -194,15 +200,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="card p-2">
-                    <nav aria-label="...">
-                        <ul class="pagination pagination-primary justify-content-end">
-                            {{$projectList->onEachSide(1)->links()}}
-                        </ul>
-                    </nav>
+            @if(sizeof($projectList) > 0)
+                <div class="col-sm-12">
+                    <div class="card p-2">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-primary justify-content-end">
+                                {{$projectList->onEachSide(1)->links()}}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
         @include('components.modal')
     </div>

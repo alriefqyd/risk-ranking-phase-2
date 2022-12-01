@@ -59,54 +59,60 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($assessments as $assessment)
+                                    @if(sizeof($assessments) > 0)
+                                        @foreach($assessments as $assessment)
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a class="js-set-session" data-id="{{$assessment?->project->id}}" href="/project/{{$assessment?->project->id}}">
+                                                        <p class="alert-color-green">{{$assessment?->project->project_name}}</p>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $assessment?->project?->project_type !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->problems_statement) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->objective) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->project_scope) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->key_performance_metric) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->key_project_risk_mitigants) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->impact_if_not_executed) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->alternative_to_proposal) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->cost_estimate) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{$assessment?->complexity_score_assessment}}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->level_project) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $assessment?->project?->getCheckTemplate($assessment?->detail_estimate_cost) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{$assessment->status}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td class="text-center">
-                                                <a class="js-set-session" data-id="{{$assessment?->project->id}}" href="/project/{{$assessment?->project->id}}">
-                                                    <p class="alert-color-green">{{$assessment?->project->project_name}}</p>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $assessment?->project?->project_type !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->problems_statement) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->objective) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->project_scope) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->key_performance_metric) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->key_project_risk_mitigants) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->impact_if_not_executed) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->alternative_to_proposal) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->cost_estimate) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{$assessment?->complexity_score_assessment}}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->level_project) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $assessment?->project?->getCheckTemplate($assessment?->detail_estimate_cost) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{$assessment->status}}
-                                            </td>
+                                            <td colspan="14" class="text-center">Empty Data</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -114,15 +120,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="card p-2">
-                    <nav aria-label="...">
-                        <ul class="pagination pagination-primary justify-content-end">
-                            {{$assessments->onEachSide(1)->links()}}
-                        </ul>
-                    </nav>
+            @if(sizeof($assessments) > 0)
+                <div class="col-sm-12">
+                    <div class="card p-2">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-primary justify-content-end">
+                                {{$assessments->onEachSide(1)->links()}}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection

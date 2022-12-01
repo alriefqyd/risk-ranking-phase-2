@@ -54,36 +54,42 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($fels1 as $fel1)
+                                    @if(sizeof($fels1) > 0)
+                                        @foreach($fels1 as $fel1)
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a class="js-set-session" data-id="{{$fel1?->project->id}}" href="/project/{{$fel1?->project->id}}">
+                                                        <p class="alert-color-green">{{$fel1?->project->project_name}}</p>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $fel1?->project?->project_type !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->project_scope) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->identified_parameter_requirement_regulation) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->alternatives) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->list_of_stakeholder) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->schedule_project) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{$fel1->status}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td class="text-center">
-                                                <a class="js-set-session" data-id="{{$fel1?->project->id}}" href="/project/{{$fel1?->project->id}}">
-                                                    <p class="alert-color-green">{{$fel1?->project->project_name}}</p>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $fel1?->project?->project_type !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $fel1?->project?->getCheckTemplate($fel1?->project_scope) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel1?->project?->getCheckTemplate($fel1?->identified_parameter_requirement_regulation) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel1?->project?->getCheckTemplate($fel1?->alternatives) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel1?->project?->getCheckTemplate($fel1?->list_of_stakeholder) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel1?->project?->getCheckTemplate($fel1?->schedule_project) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{$fel1->status}}
-                                            </td>
+                                            <td colspan="8" class="text-center">Empty Data</td>
                                         </tr>
-                                    @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -91,15 +97,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="card p-2">
-                    <nav aria-label="...">
-                        <ul class="pagination pagination-primary justify-content-end">
-                            {{$fels1->onEachSide(1)->links()}}
-                        </ul>
-                    </nav>
+            @if(sizeof($fels1) > 0)
+                <div class="col-sm-12">
+                    <div class="card p-2">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-primary justify-content-end">
+                                {{$fels1->onEachSide(1)->links()}}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection

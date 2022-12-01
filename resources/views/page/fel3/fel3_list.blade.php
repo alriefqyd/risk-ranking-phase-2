@@ -56,45 +56,51 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($fels3 as $fel3)
+                                    @if(sizeof($fels3) > 0)
+                                        @foreach($fels3 as $fel3)
+                                            <tr>
+                                                <td class="text-center">
+                                                    <a class="js-set-session" data-id="{{$fel3?->project->id}}" href="/project/{{$fel3?->project->id}}">
+                                                        <p class="alert-color-green">{{$fel3?->project->project_name}}</p>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $fel3?->project?->project_type !!}
+                                                </td>
+                                                <td class="text-center">
+                                                    {!! $fel3?->project?->getCheckTemplate($fel3?->executive_summary) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel3?->project?->getCheckTemplate($fel3?->problem_statement) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel3?->project?->getCheckTemplate($fel3?->project_scope) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel3?->project?->getCheckTemplate($fel3?->alternatives_and_best_option) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel3?->project?->getCheckTemplate($fel3?->project_schedule) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel3?->project?->getCheckTemplate($fel3?->list_of_equipment_and_specification) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel3?->project?->getCheckTemplate($fel3?->hazop_study) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {!! $fel3?->project?->getCheckTemplate($fel3?->cost_estimate) !!}
+                                                </td>
+                                                <td class="text-center js-row-bc_status">
+                                                    {{$fel3->status}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                    @endif
                                         <tr>
-                                            <td class="text-center">
-                                                <a class="js-set-session" data-id="{{$fel3?->project->id}}" href="/project/{{$fel3?->project->id}}">
-                                                    <p class="alert-color-green">{{$fel3?->project->project_name}}</p>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $fel3?->project?->project_type !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $fel3?->project?->getCheckTemplate($fel3?->executive_summary) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel3?->project?->getCheckTemplate($fel3?->problem_statement) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel3?->project?->getCheckTemplate($fel3?->project_scope) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel3?->project?->getCheckTemplate($fel3?->alternatives_and_best_option) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel3?->project?->getCheckTemplate($fel3?->project_schedule) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel3?->project?->getCheckTemplate($fel3?->list_of_equipment_and_specification) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel3?->project?->getCheckTemplate($fel3?->hazop_study) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {!! $fel3?->project?->getCheckTemplate($fel3?->cost_estimate) !!}
-                                            </td>
-                                            <td class="text-center js-row-bc_status">
-                                                {{$fel3->status}}
-                                            </td>
+                                            <td colspan="11" class="text-center">Empty Data</td>
                                         </tr>
-                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -102,15 +108,17 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="card p-2">
-                    <nav aria-label="...">
-                        <ul class="pagination pagination-primary justify-content-end">
-                            {{$fels3->onEachSide(1)->links()}}
-                        </ul>
-                    </nav>
+            @if(sizeof($fels3) > 0)
+                <div class="col-sm-12">
+                    <div class="card p-2">
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-primary justify-content-end">
+                                {{$fels3->onEachSide(1)->links()}}
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
 @endsection
