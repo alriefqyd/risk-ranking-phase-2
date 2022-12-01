@@ -15,7 +15,6 @@ use App\Service\SettingService;
 use App\Service\UserService;
 use Exception;
 use \App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +29,7 @@ class ProjectController extends Controller
         $this->userDepartment = '';
         /*
          * This code to handle auth user
-         * because constractor is calling before session created
+         * because constructor is calling before session created
          */
         $this->middleware(function ($request, $next) {
             $userService = new UserService();
@@ -122,7 +121,7 @@ class ProjectController extends Controller
         DB::beginTransaction();
         $data = $this->validate($request,[
             'project_number' => 'nullable|unique:projects',
-            'category' => 'required',
+            'project_category' => 'required',
             'project_name' => 'required',
             'owner' => 'required',
             'project_type' => 'required',
@@ -138,7 +137,7 @@ class ProjectController extends Controller
                 'owner' => $request->owner,
                 'operating_area' => $request->operating_area,
                 'sponsor' => $request->sponsor,
-                'project_category' => $request->category,
+                'project_category' => $request->project_category,
                 'bc_presenter' => $request->bc_presenter,
                 'bc_status' => $request->bc_status,
                 'note' => $request->note,
@@ -212,7 +211,7 @@ class ProjectController extends Controller
         if(!$request->isQuickUpdate){
             $data = $this->validate($request,[
                 'project_number' => 'nullable|unique:projects,project_number,'.$project->id,
-                'category' => 'required',
+                'project_category' => 'required',
                 'project_name' => 'required',
                 'owner' => 'required',
                 'project_type' => 'required',
@@ -241,7 +240,7 @@ class ProjectController extends Controller
                 $project->owner = $request->owner;
                 $project->sponsor = $request->sponsor;
                 $project->bc_presenter = $request->bc_presenter;
-                $project->project_category = $request->category;
+                $project->project_category = $request->project_category;
                 $project->finance_analyst = $request->finance_analyst;
             }
 

@@ -36,10 +36,10 @@
     <div class="col-sm-6 mb-3">
         <label class="col-sm-12 col-form-label" for="ProjectName">Project Category</label>
         <div class="col-sm-12
-            @error('category')
+            @error('project_category')
                 b-danger
             @enderror">
-            <select name="category"
+            <select name="project_category"
                     style="width: 100% !important;"
                     data-placeholder="Select Project Category"
                     class="js-example-basic-single col-sm-12
@@ -47,7 +47,7 @@
                     select2">
                 <option></option>
                 @foreach($projectCategory as $key=>$value)
-                    <option {{old('category') == $key ||
+                    <option {{old('project_category') == $key ||
                             (isset($project->project_category)
                             && $project->project_category == $key) ?
                              'selected="selected"' : ''}}
@@ -56,7 +56,7 @@
                 @endforeach
             </select>
         </div>
-        @error('category')
+        @error('project_category')
             <p class="txt-danger">{{$message}}</p>
         @enderror
     </div>
