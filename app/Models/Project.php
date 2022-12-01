@@ -78,6 +78,7 @@ class Project extends Model
             $project->fel2()->delete();
             $project->fel3()->delete();
             $project->business_case()->delete();
+            $project->cost_benefits()->delete();
         });
     }
 
@@ -221,10 +222,15 @@ class Project extends Model
     }
 
     public function getProjectAssessmentComplexity($key){
-        $data = $this?->assessment?->complexity_assessment;
-        if(!$data) return '';
-        $data = json_decode($data,true);
-        return $data[$key];
+        try{
+            $data = $this?->assessment?->complexity_assessment;
+            if(!$data) return '';
+            $data = json_decode($data,true);
+            return $data[$key];
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+
     }
 
 

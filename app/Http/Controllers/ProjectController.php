@@ -265,7 +265,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        $request->session()->flash('alert-success', 'Data was successful deleted!');
+        $request->session()->flash('alert-success', 'Data was successful updated!');
         return redirect('/project/'.$project->id);
 
     }

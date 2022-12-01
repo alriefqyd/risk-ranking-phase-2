@@ -509,7 +509,7 @@
                     </span> , that this categorize as
                     <span class="text-danger text-large-custom js-assessment-level-status-auto">{{$project?->assessment?->level_project_text}}</span> project). </small>
                 <div class="js-select2">
-                    <input type="text" value="{{$project?->assessment?->level_project_text}}" class="form-control js-select-score" style="width: 100%" name="complexity_score_assessment">
+                    <input type="hidden" value="{{$project?->assessment?->level_project_text}}" class="form-control js-select-score" style="width: 100%" name="complexity_score_assessment">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </div>
             </td>

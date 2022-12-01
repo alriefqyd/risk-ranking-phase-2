@@ -149,7 +149,7 @@ $(function() {
             success: function (data) {
                 if (data.status === 200) {
                     $('#projectDelete').modal('toggle')
-                    notification('danger', 'Project Successfully Deleted', 'fa fa-cross')
+                    notification('', 'Project Successfully Deleted', 'fa fa-cross')
                     setTimeout(function () {
                         location.reload();
                     }, 1500)
@@ -1269,8 +1269,6 @@ $(function() {
         var _type = _form.attr('method')
 
         if($('.js-fel2-form').valid()){
-            _this.find('.loader-34').removeClass('d-none')
-            _this.attr('disabled');
             $.ajax({
                 url: _url,
                 type: _type,
@@ -1281,6 +1279,9 @@ $(function() {
                     window.location.href = data.url;
                 }
             })
+        } else {
+            _this.find('.loader-34').addClass('d-none')
+            _this.removeAttr('disabled');
         }
     })
 
@@ -1519,8 +1520,6 @@ $(function() {
         if(_fel2.length > 0) formData.append('fel2',_fel2[0])
 
         if(_form.valid()){
-            _this.find('.loader-34').removeClass('d-none')
-            _this.attr('disabled');
             $.ajax({
                 url: _url,
                 type: _type,
@@ -1531,6 +1530,9 @@ $(function() {
                     window.location.href = data.url;
                 }
             })
+        } else {
+            _this.find('.loader-34').addClass('d-none')
+            _this.removeAttr('disabled');
         }
     })
 
@@ -1820,6 +1822,9 @@ $(function() {
                     else notification('alert', data, '', '')
                 }
             })
+        } else {
+            _this.find('.loader-34').addClass('d-none')
+            _this.removeAttr('disabled');
         }
     })
 

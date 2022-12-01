@@ -57,7 +57,6 @@
                                 </td>
                                 <td style="width:50%">
                                     @if($project?->getAllAttachment($project->fel2?->attachment, $setting::FEL2_ATTACHMENT['reference_of_capacity']))
-                                        <p class="m-b-0">Calculation/Reference of Capacity (Capacity & Location) : </p>
                                         <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['reference_of_capacity'])}}">
                                             <i class="fa mb-2 fa-file-text-o txt-info"></i>
                                             {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['reference_of_capacity'])}}
@@ -144,7 +143,7 @@
                             </tr>
                             <tr>
                                 <td style="width:50%">
-                                    p class="m-b-0">Project Level Assessment Document : </p>
+                                    <p class="m-b-0">Project Level Assessment Document : </p>
                                 </td>
                                 <td style="width:50%">
                                     @if($project?->getAllAttachment($project->fel2?->attachment, $setting::FEL2_ATTACHMENT['project_level_assessment']))

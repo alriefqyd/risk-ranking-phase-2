@@ -4,13 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CostBenefit extends Model
 {
     use HasFactory;
-    protected $fillable = ['value','project_id'];
+    use SoftDeletes;
+    protected $guarded = ['id'];
+    protected $dates = ['deleted_at'];
 
-    public function projects(){
-        return $this->belongsTo(Project::class,'project_id');
+    public function project(){
+        return $this->belongsTo(Project::class,'project_id')->withTrashed();
     }
 }
