@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-            @if(sizeof($business_cases) > 0)
+            @if(sizeof($business_cases) > 10)
                 <div class="col-sm-12">
                     <div class="card p-2">
                         <nav aria-label="...">

@@ -200,7 +200,7 @@
                     </div>
                 </div>
             </div>
-            @if(sizeof($projectList) > 0)
+            @if(sizeof($projectList) > 20)
                 <div class="col-sm-12">
                     <div class="card p-2">
                         <nav aria-label="...">

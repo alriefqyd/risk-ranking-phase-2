@@ -104,7 +104,7 @@
                     </div>
                 </div>
             </div>
-            @if(sizeof($fels2) > 0)
+            @if(sizeof($fels2) > 10)
                 <div class="col-sm-12">
                     <div class="card p-2">
                         <nav aria-label="...">
