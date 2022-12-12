@@ -1721,8 +1721,8 @@ $(function() {
         tinymce.triggerSave();
         var _this = $(this)
 
-        // _this.attr('disabled', 'disabled')
-        // _this.find('.loader-34').removeClass('d-none')
+        _this.attr('disabled', 'disabled')
+        _this.find('.loader-34').removeClass('d-none')
 
         var _form = _this.closest('.js-bc-form');
         var _problem_and_objective = _form.find('#checkbox-problem_and_objective');
@@ -2066,16 +2066,6 @@ $(function() {
         }
         var _temp = Mustache.render(template, data)
         $('.js-table-cost-benefit').find('.js-table-body-cost-benefit').append(_temp)
-    })
-
-    $(document).on('click', '.js-add-new-bc-attachment', function () {
-        var template = $('#js-template-attachment-bc').html();
-        Mustache.parse(template);
-        var data = {
-            "no": _table_attachment += 1,
-        }
-        var _temp = Mustache.render(template, data)
-        $('.js-table-cost-benefit').find('.js-table-attachment-bc').append(_temp)
     })
 
     $('.select2-temp').each(function () {
