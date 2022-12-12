@@ -97,13 +97,11 @@ class DocumentController extends Controller
         return $document_name ?? $existingDocument;
     }
 
-    public function multipleUploadDocument($request, $documentRequests, $existingDocument, $project_name){
+    public function multipleUploadDocument($request, $documentRequests, $existingDocument, $project_name,$allowedFileExtension){
         $projectService = new ProjectService();
         $document_name = null;
         $documents = collect([]);
         if($documentRequests) {
-
-            $allowedFileExtension = ['docx','doc','pdf','xlsx','csv','xlx','ppt','pptx'];
 
             $files = $documentRequests;
             foreach ($files as $key => $file){

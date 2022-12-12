@@ -37,8 +37,10 @@ class CostBenefitController extends Controller
     {
         $project_id = $request->project_id;
         $cost = CostBenefit::where('project_id',$project_id)->first();
-        if($cost){
-            $cost->delete();
+        $isUpdate = $request->isEdit;
+
+        if($cost && $isUpdate){
+            $cost->forceDelete();
         }
 
         $costBenefitCollection = collect([]);

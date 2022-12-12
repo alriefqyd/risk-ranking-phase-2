@@ -137,7 +137,7 @@ class Fel1Controller extends Controller
             if(isset($request->stakeholder_list)) $documentRequest->put(Setting::FEL1_ATTACHMENT['stakeholder_list'],$request->stakeholder_list);
 
             if(sizeof($documentRequest) > 0){
-                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name);
+                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name,Setting::DOCUMENT_EXTENSION);
                 if(sizeof($documents) > 0){
                     $fel1->attachment = $documents;
                 }
@@ -249,7 +249,7 @@ class Fel1Controller extends Controller
                 }
             }
 
-            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name);
+            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name,Setting::DOCUMENT_EXTENSION);
             if(sizeof($documents) > 0){
                 $fel1->attachment = $documents;
             }

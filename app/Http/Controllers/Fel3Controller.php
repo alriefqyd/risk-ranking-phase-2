@@ -114,7 +114,7 @@ class Fel3Controller extends Controller
             if(isset($request->fel2)) $documentRequest->put(Setting::FEL3_ATTACHMENT['fel2'],$request->fel2);
 
             if(sizeof($documentRequest) > 0){
-                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name);
+                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name,Setting::DOCUMENT_EXTENSION);
                 if(sizeof($documents) > 0){
                     $fel3->attachment = $documents;
                 }
@@ -232,7 +232,7 @@ class Fel3Controller extends Controller
                 }
             }
 
-            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name);
+            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name,Setting::DOCUMENT_EXTENSION);
             if(sizeof($documents) > 0){
                 $fel3->attachment = $documents;
             }

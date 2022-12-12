@@ -138,7 +138,7 @@ class AssessmentController extends Controller
             if(isset($request->document_complexity_matrix)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['complexity_matrix'],$request->document_complexity_matrix);
 
             if(sizeof($documentsRequest) > 0){
-                $documents = $documentController->multipleUploadDocument($request, $documentsRequest, null, $request->project_name);
+                $documents = $documentController->multipleUploadDocument($request, $documentsRequest, null, $request->project_name, Setting::DOCUMENT_EXTENSION);
                 if(sizeof($documents) > 0){
                     $assessment->attachment = $documents;
                 }
@@ -282,7 +282,7 @@ class AssessmentController extends Controller
             if($request->document_initial_cost_estimate) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'],$request->document_initial_cost_estimate);
             if($request->document_complexity_matrix) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['complexity_matrix'],$request->document_complexity_matrix);
 
-            $documents = $documentController->multipleUploadDocument($request, $documentsRequest, $existingDocument, $request->project_name);
+            $documents = $documentController->multipleUploadDocument($request, $documentsRequest, $existingDocument, $request->project_name,Setting::DOCUMENT_EXTENSION);
 
             if(sizeof($documents) > 0){
                 $assessment->attachment = $documents;

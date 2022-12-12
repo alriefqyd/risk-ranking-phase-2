@@ -35,3 +35,13 @@
     </div>
 
 </script>
+<script id="js-template-attachment-bc" type="x-tmpl-mustache">
+    <tr>
+        <td>
+            <input class="form-control js-bc-attachment_file-name-@{{ no }} col-md-10" name="documentTitleBc" type="text">
+        </td>
+        <td>
+            <input class="form-control js-bc-attachment_file js-bc-attachment_file-@{{ no }} col-md-10" name="document" id="inputFile" multiple type="file">
+        </td>
+    </tr>
+</script>

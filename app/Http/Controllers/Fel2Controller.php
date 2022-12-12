@@ -105,7 +105,7 @@ class Fel2Controller extends Controller
             if(isset($request->file_cost_estimate)) $documentRequest->put(Setting::FEL2_ATTACHMENT['cost_estimate'],$request->file_cost_estimate);
 
             if(sizeof($documentRequest) > 0){
-                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name);
+                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name,Setting::DOCUMENT_EXTENSION);
                 if(sizeof($documents) > 0){
                     $fel2->attachment = $documents;
                 }
@@ -206,7 +206,7 @@ class Fel2Controller extends Controller
                 }
             }
 
-            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name);
+            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name,Setting::DOCUMENT_EXTENSION);
             if(sizeof($documents) > 0){
                 $fel2->attachment = $documents;
             }

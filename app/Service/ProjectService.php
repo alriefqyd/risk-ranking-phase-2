@@ -396,6 +396,16 @@ class ProjectService
         return null;
     }
 
+    public function getAttachmentListBusinessCase($value){
+        if(!$value) return [];
+        $attachments = json_decode($value, true);
+        $documents = collect([]);
+        foreach ($attachments as $key => $value){
+            $documents->put($key,$value);
+        }
+        return $documents;
+    }
+
 
 }
 

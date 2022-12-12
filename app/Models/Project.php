@@ -214,6 +214,12 @@ class Project extends Model
         return $projectService->getAllAttachment($value,$identifier);
     }
 
+    public function getListAttachmentBusinessCase(){
+        $projectService = new ProjectService();
+        $value = $this->business_case->attachment;
+        return $projectService->getAttachmentListBusinessCase($value);
+    }
+
     public function getCleanProjectName(){
         $name = $this->project_name;
         $name = str_replace('&','and', $name);
@@ -230,8 +236,9 @@ class Project extends Model
         }catch(\Exception $e){
             return $e->getMessage();
         }
-
     }
+
+
 
 
 

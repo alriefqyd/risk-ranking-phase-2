@@ -150,8 +150,9 @@ class BusinessCaseAssessmentController extends Controller
             $documentRequest = collect([]);
             if(isset($request->attachment)) $documentRequest->put('business_case',$request->attachment);
 
+            $extension = array_merge(Setting::DOCUMENT_EXTENSION,Setting::ARCHIVE_EXTENSION);
             if(sizeof($documentRequest) > 0){
-                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name);
+                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name,Setting::DOCUMENT_EXTENSION);
                 if(sizeof($documents) > 0){
                     $business_case->attachment = $documents;
                 }
@@ -294,7 +295,8 @@ class BusinessCaseAssessmentController extends Controller
                 }
             }
 
-            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name);
+            $extension = array_merge(Setting::DOCUMENT_EXTENSION,Setting::ARCHIVE_EXTENSION);
+            $documents = $documentController->multipleUploadDocument($request, $documentRequest,$existingDocument,$request->project_name,$extension);
             if(sizeof($documents) > 0){
                 $businessCaseAssessment->attachment = $documents;
             }
@@ -302,7 +304,7 @@ class BusinessCaseAssessmentController extends Controller
             $businessCaseAssessment->saveOrFail();
             DB::commit();
             $request->session()->flash('page-tab', 'business-case');
-            $request->session()->flash('alert-success', 'Business Case 3 was saved');
+            $request->session()->flash('alert-success', 'Business Case was saved');
             return response()->json([
                 'status' => 200,
                 'url' => '/project/' . $request->project_id,

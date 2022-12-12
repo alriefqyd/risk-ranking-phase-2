@@ -128,4 +128,6 @@ class Setting extends Model
     public const HIGH = 'High';
     public const LOW = 'Low';
 
+    public const DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','csv','xlx','ppt','pptx'];
+    public const ARCHIVE_EXTENSION = ['zip','rar'];
 }

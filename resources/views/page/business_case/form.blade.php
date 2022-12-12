@@ -345,6 +345,7 @@
             </td>
             <td>
                 <div class="col-md-12">
+                    <small class="text-danger">* Upload as zip format if file is more than one</small>
                     <input class="form-control js-bc-attachment_file col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                     @if($project?->getAllAttachment($project->business_case?->attachment,'business_case'))
                         <a target="_blank"
