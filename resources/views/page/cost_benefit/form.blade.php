@@ -18,7 +18,7 @@
                     <tr data-id="1">
                         <td class="col-md-2">
                             <select name="year[]" class="form-select js-cost-benefit-year" style="width:100% !important;">
-                                @for($i=2022;$i<2051;$i++)
+                                @for($i=2023;$i<2051;$i++)
                                     <option {{$bc['year'] == $i ? 'selected' : ''}} value="{{$i}}">{{$i}}</option>
                                 @endfor
                             </select>
