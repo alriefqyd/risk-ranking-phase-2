@@ -11,9 +11,9 @@
                                  class="fill-current text-gray-500 mb-3" src="{{asset('image/vale.png')}}"/>
                         </div>
                         <h6 class="text-center">Risk Ranking Capital Investment and R&D Budget Cycle
-                            2023 - 2027</h6>
+                            2024 - 2027</h6>
                         <div class="form-group">
-                            <label>Email Address</label>
+                            <label>User Name</label>
                             <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="fa fa-user"></i>
