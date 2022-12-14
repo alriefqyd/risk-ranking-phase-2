@@ -12,6 +12,17 @@
                         </div>
                         <h6 class="text-center">Risk Ranking Capital Investment and R&D Budget Cycle
                             2024 - 2027</h6>
+
+                        @if ($errors->any())
+                            <div class="mb-4">
+                                <div class="text-md text-danger">{{ __('Whoops! Something went wrong.') }}</div>
+                                <span class="mt-3 text-sm text-danger">
+                                    @foreach ($errors->all() as $error)
+                                        <li> {{ $error }}</li>
+                                    @endforeach
+                                </span>
+                            </div>
+                        @endif
                         <div class="form-group">
                             <label>User Name</label>
                             <div class="input-group">
