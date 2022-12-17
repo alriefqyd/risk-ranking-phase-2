@@ -163,10 +163,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Level Project :</td>
+                    <td>Assessment of Level Project :</td>
                     <td>{!! $project->getCheckTemplate($project->assessment->level_project) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->level_project_text) !!}
+                        <small>(According to cost estimate $ <span class="text-danger js-cost-estimate-label-assessment">
+                            {{$project?->assessment?->cost_estimate_text}}
+                            </span> and complexity score
+                            <span class="text-danger js-complexity-score-label-assessment">
+                                {{$project?->assessment?->complexity_score_assessment}}
+                            </span> , that this categorize as
+                            <span class="text-danger text-large-custom js-assessment-level-status-auto">{{$project?->assessment?->level_project_text}}</span> project). </small>
                     </td>
                 </tr>
                 <tr>
