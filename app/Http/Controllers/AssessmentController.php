@@ -246,7 +246,6 @@ class AssessmentController extends Controller
             $assessment->level_project = $request->level_project;
             $assessment->complexity_assessment_checkbox = $request->complexity_assessment_checkbox;
             $assessment->note = $request->note;
-            $assessment->status = $assessmentService->getStatus($request);
             $assessment->alternative_to_proposal = $request->alternative_to_proposal;
             $assessment->user_id = Auth::user()->id;
             $assessment->detail_estimate_cost = $request->detail_estimate_cost;
@@ -339,7 +338,7 @@ class AssessmentController extends Controller
             'impact_if_not_executed_text' => new summernoteRequired($request->impact_if_not_executed, 'Impact if not Executed'),
             'alternatives_to_proposal_text' => new summernoteRequired($request->alternative_to_proposal, 'Alternatives to Proposal'),
             'cost_estimate_text' => new summernoteRequired($request->cost_estimate, 'Cost Estimate'),
-            'level_project_text' => new summernoteRequired($request->level_project, 'Level Project'),
+            //'level_project_text' => new summernoteRequired($request->level_project, 'Level Project'),
             'detail_estimate_cost_text' => new summernoteRequired($request->detail_estimate_cost, 'Detail Estimate Cost')
         ]);
     }

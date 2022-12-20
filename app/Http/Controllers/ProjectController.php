@@ -106,6 +106,7 @@ class ProjectController extends Controller
             'sustainingList' => $sustaining,
             'randdList' => $randd,
             'growthList' => $growth,
+            'project' => null
         ]);
     }
 
@@ -167,6 +168,10 @@ class ProjectController extends Controller
             abort(404);
         }
 
+        $capexCategory = $projectService->getCapexCategory(CapexInvestment::type['capex_investment'],null);
+        $sustaining = $projectService->getCapexCategory(CapexInvestment::type['basket'],1);
+        $randd = $projectService->getCapexCategory(CapexInvestment::type['basket'], 2);
+        $growth = $projectService->getCapexCategory(CapexInvestment::type['basket'], 3);
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
 
@@ -186,6 +191,10 @@ class ProjectController extends Controller
             'riskLevel' => $riskLevel,
             'riskMatrix' => $riskMatrix,
             'probability' => $probability,
+            'capexCategory' => $capexCategory,
+            'sustainingList' => $sustaining,
+            'randdList' => $randd,
+            'growthList' => $growth,
             'sessionUpdate' => Session::get('projectUpdate'),
             'isAdmin' => auth()->user()->role == User::ROLE['admin'],
         ]);
@@ -240,6 +249,8 @@ class ProjectController extends Controller
                 $project->owner = $request->owner;
                 $project->sponsor = $request->sponsor;
                 $project->bc_presenter = $request->bc_presenter;
+                $project->basket = $request->basket;
+                $project->sub_basket = $request->sub_basket;
                 $project->project_category = $request->project_category;
                 $project->finance_analyst = $request->finance_analyst;
             }

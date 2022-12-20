@@ -159,3 +159,8 @@
     height: auto;
     max-height: 400px;
 }
+
+.separator {
+    height: 10px;
+    background-color:#f5f7fb ;
+}
