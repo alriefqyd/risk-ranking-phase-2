@@ -18,10 +18,12 @@ Route::get('/dashboard', [\App\Http\Controllers\HomeController::class,'index'])-
 Route::get('/getDataGraph',[\App\Http\Controllers\HomeController::class,'getDataGraph'])->name('getDataGraph ')->middleware('auth');
 
 Route::get('/project',[\App\Http\Controllers\ProjectController::class,'index'])->name('project ')->middleware('auth');
+Route::get('/project/year/{year}',[\App\Http\Controllers\ProjectController::class,'index'])->name('project.year ')->middleware('auth');
 Route::post('/project',[\App\Http\Controllers\ProjectController::class,'store'])->name('project.store ')->middleware('auth');
 Route::get('/project/create',[\App\Http\Controllers\ProjectController::class,'create'])->name('project.create ')->middleware('auth');
 Route::put('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'update'])->name('project.update ')->middleware('auth');
 Route::get('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'edit'])->name('project.edit ')->middleware('auth');
+Route::get('/project/{project_id}/{year}',[\App\Http\Controllers\ProjectController::class,'detailYear'])->name('project.edit.year ')->middleware('auth');
 Route::delete('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'delete'])->name('project.delete ')->middleware('auth');
 Route::get('/project/getProjectNote/{project:id}',[\App\Http\Controllers\ProjectController::class,'getProjectNote'])->name('project.get-project-note ')->middleware('auth');
 Route::get('/export',[\App\Http\Controllers\ExportController::class,'export'])->name('export')->middleware(['auth']);

@@ -2343,6 +2343,15 @@ $(function() {
             }
             return currency
     }
+
+    /**
+     * select risk ranking project list
+     */
+    $('.js-select-rr-project-list').on('change',function(){
+        var _value = $(this).val();
+        if(_value != '')window.location.href = '/project/year/'+_value
+        else window.location.href = '/project'
+    })
 })
 
 
