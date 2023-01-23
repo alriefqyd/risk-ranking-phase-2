@@ -1,8 +1,5 @@
 <div class="row">
-    <div class="col-md-4 m-l-10 m-t-15 m-b-10">
-        <h6 class="font-roboto js-title-detail {{!$errors->any() ? '' : 'd-none'}} title">FEL 3 Detail</h6>
-        <h6 class="font-roboto js-title-form {{!$errors->any() ? 'd-none' : ''}} title">FEL 3 Form</h6>
-    </div>
+    <div class="col-md-4 m-l-10 m-t-15 m-b-10"></div>
     @can('update')
         <div class="col-md-7 m-l-50 m-b-10">
             <button class="btn btn-sm btn-success m-t-10 float-end {{!$errors->any() ? '' : 'd-none'}}
@@ -26,7 +23,9 @@
 @else
     @can('create')
         <div class="row js-form-project-edit {{!$errors->any() ? 'd-none' : ''}} m-t-0">
-            @include('page.fel3.create')
+            <div class="card-body">
+                @include('page.fel3.create')
+            </div>
         </div>
     @endcan
 @endif

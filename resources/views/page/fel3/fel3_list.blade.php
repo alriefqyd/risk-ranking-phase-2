@@ -1,5 +1,6 @@
 @extends('main')
 @section('main')
+    <h6 class="font-roboto js-title-detail {{!$errors->any() ? '' : 'd-none'}} title m-l-5 m-b-0">FEL 3 Detail</h6>
     <div class="container-fluid">
         <div class="page-header">
             <div class="row">
