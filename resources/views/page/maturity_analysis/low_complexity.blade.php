@@ -29,8 +29,8 @@
             <li>Criteria, currencies, exchange rates and other assumptions used in the preparation of the budget</li>
         </td>
         <td>
-            <select name="investment_estimate" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="investment_estimate" class="js-maturity-analysis js-maturity-analysis_investment_estimate select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -44,8 +44,8 @@
             Elaborate the monthly disbursement curves in the economic and financial visions
         </td>
         <td>
-            <select name="physical_and_financial" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="physical_and_financial" class="js-maturity-analysis js-maturity-analysis_physical_and_financial select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -60,8 +60,8 @@
             Main Purpose and Deliveries, Major Equipment and Facilities, Exclusions from Scope, Assumptions and Battery Limit
         </td>
         <td>
-            <select name="scope_statement" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="scope_statement" class="js-maturity-analysis js-maturity-analysis_scope_statement select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -75,8 +75,8 @@
             Key project macro information such as, Lead Team and Project Definition, Preliminary Budget, Summary Scope, Macro Deadlines and Costs.
         </td>
         <td>
-            <select name="project_opening_term" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="project_opening_term" class="js-maturity-analysis js-maturity-analysis_project_opening_term select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -99,8 +99,8 @@
             <li>Integration of interface areas (environment, licenses and authorizations, land management, health and safety, among others) that are applicable to the project</li>
         </td>
         <td>
-            <select name="integrated_project_timeline" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="integrated_project_timeline" class="js-maturity-analysis js-maturity-analysis_integrated_project_timeline select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -114,8 +114,8 @@
             Record baseline and generate S-curve for future comparative analysis
         </td>
         <td>
-            <select name="save_baseline" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="save_baseline" class="js-maturity-analysis js-maturity-analysis_save_baseline select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -129,8 +129,8 @@
             Establish criteria for physical advancement and consideration of activities
         </td>
         <td>
-            <select name="definition_of_physical" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="definition_of_physical" class="js-maturity-analysis js-maturity-analysis_definition_of_physical select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -149,8 +149,8 @@
             that allow the purchase process of the equipment and services, as well as the planning and budgeting of the Execution phase.
         </td>
         <td>
-            <select name="develop_basic_engineering" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="develop_basic_engineering" class="js-maturity-analysis js-maturity-analysis_develop_basic_engineering select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -168,8 +168,8 @@
             (eg, drafting, submitting and obtaining permits from city halls, state bodies, fire brigades, regulatory agencies, etc.)
         </td>
         <td>
-            <select name="identification_all_license" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="identification_all_license" class="js-maturity-analysis js-maturity-analysis_identification_all_license select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -189,8 +189,8 @@
             <li>Elaborate the map of monitoring of supplies (MAS)</li>
         </td>
         <td>
-            <select name="supply_plan" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="supply_plan" class="js-maturity-analysis js-maturity-analysis_supply_plan select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -207,8 +207,8 @@
             Specific soil data and existing conditions are not available, but general conditions are known and considered in development.
         </td>
         <td>
-            <select name="on_site_conditions" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="on_site_conditions" class="js-maturity-analysis js-maturity-analysis_on_site_conditions select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -222,8 +222,8 @@
             Layout and requirements derived from similar processes.
         </td>
         <td>
-            <select name="rental_plants" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="rental_plants" class="js-maturity-analysis js-maturity-analysis_rental_plants select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -237,11 +237,20 @@
             No formal analysis, but generic norms and standards for the site and process were identified and incorporated into the project.
         </td>
         <td>
-            <select name="health_and_safety" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="health_and_safety" class="js-maturity-analysis js-maturity-analysis_health_and_safety select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <h6 class="float-end m-r-5
+                badge badge-primary
+                js-maturity-status"
+                data-not-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Not Ready']}}"
+                data-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Ready']}}"></h6>
         </td>
     </tr>
     </tbody>

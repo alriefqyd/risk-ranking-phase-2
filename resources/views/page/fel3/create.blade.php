@@ -4,7 +4,8 @@
       class="theme-form js-fel3-form form-wizard">
     @csrf
     <div class="tab">
-        @include('page.fel3.maturity_analysis.high_complexity')
+        <input type="hidden" class="js-maturity-analysis-type" name="maturity_type" value="{{$project?->assessment?->complexity_analysis_type}}"/>
+        @include('page.maturity_analysis.template')
     </div>
     <div class="tab">
         @include('page.fel3.form',[
@@ -19,12 +20,12 @@
             <button class="btn btn-secondary" id="prevBtn" type="button" onclick="nextPrev(-1)">Previous</button>
             <button class="btn btn-primary" id="nextBtn" type="button" onclick="nextPrev(1)">Next</button>
             <button class="btn btn-secondary js-create-fel3">
-                           <span class="text-button loader-box loader-box-custom"  style="height: 21px">
+                           <span class="text-button loader-box loader-box-custom" style="height: 21px">
                                 Save As Draft <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
                             </span>
             </button>
             <button class="btn btn-primary js-create-fel3" data-status="publish">
-                           <span class="text-button loader-box loader-box-custom"  style="height: 21px">
+                           <span class="text-button loader-box loader-box-custom" style="height: 21px">
                                 Publish <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
                             </span>
             </button>

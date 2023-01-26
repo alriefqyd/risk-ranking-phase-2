@@ -34,8 +34,9 @@
             <li>Construction management plan.</li>
         </td>
         <td style="width: 15%">
-            <select name="constructive_methodology" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="constructive_methodology"
+                    class="js-maturity-analysis js-maturity-analysis_constructive_methodology select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -49,8 +50,10 @@
             Plan for the execution of construction sites and temporary installations.
         </td>
         <td>
-            <select name="physical_and_financial" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="construction_sites" class="select2
+            js-maturity-analysis js-maturity-analysis_construction_sites
+            col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -64,8 +67,9 @@
             Plan for the removal of interferences and the execution of tie-ins.
         </td>
         <td style="width: 15%">
-            <select name="interference_and_tie_ins" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="interference_and_tie_ins" class="select2
+             js-maturity-analysis js-maturity-analysis_interference_and_tie_ins col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -82,8 +86,10 @@
             CPUs (unit price compositions) and database, containing all calculation memories (indirect, contingency, escalation, BDI, etc.).
         </td>
         <td>
-            <select name="investment_estimate" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="investment_estimate" class="select2
+            js-maturity-analysis js-maturity-analysis_investment_estimate
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -97,8 +103,10 @@
             Disbursement schedule aligned with the project's physical schedule.
         </td>
         <td style="width: 15%">
-            <select name="capex_management" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="capex_management" class="select2
+             js-maturity-analysis js-maturity-analysis_capex_management
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -129,8 +137,10 @@
             <li>List of documents foreseen for detailed engineering design.</li>
         </td>
         <td>
-            <select name="engineering_development" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="engineering_development" class="select2
+             js-maturity-analysis js-maturity-analysis_engineering_development
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -144,8 +154,10 @@
             Reports of local conditions and characteristics for the basic design phase.
         </td>
         <td style="width: 15%">
-            <select name="survey_local_conditions" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="survey_local_conditions" class="select2
+             js-maturity-analysis js-maturity-analysis_survey_local_conditions
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -162,8 +174,10 @@
             <li> Identification of potential suppliers of inputs for the works. </li>
         </td>
         <td style="width: 15%">
-            <select name="logistic_studies" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="logistic_studies" class="select2
+             js-maturity-analysis js-maturity-analysis_logistic_studies
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -178,8 +192,10 @@
             Project change management plan for implementation in the Execution phase, aligned with the FEL 2 and Execution team.
         </td>
         <td style="width: 15%">
-            <select name="change_management" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="change_management_plan" class="select2
+             js-maturity-analysis js-maturity-analysis_change_management_plan
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -194,8 +210,10 @@
             Detailed project scope statement.
         </td>
         <td style="width: 15%">
-            <select name="scope_statement" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="scope_statement" class="select2
+             js-maturity-analysis js-maturity-analysis_scope_statement
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -209,8 +227,10 @@
             Includes all project documentation - technical, contractual, tax and legal.
         </td>
         <td style="width: 15%">
-            <select name="executive_report" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="executive_report" class="select2
+             js-maturity-analysis js-maturity-analysis_executive_report
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -225,8 +245,10 @@
             List of licenses, grants and authorizations required for the project for the Execution and Operation phases, with deadlines (protocol and procurement) in the integrated project schedule (eg IPHAN, FCP, FUNAI, IBAMA, ICMBIO).
         </td>
         <td style="width: 15%">
-            <select name="environmental_licensing" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="environmental_licensing" class="select2
+            js-maturity-analysis js-maturity-analysis_environmental_licensing
+            col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -241,8 +263,10 @@
             WBS defined at least on the third physical level for the Development and Execution phases.
         </td>
         <td style="width: 15%">
-            <select name="work_breakdown_structure" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="work_breakdown_structure" class="select2
+             js-maturity-analysis js-maturity-analysis_work_breakdown_structure
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -260,8 +284,10 @@
             <li> Definitive histogram of the main quantitative services for the Execution phase (civil works, earthworks, electromechanical assembly, etc.). </li>
         </td>
         <td style="width: 15%">
-            <select name="integrated_project_schedule" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="integrated_project_schedule" class="select2
+             js-maturity-analysis js-maturity-analysis_integrated_project_schedule
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -275,8 +301,10 @@
             Monthly detailing of the FTES required by the project
         </td>
         <td style="width: 15%">
-            <select name="detailed_fte_schedule" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="detailed_fte_schedule" class="select2
+            js-maturity-analysis js-maturity-analysis_detailed_fte_schedule
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -297,8 +325,10 @@
             <li> Operating Costs (where applicable)</li>
         </td>
         <td style="width: 15%">
-            <select name="operational_readiness" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="operational_readiness" class="select2
+             js-maturity-analysis js-maturity-analysis_operational_readiness
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -313,8 +343,10 @@
             Quality Plan
         </td>
         <td style="width: 15%">
-            <select name="quality_plan" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="quality_plan" class="select2
+             js-maturity-analysis js-maturity-analysis_quality_plan
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -330,8 +362,10 @@
             Report of the analysis of safety and operability (HazOp).
         </td>
         <td style="width: 15%">
-            <select name="risk_analysis_report" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="risk_analysis_report" class="select2
+             js-maturity-analysis js-maturity-analysis_risk_analysis_report
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -346,8 +380,10 @@
             Preliminary analysis of HSE, Human Rights and S & S risks in the Communities for the activities foreseen in the Execution stage.
         </td>
         <td style="width: 15%">
-            <select name="apr" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="apr" class="select2
+             js-maturity-analysis js-maturity-analysis_apr
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -362,8 +398,10 @@
             Critical Health and Safety Analysis of the project engineering.
         </td>
         <td style="width: 15%">
-            <select name="integrated_management_system" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="integrated_management_system" class="select2
+             js-maturity-analysis js-maturity-analysis_integrated_management_system
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -377,8 +415,10 @@
             PAE - HSE emergency plan for the Execution stage.
         </td>
         <td style="width: 15%">
-            <select name="pae" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="pae" class="select2
+             js-maturity-analysis js-maturity-analysis_pae
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -393,8 +433,10 @@
             Consolidated Supply Plan (PS).
         </td>
         <td style="width: 15%">
-            <select name="supply_plan" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="supply_plan" class="select2
+             js-maturity-analysis js-maturity-analysis_supply_plan
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -408,11 +450,22 @@
             Procurement Tracking Map (MAS) for all contracted mapping packages as provided in the Supply Plan.
         </td>
         <td style="width: 15%">
-            <select name="procurement_tracking_map" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="procurement_tracking_map" class="select2
+             js-maturity-analysis js-maturity-analysis_procurement_tracking_map
+             col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <h6 class="float-end m-r-5
+                badge badge-primary
+                js-maturity-status"
+                data-not-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Not Ready']}}"
+                data-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Ready']}}"></h6>
         </td>
     </tr>
     </tbody>

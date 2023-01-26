@@ -29,8 +29,10 @@
             <li>Criteria, currencies, exchange rates and other assumptions used in the preparation of the budget</li>
         </td>
         <td style="width: 15%">
-            <select name="investment_estimate" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="investment_estimate" class="js-maturity-analysis
+            js-maturity-analysis_investment_estimate
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -44,8 +46,10 @@
             Elaborate the monthly disbursement curves in the economic and financial visions
         </td>
         <td>
-            <select name="physical_and_financial" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="physical_and_financial" class="js-maturity-analysis
+            js-maturity-analysis_physical_and_financial
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -60,8 +64,10 @@
             Main Purpose and Deliveries, Major Equipment and Facilities, Exclusions from Scope, Assumptions and Battery Limit
         </td>
         <td style="width: 15%">
-            <select name="scope_statement" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="scope_statement" class="js-maturity-analysis
+            js-maturity-analysis_scope_statement
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -84,8 +90,10 @@
             <li>Integration of interface areas (environment, licenses and authorizations, land management, health and safety, among others) that are applicable to the project</li>
         </td>
         <td>
-            <select name="integrated_project_timeline" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="integrated_project_timeline" class="js-maturity-analysis
+            js-maturity-analysis_integrated_project_timeline
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -99,8 +107,10 @@
             Record baseline and generate S-curve for future comparative analysis
         </td>
         <td style="width: 15%">
-            <select name="save_baseline" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="save_baseline" class="select2
+             js-maturity-analysis_save_baseline
+            js-maturity-analysis col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -114,8 +124,10 @@
             Establish criteria for physical advancement and consideration of activities
         </td>
         <td style="width: 15%">
-            <select name="definition_of_physical" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="definition_of_physical" class="js-maturity-analysis
+            js-maturity-analysis_definition_of_physical
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -132,8 +144,10 @@
             Monthly detailing of the FTES required by the project
         </td>
         <td style="width: 15%">
-            <select name="detailed_schedule_of_project" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="detailed_schedule_of_project" class="js-maturity-analysis
+            js-maturity-analysis_detailed_schedule_of_project
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -153,8 +167,10 @@
             that allow the purchase process of the equipment and services, as well as the planning and budgeting of the Execution phase.
         </td>
         <td style="width: 15%">
-            <select name="list_document_engineer" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="list_document_engineer" class="js-maturity-analysis
+            js-maturity-analysis_list_document_engineer
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -168,8 +184,10 @@
             Involve the S & S, Environment, Operation and Maintenance areas in the main project definitions, to capture comments and recommendations
         </td>
         <td style="width: 15%">
-            <select name="involve_environment" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="involve_environment" class="js-maturity-analysis
+            js-maturity-analysis_involve_environment
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -184,8 +202,10 @@
             in the development of the Mineral Projects (Lavra Plan, etc.), which are typically functions of the Business Unit
         </td>
         <td style="width: 15%">
-            <select name="alignment_of_interface" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="alignment_of_interface" class="js-maturity-analysis
+            js-maturity-analysis_alignment_of_interface
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -204,8 +224,10 @@
             objectives and main deliveries of the project)
         </td>
         <td style="width: 15%">
-            <select name="change_management_plan" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="change_management_plan" class="js-maturity-analysis
+            js-maturity-analysis_change_management_plan
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -224,8 +246,10 @@
             fire brigades, regulatory agencies, etc.)
         </td>
         <td style="width: 15%">
-            <select name="identification_all_licenses" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="identification_all_licenses" class="js-maturity-analysis
+            js-maturity-analysis_identification_all_licenses
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -242,8 +266,10 @@
             Identify the main risks of the project (at least qualitative analysis) Monitor the action plan and address possible new risks
         </td>
         <td style="width: 15%">
-            <select name="risk_plan" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="risk_plan" class="js-maturity-analysis
+            js-maturity-analysis_risk_plan
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -260,8 +286,10 @@
             Preliminary analysis of HSE, Human Rights and Safety risks in the Communities for the activities foreseen in the Execution stage.
         </td>
         <td style="width: 15%">
-            <select name="preliminary_risk_analysis" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="preliminary_risk_analysis" class="js-maturity-analysis
+            js-maturity-analysis_preliminary_risk_analysis
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -282,8 +310,10 @@
             <li> Tracking of supplies (MAS) </li>
         </td>
         <td style="width: 15%">
-            <select name="supply_plan" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="supply_plan" class="js-maturity-analysis
+            js-maturity-analysis_supply_plan
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -300,8 +330,10 @@
             Are stakeholders, as well as identified in the matrix, correctly characterized and validated project assumptions (schedule, cost, resources)?
         </td>
         <td style="width: 15%">
-            <select name="stakeholder_matrix" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="stakeholder_matrix" class="js-maturity-analysis
+            js-maturity-analysis_stakeholder_matrix
+            select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -318,8 +350,10 @@
             Carry out the mapping of the areas of interest to the project and formalize the demand in the iImobiliários Business area, including the respective activities to regularize these areas in the integrated planning
         </td>
         <td style="width: 15%">
-            <select name="land_management_report" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="land_management_report" class="js-maturity-analysis
+             js-maturity-analysis_land_management_report
+             select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
@@ -336,11 +370,22 @@
             Define an interlocutor to work with the communities in the territories in which Vale is not included or seek support from those responsible for Community Relations in the territory
         </td>
         <td style="width: 15%">
-            <select name="definition_of_interlocutor" class="select2 col-md-12">
-                <option>N/A</option>
+            <select name="definition_of_interlocutor" class="js-maturity-analysis
+             js-maturity-analysis_definition_of_interlocutor
+             select2 col-md-12">
+                <option value="not_available">N/A</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <h6 class="float-end m-r-5
+                badge badge-primary
+                js-maturity-status"
+                data-not-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Not Ready']}}"
+                data-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Ready']}}"></h6>
         </td>
     </tr>
     </tbody>

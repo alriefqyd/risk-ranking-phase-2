@@ -131,4 +131,56 @@ class Setting extends Model
 
     public const DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx'];
     public const ARCHIVE_EXTENSION = ['zip','rar'];
+
+    public const MATURITY_ANALYSIS_ITEM = [
+        'investment_estimate' => 'investment_estimate',
+        'scope' => 'scope',
+        'integrated_project_timeline' => 'integrated_project_timeline',
+        'supply_plan' => 'supply_plan',
+        'physical_and_financial' => 'physical_and_financial',
+        'scope_statement' => 'scope_statement',
+        'project_opening_term' => 'project_opening_term',
+        'save_baseline' => 'save_baseline',
+        'definition_of_physical' => 'definition_of_physical',
+        'develop_basic_engineering' => 'develop_basic_engineering',
+        'identification_all_licenses' => 'identification_all_licenses',
+        'on_site_conditions' => 'on_site_conditions',
+        'rental_plants' => 'rental_plants',
+        'health_and_safety' => 'health_and_safety',
+        'detailed_schedule_of_project' => 'detailed_schedule_of_project',
+        'list_document_engineer' => 'list_document_engineer',
+        'involve_environment' => 'involve_environment',
+        'alignment_of_interface' => 'alignment_of_interface',
+        'change_management_plan' => 'change_management_plan',
+        'risk_plan' => 'risk_plan',
+        'preliminary_risk_analysis' => 'preliminary_risk_analysis',
+        'stakeholder_matrix' => 'stakeholder_matrix',
+        'land_management_report' => 'land_management_report',
+        'definition_of_interlocutor' => 'definition_of_interlocutor',
+        'constructive_methodology' => 'constructive_methodology',
+        'interference_and_tie_ins' => 'interference_and_tie_ins',
+        'capex_management' => 'capex_management',
+        'engineering_development' => 'engineering_development',
+        'survey_local_conditions' => 'survey_local_conditions',
+        'logistic_studies' => 'logistic_studies',
+        'executive_report' => 'executive_report',
+        'environmental_licensing' => 'environmental_licensing',
+        'work_breakdown_structure' => 'work_breakdown_structure',
+        'integrated_project_schedule' => 'integrated_project_schedule',
+        'detailed_fte_schedule' => 'detailed_fte_schedule',
+        'operational_readiness' => 'operational_readiness',
+        'quality_plan' => 'quality_plan',
+        'risk_analysis_report' => 'risk_analysis_report',
+        'integrated_management_system' => 'integrated_management_system',
+        'pae' => 'pae',
+        'apr' => 'apr',
+        'construction_sites' => 'construction_sites',
+        'procurement_tracking_map' => 'procurement_tracking_map'
+    ];
+
+    public const MATURITY_ANALYSIS_SUMMARY = [
+        'Ready' => 'Ready',
+        'Not Ready' => 'Not Ready'
+    ];
+
 }

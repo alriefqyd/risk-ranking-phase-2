@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Setting;
 use App\Models\User;
 use App\Service\Fel3Service;
+use App\Service\MaturityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -73,6 +74,8 @@ class Fel3Controller extends Controller
     public function store(Request $request)
     {
         $documentController = new DocumentController();
+        $maturityService = new MaturityService();
+
         $this->authorize('create');
         DB::beginTransaction();
         $data = $this->validate($request,[
@@ -128,6 +131,7 @@ class Fel3Controller extends Controller
             }
 
             $fel3->saveOrFail();
+            $maturityService->saveMaturity($request,$fel3);
             DB::commit();
             $request->session()->flash('page-tab', 'fel3');
             $request->session()->flash('alert-success', 'FEL 3 was saved');

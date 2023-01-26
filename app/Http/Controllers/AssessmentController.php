@@ -233,7 +233,7 @@ class AssessmentController extends Controller
         $projectService = new ProjectService();
 
         DB::beginTransaction();
-        $this->validation($request);
+        //$this->validation($request);
         try{
             $assessment = Assessment::find($project?->assessment?->id);
             $assessment->problems_statement = $request->problems_statement;
@@ -302,7 +302,6 @@ class AssessmentController extends Controller
             }
 
             $assessment->complexity_assessment= $complexity_assessment;
-
 
             $assessment->saveOrFail();
             DB::commit();
