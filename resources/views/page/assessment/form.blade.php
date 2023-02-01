@@ -395,7 +395,9 @@
                         </table>
                     </div>
                     <input type="hidden" name="score" value="{{$project?->assessment?->complexity_analyzis_score}}" class="js-complexity-analyzis-score-label-val">
-                    <input type="hidden" name="complexity_analysis_type" value="{{$project?->assessment?->complexity_analysis_type}}" class="js-complexity-label-val">
+                    <input type="hidden" name="complexity_analysis_type" data-existing-type="{{$project?->assessment?->complexity_analysis_type}}"
+                           value="{{$project?->assessment?->complexity_analysis_type}}"
+                           data-is-ma-exist="{{$project?->fel3?->maturityAnalysis?->id}}" class="js-complexity-label-val">
                     Score : <span class="js-complexity-score-label">{{$project?->assessment?->complexity_analyzis_score}}</span></br>
                     Complexity : <span class="js-complexity-label">{{$project?->assessment?->complexity_analysis_type}}</span>
                 </div>

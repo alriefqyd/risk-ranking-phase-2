@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Service\MaturityService;
 use App\Service\ProjectService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -239,7 +240,22 @@ class Project extends Model
     }
 
 
+    public function getMaturityAnalysis($maturityItem, $viewAnswer){
+        $maturityService = new MaturityService();
+        $data = $maturityService->getMaturityAnalysis($this?->fel3, $this?->fel3?->id);
+        $dataValueDecode = json_decode($data?->value);
 
+        if($data){
+            foreach ($dataValueDecode as $key => $value){
+                foreach ($value as $k => $v){
+                    if($maturityItem == $k){
+                        if($viewAnswer) return Setting::MATURITY_VALUE[$v];
+                        return $v;
+                    }
+                }
+            }
+        }
 
-
+        return '';
+    }
 }
