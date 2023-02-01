@@ -25,12 +25,12 @@
 <script src="{{asset('assets/js/editor/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('assets/js/editor/ckeditor/adapters/jquery.js')}}"></script>
 <script src="{{asset('assets/js/editor/ckeditor/styles.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap/popper.min.js')}}"></script>
 <script src="{{asset('assets/js/editor/ckeditor/ckeditor.custom.js')}}"></script>
 <script src="{{asset('assets/select2/dist/js/select2.min.js')}}"></script>
 <script src="{{asset('assets/js/notification.js')}}"></script>
 <script src="{{asset('assets/jquery-validation/dist/jquery.validate.min.js')}}"></script>
 <script src="{{asset('assets/tinymce/tinymce.min.js')}}"></script>
+<script src="{{asset('assets/js/form-wizard/form-wizard.js')}}"></script>
 <script src="https://cdn.tiny.cloud/1/v40ov1kx8ufxesasyu8imd5a9bl5h6vvi7iulph996cjgrtb/tinymce/6/plugins.min.js" referrerpolicy="origin"></script>
 <script src="{{asset('assets/js/application.js')}}"></script>
 <!-- Plugins JS Ends-->

@@ -22,4 +22,8 @@ class Fel3 extends Model
         return $this->belongsTo(Project::class,'project_id');
 //        return $this->belongsTo(Project::class,'project_id')->withTrashed();
     }
+
+    public function maturityAnalysis(){
+        return $this->hasOne(MaturityAnalysis::class, 'fels_id');
+    }
 }

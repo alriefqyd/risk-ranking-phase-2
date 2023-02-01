@@ -183,3 +183,7 @@
     }
 }
 
+.table-vertical-center {
+    vertical-align : middle;
+    text-align:center;
+}
