@@ -1,4 +1,4 @@
-<h6 class="font-roboto">Maturity Analysis</h6>
+<h6 class="font-roboto float-start {{$isView ? 'm-l-15' : ''}}">Maturity Analysis</h6>
 <table class="table table-striped js-table-assessment m-b-35">
     <thead>
     <tr>
@@ -34,12 +34,16 @@
             <li>Construction management plan.</li>
         </td>
         <td style="width: 15%">
-            <select name="constructive_methodology"
-                    class="js-maturity-analysis js-maturity-analysis_constructive_methodology select2 col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['constructive_methodology'], true) !!}
+            @else
+                <select name="constructive_methodology"
+                        class="js-maturity-analysis js-maturity-analysis_constructive_methodology select2 col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -50,13 +54,17 @@
             Plan for the execution of construction sites and temporary installations.
         </td>
         <td>
-            <select name="construction_sites" class="select2
-            js-maturity-analysis js-maturity-analysis_construction_sites
-            col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['construction_sites'], true) !!}
+            @else
+                <select name="construction_sites" class="select2
+                js-maturity-analysis js-maturity-analysis_construction_sites
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -67,12 +75,16 @@
             Plan for the removal of interferences and the execution of tie-ins.
         </td>
         <td style="width: 15%">
-            <select name="interference_and_tie_ins" class="select2
-             js-maturity-analysis js-maturity-analysis_interference_and_tie_ins col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['interference_and_tie_ins'], true) !!}
+            @else
+                <select name="interference_and_tie_ins" class="select2
+                js-maturity-analysis js-maturity-analysis_interference_and_tie_ins col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -86,13 +98,17 @@
             CPUs (unit price compositions) and database, containing all calculation memories (indirect, contingency, escalation, BDI, etc.).
         </td>
         <td>
-            <select name="investment_estimate" class="select2
-            js-maturity-analysis js-maturity-analysis_investment_estimate
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['investment_estimate'], true) !!}
+            @else
+                <select name="investment_estimate" class="select2
+                js-maturity-analysis js-maturity-analysis_investment_estimate
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -103,13 +119,17 @@
             Disbursement schedule aligned with the project's physical schedule.
         </td>
         <td style="width: 15%">
-            <select name="capex_management" class="select2
-             js-maturity-analysis js-maturity-analysis_capex_management
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['capex_management'], true) !!}
+            @else
+                <select name="capex_management" class="select2
+                js-maturity-analysis js-maturity-analysis_capex_management
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -137,13 +157,17 @@
             <li>List of documents foreseen for detailed engineering design.</li>
         </td>
         <td>
-            <select name="engineering_development" class="select2
-             js-maturity-analysis js-maturity-analysis_engineering_development
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['engineering_development'], true) !!}
+            @else
+                <select name="engineering_development" class="select2
+                js-maturity-analysis js-maturity-analysis_engineering_development
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -154,13 +178,17 @@
             Reports of local conditions and characteristics for the basic design phase.
         </td>
         <td style="width: 15%">
-            <select name="survey_local_conditions" class="select2
-             js-maturity-analysis js-maturity-analysis_survey_local_conditions
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['survey_local_conditions'], true) !!}
+            @else
+                <select name="survey_local_conditions" class="select2
+                js-maturity-analysis js-maturity-analysis_survey_local_conditions
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -174,13 +202,17 @@
             <li> Identification of potential suppliers of inputs for the works. </li>
         </td>
         <td style="width: 15%">
-            <select name="logistic_studies" class="select2
-             js-maturity-analysis js-maturity-analysis_logistic_studies
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['logistic_studies'], true) !!}
+            @else
+                <select name="logistic_studies" class="select2
+                js-maturity-analysis js-maturity-analysis_logistic_studies
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -192,13 +224,17 @@
             Project change management plan for implementation in the Execution phase, aligned with the FEL 2 and Execution team.
         </td>
         <td style="width: 15%">
-            <select name="change_management_plan" class="select2
-             js-maturity-analysis js-maturity-analysis_change_management_plan
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['change_management_plan'], true) !!}
+            @else
+                <select name="change_management_plan" class="select2
+                js-maturity-analysis js-maturity-analysis_change_management_plan
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -210,13 +246,17 @@
             Detailed project scope statement.
         </td>
         <td style="width: 15%">
-            <select name="scope_statement" class="select2
-             js-maturity-analysis js-maturity-analysis_scope_statement
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['scope_statement'], true) !!}
+            @else
+                <select name="scope_statement" class="select2
+                js-maturity-analysis js-maturity-analysis_scope_statement
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -227,13 +267,17 @@
             Includes all project documentation - technical, contractual, tax and legal.
         </td>
         <td style="width: 15%">
-            <select name="executive_report" class="select2
-             js-maturity-analysis js-maturity-analysis_executive_report
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['executive_report'], true) !!}
+            @else
+                <select name="executive_report" class="select2
+                js-maturity-analysis js-maturity-analysis_executive_report
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -245,13 +289,17 @@
             List of licenses, grants and authorizations required for the project for the Execution and Operation phases, with deadlines (protocol and procurement) in the integrated project schedule (eg IPHAN, FCP, FUNAI, IBAMA, ICMBIO).
         </td>
         <td style="width: 15%">
-            <select name="environmental_licensing" class="select2
-            js-maturity-analysis js-maturity-analysis_environmental_licensing
-            col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['environmental_licensing'], true) !!}
+            @else
+                <select name="environmental_licensing" class="select2
+                js-maturity-analysis js-maturity-analysis_environmental_licensing
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -263,13 +311,17 @@
             WBS defined at least on the third physical level for the Development and Execution phases.
         </td>
         <td style="width: 15%">
-            <select name="work_breakdown_structure" class="select2
-             js-maturity-analysis js-maturity-analysis_work_breakdown_structure
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['work_breakdown_structure'], true) !!}
+            @else
+                <select name="work_breakdown_structure" class="select2
+                js-maturity-analysis js-maturity-analysis_work_breakdown_structure
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -284,13 +336,17 @@
             <li> Definitive histogram of the main quantitative services for the Execution phase (civil works, earthworks, electromechanical assembly, etc.). </li>
         </td>
         <td style="width: 15%">
-            <select name="integrated_project_schedule" class="select2
-             js-maturity-analysis js-maturity-analysis_integrated_project_schedule
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['integrated_project_schedule'], true) !!}
+            @else
+                <select name="integrated_project_schedule" class="select2
+                js-maturity-analysis js-maturity-analysis_integrated_project_schedule
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -301,13 +357,17 @@
             Monthly detailing of the FTES required by the project
         </td>
         <td style="width: 15%">
-            <select name="detailed_fte_schedule" class="select2
-            js-maturity-analysis js-maturity-analysis_detailed_fte_schedule
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['detailed_fte_schedule'], true) !!}
+            @else
+                <select name="detailed_fte_schedule" class="select2
+                js-maturity-analysis js-maturity-analysis_detailed_fte_schedule
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -325,13 +385,17 @@
             <li> Operating Costs (where applicable)</li>
         </td>
         <td style="width: 15%">
-            <select name="operational_readiness" class="select2
-             js-maturity-analysis js-maturity-analysis_operational_readiness
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['operational_readiness'], true) !!}
+            @else
+                <select name="operational_readiness" class="select2
+                js-maturity-analysis js-maturity-analysis_operational_readiness
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -343,13 +407,17 @@
             Quality Plan
         </td>
         <td style="width: 15%">
-            <select name="quality_plan" class="select2
-             js-maturity-analysis js-maturity-analysis_quality_plan
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['quality_plan'], true) !!}
+            @else
+                <select name="quality_plan" class="select2
+                js-maturity-analysis js-maturity-analysis_quality_plan
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -362,13 +430,17 @@
             Report of the analysis of safety and operability (HazOp).
         </td>
         <td style="width: 15%">
-            <select name="risk_analysis_report" class="select2
-             js-maturity-analysis js-maturity-analysis_risk_analysis_report
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['risk_analysis_report'], true) !!}
+            @else
+                <select name="risk_analysis_report" class="select2
+                js-maturity-analysis js-maturity-analysis_risk_analysis_report
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -380,13 +452,17 @@
             Preliminary analysis of HSE, Human Rights and S & S risks in the Communities for the activities foreseen in the Execution stage.
         </td>
         <td style="width: 15%">
-            <select name="apr" class="select2
-             js-maturity-analysis js-maturity-analysis_apr
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['apr'], true) !!}
+            @else
+                <select name="apr" class="select2
+                js-maturity-analysis js-maturity-analysis_apr
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -398,13 +474,17 @@
             Critical Health and Safety Analysis of the project engineering.
         </td>
         <td style="width: 15%">
-            <select name="integrated_management_system" class="select2
-             js-maturity-analysis js-maturity-analysis_integrated_management_system
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['integrated_management_system'], true) !!}
+            @else
+                <select name="integrated_management_system" class="select2
+                js-maturity-analysis js-maturity-analysis_integrated_management_system
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -415,13 +495,17 @@
             PAE - HSE emergency plan for the Execution stage.
         </td>
         <td style="width: 15%">
-            <select name="pae" class="select2
-             js-maturity-analysis js-maturity-analysis_pae
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['pae'], true) !!}
+            @else
+                <select name="pae" class="select2
+                js-maturity-analysis js-maturity-analysis_pae
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -433,13 +517,17 @@
             Consolidated Supply Plan (PS).
         </td>
         <td style="width: 15%">
-            <select name="supply_plan" class="select2
-             js-maturity-analysis js-maturity-analysis_supply_plan
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['supply_plan'], true) !!}
+            @else
+                <select name="supply_plan" class="select2
+                js-maturity-analysis js-maturity-analysis_supply_plan
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
@@ -450,23 +538,21 @@
             Procurement Tracking Map (MAS) for all contracted mapping packages as provided in the Supply Plan.
         </td>
         <td style="width: 15%">
-            <select name="procurement_tracking_map" class="select2
-             js-maturity-analysis js-maturity-analysis_procurement_tracking_map
-             col-md-12">
-                <option value="not_available">N/A</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
+            @if($isView)
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['procurement_tracking_map'], true) !!}
+            @else
+                <select name="procurement_tracking_map" class="select2
+                js-maturity-analysis js-maturity-analysis_procurement_tracking_map
+                col-md-12">
+                    <option value="not_available">N/A</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            @endif
         </td>
     </tr>
     <tr>
-        <td colspan="4">
-            <h6 class="float-end m-r-5
-                badge badge-primary
-                js-maturity-status"
-                data-not-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Not Ready']}}"
-                data-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Ready']}}"></h6>
-        </td>
+        @include('page.maturity_analysis.summary')
     </tr>
     </tbody>
 </table>

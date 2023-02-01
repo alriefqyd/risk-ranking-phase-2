@@ -14,13 +14,21 @@ class MaturityService
         $this->fel3 = new Fel3();
     }
 
+
+    public function getMaturityAnalysis($fels, $felsId){
+        $data = MaturityAnalysis::where('fels_type',class_basename($fels))
+            ->where('fels_id',$felsId)->first();
+
+        return $data;
+    }
+
     /**
      * Save Maturity Analysis Based on FEL
      * @param Request $request
      * @param $fels
      * @return void
      */
-    public function saveMaturity(Request $request, $fels){
+    public function saveMaturity(Request $request, $fels, $maturityAnalysis){
         $maturityRequest = Setting::MATURITY_ANALYSIS_ITEM;
         $maturityCollection = collect([]);
 
@@ -33,7 +41,6 @@ class MaturityService
             });
         }
 
-        $maturityAnalysis = new MaturityAnalysis();
         $maturityAnalysis->value = $maturityCollection;
         $maturityAnalysis->fels_id = $fels->id;
         $maturityAnalysis->maturity_type = $request->maturity_type;

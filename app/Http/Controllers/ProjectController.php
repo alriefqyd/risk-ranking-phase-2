@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\RiskAssessments;
 use App\Models\Setting;
 use App\Notifications\ProjectNote;
+use App\Service\MaturityService;
 use App\Service\ProjectService;
 use App\Service\SettingService;
 use App\Service\UserService;
@@ -163,9 +164,12 @@ class ProjectController extends Controller
         $this->authorize('read');
 
         $projectService = new ProjectService();
+        $maturityService = new MaturityService();
         if($projectService->projectNotAuthorized($project)){
             abort(404);
         }
+
+        $dataMaturity = $maturityService->getMaturityAnalysis($project?->fel3, $project?->fel3?->id);
 
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
@@ -188,6 +192,8 @@ class ProjectController extends Controller
             'probability' => $probability,
             'sessionUpdate' => Session::get('projectUpdate'),
             'isAdmin' => auth()->user()->role == User::ROLE['admin'],
+            'dataMaturity' => $dataMaturity,
+            'maturityOption' => Setting::MATURITY_VALUE
         ]);
     }
     /**

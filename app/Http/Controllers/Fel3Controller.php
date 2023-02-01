@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fel3;
+use App\Models\MaturityAnalysis;
 use App\Models\Project;
 use App\Models\Setting;
 use App\Models\User;
@@ -131,7 +132,8 @@ class Fel3Controller extends Controller
             }
 
             $fel3->saveOrFail();
-            $maturityService->saveMaturity($request,$fel3);
+            $maturityAnalysis = new MaturityAnalysis();
+            $maturityService->saveMaturity($request, $fel3, $maturityAnalysis);
             DB::commit();
             $request->session()->flash('page-tab', 'fel3');
             $request->session()->flash('alert-success', 'FEL 3 was saved');
@@ -142,7 +144,10 @@ class Fel3Controller extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json($e->getMessage());
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage()
+            ]);
         }
     }
 
@@ -165,6 +170,8 @@ class Fel3Controller extends Controller
      */
     public function edit(Fel3 $fel3, Request $request)
     {
+        $maturityService = new MaturityService();
+
         $this->authorize('update');
         $validId = Fel3::find($request->id);
 
@@ -175,7 +182,9 @@ class Fel3Controller extends Controller
         $fel3 = Fel3::with(['project','user'])->where('id',$request->id)->first();
 
         return view('fel3.edit',[
-            'fel3' => $fel3
+            'fel3' => $fel3,
+            'dataMaturity' => $maturityService->getMaturityAnalysis($fel3, $fel3?->id),
+            'maturityOption' => Setting::MATURITY_VALUE
         ]);
     }
 
@@ -189,6 +198,8 @@ class Fel3Controller extends Controller
     public function update(Request $request, Project $project)
     {
         $documentController = new DocumentController();
+        $maturityService = new MaturityService();
+
         $this->authorize('update');
         /*if($fel3->status == 'PUBLISH'){;
             abort(403);
@@ -249,6 +260,8 @@ class Fel3Controller extends Controller
             }
 
             $fel3->saveOrFail();
+            $maturityAnalysis = $project?->fel3?->maturityAnalysis;
+            $maturityService->saveMaturity($request,$fel3, $maturityAnalysis);
             DB::commit();
             $request->session()->flash('page-tab', 'fel3');
             $request->session()->flash('alert-success', 'FEL 3 was saved');
@@ -258,7 +271,10 @@ class Fel3Controller extends Controller
             ]);
         } catch (\Exception $e){
             DB::rollBack();
-            return redirect('fel3/create/'.$request->project_id)->withErrors($e->getMessage());
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage()
+            ]);
         }
     }
 

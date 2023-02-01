@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //use App\Exports\AssessmentExport;
 use App\Models\Assessment;
+use App\Models\MaturityAnalysis;
 use App\Models\Project;
 use App\Models\Setting;
 use App\Models\User;
@@ -302,6 +303,12 @@ class AssessmentController extends Controller
             }
 
             $assessment->complexity_assessment= $complexity_assessment;
+            if($project->assessment?->complexity_analysis_type &&
+                $project->fel3?->maturityAnalysis?->id &&
+                $assessment->isDirty('complexity_analysis_type')){
+                $maturity = MaturityAnalysis::where('fels_id',$project->fel3->id)->first();
+                $maturity->delete();
+            }
 
             $assessment->saveOrFail();
             DB::commit();
@@ -313,7 +320,10 @@ class AssessmentController extends Controller
             ]);
         } catch (\Exception $e){
             DB::rollBack();
-            return response()->json($e->getMessage());
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage()
+            ]);
         }
     }
 

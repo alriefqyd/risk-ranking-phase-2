@@ -23,9 +23,7 @@
 @else
     @can('create')
         <div class="row js-form-project-edit {{!$errors->any() ? 'd-none' : ''}} m-t-0">
-            <div class="card-body">
-                @include('page.fel3.create')
-            </div>
+            @include('page.fel3.create')
         </div>
     @endcan
 @endif

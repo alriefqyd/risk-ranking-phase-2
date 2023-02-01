@@ -183,4 +183,10 @@ class Setting extends Model
         'Not Ready' => 'Not Ready'
     ];
 
+    public const MATURITY_VALUE = [
+        'not_available' => 'N/A',
+        '1' => 'Yes',
+        '0' => 'No',
+    ];
+
 }

@@ -428,7 +428,7 @@ $(function() {
 
     var _assessment_form = $('.js-assessment-form')
 
-    $('.js-create-assessment').on('click', function (e) {
+    $(document).on('click', '.js-create-assessment', function (e) {
         e.preventDefault();
         tinyMCE.triggerSave();
         var _this = $(this);
@@ -554,21 +554,50 @@ $(function() {
                 success: function (data) {
                     if (data.status === 200) window.location.href = data.url;
                     else {
-                        notification('danger', data, 'fa fa-time', 'Error')
+                        notification('danger', data, 'fa fa-time', data.message)
                         _this.removeAttr('disabled')
                         _this.find('.loader-34').addClass('d-none')
                     }
                 }
             })
         } else {
-            // _this.removeAttr('disabled')
-            // _this.find('.loader-34').addClass('d-none')
+            _this.removeAttr('disabled')
+            _this.find('.loader-34').addClass('d-none')
         }
     })
 
     function setBooleanNumber(val) {
         if (val === true) return 1;
         return 0;
+    }
+
+    /**
+     * Handle Change Complexity Analysis Assessment
+     */
+    function updateComplexityAnalysisConfirmation(_value){
+        var _score_val = $('.js-complexity-analyzis-score-label-val').val();
+        var _complexity_type = $('.js-complexity-label-val');
+        var _existing_complexity = _complexity_type.attr('data-existing-type');
+        var _existing_fel3 = _complexity_type.attr('data-is-ma-exist');
+        var _new_complexity = _complexity_type.val();
+        var _form_assessment = $('.js-assessment-form');
+        var _button_submit = _form_assessment.find('.js-create-assessment');
+
+        if(_existing_complexity.length > 0 &&
+            _existing_fel3.length > 0 &&
+            _existing_complexity != _value){
+            _button_submit.attr('data-bs-toggle','modal')
+            _button_submit.attr('data-original-title','test')
+            _button_submit.attr('data-bs-target','#exampleModal')
+            $('.js-btn-submit-assessment-non-confirm').removeClass('js-create-assessment')
+            $('.js-btn-submit-assessment-confirm').addClass('js-create-assessment')
+        } else {
+            _button_submit.removeAttr('data-bs-toggle','modal')
+            _button_submit.removeAttr('data-original-title','test')
+            _button_submit.removeAttr('data-bs-target','#exampleModal')
+            $('.js-btn-submit-assessment-confirm').removeClass('js-create-assessment')
+            $('.js-btn-submit-assessment-non-confirm').addClass('js-create-assessment')
+        }
     }
 
 
@@ -877,6 +906,7 @@ $(function() {
             var _score = _complexity_analysis.find(x => x.key === _attr_name).value;
             var _sum = 0;
             var _budget_value = __this.closest('.js-table-assessment').find('.js-cost_estimate_assessment').val()
+
             if(_investment_just_purchase == 1
                 && _needs_engineering_development == 0){
                 _complexity = 'Simple Purchase'
@@ -914,7 +944,7 @@ $(function() {
                 }
 
             }
-
+            updateComplexityAnalysisConfirmation(_complexity);
             $('.js-complexity-label').text(_complexity)
             $('.js-complexity-score-label').text(_sum)
             $('.js-complexity-label-val').val(_complexity)
@@ -1442,6 +1472,7 @@ $(function() {
     /**
      * Fel 3 Section
      */
+
     var _fel3_submit_form = $('.js-create-fel3')
 
     _fel3_submit_form.on('click', function (e) {
@@ -1530,6 +1561,7 @@ $(function() {
         var _pae = $('.js-maturity-analysis_pae').val();
         var _procurement_tracking_map = $('.js-maturity-analysis_procurement_tracking_map').val();
         var _construction_sites = $('.js-maturity-analysis_construction_sites').val();
+        var _summary_status = $('.js-fel3-form').find('.js-maturity-status').text();
 
         var formData = new FormData()
         formData.append('file_category','FEL 3')
@@ -1602,7 +1634,7 @@ $(function() {
         if(_construction_sites != null) formData.append('construction_sites',_construction_sites)
         if(_detailed_fte_schedule != null) formData.append('detailed_fte_schedule',_detailed_fte_schedule)
 
-        if($('.js-maturity-status').text() !== null) formData.append('summary',$('.js-maturity-status').text())
+        if(_summary_status !== null) formData.append('summary',_summary_status)
         if($('.js-maturity-analysis-type').val() !== null) formData.append('maturity_type',$('.js-maturity-analysis-type').val())
 
         // attachment
@@ -1624,7 +1656,8 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    if(data.url != null) window.location.href = data.url;
+                    if(data.status === 200) window.location.href = data.url;
+                    else console.log(data.message);
                 }
             })
         } else {
@@ -1638,18 +1671,34 @@ $(function() {
      */
     var _maturity_analysis_form = $('.js-maturity-analysis')
     var _label_maturity_status = $('.js-maturity-status')
-    _label_maturity_status.text(_label_maturity_status.data('ready'))
+
+    //check existing maturity label
+    if(_label_maturity_status.text() != ""){
+        if(_label_maturity_status.text() == _label_maturity_status.data('ready')){
+            _label_maturity_status.removeClass('badge-danger')
+            _label_maturity_status.addClass('badge-primary')
+            _label_maturity_status.text(_label_maturity_status.data('ready'))
+        }
+        if(_label_maturity_status.text() == _label_maturity_status.data('not-ready')){
+            _label_maturity_status.removeClass('badge-primary')
+            _label_maturity_status.addClass('badge-danger')
+            _label_maturity_status.text(_label_maturity_status.data('not-ready'))
+        }
+    } else {
+        _label_maturity_status.text(_label_maturity_status.data('ready'))
+    }
+
     _maturity_analysis_form.on('change',function(){
         var _this = $(this);
         var isReady = checkMaturityVal();
         if(isReady){
-            _label_maturity_status.removeClass('badge-danger')
-            _label_maturity_status.addClass('badge-primary')
-            _label_maturity_status.text(_label_maturity_status.data('ready'))
+            _this.closest('.js-parent-detail').find('.js-maturity-status').removeClass('badge-danger')
+            _this.closest('.js-parent-detail').find('.js-maturity-status').addClass('badge-primary')
+            _this.closest('.js-parent-detail').find('.js-maturity-status').text(_label_maturity_status.data('ready'))
         } else {
-            _label_maturity_status.removeClass('badge-primary')
-            _label_maturity_status.addClass('badge-danger')
-            _label_maturity_status.text(_label_maturity_status.data('not-ready'))
+            _this.closest('.js-parent-detail').find('.js-maturity-status').removeClass('badge-primary')
+            _this.closest('.js-parent-detail').find('.js-maturity-status').addClass('badge-danger')
+            _this.closest('.js-parent-detail').find('.js-maturity-status').text(_label_maturity_status.data('not-ready'))
         }
 
     })
