@@ -10,26 +10,11 @@
                         <li class="breadcrumb-item active">project list</li>
                     </ol>
                 </div>
-                <div class="col-sm-8">
-                    @can('create')
-                        <a href="/project/create">
-                            <button class="btn btn-outline-primary-2x m-l-5 float-end" type="button">Create New Project</button>
-                        </a>
-                    @endcan
-                    @can('export')
-                        <a href="/export">
-                            <button class="btn btn-export btn-outline-primary-2x float-end"
-                            data-storage="{{storage_path()}}"
-                            >
-                                <span class="text-button loader-box" style="height: 21px">
-                                    Download <span class="m-l-5 loader-34 d-none"></span>
-                                    <span class="js-icon-download">
-                                        <i style="width: 20px; height: 15px;" data-feather="download"></i>
-                                    </span>
-                                </span>
-                            </button>
-                        </a>
-                    @endcan
+                <div class="col-sm-4 offset-md-4 mt-2">
+                    <select class="select2 js-select-rr-project-list" data-allowClear="false" style="width: 100%">
+                        <option value="2023" {{request()->year == '2023' ? 'selected' : ''}}>Risk Ranking Project List 2023</option>
+                        <option value="" {{!request()->year ? 'selected' : ''}}>Risk Ranking Project List 2024</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -38,67 +23,90 @@
         <div class="row">
             <div class="col-md-12 project-list">
                 @canany(['create','export'])
-                <div class="card">
-                    <div class="row mt-3 mb-0 ">
-                        <h6>Filter Project</h6>
+                    <div class="card">
+                        @if(!request()->year)
+                            <div class="col-md-12 col-sm-6 p-r-10 mt-3 float-end">
+                                @can('create')
+                                    <a href="/project/create">
+                                        <button class="btn btn-outline-primary-2x m-l-5 float-end" type="button">Create New Project</button>
+                                    </a>
+                                @endcan
+                                @can('export')
+                                    <a href="/export">
+                                        <button class="btn btn-export btn-outline-primary-2x float-end"
+                                                data-storage="{{storage_path()}}"
+                                        >
+                                        <span class="text-button loader-box" style="height: 21px">
+                                            Download <span class="m-l-5 loader-34 d-none"></span>
+                                            <span class="js-icon-download">
+                                                <i style="width: 20px; height: 15px;" data-feather="download"></i>
+                                            </span>
+                                        </span>
+                                        </button>
+                                    </a>
+                                @endcan
+                            </div>
+                        @endif
+                        <div class="row mt-3 mb-0 ">
+                            <h6>Filter Project</h6>
+                        </div>
+                        <form method="get" action="{{isset($year) ? '2023' : 'project'}}">
+                            <div class="row mt-0 mb-1">
+                                <div class="col-md-4 p-0">
+                                    <div class="mb-2">
+                                        <select name="owner" data-placeholder="Select Owner Area" class="js-example-basic-single col-sm-12 select2">
+                                            <option></option>
+                                            @foreach($department as $d)
+                                                <option {{$d->id == request('owner') ? 'selected' : ''}} value="{{$d->id}}">{{$d->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 m-l-5 p-0">
+                                    <div class="mb-2">
+                                        <select name="sponsor" data-placeholder="Select Sponsor" class="js-example-basic-single col-sm-12 select2">
+                                            <option></option>
+                                            @foreach($subDepartment as $sd)
+                                                <option {{$sd->id == request('sponsor') ? 'selected' : ''}} value="{{$sd->id}}">{{$sd->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 m-l-5 p-0">
+                                    <div class="mb-2">
+                                        <select name="category" data-placeholder="Select Project Category" class="js-example-basic-single col-sm-12 select2">
+                                            <option></option>
+                                            @foreach($projectCategory as $key=>$value)
+                                                <option {{$key == request('category') ? 'selected' : ''}} value="{{$key}}">{{$value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-0">
+                                <div class="col-md-4 p-0">
+                                    <div class="mb-2">
+                                        <select name="type" data-placeholder="Select Project Type" class="js-example-basic-single col-sm-12 select2">
+                                            <option></option>
+                                            @foreach($projectType as $pt)
+                                                <option {{$pt->id == request('type') ? 'selected' : ''}} value="{{$pt->id}}">{{$pt->setting_value}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 m-l-5 p-0">
+                                    <div class="mb-2">
+                                        <input type="text" name="q" value="{{request('q')}}" style="height: 40px" class="form-control" placeholder="Search By Project Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-2 p-0">
+                                    <div class="form-group mb-0 me-0">
+                                        <button class="btn btn-primary " type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <form method="get" action="project">
-                        <div class="row mt-0 mb-1">
-                            <div class="col-md-4 p-0">
-                                <div class="mb-2">
-                                    <select name="owner" data-placeholder="Select Owner Area" class="js-example-basic-single col-sm-12 select2">
-                                        <option></option>
-                                        @foreach($department as $d)
-                                            <option {{$d->id == request('owner') ? 'selected' : ''}} value="{{$d->id}}">{{$d->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3 m-l-5 p-0">
-                                <div class="mb-2">
-                                    <select name="sponsor" data-placeholder="Select Sponsor" class="js-example-basic-single col-sm-12 select2">
-                                        <option></option>
-                                        @foreach($subDepartment as $sd)
-                                            <option {{$sd->id == request('sponsor') ? 'selected' : ''}} value="{{$sd->id}}">{{$sd->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4 m-l-5 p-0">
-                                <div class="mb-2">
-                                    <select name="category" data-placeholder="Select Project Category" class="js-example-basic-single col-sm-12 select2">
-                                        <option></option>
-                                        @foreach($projectCategory as $key=>$value)
-                                            <option {{$key == request('category') ? 'selected' : ''}} value="{{$key}}">{{$value}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mt-0">
-                            <div class="col-md-4 p-0">
-                                <div class="mb-2">
-                                    <select name="type" data-placeholder="Select Project Type" class="js-example-basic-single col-sm-12 select2">
-                                        <option></option>
-                                        @foreach($projectType as $pt)
-                                            <option {{$pt->id == request('type') ? 'selected' : ''}} value="{{$pt->id}}">{{$pt->setting_value}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-5 m-l-5 p-0">
-                                <div class="mb-2">
-                                    <input type="text" name="q" value="{{request('q')}}" style="height: 40px" class="form-control" placeholder="Search By Project Name">
-                                </div>
-                            </div>
-                            <div class="col-md-2 p-0">
-                                <div class="form-group mb-0 me-0">
-                                    <button class="btn btn-primary " type="submit">Search</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 @endcan
             </div>
             <div class="col-sm-12">
@@ -142,9 +150,15 @@
                                                     {{$project->project_number ?: '-'}}
                                                 </td>
                                                 <td>
-                                                    <a href="/project/{{$project->id}}">
-                                                        <p class="alert-color-green">{{$project->project_name}}</p>
-                                                    </a>
+                                                    @if(request()->year == '2023')
+                                                        <a href="/project/{{$project->id}}/2023">
+                                                            <p class="alert-color-green">{{$project->project_name}}</p>
+                                                        </a>
+                                                    @else
+                                                        <a href="/project/{{$project->id}}">
+                                                            <p class="alert-color-green">{{$project->project_name}}</p>
+                                                        </a>
+                                                    @endif
                                                 </td>
                                                 <td class="text-center">
                                                     {!! $project->getRelatedDataProjectAssessment() !!}
@@ -200,7 +214,7 @@
                     </div>
                 </div>
             </div>
-            @if(sizeof($projectList) > 20)
+            @if(sizeof($projectList) > 20 && !request()->year)
                 <div class="col-sm-12">
                     <div class="card p-2">
                         <nav aria-label="...">

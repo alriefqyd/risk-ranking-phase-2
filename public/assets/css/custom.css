@@ -159,3 +159,27 @@
     height: auto;
     max-height: 400px;
 }
+
+.separator {
+    height: 10px;
+    background-color:#f5f7fb ;
+}
+
+@media only screen and (min-width: 481px){
+    .img-responsive {
+        width: 35%;
+    }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 975px){
+    footer {
+        margin-left: 0 !important;
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 768px){
+    .img-responsive {
+        width: 12%;
+    }
+}
+

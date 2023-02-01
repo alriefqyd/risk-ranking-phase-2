@@ -29,7 +29,7 @@ class HomeController extends Controller
        $bcService = new BusinessCaseService();
 
        //count all data
-       $project = $getProject->getAllProject(false);
+       $project = $getProject->getAllProject(false, null);
        $countAssessment = $assessmentService->countAssessment(null);
        $countAssessmentDraft = $assessmentService->countAssessment(config('constants.status.draft'));
        $countAssessmentPublish = $assessmentService->countAssessment(config('constants.status.publish'));

@@ -6,15 +6,9 @@ use App\Models\CapexInvestment;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\Setting;
-use App\Models\User;
-use App\Service\UserService;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Assessment;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
-use Nette\Utils\Html;
-use function Termwind\render;
 
 class ProjectService
 {
@@ -66,12 +60,19 @@ class ProjectService
      * @param $paginate
      * @return mixed
      */
-    public function getAllProject($paginate){
+    public function getAllProject($paginate, $year){
         $department = auth()->user()->department;
 
         $project = Project::with(['createdBy','assessment','fel1','fel2','fel3',
             'business_case','cost_benefits'])
             ->filter(request(['q','owner','sponsor','category','type']));
+
+        if($year){
+            $project = Project::withTrashed()->with(['createdBy','assessment','fel1','fel2','fel3',
+                'business_case','cost_benefits'])
+                ->filter(request(['q','owner','sponsor','category','type']));
+        }
+
 
         /*
          * Get All Data based on Admin Dept
@@ -81,7 +82,11 @@ class ProjectService
 
         }
 
-        if($paginate){
+        if($year) {
+            $project = $project->whereNotNull('deleted_at')->get();
+        }
+
+        if($paginate && !$year){
             $project = $project->orderBy('created_at', 'DESC')->paginate(20)->withQueryString();
         }
 

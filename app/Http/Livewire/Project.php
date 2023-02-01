@@ -22,7 +22,7 @@ class Project extends Component
 //        $settingService = new SettingService();
 //        $userService = new UserService();
 
-        $projectList = $projectService->getAllProject(true);
+        $projectList = $projectService->getAllProject(true,null);
 //        $department = Department::TYPE['department'];
 //        $subDepartment = Department::TYPE['sub-department'];
 
