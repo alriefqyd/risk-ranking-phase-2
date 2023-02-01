@@ -97,10 +97,10 @@
                                             </tr>
                                         @endforeach
                                     @else
-                                    @endif
                                         <tr>
                                             <td colspan="11" class="text-center">Empty Data</td>
                                         </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>

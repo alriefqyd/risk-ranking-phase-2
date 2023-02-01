@@ -53,7 +53,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function index(){
+    public function index(Request $request){
         //set gate authorization
         $this->authorize('read');
         $department = $this->department;
@@ -67,7 +67,12 @@ class ProjectController extends Controller
         $projectType = $this->projectType;
         $isAdmin = $this->isAdmin;
 
-        $projectList = $projectService->getAllProject(true);
+        $projectList = $projectService->getAllProject(true, null);
+        $year = null;
+        if($request->year){
+            $year = '2023';
+            $projectList = $projectService->getAllProject(true, $request->year);
+        }
         $department = $projectService->getDepartment($department, null);
         $subDepartment = $projectService->getDepartment($subDepartment, null);
 
@@ -79,7 +84,7 @@ class ProjectController extends Controller
             'department' => $department,
             'subDepartment' => $subDepartment,
             'bcStatus' => $bcStatus,
-
+            'year' => $year
         ]);
     }
 
@@ -106,6 +111,7 @@ class ProjectController extends Controller
             'sustainingList' => $sustaining,
             'randdList' => $randd,
             'growthList' => $growth,
+            'project' => null
         ]);
     }
 
@@ -158,8 +164,26 @@ class ProjectController extends Controller
             return redirect('project/create')->withErrors($e->getMessage());
         }
     }
+    public function detailYear(Request $request){
+        $project = Project::withTrashed()->with(['createdBy','assessment','fel1','fel2','fel3',
+            'business_case','cost_benefits'])->find($request->project_id);
 
-    public function edit(Project $project){
+        $complexityScore = Assessment::COMPLEXITY_SCORE;
+        $riskLevel = RiskAssessments::SEVERITY;
+        $riskMatrix = RiskAssessments::RISK_MATRIX;
+        $probability = RiskAssessments::PROBABILITY;
+        return view('page.project.detail',[
+            'project' => $project,
+            'complexityScore' => $complexityScore,
+            'riskLevel' => $riskLevel,
+            'riskMatrix' => $riskMatrix,
+            'probability' => $probability,
+            'isAdmin' => auth()->user()->role == User::ROLE['admin'],
+            'isNotCurrentData' => true
+        ]);
+    }
+
+    public function edit(Project $project, Request $request){
         $this->authorize('read');
 
         $projectService = new ProjectService();
@@ -167,6 +191,10 @@ class ProjectController extends Controller
             abort(404);
         }
 
+        $capexCategory = $projectService->getCapexCategory(CapexInvestment::type['capex_investment'],null);
+        $sustaining = $projectService->getCapexCategory(CapexInvestment::type['basket'],1);
+        $randd = $projectService->getCapexCategory(CapexInvestment::type['basket'], 2);
+        $growth = $projectService->getCapexCategory(CapexInvestment::type['basket'], 3);
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
 
@@ -186,8 +214,13 @@ class ProjectController extends Controller
             'riskLevel' => $riskLevel,
             'riskMatrix' => $riskMatrix,
             'probability' => $probability,
+            'capexCategory' => $capexCategory,
+            'sustainingList' => $sustaining,
+            'randdList' => $randd,
+            'growthList' => $growth,
             'sessionUpdate' => Session::get('projectUpdate'),
             'isAdmin' => auth()->user()->role == User::ROLE['admin'],
+            'isNotCurrentData' => false
         ]);
     }
     /**
@@ -240,6 +273,8 @@ class ProjectController extends Controller
                 $project->owner = $request->owner;
                 $project->sponsor = $request->sponsor;
                 $project->bc_presenter = $request->bc_presenter;
+                $project->basket = $request->basket;
+                $project->sub_basket = $request->sub_basket;
                 $project->project_category = $request->project_category;
                 $project->finance_analyst = $request->finance_analyst;
             }

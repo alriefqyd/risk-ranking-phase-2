@@ -107,7 +107,7 @@
                                                     {!! $business_case?->project?->getCheckTemplate($business_case?->additional_information) !!}
                                                 </td>
                                                 <td class="text-center js-row-bc_status">
-                                                    {{ number_format($business_case?->npv,'0',',','.')}}
+                                                    {{$business_case?->npv,'0',',','.'}}
                                                 </td>
                                                 <td class="text-center js-row-bc_status">
                                                     {{$business_case->irr}}

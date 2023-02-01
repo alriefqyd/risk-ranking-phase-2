@@ -24,11 +24,11 @@
                             <i data-feather="box"></i><span>Project</span></a>
                         <ul class="nav-submenu menu-content">
                             <li><a class="{{request()->is('project*') ? 'active' : ''}}" href="/project">Project List</a></li>
-                            <li><a class="{{request()->is('assessment*') ? 'active' : ''}}" href="/assessment">Project Level Assessment</a></li>
-                            <li><a class="{{request()->is('fel1*') ? 'active' : ''}}" href="/fel1">FEL 1</a></li>
-                            <li><a class="{{request()->is('fel2*') ? 'active' : ''}}" href="/fel2">FEL 2</a></li>
-                            <li><a class="{{request()->is('fel3*') ? 'active' : ''}}" href="/fel3">FEL 3</a></li>
-                            <li><a class="{{request()->is('business-case*') ? 'active' : ''}}" href="/business-case">Business Case</a></li>
+                            <li><a class="{{request()->is('assessment*') ? 'active' : ''}}" href="/assessment">Project Level Assessment List</a></li>
+                            <li><a class="{{request()->is('fel1*') ? 'active' : ''}}" href="/fel1">FEL 1 List</a></li>
+                            <li><a class="{{request()->is('fel2*') ? 'active' : ''}}" href="/fel2">FEL 2 List</a></li>
+                            <li><a class="{{request()->is('fel3*') ? 'active' : ''}}" href="/fel3">FEL 3 List</a></li>
+                            <li><a class="{{request()->is('business-case*') ? 'active' : ''}}" href="/business-case">Business Case List</a></li>
                         </ul>
                     </li>
                 </ul>
