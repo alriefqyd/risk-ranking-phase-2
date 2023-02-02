@@ -1,7 +1,6 @@
 <div class="row">
     <div class="col-md-4 m-l-10 m-t-15 m-b-10">
-        <h6 class="font-roboto js-title-detail {{!$errors->any() ? '' : 'd-none'}} title">FEL 3 Detail</h6>
-        <h6 class="font-roboto js-title-form {{!$errors->any() ? 'd-none' : ''}} title">FEL 3 Form</h6>
+
     </div>
     @if(!$isNotCurrentData)
         @can('update')
