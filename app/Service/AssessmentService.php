@@ -13,22 +13,24 @@ use Illuminate\Support\Facades\Auth;
 class AssessmentService
 {
     public function getAllAssessment(){
-        $data = $this->getDataAssessment(null);
+        $data = $this->getDataAssessment(null,false);
         return $data->get();
     }
 
     public function countAssessment($status){
-        return $this->getDataAssessment($status)->count();
+        return $this->getDataAssessment($status,true)->count();
     }
 
-    public function getDataAssessment($status) {
+    public function getDataAssessment($status, $newData) {
         $userService = new UserService();
         $assessment = Assessment::with(['user','project']);
-        if($userService->isAdminDept()){
-            $assessment = $assessment->whereHas('project', function($q){
-               return $q->where('owner',Auth::user()->department);
-            });
-        }
+
+        $assessment = $assessment->whereHas('project', function($q) use ($newData,$userService){
+            $subQuery = $q->whereNull('deleted_at');
+            if($newData) return $subQuery;
+            if($userService->isAdminDept()) return $subQuery->where('owner',Auth::user()->department);
+        });
+
         if($status){
             $assessment = $assessment->where('status',$status);
         }

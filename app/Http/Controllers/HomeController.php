@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\CapexInvestment;
 use App\Models\Project;
 use App\Models\Setting;
-use App\Models\User;
-use App\Notifications\ProjectNote;
 use App\service\Fel2Service;
 use App\Service\ProjectService;
 use App\Service\UserService;
@@ -14,10 +12,7 @@ use App\service\Fel1Service;
 use App\service\Fel3Service;
 use App\service\BusinessCaseService;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Auth;
 use App\Service\AssessmentService;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {

@@ -20,23 +20,7 @@
             'isView' => false
         ])
     </div>
-    <div class="m-t-15">
-        <div class="text-end btn-mb">
-            <button class="btn btn-secondary" id="prevBtn" type="button" onclick="nextPrev(-1)">Previous</button>
-            <button class="btn btn-primary" id="nextBtn" type="button" onclick="nextPrev(1)">Next</button>
-            <button class="btn btn-secondary js-create-fel3">
-                           <span class="text-button loader-box loader-box-custom" style="height: 21px">
-                                Save As Draft <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
-                            </span>
-            </button>
-            <button class="btn btn-primary js-create-fel3" data-status="publish">
-                           <span class="text-button loader-box loader-box-custom" style="height: 21px">
-                                Publish <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
-                            </span>
-            </button>
-            <p class="error-msg-checkbox"></p>
-        </div>
-    </div>
+    @include('page.fel3.fel3_submit_btn')
 
     <!-- Circles which indicates the steps of the form:-->
     @if($project?->assessment?->complexity_analysis_type)
