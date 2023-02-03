@@ -261,6 +261,7 @@ class Fel3Controller extends Controller
 
             $fel3->saveOrFail();
             $maturityAnalysis = $project?->fel3?->maturityAnalysis;
+            if(!$maturityAnalysis) $maturityAnalysis = new MaturityAnalysis();
             $maturityService->saveMaturity($request,$fel3, $maturityAnalysis);
             DB::commit();
             $request->session()->flash('page-tab', 'fel3');

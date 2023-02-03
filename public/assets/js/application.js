@@ -1855,6 +1855,15 @@ $(function() {
         })
     })
 
+    // hide and show button submit
+    $('.js-next-btn-fel3').on('click',function(){
+        $('.js-create-fel3').removeClass('d-none')
+    })
+
+    $('.js-prev-btn-fel3').on('click',function(){
+        $('.js-create-fel3').addClass('d-none')
+    })
+
     /**
      * Business Case Handle Here
      */

@@ -1,6 +1,6 @@
 @inject('setting',App\Models\Setting::class)
 <div class="col-md-12">
-    <h6 class="font-roboto float-start {{$isView ? 'm-l-15' : ''}}">Maturity Analysis</h6>
+    <h6 class="font-roboto float-start m-l-15">Maturity Analysis</h6>
 </div>
 <table class="table table-striped js-table-assessment m-b-35">
     <thead>
