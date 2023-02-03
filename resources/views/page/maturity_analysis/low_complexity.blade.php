@@ -1,4 +1,4 @@
-<h6 class="font-roboto float-start {{$isView ? 'm-l-15' : ''}}">Maturity Analysis</h6>
+<h6 class="font-roboto float-start m-l-15">Maturity Analysis</h6>
 <table class="table table-striped js-table-assessment m-b-35">
     <thead>
     <tr>
