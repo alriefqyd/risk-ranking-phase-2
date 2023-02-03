@@ -68,7 +68,7 @@ $(function() {
         var _id = relatedTarget.data('id');
         var _note = relatedTarget.data('note');
         $.ajax({
-            url: '/project/getProjectNote/' + _id,
+            url: '/getProjectNote/' + _id,
             type: 'get',
             success: function (data) {
                 if (data.status === 200) {

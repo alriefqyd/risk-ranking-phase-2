@@ -1,4 +1,4 @@
-<h6 class="font-roboto float-start {{$isView ? 'm-l-15' : ''}}">Maturity Analysis</h6>
+<h6 class="font-roboto float-start m-l-15">Maturity Analysis</h6>
 <table class="table table-striped js-table-assessment m-b-35">
     <thead>
     <tr>
@@ -39,9 +39,10 @@
             @else
                 <select name="constructive_methodology"
                         class="js-maturity-analysis js-maturity-analysis_constructive_methodology select2 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['constructive_methodology'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -60,9 +61,10 @@
                 <select name="construction_sites" class="select2
                 js-maturity-analysis js-maturity-analysis_construction_sites
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['construction_sites'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -80,9 +82,10 @@
             @else
                 <select name="interference_and_tie_ins" class="select2
                 js-maturity-analysis js-maturity-analysis_interference_and_tie_ins col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['interference_and_tie_ins'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -104,9 +107,10 @@
                 <select name="investment_estimate" class="select2
                 js-maturity-analysis js-maturity-analysis_investment_estimate
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['investment_estimate'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -125,9 +129,10 @@
                 <select name="capex_management" class="select2
                 js-maturity-analysis js-maturity-analysis_capex_management
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['capex_management'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -163,9 +168,10 @@
                 <select name="engineering_development" class="select2
                 js-maturity-analysis js-maturity-analysis_engineering_development
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['engineering_development'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -184,9 +190,10 @@
                 <select name="survey_local_conditions" class="select2
                 js-maturity-analysis js-maturity-analysis_survey_local_conditions
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['survey_local_conditions'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -208,9 +215,10 @@
                 <select name="logistic_studies" class="select2
                 js-maturity-analysis js-maturity-analysis_logistic_studies
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['logistic_studies'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -230,9 +238,10 @@
                 <select name="change_management_plan" class="select2
                 js-maturity-analysis js-maturity-analysis_change_management_plan
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['change_management_plan'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -252,9 +261,10 @@
                 <select name="scope_statement" class="select2
                 js-maturity-analysis js-maturity-analysis_scope_statement
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['scope_statement'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -273,9 +283,10 @@
                 <select name="executive_report" class="select2
                 js-maturity-analysis js-maturity-analysis_executive_report
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['executive_report'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -295,9 +306,10 @@
                 <select name="environmental_licensing" class="select2
                 js-maturity-analysis js-maturity-analysis_environmental_licensing
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['environmental_licensing'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -317,9 +329,10 @@
                 <select name="work_breakdown_structure" class="select2
                 js-maturity-analysis js-maturity-analysis_work_breakdown_structure
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['work_breakdown_structure'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -342,9 +355,10 @@
                 <select name="integrated_project_schedule" class="select2
                 js-maturity-analysis js-maturity-analysis_integrated_project_schedule
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['integrated_project_schedule'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -363,9 +377,10 @@
                 <select name="detailed_fte_schedule" class="select2
                 js-maturity-analysis js-maturity-analysis_detailed_fte_schedule
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['detailed_fte_schedule'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -391,9 +406,10 @@
                 <select name="operational_readiness" class="select2
                 js-maturity-analysis js-maturity-analysis_operational_readiness
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['operational_readiness'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -413,9 +429,10 @@
                 <select name="quality_plan" class="select2
                 js-maturity-analysis js-maturity-analysis_quality_plan
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['quality_plan'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -436,9 +453,10 @@
                 <select name="risk_analysis_report" class="select2
                 js-maturity-analysis js-maturity-analysis_risk_analysis_report
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['risk_analysis_report'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -458,9 +476,10 @@
                 <select name="apr" class="select2
                 js-maturity-analysis js-maturity-analysis_apr
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['apr'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -480,9 +499,10 @@
                 <select name="integrated_management_system" class="select2
                 js-maturity-analysis js-maturity-analysis_integrated_management_system
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['integrated_management_system'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -501,9 +521,10 @@
                 <select name="pae" class="select2
                 js-maturity-analysis js-maturity-analysis_pae
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['pae'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -523,9 +544,10 @@
                 <select name="supply_plan" class="select2
                 js-maturity-analysis js-maturity-analysis_supply_plan
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['supply_plan'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>
@@ -544,9 +566,10 @@
                 <select name="procurement_tracking_map" class="select2
                 js-maturity-analysis js-maturity-analysis_procurement_tracking_map
                 col-md-12">
-                    <option value="not_available">N/A</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    @foreach($maturityOption as $key => $value)
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['procurement_tracking_map'], false) == $key ? 'selected=selected' : '' !!}
+                                value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             @endif
         </td>

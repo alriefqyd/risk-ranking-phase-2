@@ -1,9 +1,11 @@
 @inject('setting',App\Models\Setting::class)
 <div class="js-form-project-detail js-parent-detail">
     @if($project?->fel3)
-        @include('page.maturity_analysis.template',[
-                   'isView' => true
-        ])
+        @if($project?->assessment?->complexity_analysis_type)
+            @include('page.maturity_analysis.template',[
+                     'isView' => true
+            ])
+        @endif
 
         <div class="row m-b-30 m-t-40 {{!$errors->any() ? '' : 'd-none'}}">
             <div class="table-responsive js-fel-3-view-property">

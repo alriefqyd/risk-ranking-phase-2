@@ -7,3 +7,5 @@
         data-not-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Not Ready']}}"
         data-ready="{{$setting::MATURITY_ANALYSIS_SUMMARY['Ready']}}">{{$dataMaturity?->summary}}</h6>
 </td>
+
+
