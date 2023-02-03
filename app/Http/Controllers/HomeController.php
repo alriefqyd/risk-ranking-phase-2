@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CapexInvestment;
 use App\Models\Project;
 use App\Models\Setting;
 use App\Models\User;
@@ -63,6 +64,7 @@ class HomeController extends Controller
            'countBC' => $countBC,
            'countBCDraft' => $countBCDraft,
            'countBCPublish' => $countBCPublish,
+           'countBasketCategory' => $this->getDataBasket()
        ]);
    }
 
@@ -118,5 +120,28 @@ class HomeController extends Controller
             $data = $data->where('owner',auth()->user()->department);
         }
         return $data->count() ?: 0;
+    }
+
+    public function getDataBasket(){
+       $capexCollection = collect();
+       $capexInvestment = CapexInvestment::CAPEX_INVESTMENT;
+
+       foreach ($capexInvestment as $ciKey => $ciValue){
+           $basketCollection = collect();
+           $parent = CapexInvestment::where('code',$ciKey)->first();
+           $basketList = CapexInvestment::where('type',CapexInvestment::type['basket'])
+               ->where('parent_id',$parent?->id)->get();
+           foreach ($basketList as $s){
+               $ci = CapexInvestment::where('code',$s->code)
+                   ->where('parent_id',$parent->id)
+                   ->first();
+               $count = Project::where('basket',$ci?->id)->count();
+               $basketCollection->put(
+                   $s->name,$count
+               );
+           }
+           $capexCollection->put($ciValue,$basketCollection);
+       }
+       return $capexCollection;
     }
 }

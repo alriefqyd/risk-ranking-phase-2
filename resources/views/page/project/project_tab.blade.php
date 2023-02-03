@@ -33,7 +33,7 @@
         </div>
     </div>
     @if(!$isNotCurrentData)
-        <form method="post" action="/project/{{$project->id}}"
+        <form method="post" action="/project/{{$project?->id}}"
               class="theme-form js-project-edit js-project-form">
             @csrf
             @method('PUT')
@@ -72,31 +72,31 @@
             </tr>
             <tr>
                 <td style="width: 200px">Project Number : </td>
-                <td>{{$project->project_number}}</td>
+                <td>{{$project?->project_number}}</td>
             </tr>
             <tr>
                 <td>Project Name : </td>
-                <td>{{$project->project_name}}</td>
+                <td>{{$project?->project_name}}</td>
             </tr>
             <tr>
                 <td>Project Type : </td>
-                <td>{{$project->project_type}}</td>
+                <td>{{$project?->project_type}}</td>
             </tr>
             <tr>
                 <td>Owner Area :</td>
-                <td>{{$project->owners->name}}</td>
+                <td>{{$project?->owners->name}}</td>
             </tr>
             <tr>
                 <td>Project Sponsor :</td>
-                <td>{{$project->sponsors->name}}</td>
+                <td>{{$project?->sponsors->name}}</td>
             </tr>
             <tr>
                 <td>BC Presenter :</td>
-                <td>{{$project->bc_presenter}}</td>
+                <td>{{$project?->bc_presenter}}</td>
             </tr>
             <tr>
                 <td>Finance Analyst :</td>
-                <td>{{$project->finance_analyst}}</td>
+                <td>{{$project?->finance_analyst}}</td>
             </tr>
             </tbody>
         </table>

@@ -25,7 +25,7 @@ Route::put('/project/{project:id}',[\App\Http\Controllers\ProjectController::cla
 Route::get('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'edit'])->name('project.edit ')->middleware('auth');
 Route::get('/project/{project_id}/{year}',[\App\Http\Controllers\ProjectController::class,'detailYear'])->name('project.edit.year ')->middleware('auth');
 Route::delete('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'delete'])->name('project.delete ')->middleware('auth');
-Route::get('/project/getProjectNote/{project:id}',[\App\Http\Controllers\ProjectController::class,'getProjectNote'])->name('project.get-project-note ')->middleware('auth');
+Route::get('/getProjectNote/{project:id}',[\App\Http\Controllers\ProjectController::class,'getProjectNote'])->name('project.get-project-note ')->middleware('auth');
 Route::get('/export',[\App\Http\Controllers\ExportController::class,'export'])->name('export')->middleware(['auth']);
 
 Route::post('/assessment',[\App\Http\Controllers\AssessmentController::class,'store'])->middleware('auth');

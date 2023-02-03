@@ -1,70 +1,70 @@
 @inject('setting',App\Models\Setting::class)
 <div class="row js-form-project-detail m-b-30 {{!$errors->any() ? '' : 'd-none'}}">
-    @if($project->assessment)
+    @if($project?->assessment)
         <div class="table-responsive">
             <table class="table table-striped js-table-assessment">
                 <tbody>
                 <tr>
                     <td style="width: 17%">Problem Statement : </td>
-                    <td style="width: 8%">{!! $project->getCheckTemplate($project->assessment->problems_statement) !!}</td>
+                    <td style="width: 8%">{!! $project?->getCheckTemplate($project?->assessment->problems_statement) !!}</td>
                     <td style="width: 75%">
-                        {!! $project->getTemplateExpandChar($project->assessment->problem_statement_text) !!}
+                        {!! $project?->getTemplateExpandChar($project?->assessment->problem_statement_text) !!}
                     </td>
                 </tr>
                 <tr>
                     <td>Objective : </td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->objective) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->objective) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->objective_text) !!}
+                        {!! $project?->getTemplateExpandChar($project?->assessment->objective_text) !!}
                     </td>
                 </tr>
                 <tr>
                     <td>Project Scope : </td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->project_scope) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->project_scope) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->project_scope_text) !!}
+                        {!! $project?->getTemplateExpandChar($project?->assessment->project_scope_text) !!}
                     </td>
                 </tr>
                 <tr>
                     <td>Key Performance Metric :</td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->key_performance_metric) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->key_performance_metric) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->key_performance_metric_text) !!}
+                        {!! $project?->getTemplateExpandChar($project?->assessment->key_performance_metric_text) !!}
                     </td>
                 </tr>
                 <tr>
                     <td>Key Project Risk Mitigants :</td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->key_project_risk_mitigants) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->key_project_risk_mitigants) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->key_project_risk_and_mitigants_text) !!}
+                        {!! $project?->getTemplateExpandChar($project?->assessment->key_project_risk_and_mitigants_text) !!}
                     </td>
                 </tr>
                 <tr>
                     <td>Impact If Not <br/>Executed :</td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->impact_if_not_executed) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->impact_if_not_executed) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->impact_if_not_executed_text) !!}
+                        {!! $project?->getTemplateExpandChar($project?->assessment->impact_if_not_executed_text) !!}
                     </td>
                 </tr>
                 <tr>
                     <td>Alternative To <br/> Proposal :</td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->alternative_to_proposal) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->alternative_to_proposal) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->alternatives_to_proposal_text) !!}
+                        {!! $project?->getTemplateExpandChar($project?->assessment->alternatives_to_proposal_text) !!}
                     </td>
                 </tr>
                 <tr>
                     <td>Cost Estimate :</td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->cost_estimate) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->cost_estimate) !!}</td>
                     <td>
-                        $ {{$project->assessment->cost_estimate_text }}
+                        $ {{$project?->assessment->cost_estimate_text }}
                     </td>
                 </tr>
                 <tr>
                     <td>Detail Estimate Cost :</td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->detail_estimate_cost) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->detail_estimate_cost) !!}</td>
                     <td>
-                        {!! $project->getTemplateExpandChar($project->assessment->detail_estimate_cost_text) !!}
+                        {!! $project?->getTemplateExpandChar($project?->assessment->detail_estimate_cost_text) !!}
                     </td>
                 </tr>
                 <tr>
@@ -73,14 +73,14 @@
 
                     </td>
                     <td>
-                        <p>Score : {!! $project->assessment->complexity_analyzis_score !!}</p>
+                        <p>Score : {!! $project?->assessment->complexity_analyzis_score !!}</p>
                         <p>Complexity : {!! $project?->assessment?->complexity_analysis_type !!}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>Complexity Score Assessment :</td>
                     <td>
-                        {!! $project->getCheckTemplate($project->assessment->complexity_assessment_checkbox) !!}</td>
+                        {!! $project?->getCheckTemplate($project?->assessment->complexity_assessment_checkbox) !!}</td>
                     </td>
                     <td>
                         <table style="width: 100%">
@@ -164,7 +164,7 @@
                 </tr>
                 <tr>
                     <td>Assessment of Level Project :</td>
-                    <td>{!! $project->getCheckTemplate($project->assessment->level_project) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->level_project) !!}</td>
                     <td>
                         <small>(According to cost estimate $ <span class="text-danger js-cost-estimate-label-assessment">
                             {{$project?->assessment?->cost_estimate_text}}
@@ -177,7 +177,7 @@
                 </tr>
                 <tr>
                     <td>Document <br/>Attachment :</td>
-                    <td>{!! $project->getCheckTemplate($project?->assessment?->attachment ? 1 : 0) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment?->attachment ? 1 : 0) !!}</td>
                     <td>
                         <table style="width: 100%">
                             <tr>
@@ -185,10 +185,10 @@
                                     Initial Cost Estimate :
                                 </td>
                                 <td>
-                                    @if($project?->getAllAttachment($project->assessment?->attachment, $setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
-                                        <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}&dir={{urlencode($project->project_name)}}">
+                                    @if($project?->getAllAttachment($project?->assessment?->attachment, $setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
+                                        <a target="_blank" href="/preview?id={{$project?->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}&dir={{urlencode($project?->project_name)}}">
                                             <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                            {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
+                                            {{$project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
                                         </a>
                                     @endif
                                 </td>
@@ -198,10 +198,10 @@
                                     Complexity Matrix :
                                 </td>
                                 <td>
-                                    @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
-                                        <a target="_blank" href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}&dir={{urlencode($project->project_name)}}">
+                                    @if($project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
+                                        <a target="_blank" href="/preview?id={{$project?->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}&dir={{urlencode($project?->project_name)}}">
                                             <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                            {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
+                                            {{$project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
                                         </a>
                                     @endif
                                 </td>

@@ -4,13 +4,13 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3>{{$project->project_name}}</h3>
-                    <smal>{{$project->project_type}}</smal>
+                    <h3>{{$project?->project_name}}</h3>
+                    <smal>{{$project?->project_type}}</smal>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="/project">project list</a></li>
                         <li class="breadcrumb-item">project Detail</li>
-                        <li class="breadcrumb-item active">{{$project->project_name}}</li>
+                        <li class="breadcrumb-item active">{{$project?->project_name}}</li>
                     </ol>
                 </div>
             </div>

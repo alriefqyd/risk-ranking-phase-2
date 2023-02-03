@@ -182,7 +182,31 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-2" >
+            @foreach($countBasketCategory as $key => $value)
+                <div class="col-sm-14 col-md-6 col-lg-4">
+                    <div class="ribbon-wrapper card">
+                        <div class="card-body">
+                            <div class="ribbon ribbon-clip ribbon-primary"><p class="text-2xl">{{$key}}</p></div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped">
+                                        @foreach($value as $k => $v)
+                                            <tr>
+                                                <td><p class="text-2xl">{{$k}}</p></td>
+                                                <td><span class="badge badge-primary counter"><p class="text-2xl">{{$v}}</p></span></td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+
+        {{--<div class="row">
             <div class="col-lg-12 col-sm-12 box-col-12">
                 <div class="card">
                     <div class="card-header pb-0">
@@ -194,7 +218,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
         </div>
     </div>
 @endsection
