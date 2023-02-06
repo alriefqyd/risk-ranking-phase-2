@@ -26,4 +26,11 @@ class Fel3 extends Model
     public function maturityAnalysis(){
         return $this->hasOne(MaturityAnalysis::class, 'fels_id');
     }
+
+    protected static function boot() {
+        parent::boot();
+        static::deleted(function ($fel3) {
+            $fel3->maturityAnalysis()->delete();
+        });
+    }
 }
