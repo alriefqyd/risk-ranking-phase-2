@@ -9,20 +9,22 @@ use Illuminate\Support\Facades\Auth;
 class Fel2Service
 {
     public function getAllFel2(){
-        return $this->getDataFel2(null)->get();
+        return $this->getDataFel2(null,false)->get();
     }
 
     public function countFel2($status){
-        return $this->getDataFel2($status)->count();
+        return $this->getDataFel2($status,true)->count();
     }
 
-    public function getDataFel2($status){
+    public function getDataFel2($status, $newData){
         $userService = new UserService();
 
         $data = Fel2::with(['project.assessment','user']);
         if($userService->isAdminDept()){
-            $data = $data->whereHas('project', function($q){
-                return $q->where('owner',Auth::user()->department);
+            $data = $data->whereHas('project', function($q) use ($newData,$userService){
+                $subQuery = $q->whereNull('deleted_at');
+                if($userService->isAdminDept()) $q->where('owner',Auth::user()->department);
+                return $subQuery;
             });
         }
 
