@@ -9,22 +9,22 @@ use Illuminate\Support\Facades\Auth;
 class BusinessCaseService
 {
     public function getAllBc(){
-        return $this->getDataBc(null)->get();
+        return $this->getDataBc(null,false)->get();
     }
 
     public function countAllBc($status){
-        return $this->getDataBc($status)->count();
+        return $this->getDataBc($status,true)->count();
     }
 
-    public function getDataBc($status){
+    public function getDataBc($status,$newData){
         $userService = new UserService();
-
         $data = BusinessCaseAssessment::with(['project.assessment','user']);
-        if($userService->isAdminDept()){
-            $data = $data->whereHas('project', function($q){
-                return $q->where('owner',Auth::user()->department);
-            });
-        }
+
+        $data = $data->whereHas('project', function($q) use ($newData,$userService){
+            $subQuery = $q->whereNull('deleted_at');
+            if($userService->isAdminDept()) return $subQuery->where('owner',Auth::user()->department);
+            return $subQuery;
+        });
 
         if($status){
             $data = $data->where('status',$status);
