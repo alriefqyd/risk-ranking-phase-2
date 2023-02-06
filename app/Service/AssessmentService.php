@@ -27,8 +27,8 @@ class AssessmentService
 
         $assessment = $assessment->whereHas('project', function($q) use ($newData,$userService){
             $subQuery = $q->whereNull('deleted_at');
-            if($newData) return $subQuery;
             if($userService->isAdminDept()) return $subQuery->where('owner',Auth::user()->department);
+            return $subQuery;
         });
 
         if($status){

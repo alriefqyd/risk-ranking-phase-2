@@ -527,7 +527,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label>Initial Cost Estimate : </label>
-                        <input class="form-control js-assessment-attachment_initial_cost_estimate col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-assessment-attachment_initial_cost_estimate col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
                             <a target="_blank"
                                href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}&dir={{$project->project_name}}">
@@ -536,12 +536,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Complexity Matrix :</label>
-                        <input class="form-control js-assessment-attachment_complexity_matrix col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-assessment-attachment_complexity_matrix col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
                             <a target="_blank"
                                href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}&dir={{$project->project_name}}">
@@ -550,6 +551,7 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
             </td>
         </tr>

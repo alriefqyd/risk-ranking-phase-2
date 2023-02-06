@@ -423,6 +423,21 @@ $(function() {
     }
 
     /**
+     * Upload Attachment Validation
+     */
+    var DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx'];
+    $('.js-upload-attachment').on('change', function(){
+        var _this = $(this);
+        var _extension = _this.val().substr((_this.val().lastIndexOf('.') +1));
+       if(jQuery.inArray(_extension, DOCUMENT_EXTENSION) < 1){
+            _this.closest('.row').find('.js-error-attachment_extension').text('File extension not allowed ')
+        } else {
+           _this.closest('.row').find('.js-error-attachment_extension').text('')
+       }
+    });
+
+
+    /**
      * Save Assessment Using AJAX
      */
 

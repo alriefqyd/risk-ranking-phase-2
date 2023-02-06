@@ -119,7 +119,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label>Parameter, Regulation, Requirement</label>
-                        <input class="form-control js-fel1-attachment_parameter_regulation_requirement col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel1-attachment_parameter_regulation_requirement col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement']))
                             <a target="_blank"
                                href="/preview?id={{$project->id}}&dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement'])}}">
@@ -128,12 +128,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Initial Process Diagram (Alur)</label>
-                        <input class="form-control js-fel1-attachment_initial_progress_diagram col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel1-attachment_initial_progress_diagram col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_process_diagram']))
                             <a target="_blank"
                                href="/preview?id={{$project->id}}&dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_process_diagram'])}}">
@@ -142,12 +143,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Data of Alternatives (drawing/figure, cost of investment & operation, maintenance, etc.)</label>
-                        <input class="form-control js-fel1-attachment_data_of_alternatives col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel1-attachment_data_of_alternatives col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['data_of_alternatives']))
                             <a target="_blank"
                                href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['data_of_alternatives'])}}">
@@ -156,12 +158,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Initial schedule until level 1</label>
-                        <input class="form-control js-fel1-attachment_initial_schedule col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel1-attachment_initial_schedule col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_schedule']))
                             <a target="_blank"
                                href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_schedule'])}}">
@@ -170,12 +173,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Project level assessment</label>
-                        <input class="form-control js-fel1-attachment_project_level_assessment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel1-attachment_project_level_assessment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment']))
                             <a target="_blank"
                                href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment'])}}&dir={{$project->project_name}}">
@@ -184,12 +188,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Stakeholder list </label>
-                        <input class="form-control js-fel1-attachment_stakeholder_list col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel1-attachment_stakeholder_list col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list']))
                             <a target="_blank"
                                href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list'])}}&dir={{$project->project_name}}">
@@ -198,6 +203,7 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
             </td>
         </tr>

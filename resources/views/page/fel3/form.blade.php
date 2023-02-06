@@ -207,7 +207,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label>Preliminary Design</label>
-                        <input class="form-control js-fel3-attachment_preliminary_design col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel3-attachment_preliminary_design col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['preliminary_design']))
                             <a target="_blank"
                                href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['preliminary_design'])}}">
@@ -216,12 +216,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Utility/Infrastructure/Facilities Diagram</label>
-                        <input class="form-control js-fel3-attachment_utility_infrastructure_facilities_diagram
+                        <input class="form-control js-upload-attachment js-fel3-attachment_utility_infrastructure_facilities_diagram
                         col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['utility_infrastructure_facilities_diagram']))
                             <a target="_blank"
@@ -231,12 +232,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>HAZOP Study/GPRA/WI (Risk Assessment)</label>
-                        <input class="form-control js-fel3-attachment_hazop col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel3-attachment_hazop col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['hazop']))
                             <a target="_blank"
                                href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['hazop'])}}">
@@ -245,12 +247,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>MoC Document </label>
-                        <input class="form-control js-fel3-attachment_moc_document col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel3-attachment_moc_document col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['moc_document']))
                             <a target="_blank"
                                href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['moc_document'])}}">
@@ -259,12 +262,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Cost Estimate with rough of magnitude 15-20%</label>
-                        <input class="form-control js-fel3-cost_estimate col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel3-cost_estimate col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['cost_estimate']))
                             <a target="_blank"
                                href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['cost_estimate'])}}">
@@ -273,12 +277,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Quotation of equipment/Site Query </label>
-                        <input class="form-control js-fe3-attachment_quotation_of_equipment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fe3-attachment_quotation_of_equipment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['quotation_of_equipment']))
                             <a target="_blank"
                                href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['quotation_of_equipment'])}}">
@@ -287,12 +292,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Project Level Assessment Document</label>
-                        <input class="form-control js-fel3-attachment_project_level_assessment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel3-attachment_project_level_assessment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['project_level_assessment']))
                             <a target="_blank"
                                href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['project_level_assessment'])}}">
@@ -301,12 +307,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>FEL 1 Engineering Report (if though FEL 1)</label>
-                        <input class="form-control js-fel3-attachment_fel1 col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel3-attachment_fel1 col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel1']))
                             <a target="_blank"
                                href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel1'])}}">
@@ -315,12 +322,13 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <label>FEL 2 – Engineering Report (if through FEL 2)</label>
-                        <input class="form-control js-fel3-attachment_fel2 col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        <input class="form-control js-upload-attachment js-fel3-attachment_fel2 col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel2']))
                             <a target="_blank"
                                href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel2'])}}">
@@ -329,6 +337,7 @@
                             </a>
                         @endif
                     </div>
+                    <div class="js-error-attachment_extension text-danger"></div>
                 </div>
                 <hr>
             </td>
