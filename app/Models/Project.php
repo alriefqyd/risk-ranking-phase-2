@@ -21,11 +21,11 @@ class Project extends Model
     ];
 
     public function assessment(){
-        return $this->hasOne(Assessment::class,'project_id');
+        return $this->hasOne(Assessment::class,'project_id')->withTrashed();
     }
 
     public function fel1(){
-        return $this->hasOne(Fel1::class,'project_id');
+        return $this->hasOne(Fel1::class,'project_id')->withTrashed();;
     }
 
     public function createdBy(){
@@ -33,15 +33,15 @@ class Project extends Model
     }
 
     public function fel2(){
-        return $this->hasOne(Fel2::class,'project_id');
+        return $this->hasOne(Fel2::class,'project_id')->withTrashed();;
     }
 
     public function fel3(){
-        return $this->hasOne(Fel3::class,'project_id');
+        return $this->hasOne(Fel3::class,'project_id')->withTrashed();;
     }
 
     public function business_case(){
-        return $this->hasOne(BusinessCaseAssessment::class,'project_id');
+        return $this->hasOne(BusinessCaseAssessment::class,'project_id')->withTrashed();;
     }
 
     public function owners(){
@@ -53,7 +53,7 @@ class Project extends Model
     }
 
     public function cost_benefits(){
-        return $this->hasOne(CostBenefit::class,'project_id');
+        return $this->hasOne(CostBenefit::class,'project_id')->withTrashed();;
     }
 
     public function baskets(){

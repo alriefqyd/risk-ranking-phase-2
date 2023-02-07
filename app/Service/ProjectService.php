@@ -83,7 +83,7 @@ class ProjectService
         }
 
         if($year) {
-            $project = $project->whereNotNull('deleted_at')->get();
+            $project = $project->whereNotNull('deleted_at')->paginate(20)->withQueryString();
         }
 
         if($paginate && !$year){
