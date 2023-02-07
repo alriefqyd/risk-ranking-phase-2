@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9" style="margin-top: auto">
-                                {{$subBasket->name}} - {!! old('checkbox_sub_basket') == $subBasket->id ? 'checked' : ''!!}
+                                {{$subBasket->name}}
                             </div>
                         </div>
                     @endforeach
