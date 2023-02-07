@@ -37,8 +37,8 @@
                                            data-id="{{$subBasket->id}}"
                                            data-idx="{{$index}}"
                                            name="checkbox_sub_basket"
-                                           {{old('checkbox_sub_basket') == $subBasket->id ? 'checked' : ''}}
-                                           {{$project?->sub_basket == $subBasket->id ? 'checked' : ''}}
+                                           {!! old('checkbox_sub_basket') == $subBasket->id ? 'checked' : ''!!}
+                                           {!! $project?->sub_basket == $subBasket->id ? 'checked' : ''!!}
                                            value="{{$subBasket->id}}"
                                            class="js-checkbox-{{$subBasket->code}}
                                                js-checkbox-sub-basket"
@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="col-md-9" style="margin-top: auto">
-                                {{$subBasket->name}}
+                                {{$subBasket->name}} - {!! old('checkbox_sub_basket') == $subBasket->id ? 'checked' : ''!!}
                             </div>
                         </div>
                     @endforeach
@@ -73,7 +73,10 @@
         <div class="checkbox checkbox-primary">
             <input id="checkbox-{{$randd->code}}"
                    data-id="{{$randd->id}}"
+                   name="checkbox_basket"
+                   value="{{$randd->id}}"
                    {{$project?->basket == $randd?->id ? 'checked' : ''}}
+                   {{old('checkbox_basket') == $randd?->id ? 'checked' : ''}}
                    class="js-checkbox-margin js-checkbox-open-bucket"
                    type="checkbox">
 
@@ -93,7 +96,10 @@
         <div class="checkbox checkbox-primary">
             <input id="checkbox-{{$growth->code}}"
                    data-id="{{$growth->id}}"
+                   name="checkbox_basket"
+                   value="{{$growth->id}}"
                    {{$project?->basket == $growth?->id ? 'checked' : ''}}
+                   {{old('checkbox_basket') == $growth?->id ? 'checked' : ''}}
                    class="js-checkbox-margin js-checkbox-open-bucket"
                    type="checkbox">
 
