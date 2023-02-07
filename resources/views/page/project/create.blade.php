@@ -14,7 +14,9 @@
             </div>
         </div>
     </div>
-    <form method="post" action="/project" class="theme-form js-project-form">
+    <form method="post" action="/project" class="theme-form
+    {{ count($errors) > 0 ? 'isError' : ''}}
+    js-project-form">
     @csrf
         <div class="container-fluid js-capex-investment-form {{!$errors->isEmpty() ? 'd-none' : ''}}">
             <div class="row">

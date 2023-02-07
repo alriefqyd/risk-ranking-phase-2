@@ -15,6 +15,6 @@ class ExportController extends Controller
         $this->authorize('export');
         $fileName = 'document\risk-ranking-2023.xlsx';
         Excel::store(new RiskRankingExport(), $fileName);
-        return response()->download(storage_path('app\document\risk-ranking-2023.xlsx'));
+        return response()->download(storage_path('app/document/risk-ranking-2023.xlsx'));
     }
 }

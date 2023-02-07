@@ -2338,7 +2338,7 @@ $(function() {
     $('.js-checkbox-open-bucket').each(function(){
         var _this = $(this);
         var _btn_next = _this.closest('.card').find('.js-next-capex-investment-form')
-        var _isUpdate = _this.closest('.js-project-edit').length > 0
+        var _isUpdate = _this.closest('.js-project-edit').length > 0 //to know the form is edit or not
         validate_capex_investment(_this,_isUpdate)
         _this.on('change',function(){
             var __this = $(this)
@@ -2352,6 +2352,7 @@ $(function() {
     function validate_capex_investment(_this, _isUpdate){
         var __this = _this;
         var __sub_bucket_list = __this.closest('.js-basket-list-detail').find('.js-sub-basket-list');
+        var _isErrorForm = _this.closest('form').hasClass('isError') //to know the form is edit or not
 
         if(__this.is(':checked')){
             _idx = __this.data('idx');
@@ -2370,7 +2371,7 @@ $(function() {
                 __this.attr('disabled','disabled')
             }
             _check_capex_investment = 0;
-            if(!_isUpdate){
+            if(!_isUpdate && !_isErrorForm){
                 $('.js-checkbox-sub-basket').prop('checked', false);
                 $('.js-checkbox-sub-basket').removeAttr('checked');
                 $('.js-hidden-basket').val('');
