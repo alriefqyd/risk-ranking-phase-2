@@ -13,6 +13,12 @@ class Assessment extends Model
     use HasFactory;
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+    /**
+     * cost_estimate will bi save in custom format #######,##
+     * (.) will remove and comma will replace into (.)
+     **/
+
     public const COMPLEXITY_SCORE = [
         'pds' => 'PDS',
         'complex' => 'COMPLEX',
@@ -23,7 +29,6 @@ class Assessment extends Model
     protected $guarded = ['id'];
 
     public function project(){
-//     return $this->belongsTo(Project::class,'project_id')->withTrashed();
      return $this->belongsTo(Project::class,'project_id');
     }
 

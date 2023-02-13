@@ -411,6 +411,16 @@ class ProjectService
         return $documents;
     }
 
+    /**
+     * Convert USD to Euro
+     */
+    public function convertCurrency($curr){
+        $value = str_replace('.','',$curr);
+        $valueConvert = str_replace(',','.',$value);
+        return $valueConvert;
+    }
+
+
 
 }
 

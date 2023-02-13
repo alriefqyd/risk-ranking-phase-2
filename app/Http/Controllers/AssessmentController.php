@@ -121,7 +121,7 @@ class AssessmentController extends Controller
                 'key_project_risk_and_mitigants_text' => $request->key_project_risk_mitigants_text,
                 'impact_if_not_executed_text' => $request->impact_if_not_executed_text,
                 'alternatives_to_proposal_text' => $request->alternatives_to_proposal_text,
-                'cost_estimate_text' => $request->cost_estimate_text,
+                'cost_estimate_text' => $projectService->convertCurrency($request->cost_estimate_text),
                 //'cost_estimate_text' => $projectService->priceToText($request->cost_estimate_text), //temporary not used until phase 2 start
                 'level_project_text' => $request->level_project_text,
                 'detail_estimate_cost_text' => $request->detail_estimate_cost_text,
@@ -261,7 +261,7 @@ class AssessmentController extends Controller
             $assessment->key_project_risk_and_mitigants_text = $request->key_project_risk_mitigants_text;
             $assessment->impact_if_not_executed_text = $request->impact_if_not_executed_text;
             $assessment->alternatives_to_proposal_text = $request->alternatives_to_proposal_text;
-            $assessment->cost_estimate_text = $request->cost_estimate_text;
+            $assessment->cost_estimate_text = $projectService->convertCurrency($request->cost_estimate_text);
             if($request?->status == 'publish'){
                 $assessment->status = 'PUBLISH';
             }
@@ -388,5 +388,4 @@ class AssessmentController extends Controller
 
         return $complexityAnalysis;
     }
-
 }
