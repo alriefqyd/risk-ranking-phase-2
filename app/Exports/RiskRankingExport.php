@@ -20,8 +20,8 @@ class RiskRankingExport implements FromCollection, WithMultipleSheets
     public function sheets(): array
     {
         $sheets = [
-            'Project' => new ProjectExport(),
-//            'Cost Benefit' => new CostBenefitExport(),
+            'Project' => new ProjectListExport(),
+            'Cost Benefit' => new CostBenefitExport(),
         ];
 
         return $sheets;

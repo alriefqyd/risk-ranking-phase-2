@@ -6,14 +6,18 @@ use App\Models\Project;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CostBenefitExport implements FromView, WithHeadingRow, ShouldAutoSize, WithStyles,
-    WithTitle
+class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, ShouldAutoSize, WithStyles,
+    WithTitle, WithColumnFormatting
 {
     public function __construct()
     {
@@ -25,8 +29,8 @@ class CostBenefitExport implements FromView, WithHeadingRow, ShouldAutoSize, Wit
 
     public function view(): View
     {
-        $cb = Project::with('cost_benefits')->get();
-        return view('page.project.export', [
+        $cb = Project::with(['owners','sponsors','assessment','baskets','subBaskets'])->get();
+        return view('page.project.export_project', [
             'project' => $cb
         ]);
     }
@@ -34,7 +38,7 @@ class CostBenefitExport implements FromView, WithHeadingRow, ShouldAutoSize, Wit
     public function styles(Worksheet $sheet)
     {
         $columnSize = $this->size * 5 + 2;
-        $sheet->getStyle('1')->applyFromArray([
+        $sheet->getStyle('A1:BS3')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'italic' => false,
@@ -45,7 +49,15 @@ class CostBenefitExport implements FromView, WithHeadingRow, ShouldAutoSize, Wit
             ],
         ]);
 
-        $column = "A1:AI".($columnSize) ;
+        $sheet->getStyle('A1:BS3')
+            ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+        $sheet->getStyle('A1:BS3')->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setARGB('3fa7fd');
+        //$sheet->getColumnDimension('A')->setWidth('30'); work if shouldAutoSize is disable
+
+
+        $column = "A1:BS".($columnSize) ;
         $sheet->getStyle($column)->applyFromArray([
             'borders' => [
                 'allBorders' => [
@@ -54,16 +66,22 @@ class CostBenefitExport implements FromView, WithHeadingRow, ShouldAutoSize, Wit
                 ],
             ],
             'background' => [
-                'color'=> '#000000'
-            ]
+                'color'=> '#2978ff'
+            ],
         ]);
-        for($i=3;$i<=$columnSize;$i++){
-            $sheet->setCellValue('AI'.$i,'=SUM(D'.$i.':AG'.$i.')');
-        }
     }
 
     public function title(): string
     {
-       return 'Cost Benefit';
+       return 'Risk Ranking 2023';
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'AC' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'BQ' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'BR' => NumberFormat::FORMAT_PERCENTAGE
+        ];
     }
 }

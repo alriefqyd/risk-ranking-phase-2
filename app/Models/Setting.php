@@ -58,6 +58,13 @@ class Setting extends Model
         'complexity_matrix' => 'complexity_matrix'
     ];
 
+    public const ASSESSMENT_LEVEL = [
+      'PDS' => 'PDS',
+      'MODERATE' => 'MODERATE',
+      'LIGHT' => 'LIGHT',
+      'COMPLEX' => 'COMPLEX'
+    ];
+
     public const FEL1_ATTACHMENT = [
         'parameter_regulation_requirement' => 'parameter_regulation_requirement',
         'initial_process_diagram' => 'initial_process_diagram',
