@@ -441,6 +441,17 @@ $(function() {
      * Save Assessment Using AJAX
      */
 
+    $('.js-currency-format').each(function(){
+        var _val = currencyFormat($(this).val())
+        $(this).val(_val);
+    })
+
+    $('.js-currency-format-text').each(function(){
+        var _convert = $(this).text().replace('.',',')
+        var _val = currencyFormat(_convert)
+        $(this).text(_val);
+    })
+
     var _assessment_form = $('.js-assessment-form')
 
     $(document).on('click', '.js-create-assessment', function (e) {
@@ -2234,7 +2245,9 @@ $(function() {
         var _this = $(this);
         var _input = _this.closest('td').find('.js-cost_estimate_bc');
         if (_this.is(':checked')) {
-            _input.val(_input.data('default'))
+            var _val = _input.data('default').toString().replace('.',',')
+            var _convertVal = currencyFormat(_val)
+            _input.val(_convertVal)
         } else {
             _input.val(0)
         }

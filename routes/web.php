@@ -56,4 +56,7 @@ Route::post('/cost_benefit',[\App\Http\Controllers\CostBenefitController::class,
 
 Route::get('/preview',[\App\Http\Controllers\DocumentController::class,'preview'])->name('preview_document')->middleware(['auth']);
 Route::post('/markNotification', [\App\Http\Controllers\ProjectController::class,'markNotification'])->name('notif')->middleware(['auth']);
+
+Route::get('/preview-export',[\App\Http\Controllers\ProjectController::class,'previewExport'])->name('preview_export')->middleware(['auth']);
+
 require __DIR__.'/auth.php';

@@ -503,7 +503,7 @@
 
             </td>
             <td>
-                <small>(According to cost estimate $ <span class="text-danger js-cost-estimate-label-assessment">
+                <small>(According to cost estimate $ <span class="text-danger js-currency-format-text js-cost-estimate-label-assessment">
                         {{$project?->assessment?->cost_estimate_text}}
                     </span> and complexity score
                     <span class="text-danger js-complexity-score-label-assessment">

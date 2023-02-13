@@ -57,7 +57,7 @@
                     <td>Cost Estimate :</td>
                     <td>{!! $project?->getCheckTemplate($project?->assessment->cost_estimate) !!}</td>
                     <td>
-                        $ {{$project?->assessment->cost_estimate_text }}
+                        $ <span class="js-currency-format-text"> {{$project?->assessment->cost_estimate_text }}</span>
                     </td>
                 </tr>
                 <tr>
@@ -167,7 +167,7 @@
                     <td>{!! $project?->getCheckTemplate($project?->assessment->level_project) !!}</td>
                     <td>
                         <small>(According to cost estimate $ <span class="text-danger js-cost-estimate-label-assessment">
-                            {{$project?->assessment?->cost_estimate_text}}
+                                <span class="js-currency-format-text"> {{$project?->assessment?->cost_estimate_text}} </span>
                             </span> and complexity score
                             <span class="text-danger js-complexity-score-label-assessment">
                                 {{$project?->assessment?->complexity_score_assessment}}

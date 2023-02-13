@@ -386,4 +386,12 @@ class ProjectController extends Controller
             })->markAsRead();
         return response()->noContent();
     }
+
+    /**
+     * Preview Export Table Excel
+     * @return void
+     */
+    public function previewExport(){
+        return view('page.project.export_project');
+    }
 }

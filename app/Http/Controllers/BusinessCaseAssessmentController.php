@@ -122,7 +122,7 @@ class BusinessCaseAssessmentController extends Controller
                 'social_community_and_government_text' => $request->social_community_and_government_text,
                 'financial_evaluation_text' => $request->financial_evaluation_text,
                 'additional_information_text' => $request->additional_information_text,
-                'npv' => $request->npv,
+                'npv' => $projectService->convertCurrency($request->npv),
                 'irr' => $request->irr,
                 'payback_period' => $request->payback_period,
                 'department' => auth()->user()->department,
@@ -261,7 +261,7 @@ class BusinessCaseAssessmentController extends Controller
             $businessCaseAssessment->financial_evaluation_text = $request->financial_evaluation_text;
             $businessCaseAssessment->additional_information_text = $request->additional_information_text;
             $businessCaseAssessment->project_id = $request->project_id;
-            $businessCaseAssessment->npv = $request->npv;
+            $businessCaseAssessment->npv = $projectService->convertCurrency($request->npv);
             $businessCaseAssessment->irr = $request->irr;
             $businessCaseAssessment->payback_period = $request->payback_period;
 
