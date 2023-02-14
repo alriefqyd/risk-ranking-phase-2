@@ -191,6 +191,24 @@
                     <td>$ {{$project?->business_case?->cost_estimate ?: 0}}</td>
                 </tr>
                 <tr>
+                    <td>Change Management Request</td>
+                    <td>
+                        {!! $project?->getCheckTemplate($project?->business_case?->change_management_request ? 1 : 0) !!}
+                    </td>
+                    <td>
+                        <ul>
+                            @if($project->business_case?->change_management_request)
+                                <li>
+                                    <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project->business_case?->change_management_request}}">
+                                        <i class="fa mb-2 fa-file-text-o txt-info"></i>
+                                        {{$project->business_case?->change_management_request}}
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
                     <td>Attachment</td>
                     <td>
                         {!! $project?->getCheckTemplate($project?->business_case?->attachment ? 1 : 0) !!}

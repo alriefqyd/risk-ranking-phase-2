@@ -158,6 +158,14 @@ class BusinessCaseAssessmentController extends Controller
                 }
             }
 
+
+            if(isset($request->change_management_request)) {
+                $documentsChangeManagementRequest = $documentController->uploadDocument($request, $request->change_management_request, null,$request->project_name,Setting::DOCUMENT_EXTENSION);
+                if(isset($documentsChangeManagementRequest)){
+                    $business_case->change_management_request = $documentsChangeManagementRequest;
+                }
+            }
+
             $business_case->saveOrFail();
             if($riskAssessment){
                 $business_case->riskAssessment()->save(
@@ -258,12 +266,12 @@ class BusinessCaseAssessmentController extends Controller
             $businessCaseAssessment->utility_requirements_text = $request->utility_requirements_text;
             $businessCaseAssessment->permitting_text = $request->permitting_text;
             $businessCaseAssessment->social_community_and_government_text = $request->social_community_and_government_text;
-            $businessCaseAssessment->financial_evaluation_text = $request->financial_evaluation_text;
             $businessCaseAssessment->additional_information_text = $request->additional_information_text;
             $businessCaseAssessment->project_id = $request->project_id;
             $businessCaseAssessment->npv = $projectService->convertCurrency($request->npv);
             $businessCaseAssessment->irr = $request->irr;
             $businessCaseAssessment->payback_period = $request->payback_period;
+            //$businessCaseAssessment->financial_evaluation_text = $request->financial_evaluation_text;
 
             $businessCaseAssessment->riskAssessment()->update([
                 'people' => $request->people ?: 0,
@@ -287,6 +295,15 @@ class BusinessCaseAssessmentController extends Controller
             $existingDocument = collect([]);
 
             if(isset($request->attachment)) $documentRequest->put('business_case',$request->attachment);
+
+            if(isset($request->change_management_request)) {
+                $documentsChangeManagementRequest = $documentController->uploadDocument($request, $request->change_management_request,
+                    $businessCaseAssessment->change_management_request,
+                    $request->project_name,Setting::DOCUMENT_EXTENSION);
+                if(isset($documentsChangeManagementRequest)){
+                    $businessCaseAssessment->change_management_request = $documentsChangeManagementRequest;
+                }
+            }
 
             if($businessCaseAssessment?->attachment){
                 $existingDocuments = json_decode($businessCaseAssessment?->attachment,true);
