@@ -338,6 +338,26 @@
         </tr>
         <tr>
             <td>
+                Change Management Request
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <div class="col-md-12">
+                    <input class="form-control js-bc-change_management_request col-md-10" name="document" id="inputFile" multiple type="file">
+                    @if($project?->business_case?->change_management_request)
+                        <a target="_blank"
+                           href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->business_case?->change_management_request}}">
+                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                            {{$project?->business_case?->change_management_request}}
+                        </a>
+                    @endif
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 Attachment File
             </td>
             <td>

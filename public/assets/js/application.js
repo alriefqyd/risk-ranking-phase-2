@@ -1934,8 +1934,8 @@ $(function() {
         tinymce.triggerSave();
         var _this = $(this)
 
-        _this.attr('disabled', 'disabled')
-        _this.find('.loader-34').removeClass('d-none')
+        // _this.attr('disabled', 'disabled')
+        // _this.find('.loader-34').removeClass('d-none')
 
         var _form = _this.closest('.js-bc-form');
         var _problem_and_objective = _form.find('#checkbox-problem_and_objective');
@@ -1975,15 +1975,18 @@ $(function() {
         var _utility_requirement_text = $('.js-bc_utility_requirement_text').val();
         var _permitting_text = $('.js-bc_permitting').val();
         var _social_community_text = $('.js-bc_social_community').val();
-        var _financial_evaluation_text = $('.js-bc_financial_evaluation').val();
         var _additional_information_text = $('.js-bc_additional_information').val();
 
         var _attachment = $('.js-bc-attachment_file')[0].files
+        var _change_management_request = $('.js-bc-change_management_request')[0].files
 
         var formData = new FormData();
         formData.append('problem_statement_and_objective_text',_problem_statement_text)
         if (_form.data('method') === 'put') formData.append('_method', 'put')
         if(_attachment.length > 0) formData.append('attachment',_attachment[0])
+        if(_change_management_request.length > 0) {
+            formData.append('change_management_request',_change_management_request[0])
+        }
         formData.append('file_category','Business Case')
 
         formData.append('project_alternatives_text',_project_alternative_text)
@@ -1992,7 +1995,6 @@ $(function() {
         formData.append('utility_requirements_text',_utility_requirement_text)
         formData.append('permitting_text',_permitting_text)
         formData.append('social_community_and_government_text',_social_community_text)
-        formData.append('financial_evaluation_text',_financial_evaluation_text)
         formData.append('additional_information_text',_additional_information_text)
         formData.append('project_name',_form.data('name'));
 
@@ -2030,7 +2032,6 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    // console.log(data)
                     if (data.status === 200) window.location.href = data.url;
                     else notification('alert', data, '', '')
                 }
