@@ -75,22 +75,21 @@ class DocumentController extends Controller
         }
     }
 
-    public function uploadDocument(Request $request, $existingDocument, $project_name){
+    public function uploadDocument(Request $request,$file, $existingDocument, $project_name, $allowedFileExtension){
         $document_name = null;
-        if($request->hasfile('document')) {
-            $request->validate([
-                'document' => 'required|mimes:doc,docx,pdf|max:10240'
-            ]);
+        if($file) {
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $check = in_array($extension, $allowedFileExtension);
+            if($check){
+                $document_name = $request->file_category .'-' . $project_name . '-' . uniqid() . '.' . $extension;
+                $dir = 'documents/'.$project_name.'/'.$request->file_category;
+                Storage::disk('local')->putFileAs($dir, $file, $document_name);
+            }
 
-
-            $file = $request->file('document');
-            $name = $request->file_category .'-' . $project_name . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
-            $dir = 'documents/'.$project_name;
-            Storage::disk('local')->putFileAs($dir, $file, $name);
-            $document_name = $name;
-
-            if (isset($existingDocument)) {
-                $this->deleteDocument($existingDocument, $project_name);
+            if(isset($existingDocument)) {
+                $dirName = $project_name . '/' . $request->file_category;
+                $this->deleteDocument($existingDocument, $dirName);
             }
         }
 
@@ -101,6 +100,7 @@ class DocumentController extends Controller
         $projectService = new ProjectService();
         $document_name = null;
         $documents = collect([]);
+
         if($documentRequests) {
 
             $files = $documentRequests;
@@ -142,8 +142,14 @@ class DocumentController extends Controller
         return redirect('/document');
     }
 
+    /**
+     * Function used to delete or remove document
+     * @param $document
+     * @param $path
+     * @return void
+     */
     private function deleteDocument($document, $path){
-        $existDocumentName = storage_path('app\\documents\\') . $path .'\\' . $document;
+        $existDocumentName = storage_path('app/documents/') . $path .'/' . $document;
         if (File::exists($existDocumentName)) {
             File::delete($existDocumentName);
         }
