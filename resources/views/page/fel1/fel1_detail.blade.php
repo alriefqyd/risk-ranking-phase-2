@@ -42,6 +42,21 @@
                     <table>
                         <tr>
                             <td style="width: 50%">
+                                <p class="m-b-0">Parameter, Regulation, Requirement</p>
+                            </td>
+                            <td style="width: 50%">
+                                @if($project?->getAllAttachment($project->fel1?->attachment, $setting::FEL1_ATTACHMENT['parameter_regulation_requirement']))
+                                    <a target="_blank" href="/preview?dir={{$project->project_name}}&category={{$setting::FOLDER_TYPE['fel1']}}&file={{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement'])}}">
+                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                        {{$project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement'])}}
+                                    </a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%">
                                 <p class="m-b-0">Initial Process Diagram (Alur)</p>
                             </td>
                             <td style="width: 50%">

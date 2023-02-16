@@ -536,7 +536,8 @@
                             </a>
                         @endif
                     </div>
-                    <div class="js-error-attachment_extension text-danger"></div>
+                    <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                    <div class="js-error-file_size js-check-count-error text-danger"></div>
                 </div>
                 <hr>
                 <div class="row">
@@ -551,7 +552,8 @@
                             </a>
                         @endif
                     </div>
-                    <div class="js-error-attachment_extension text-danger"></div>
+                    <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                    <div class="js-error-file_size js-check-count-error text-danger"></div>
                 </div>
             </td>
         </tr>

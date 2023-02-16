@@ -152,7 +152,7 @@ class BusinessCaseAssessmentController extends Controller
 
             $extension = array_merge(Setting::DOCUMENT_EXTENSION,Setting::ARCHIVE_EXTENSION);
             if(sizeof($documentRequest) > 0){
-                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name,Setting::DOCUMENT_EXTENSION);
+                $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name,$extension);
                 if(sizeof($documents) > 0){
                     $business_case->attachment = $documents;
                 }

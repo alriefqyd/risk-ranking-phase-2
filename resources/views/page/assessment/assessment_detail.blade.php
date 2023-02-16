@@ -164,7 +164,7 @@
                 </tr>
                 <tr>
                     <td>Assessment of Level Project :</td>
-                    <td>{!! $project?->getCheckTemplate($project?->assessment->level_project) !!}</td>
+                    <td>{!! $project?->getCheckTemplate($project?->assessment->level_project_text ? 1 : 0) !!}</td>
                     <td>
                         <small>(According to cost estimate $ <span class="text-danger js-cost-estimate-label-assessment">
                                 <span class="js-currency-format-text"> {{$project?->assessment?->cost_estimate_text}} </span>

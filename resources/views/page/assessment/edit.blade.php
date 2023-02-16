@@ -11,19 +11,19 @@
             'errors' => $errors
         ])
     <div class="card-footer">
-        <div class="btn btn-secondary js-btn-submit-assessment-non-confirm js-btn-submit-assessment
+        <button class="btn btn-secondary js-save-button js-btn-submit-assessment-non-confirm js-btn-submit-assessment
          js-create-assessment"
              data-status="draft">
            <span class="text-button loader-box loader-box-custom"  style="height: 21px">
                 Save As Draft <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
             </span>
-        </div>
-        <div class="btn btn-primary js-btn-submit-assessment-non-confirm js-create-assessment"
+        </button>
+        <button class="btn btn-primary js-save-button js-btn-submit-assessment-non-confirm js-create-assessment"
                 data-status="publish">
            <span class="text-button loader-box loader-box-custom"  style="height: 21px">
                 Publish <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
             </span>
-        </div>
+        </button>
         <p class="error-msg-checkbox"></p>
     </div>
 
