@@ -344,15 +344,19 @@
 
             </td>
             <td>
-                <div class="col-md-12">
-                    <input class="form-control js-bc-change_management_request col-md-10" name="document" id="inputFile" multiple type="file">
-                    @if($project?->business_case?->change_management_request)
-                        <a target="_blank"
-                           href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->business_case?->change_management_request}}">
-                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                            {{$project?->business_case?->change_management_request}}
-                        </a>
-                    @endif
+                <div class="row">
+                    <div class="col-md-12">
+                        <input class="form-control js-upload-attachment js-bc-change_management_request col-md-10" name="document" id="inputFile" multiple type="file">
+                        @if($project?->business_case?->change_management_request)
+                            <a target="_blank"
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->business_case?->change_management_request}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->business_case?->change_management_request}}
+                            </a>
+                        @endif
+                    </div>
+                    <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                    <div class="js-error-file_size text-danger"></div>
                 </div>
             </td>
         </tr>
@@ -364,16 +368,20 @@
 
             </td>
             <td>
-                <div class="col-md-12">
-                    <small class="text-danger">* Upload as zip format if file is more than one</small>
-                    <input class="form-control js-bc-attachment_file col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
-                    @if($project?->getAllAttachment($project->business_case?->attachment,'business_case'))
-                        <a target="_blank"
-                           href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}">
-                            <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                            {{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}
-                        </a>
-                    @endif
+                <div class="row">
+                    <div class="col-md-12">
+                        <small>* Upload as zip format if file is more than one</small>
+                        <input class="form-control js-upload-attachment js-upload-zip js-bc-attachment_file col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                        @if($project?->getAllAttachment($project->business_case?->attachment,'business_case'))
+                            <a target="_blank"
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}">
+                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                {{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}
+                            </a>
+                        @endif
+                    </div>
+                    <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                    <div class="js-error-file_size js-check-count-error text-danger"></div>
                 </div>
             </td>
         </tr>

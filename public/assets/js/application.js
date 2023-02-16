@@ -426,14 +426,36 @@ $(function() {
      * Upload Attachment Validation
      */
     var DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx'];
-    $('.js-upload-attachment').on('change', function(){
-        var _this = $(this);
-        var _extension = _this.val().substr((_this.val().lastIndexOf('.') +1));
-       if(jQuery.inArray(_extension, DOCUMENT_EXTENSION) < 1){
-            _this.closest('.row').find('.js-error-attachment_extension').text('File extension not allowed ')
-        } else {
-           _this.closest('.row').find('.js-error-attachment_extension').text('')
-       }
+    var ZIP_EXTENSION = ['zip','rar'];
+
+    $(document).on('change','.js-upload-attachment',function(){
+           var _this = $(this);
+           var _extension = _this.val().substr((_this.val().lastIndexOf('.') + 1));
+           var _size = _this[0].files[0].size
+           var _listExtension = DOCUMENT_EXTENSION;
+
+           if (_this.hasClass('js-upload-zip')) {
+               _listExtension = ZIP_EXTENSION.concat(DOCUMENT_EXTENSION);
+           }
+
+           if (_size > 40000000) {
+               _this.closest('.row').find('.js-error-file_size').text('Error : File size cannot more than 40 MB ')
+           } else {
+               _this.closest('.row').find('.js-error-file_size').text('')
+           }
+
+           if (_listExtension.indexOf(_extension) < 0) {
+               _this.closest('.row').find('.js-error-attachment_extension').text('Error: File extension not allowed ')
+           } else {
+               _this.closest('.row').find('.js-error-attachment_extension').text('')
+           }
+
+           var _errorCount = _this.closest('form').find('.js-check-count-error:contains("Error")').length
+           if (_errorCount > 0) {
+               _this.closest('form').find('.js-save-button').attr('disabled', 'disabled')
+           } else {
+               _this.closest('form').find('.js-save-button').removeAttr('disabled', 'disabled')
+           }
     });
 
 
@@ -1207,7 +1229,7 @@ $(function() {
                         return _count < 1;
                     }
                 }
-            }
+            },
         },
         messages: {
             validate_fel1_project_scope: {

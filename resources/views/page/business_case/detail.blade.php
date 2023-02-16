@@ -60,7 +60,7 @@
                         <div class="col-md-6 js-financial_evaluation_detail d-none">
                             <div>
                                 <label class="col-form-label">NPV : </label>
-                                $ {{$project?->business_case?->npv}}
+                                $ <span class="js-currency-format-text">{{$project?->business_case?->npv}}</span>
                             </div>
                             <div>
                                 <label class="col-form-label">IRR :</label>
