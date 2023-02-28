@@ -219,12 +219,12 @@
         </td>
         <td>
             @if($isView)
-                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['identification_all_license'], true) !!}
+                {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['identification_all_licenses'], true) !!}
             @else
                 <select name="identification_all_license" class="js-maturity-analysis
                 js-maturity-analysis_identification_all_license select2 col-md-12">
                     @foreach($maturityOption as $key => $value)
-                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['identification_all_license'], false) == $key ? 'selected=selected' : '' !!}
+                        <option {!! $project->getMaturityAnalysis($setting::MATURITY_ANALYSIS_ITEM['identification_all_licenses'], false) == $key ? 'selected=selected' : '' !!}
                                 value="{{$key}}">{{$value}}</option>
                     @endforeach
                 </select>
