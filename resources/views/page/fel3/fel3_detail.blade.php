@@ -68,11 +68,11 @@
                             <table style="width:100%">
                                 <tr>
                                     <td style="width: 50%">
-                                        <p class="m-b-0">Calculation/Reference of Capacity (Capacity & Location) : </p>
+                                        <p class="m-b-0">Preliminary Design  : </p>
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['preliminary_design']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['preliminary_design'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['preliminary_design']))}}">
                                                 <i class="fa mb-2 fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['preliminary_design'])}}
                                             </a>
@@ -83,11 +83,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 50%">
-                                        <p class="m-b-0">Data of Survey for Parameter, reference :</p>
+                                        <p class="m-b-0">Utility/Infrastructure/Facilities Diagram :</p>
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['utility_infrastructure_facilities_diagram']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['utility_infrastructure_facilities_diagram'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['utility_infrastructure_facilities_diagram']))}}">
                                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['utility_infrastructure_facilities_diagram'])}}
                                             </a>
@@ -98,11 +98,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 50%">
-                                        <p class="m-b-0">Diagram/Drawing of Flow/Process :</p>
+                                        <p class="m-b-0">HAZOP Study/GPRA/WI (Risk Assessment)		 :</p>
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['hazop']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['hazop'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['hazop']))}}">
                                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['hazop'])}}
                                             </a>
@@ -113,11 +113,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 50%">
-                                        <p class="m-b-0">Initial Risk Assessment (as reference for select best option) :</p>
+                                        <p class="m-b-0">MoC Document  :</p>
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['moc_document']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['moc_document'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['moc_document']))}}">
                                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['moc_document'])}}
                                             </a>
@@ -128,11 +128,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 50%">
-                                        <p class="m-b-0">Initial Utility/Facility/Infrastructure Diagram :</p>
+                                        <p class="m-b-0">Cost Estimate with rough of magnitude 15-20% :</p>
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['cost_estimate']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['cost_estimate'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['cost_estimate']))}}">
                                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['cost_estimate'])}}
                                             </a>
@@ -143,11 +143,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 50%">
-                                        <p class="m-b-0">Site Query/Quotation of Main Equipment :</p>
+                                        <p class="m-b-0">Quotation of equipment/Site Query :</p>
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['quotation_of_equipment']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['quotation_of_equipment'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['quotation_of_equipment']))}}">
                                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['quotation_of_equipment'])}}
                                             </a>
@@ -158,11 +158,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 50%">
-                                        <p class="m-b-0">Project Level Assessment Document : </p>
+                                        <p class="m-b-0">Project Assessment Level : </p>
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['project_level_assessment']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['project_level_assessment'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['project_level_assessment']))}}">
                                                 <i class="fa mb-2 fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['project_level_assessment'])}}
                                             </a>
@@ -177,7 +177,7 @@
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['fel1']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel1'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel1']))}}">
                                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel1'])}}
                                             </a>
@@ -188,11 +188,11 @@
                                 </tr>
                                 <tr>
                                     <td style="width: 50%">
-                                        <p class="m-b-0">Technical Evaluation :</p>
+                                        <p class="m-b-0">FEL 2 – Engineering Report (if through FEL 2) :</p>
                                     </td>
                                     <td style="width: 50%">
                                         @if($project?->getAllAttachment($project->fel3?->attachment, $setting::FEL3_ATTACHMENT['fel2']))
-                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel2'])}}">
+                                            <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel2']))}}">
                                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                 {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel2'])}}
                                             </a>
