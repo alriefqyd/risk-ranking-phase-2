@@ -122,7 +122,10 @@ class Fel2Controller extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json($e->getMessage());
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+            ]);
         }
     }
 
@@ -228,7 +231,10 @@ class Fel2Controller extends Controller
             ]);
         } catch (\Exception $e){
             DB::rollBack();
-            return response()->json($e->getMessage());
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage(),
+            ]);
         }
     }
 
