@@ -1130,7 +1130,12 @@ $(function() {
                 contentType: false,
                 success: function (data) {
                     // console.log(data)
-                    window.location.href = data.url;
+                    if (data.status === 200) window.location.href = data.url;
+                    else {
+                        notification('danger', data, 'fa fa-time', data.message)
+                        _this.removeAttr('disabled')
+                        _this.find('.loader-34').addClass('d-none')
+                    }
                 }
             })
         } else {
@@ -1354,7 +1359,12 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    window.location.href = data.url;
+                    if (data.status === 200) window.location.href = data.url;
+                    else {
+                        notification('danger', data, 'fa fa-time', data.message)
+                        _this.removeAttr('disabled')
+                        _this.find('.loader-34').addClass('d-none')
+                    }
                 }
             })
         } else {
@@ -1704,8 +1714,12 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    if(data.status === 200) window.location.href = data.url;
-                    else console.log(data.message);
+                    if (data.status === 200) window.location.href = data.url;
+                    else {
+                        notification('danger', data, 'fa fa-time', data.message)
+                        _this.removeAttr('disabled')
+                        _this.find('.loader-34').addClass('d-none')
+                    }
                 }
             })
         } else {
