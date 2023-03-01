@@ -150,7 +150,7 @@
                 <td>{{$p?->fel2?->permit_list ?: '0'}}</td>
                 <td>{{$p?->fel2?->schedule_project ?: '0'}}</td>
                 <td>{{$p?->fel2?->cost_estimate ?: '0'}}</td>
-                <td>{{$p?->fel2?->attachment ?: '0'}}</td>
+                <td>{{$p?->fel2?->attachment ? '1' : '0'}}</td>
                 <td>{{$p?->fel3?->executive_summary ?: '0'}}</td>
                 <td>{{$p?->fel3?->problem_statement ?: '0'}}</td>
                 <td>{{$p?->fel3?->project_scope ?: '0'}}</td>
