@@ -530,7 +530,7 @@
                         <input class="form-control js-upload-attachment js-assessment-attachment_initial_cost_estimate col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
                             <a target="_blank"
-                               href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}&dir={{$project->project_name}}">
+                               href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))}}&dir={{$project->project_name}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
                             </a>
@@ -546,7 +546,7 @@
                         <input class="form-control js-upload-attachment js-assessment-attachment_complexity_matrix col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
                             <a target="_blank"
-                               href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}&dir={{$project->project_name}}">
+                               href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))}}&dir={{$project->project_name}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
                             </a>

@@ -165,7 +165,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_calculation_of_capacity col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['reference_of_capacity']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['reference_of_capacity'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['reference_of_capacity']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['reference_of_capacity'])}}
                             </a>
@@ -181,7 +181,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_data_of_survey_parameter col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['data_of_survey_parameter']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['data_of_survey_parameter'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['data_of_survey_parameter']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['data_of_survey_parameter'])}}
                             </a>
@@ -197,7 +197,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_diagram_process col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['diagram_process']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['diagram_process'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['diagram_process']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['diagram_process'])}}
                             </a>
@@ -213,7 +213,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_initial_risk_assessment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['initial_risk_assessment']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['initial_risk_assessment'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['initial_risk_assessment']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['initial_risk_assessment'])}}
                             </a>
@@ -229,7 +229,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_initial_utility_diagram col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['initial_utility_diagram']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['initial_utility_diagram'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['initial_utility_diagram']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['initial_utility_diagram'])}}
                             </a>
@@ -245,7 +245,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_quotation_main_equipment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['quotation_main_equipment']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['quotation_main_equipment'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['quotation_main_equipment']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['quotation_main_equipment'])}}
                             </a>
@@ -261,7 +261,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_project_level_assessment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['project_level_assessment']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['project_level_assessment'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['project_level_assessment']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['project_level_assessment'])}}
                             </a>
@@ -276,7 +276,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_fel1 col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['fel1']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['fel1'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['fel1']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['fel1'])}}
                             </a>
@@ -292,7 +292,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_technical_evaluation col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['technical_evaluation']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['technical_evaluation'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['technical_evaluation']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['technical_evaluation'])}}
                             </a>
@@ -308,7 +308,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_financial_evaluation col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['financial_evaluation']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['financial_evaluation'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['financial_evaluation']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['financial_evaluation'])}}
                             </a>
@@ -324,7 +324,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_schedule_level-2 col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['schedule_level_2']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['schedule_level_2'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['schedule_level_2']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['schedule_level_2'])}}
                             </a>
@@ -340,7 +340,7 @@
                         <input class="form-control js-upload-attachment js-fel2-attachment_cost_estimate col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate']))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate'])}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel2']}}&file={{urlencode($project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate']))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate'])}}
                             </a>

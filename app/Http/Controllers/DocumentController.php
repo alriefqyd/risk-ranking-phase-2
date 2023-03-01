@@ -70,8 +70,9 @@ class DocumentController extends Controller
             if($request->category == Setting::FOLDER_TYPE['bc']){
                 $request->session()->flash('page-tab','business-case');
             }
+
             $request->session()->flash('alert-error-download', $e->getMessage());
-            return redirect('/project/'.+ $request->id);
+            return $e->getMessage();
         }
     }
 
