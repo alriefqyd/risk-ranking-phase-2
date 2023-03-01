@@ -214,7 +214,7 @@
                     </div>
                 </div>
             </div>
-            @if(sizeof($projectList) > 19)
+            @if($projectList->total() > 19)
                 <div class="col-sm-12">
                     <div class="card p-2">
                         <nav aria-label="...">
