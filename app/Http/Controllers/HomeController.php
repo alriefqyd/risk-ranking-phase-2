@@ -120,6 +120,7 @@ class HomeController extends Controller
     public function getDataBasket(){
        $capexCollection = collect();
        $capexInvestment = CapexInvestment::CAPEX_INVESTMENT;
+       $userService = new UserService();
 
        foreach ($capexInvestment as $ciKey => $ciValue){
            $basketCollection = collect();
@@ -130,7 +131,10 @@ class HomeController extends Controller
                $ci = CapexInvestment::where('code',$s->code)
                    ->where('parent_id',$parent->id)
                    ->first();
-               $count = Project::where('basket',$ci?->id)->count();
+               $count = Project::where('basket',$ci?->id)
+                   ->when($userService->isAdminDept(),function ($q) use ($userService){
+                       $q->where('owner',auth()->user()->department);
+                   })->count();
                $basketCollection->put(
                    $s->name,$count
                );
