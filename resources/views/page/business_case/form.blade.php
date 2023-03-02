@@ -349,7 +349,7 @@
                         <input class="form-control js-upload-attachment js-bc-change_management_request col-md-10" name="document" id="inputFile" multiple type="file">
                         @if($project?->business_case?->change_management_request)
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->business_case?->change_management_request}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project?->business_case?->change_management_request)}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->business_case?->change_management_request}}
                             </a>
@@ -374,7 +374,7 @@
                         <input class="form-control js-upload-attachment js-upload-zip js-bc-attachment_file col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                         @if($project?->getAllAttachment($project->business_case?->attachment,'business_case'))
                             <a target="_blank"
-                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}">
+                               href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project?->getAllAttachment($project->business_case?->attachment,'business_case'))}}">
                                 <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                 {{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}
                             </a>
