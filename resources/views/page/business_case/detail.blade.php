@@ -199,7 +199,7 @@
                         <ul>
                             @if($project->business_case?->change_management_request)
                                 <li>
-                                    <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project->business_case?->change_management_request}}">
+                                    <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project->business_case?->change_management_request)}}">
                                         <i class="fa mb-2 fa-file-text-o txt-info"></i>
                                         {{$project->business_case?->change_management_request}}
                                     </a>
@@ -217,7 +217,7 @@
                         <ul>
                             @if($project?->getAllAttachment($project->business_case?->attachment, 'business_case'))
                                 <li>
-                                    <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}">
+                                    <a target="_blank" href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project?->getAllAttachment($project->business_case?->attachment,'business_case'))}}">
                                         <i class="fa mb-2 fa-file-text-o txt-info"></i>
                                         {{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}
                                     </a>
