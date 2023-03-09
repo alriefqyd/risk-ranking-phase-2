@@ -22,7 +22,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 project-list">
-                @canany(['create','export'])
+                @canany(['create','export','read'])
                     <div class="card">
                         @if(!request()->year)
                             <div class="col-md-12 col-sm-6 p-r-10 mt-3 float-end">

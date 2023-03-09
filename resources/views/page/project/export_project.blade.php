@@ -160,8 +160,8 @@
                 <td>{{$p?->fel3?->hazop_study ?: '0'}}</td>
                 <td>{{$p?->fel3?->cost_estimate ?: '0'}}</td>
                 <td>{{$p?->fel3?->attachment ? '1' : '0'}}</td>
-                <td>{{$p?->business_case?->project_title ?: '0'}}</td>
-                <td>{{$p?->business_case?->problem_tatement_and_objective ?: '0'}}</td>
+                <td>{{$p?->business_case?->problem_statement_and_objective ?: '0'}}</td>
+                <td>{{$p?->business_case?->project_alternatives ?: '0'}}</td>
                 <td>{{$p?->business_case?->project_scope_of_work ?: '0'}}</td>
                 <td>{{$p?->business_case?->major_equipment ?: '0'}}</td>
                 <td>{{$p?->business_case?->utility_requirements ?: '0'}}</td>
