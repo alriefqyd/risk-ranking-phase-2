@@ -101,6 +101,7 @@ class DocumentController extends Controller
         $projectService = new ProjectService();
         $document_name = null;
         $documents = collect([]);
+        $project_name = preg_replace("/\r|\n/", " ", $project_name);
 
         if($documentRequests) {
 
