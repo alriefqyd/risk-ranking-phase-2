@@ -196,4 +196,17 @@ class Setting extends Model
         '0' => 'No',
     ];
 
+    public const sustaining = 'sustaining';
+    public const r_and_d = 'r_and_d';
+    public const growth = 'growth';
+
+    public const MARGIN = 'margin';
+    public const MAINTAIN_CAPACITY = 'maintain_capacity';
+    public const HEALTH_AND_SAFETY = 'health_safety';
+    public const SUSTAINABILITY = 'sustainability';
+    public const EXPLORATION = 'exploration';
+    public const INNOVATION_AND_TECHNOLOGY = 'innovation_and_technology';
+    public const VOLUME_GROWTH = 'volume_growth';
+    public const VOLUME_REPLACEMENT = 'volume_replacement';
+    public const ADMINISTRATIVE_IMPROVEMENTS = 'administrative_improvements';
 }
