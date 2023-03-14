@@ -4,7 +4,7 @@ $(function (){
         $.ajax({
             url:'/getDataGraph',
             success:function (result){
-                setGraph(result)
+                setGraph(result);
             }
         });
 
@@ -102,28 +102,52 @@ $(function (){
                 options: {
                     plugins:{
                         datalabels:{
-                            color : "black",
-                            font: {
-                                weight: 'bold',
-                                size: 16,
-                            },
-                            formatter: (value, context) => {
-                                const datasetArray = [];
-                                console.log(context, value);
-                                context.chart.data.datasets.forEach((dataset) => {
-                                    if(dataset.data[context.dataIndex] != undefined){
-                                        datasetArray.push(dataset.data[context.dataIndex]);
+                            labels:{
+                                index:{
+                                    align:"top",
+                                    color : "black",
+                                    font: {
+                                        weight: 'bold',
+                                        size: 16,
+                                    },
+                                    formatter: (value, context) => {
+                                        const datasetArray = [];
+                                        context.chart.data.datasets.forEach((dataset) => {
+                                            if(dataset.data[context.dataIndex] != undefined){
+                                                datasetArray.push(dataset.data[context.dataIndex]);
+                                            }
+                                        });
+                                        function totalSum(total, dataPoint){
+                                            return total + dataPoint;
+                                        }
+
+                                        if(context.datasetIndex === datasetArray.length - 1){
+                                            return datasetArray.reduce(totalSum, 0);
+                                        }
+                                        return '';
                                     }
-                                });
-                                function totalSum(total, dataPoint){
-                                    return total + dataPoint;
+                                },
+                                name:{
+                                    align:"left",
+                                    color:"white",
+                                    padding:20,
+                                    padding:4,
+                                    formatter: function(value, context) {
+                                        var label = '';
+                                        if(value == 0) return '';
+                                        return context.dataset.label;
+                                    },
+                                },
+                                value: {
+                                    align:"right",
+                                    color : "white",
+                                    padding: 10,
+                                    formatter: function(value, context) {
+                                        if(value == 0) return '';
+                                    },
                                 }
 
-                                if(context.datasetIndex === datasetArray.length - 1){
-                                    return datasetArray.reduce(totalSum, 0);
-                                }
-                                return '';
-                            }
+                            },
                         }
                     },
                     scales: {
