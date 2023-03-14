@@ -100,6 +100,11 @@ $(function (){
                     ]
                 },
                 options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                    },
                     plugins:{
                         datalabels:{
                             labels:{
@@ -108,7 +113,7 @@ $(function (){
                                     color : "black",
                                     font: {
                                         weight: 'bold',
-                                        size: 16,
+                                        size: 13,
                                     },
                                     formatter: (value, context) => {
                                         const datasetArray = [];
@@ -128,25 +133,19 @@ $(function (){
                                     }
                                 },
                                 name:{
-                                    align:"left",
+                                    align:"center",
                                     color:"white",
                                     padding:20,
                                     padding:4,
+                                    font: {
+                                        size: 11,
+                                    },
                                     formatter: function(value, context) {
                                         var label = '';
                                         if(value == 0) return '';
-                                        return context.dataset.label;
+                                        return context.dataset.label + ": " + value;
                                     },
                                 },
-                                value: {
-                                    align:"right",
-                                    color : "white",
-                                    padding: 10,
-                                    formatter: function(value, context) {
-                                        if(value == 0) return '';
-                                    },
-                                }
-
                             },
                         }
                     },
