@@ -182,7 +182,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-2" >
+        {{--<div class="row mt-2" >
             @foreach($countBasketCategory as $key => $value)
                 <div class="col-sm-14 col-md-6 col-lg-4">
                     <div class="ribbon-wrapper card">
@@ -204,9 +204,7 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-
-
+        </div>--}}
         <div class="row">
             <div class="col-lg-12 col-sm-12 box-col-12">
                 <div class="card">
