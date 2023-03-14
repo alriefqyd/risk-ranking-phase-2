@@ -36,4 +36,5 @@
 <!-- Plugins JS Ends-->
 <!-- Theme js-->
 <script src="{{asset('assets/js/script.js')}}"></script>
+<script src="{{asset('assets/js/custom/graph.js')}}"></script>
 @livewireScripts

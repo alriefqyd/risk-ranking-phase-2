@@ -72,45 +72,57 @@ class HomeController extends Controller
    }
 
     public function getDataGraph(Request $request){
-        $project_category = [Setting::PROJECT_TYPE_BETTERMENT,Setting::PROJECT_TYPE_SUSTAINABILITY_DEVELOPMENT, Setting::REPLACEMENT, Setting::RESEARCH_AND_DEVELOPMENT];
-        $label = [Setting::PROJECT_CATEGORY['betterment'],Setting::PROJECT_CATEGORY['sustainability_development'],Setting::PROJECT_CATEGORY['replacement'],Setting::PROJECT_CATEGORY['research_and_development']];
-        $productive = array();
+        $project_category = [Setting::sustaining,Setting::r_and_d, Setting::growth];
+        $label = [Setting::sustaining,Setting::r_and_d,Setting::growth];
+        $margin = array();
+        $maintain = array();
+        $hsor = array();
+        $sustainability = array();
         $administrative = array();
-        $environment = array();
-        $occupational_health_and_safety = array();
-        $technology_and_process_development = array();
         $engineering = array();
-        $geological_research = array();
-        $social_community = array();
+        $exploration = array();
+        $innovation_technology = array();
+        $volume_growth = array();
+        $volume_replacement = array();
+
         foreach ($project_category as $l){
-            array_push($productive,$this->getDataByProjectType(Setting::PRODUCTIVE,$l));
-            array_push($administrative,$this->getDataByProjectType(Setting::ADMINISTRATIVE,$l));
-            array_push($environment,$this->getDataByProjectType(Setting::ENVIRONMENT,$l));
-            array_push($occupational_health_and_safety,$this->getDataByProjectType(Setting::OCCUPATIONAL_HEALTH_AND_SAFETY,$l));
-            array_push($technology_and_process_development,$this->getDataByProjectType(Setting::TECHNOLOGY_AND_PROCESS_DEVELOPMENT,$l));
+            array_push($margin,$this->getDataByProjectType(Setting::MARGIN,$l));
+            array_push($maintain,$this->getDataByProjectType(Setting::MAINTAIN_CAPACITY,$l));
+            array_push($hsor,$this->getDataByProjectType(Setting::HEALTH_AND_SAFETY,$l));
+            array_push($sustainability,$this->getDataByProjectType(Setting::SUSTAINABILITY,$l));
+            array_push($administrative,$this->getDataByProjectType(Setting::ADMINISTRATIVE_IMPROVEMENTS,$l));
             array_push($engineering,$this->getDataByProjectType(Setting::ENGINEERING,$l));
-            array_push($geological_research,$this->getDataByProjectType(Setting::GEOLOGICAL_RESEARCH,$l));
-            array_push($social_community,$this->getDataByProjectType(Setting::SOCIAL_COMMUNITY_REPUTATION,$l));
+            array_push($exploration,$this->getDataByProjectType(Setting::EXPLORATION,$l));
+            array_push($innovation_technology,$this->getDataByProjectType(Setting::INNOVATION_AND_TECHNOLOGY,$l));
+            array_push($volume_growth,$this->getDataByProjectType(Setting::VOLUME_GROWTH,$l));
+            array_push($volume_replacement,$this->getDataByProjectType(Setting::VOLUME_REPLACEMENT,$l));
         }
 
         $result = array(
             'label' => $label,
-            'productive' => $productive,
+            'margin' => $margin,
             'administrative' => $administrative,
-            'environment' => $environment,
-            'occupational_health_and_safety' => $occupational_health_and_safety,
-            'technology_and_process_development' => $technology_and_process_development,
+            'maintain' => $maintain,
+            'hsor' => $hsor,
+            'sustainability' => $sustainability,
             'engineering' => $engineering,
-            'geological_research' => $geological_research,
-            'social' => $social_community
+            'exploration' => $exploration,
+            'innovation_technology' => $innovation_technology,
+            'volume_growth' => $volume_growth,
+            'volume_replacement' => $volume_replacement,
         );
 
         return response()->json($result);
     }
 
-    public function getDataByProjectType($pt, $pc){
+    public function getDataByProjectType($pt,$pc){
         $userService = new UserService();
-        $data = Project::where('project_type',$pt)->where('project_category',$pc);
+        $capexInvestmentCategory = CapexInvestment::where('code',$pc)->first();
+        $data = Project::with('baskets')->whereHas('baskets',function ($q) use ($capexInvestmentCategory,$pt) {
+            return $q->where('category',$capexInvestmentCategory->id)->where('type','BASKET')
+                ->where('code',$pt);
+        });
+
         if(!$userService->isAdmin() && !$userService->isViewer()){
             $data = $data->where('owner',auth()->user()->department);
         }
