@@ -211,8 +211,8 @@
                     <div class="card-header pb-0">
                         <h5>Summary Chart</h5>
                     </div>
-                    <div class="card-body chart-block" >
-                        <div class="flot-chart-container" style="height: auto">
+                    <div class="card-body chart-block m-t-30" >
+                        <div class="flot-chart-container" style="height:750px">
                             <canvas class="flot-chart-placeholder" id="stacked-bar-chart"></canvas>
                         </div>
                     </div>
