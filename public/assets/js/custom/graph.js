@@ -21,8 +21,7 @@ $(function (){
                 volume_growth = result.volume_growth;
                 volume_replacement = result.volume_replacement;
 
-            var ctx = document.getElementById('stacked-bar-chart').getContext('2d');
-            var chart = new Chart(ctx, {
+            const options =  {
                 type: 'bar',
                 data: {
                     labels: labelArray,
@@ -101,6 +100,32 @@ $(function (){
                     ]
                 },
                 options: {
+                    plugins:{
+                        datalabels:{
+                            color : "black",
+                            font: {
+                                weight: 'bold',
+                                size: 16,
+                            },
+                            formatter: (value, context) => {
+                                const datasetArray = [];
+                                console.log(context, value);
+                                context.chart.data.datasets.forEach((dataset) => {
+                                    if(dataset.data[context.dataIndex] != undefined){
+                                        datasetArray.push(dataset.data[context.dataIndex]);
+                                    }
+                                });
+                                function totalSum(total, dataPoint){
+                                    return total + dataPoint;
+                                }
+
+                                if(context.datasetIndex === datasetArray.length - 1){
+                                    return datasetArray.reduce(totalSum, 0);
+                                }
+                                return '';
+                            }
+                        }
+                    },
                     scales: {
                         xAxes: [{
                             stacked: true,
@@ -109,8 +134,12 @@ $(function (){
                             stacked: true
                         }]
                     },
-                }
-            });
+                },
+                plugins:[ChartDataLabels]
+            };
+
+            var ctx = document.getElementById('stacked-bar-chart').getContext('2d');
+            var chart = new Chart(ctx, options);
         }
     }
 });
