@@ -101,6 +101,7 @@ $(function (){
                 },
                 options: {
                     maintainAspectRatio: false,
+                    responsive:true,
                     legend: {
                         display: true,
                         position: 'bottom',
@@ -154,7 +155,15 @@ $(function (){
                             stacked: true,
                         }],
                         yAxes: [{
-                            stacked: true
+                            stacked: true,
+                            display: true,
+                            ticks: {
+                                beginAtZero: true,
+                                steps: 10,
+                                stepValue: 5,
+                                suggestedMin: 50,
+                                suggestedMax: 150
+                            }
                         }]
                     },
                 },
