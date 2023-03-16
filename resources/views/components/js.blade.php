@@ -38,5 +38,4 @@
 <script src="{{asset('assets/js/script.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@1.0.0"></script>
-<script src="{{asset('assets/js/custom/graph.js')}}"></script>
 @livewireScripts
