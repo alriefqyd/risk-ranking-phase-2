@@ -425,7 +425,7 @@ $(function() {
     /**
      * Upload Attachment Validation
      */
-    var DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx'];
+    var DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx','xlsm'];
     var ZIP_EXTENSION = ['zip','rar'];
 
     $(document).on('change','.js-upload-attachment',function(){

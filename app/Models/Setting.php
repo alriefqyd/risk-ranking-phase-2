@@ -136,7 +136,7 @@ class Setting extends Model
     public const LOW = 'Low';
     public const SIMPLE_PURCHASE = 'Simple Purchase';
 
-    public const DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx'];
+    public const DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx','xlsm'];
     public const ARCHIVE_EXTENSION = ['zip','rar'];
 
     public const MATURITY_ANALYSIS_ITEM = [
