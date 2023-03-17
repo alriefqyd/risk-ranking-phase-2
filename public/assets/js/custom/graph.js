@@ -162,7 +162,7 @@ $(function (){
                                 steps: 10,
                                 stepValue: 5,
                                 suggestedMin: 50,
-                                suggestedMax: 150
+                                suggestedMax: 110
                             }
                         }]
                     },
