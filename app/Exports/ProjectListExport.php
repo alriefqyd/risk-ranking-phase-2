@@ -38,7 +38,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     public function styles(Worksheet $sheet)
     {
         $columnSize = $this->size * 5 + 2;
-        $sheet->getStyle('A1:BT3')->applyFromArray([
+        $sheet->getStyle('A1:BU3')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'italic' => false,
@@ -49,15 +49,15 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
             ],
         ]);
 
-        $sheet->getStyle('A1:BT3')
+        $sheet->getStyle('A1:BU3')
             ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
-        $sheet->getStyle('A1:BT3')->getFill()
+        $sheet->getStyle('A1:BU3')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('3fa7fd');
         //$sheet->getColumnDimension('A')->setWidth('30'); work if shouldAutoSize is disable
 
 
-        $column = "A1:BT".($columnSize) ;
+        $column = "A1:BU".($columnSize) ;
         $sheet->getStyle($column)->applyFromArray([
             'borders' => [
                 'allBorders' => [

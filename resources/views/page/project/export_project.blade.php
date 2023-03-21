@@ -13,6 +13,7 @@
             <th rowspan="3">BC Presenter</th>
             <th rowspan="3">Finance Analyst</th>
             <th rowspan="3">Narrative</th>
+            <th rowspan="3">Project Submit Date</th>
             <th rowspan="3">Assessment of Level Project</th>
             <th rowspan="1" colspan="20">1. Form Assessment of Project Level</th>
             <th rowspan="1" colspan="2">2. Form Project Level Complexity</th>
@@ -104,6 +105,7 @@
                 <td>{{$p->bc_presenter}}</td>
                 <td>{{$p->finance_analyst}}</td>
                 <td style="background-color:{!! $p->updated_at > now()->startOfDay() ? "#fefe00" : '' !!}">{!! $p->note !!}</td>
+                <td>{{$p->created_at}}</td>
                 <td style="background-color:
                 @if($p?->assessment?->level_project_text == $setting::ASSESSMENT_LEVEL['COMPLEX'])
                     {!! '#fe0000' !!}
@@ -116,7 +118,8 @@
                 @else
                     {!! '' !!}
                 @endif
-                ;text-align: center">{{$p?->assessment?->level_project_text}}</td>
+                ;text-align: center">
+                    {{$p?->assessment?->level_project_text}}</td>
                 <td>{{$p?->assessment?->problems_statement ?: '0'}}</td>
                 <td>{{$p?->assessment?->objective ?: '0'}}</td>
                 <td>{{$p?->assessment?->project_scope ?: '0'}}</td>
