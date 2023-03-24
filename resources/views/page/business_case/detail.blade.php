@@ -64,11 +64,20 @@
                             </div>
                             <div>
                                 <label class="col-form-label">IRR :</label>
-                                {{$project?->business_case?->irr}} %
+                                @if($project?->business_case?->irr == 0)
+                                    N/A
+                                @else
+                                    {{$project?->business_case?->irr}} %
+                                @endif
+
                             </div>
                             <div>
                                 <label class="col-form-label">Payback Period :</label>
-                                {{$project?->business_case?->payback_period}} {{$project?->business_case?->payback_period > 1 ? 'Years' : 'Year'}}
+                                @if($project?->business_case?->payback_period == 0)
+                                    N/A
+                                @else
+                                    {{$project?->business_case?->payback_period}} {{$project?->business_case?->payback_period > 1 ? 'Years' : 'Year'}}
+                                @endif
                             </div>
                         </div>
                     </td>
