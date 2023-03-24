@@ -232,7 +232,6 @@ class AssessmentController extends Controller
         $this->authorize('update');
         $assessmentService = new AssessmentService();
         $projectService = new ProjectService();
-
         DB::beginTransaction();
         //$this->validation($request);
         try{
