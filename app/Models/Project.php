@@ -270,4 +270,9 @@ class Project extends Model
         if($probability == null) return "";
         return RiskAssessments::PROBABILITY[$probability];
     }
+
+    public function getSeverityValue($val){
+        if(!$val) return "";
+        return RiskAssessments::SEVERITY[$val];
+    }
 }

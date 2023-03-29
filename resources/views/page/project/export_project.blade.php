@@ -184,11 +184,11 @@
                 <td>{{$p?->business_case?->cost_estimate ? '1' : '0'}}</td>
                 <td>{{$p?->business_case?->financial_evaluation ?: '0'}}</td>
                 <td>{{$p?->business_case?->riskAssessment?->id ? '1' : '0'}}</td>
-                <td>{{$p?->business_case?->riskAssessment?->people}}</td>
-                <td>{{$p?->business_case?->riskAssessment?->environment}}</td>
-                <td>{{$p?->business_case?->riskAssessment?->social_and_human_rights}}</td>
-                <td>{{$p?->business_case?->riskAssessment?->reputation}}</td>
-                <td>{{$p?->business_case?->riskAssessment?->finance}}</td>
+                <td>{{$p?->getSeverityValue($p->business_case?->riskAssessment?->people)}}</td>
+                <td>{{$p?->getSeverityValue($p?->business_case?->riskAssessment?->environment)}}</td>
+                <td>{{$p?->getSeverityValue($p?->business_case?->riskAssessment?->social_and_human_rights)}}</td>
+                <td>{{$p?->getSeverityValue($p?->business_case?->riskAssessment?->reputation)}}</td>
+                <td>{{$p?->getSeverityValue($p?->business_case?->riskAssessment?->finance)}}</td>
                 <td>{{$p?->business_case?->riskAssessment?->final_impact_score}}</td>
                 <td>{{$p->getSeverityRiskAssessment()}}</td>
                 <td>{{$p->getProbabilityRiskAssessment()}}</td>

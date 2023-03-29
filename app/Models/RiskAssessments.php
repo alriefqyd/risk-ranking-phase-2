@@ -32,7 +32,7 @@ class RiskAssessments extends Model
         1 => 'Very Low',
         2 => 'Low',
         3 => 'Moderate',
-        4 => 'Significant',
+        4 => 'Severe',
         5 => 'Critical',
         6 => 'Very Critical'
     ];
