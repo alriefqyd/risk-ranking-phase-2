@@ -61,7 +61,7 @@
             <td rowspan="2">8. Attachment List</td>
             <td rowspan="1" colspan="9">Form Fel 3</td>
             <td rowspan="1" colspan="10">Business Case</td>
-            <td rowspan="2">Business Case Risk Assessment</td>
+            <td rowspan="1" colspan="9">Business Case Risk Assessment</td>
             <td rowspan="2">Change Management Request</td>
             <td rowspan="1" colspan="3">Financial Evaluation</td>
         </tr>
@@ -86,6 +86,15 @@
             <td> 8. Cost Estimate  </td>
             <td> 9. Financial Evaluation  </td>
             <td> 10. Risk Assessment  </td>
+            <td>People</td>
+            <td>Environment</td>
+            <td>Social and Human Rights</td>
+            <td>Reputation</td>
+            <td>Finance</td>
+            <td>Final Impact Score</td>
+            <td>Severity</td>
+            <td>Probability</td>
+            <td>Priority Level</td>
             <td>NPV</td>
             <td>IRR</td>
             <td>PP</td>
@@ -175,7 +184,15 @@
                 <td>{{$p?->business_case?->cost_estimate ? '1' : '0'}}</td>
                 <td>{{$p?->business_case?->financial_evaluation ?: '0'}}</td>
                 <td>{{$p?->business_case?->riskAssessment?->id ? '1' : '0'}}</td>
-                <td>{{$p?->business_case?->riskAssessment?->id ? '1' : '0'}}</td>
+                <td>{{$p?->business_case?->riskAssessment?->people}}</td>
+                <td>{{$p?->business_case?->riskAssessment?->environment}}</td>
+                <td>{{$p?->business_case?->riskAssessment?->social_and_human_rights}}</td>
+                <td>{{$p?->business_case?->riskAssessment?->reputation}}</td>
+                <td>{{$p?->business_case?->riskAssessment?->finance}}</td>
+                <td>{{$p?->business_case?->riskAssessment?->final_impact_score}}</td>
+                <td>{{$p->getSeverityRiskAssessment()}}</td>
+                <td>{{$p->getProbabilityRiskAssessment()}}</td>
+                <td>{{$p?->business_case?->riskAssessment?->priority_level}}</td>
                 <td>{{$p?->business_case?->change_management_request ? '1' : '0'}}</td>
                 <td>{!!$p?->business_case?->npv ?: '0' !!}</td>
                 <td>{{($p?->business_case?->irr / 100) ?: '0'}}</td>

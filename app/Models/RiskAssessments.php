@@ -32,7 +32,7 @@ class RiskAssessments extends Model
         1 => 'Very Low',
         2 => 'Low',
         3 => 'Moderate',
-        4 => 'Severe',
+        4 => 'Significant',
         5 => 'Critical',
         6 => 'Very Critical'
     ];
@@ -40,7 +40,7 @@ class RiskAssessments extends Model
     const PROBABILITY = [
         1 => 'Very Remote',
         2 => 'Remote',
-        3 => 'Unlikely',
+        3 => 'Possible',
         4 => 'Likely',
         5 => 'Very Likely'
     ];

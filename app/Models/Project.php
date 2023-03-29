@@ -25,7 +25,7 @@ class Project extends Model
     }
 
     public function fel1(){
-        return $this->hasOne(Fel1::class,'project_id')->withTrashed();;
+        return $this->hasOne(Fel1::class,'project_id')->withTrashed();
     }
 
     public function createdBy(){
@@ -33,15 +33,15 @@ class Project extends Model
     }
 
     public function fel2(){
-        return $this->hasOne(Fel2::class,'project_id')->withTrashed();;
+        return $this->hasOne(Fel2::class,'project_id')->withTrashed();
     }
 
     public function fel3(){
-        return $this->hasOne(Fel3::class,'project_id')->withTrashed();;
+        return $this->hasOne(Fel3::class,'project_id')->withTrashed();
     }
 
     public function business_case(){
-        return $this->hasOne(BusinessCaseAssessment::class,'project_id')->withTrashed();;
+        return $this->hasOne(BusinessCaseAssessment::class,'project_id')->withTrashed();
     }
 
     public function owners(){
@@ -53,7 +53,7 @@ class Project extends Model
     }
 
     public function cost_benefits(){
-        return $this->hasOne(CostBenefit::class,'project_id')->withTrashed();;
+        return $this->hasOne(CostBenefit::class,'project_id')->withTrashed();
     }
 
     public function baskets(){
@@ -257,5 +257,17 @@ class Project extends Model
         }
 
         return '';
+    }
+
+    public function getSeverityRiskAssessment(){
+        $impactScore = $this?->business_case?->riskAssessment?->final_impact_score;
+        if($impactScore == null) return "";
+        return RiskAssessments::SEVERITY[$impactScore];
+    }
+
+    public function getProbabilityRiskAssessment(){
+        $probability = $this?->business_case?->riskAssessment?->probability;
+        if($probability == null) return "";
+        return RiskAssessments::PROBABILITY[$probability];
     }
 }
