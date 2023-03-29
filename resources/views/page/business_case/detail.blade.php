@@ -73,11 +73,7 @@
                             </div>
                             <div>
                                 <label class="col-form-label">Payback Period :</label>
-                                @if($project?->business_case?->payback_period == 0)
-                                    N/A
-                                @else
-                                    {{$project?->business_case?->payback_period}} {{$project?->business_case?->payback_period > 1 ? 'Years' : 'Year'}}
-                                @endif
+                                {{$project?->business_case?->payback_period}} {{$project?->business_case?->payback_period > 1 ? 'Years' : 'Year'}}
                             </div>
                         </div>
                     </td>
@@ -86,16 +82,16 @@
                     <td>Risk Assessment :</td>
                     <td>{!! $project->getCheckTemplate($project?->business_case?->risk_assessment) !!}</td>
                     <td>
-                            @if($project?->business_case?->risk_assessment == 1)
-                                <a class="js-bc-risk-assessment-expand alert-note d-none">
-                                    View Detail <i class="fa fa-arrow-right"></i>
-                                </a>
-                            @endif
-                            <a class="js-bc-risk-assessment-hide alert-note
+                        @if($project?->business_case?->risk_assessment == 1)
+                            <a class="js-bc-risk-assessment-expand alert-note d-none">
+                                View Detail <i class="fa fa-arrow-right"></i>
+                            </a>
+                        @endif
+                        <a class="js-bc-risk-assessment-hide alert-note
                             {{$project?->business_case?->risk_assessment != 1 ? 'd-none' : ''}}">
                             Hide Detail
                             <i class="fa fa-arrow-left"></i></a>
-                            <ul class="{{$project?->business_case?->risk_assessment != 1 ? 'd-none' : ''}}" style="margin-left: 0px ;">
+                        <ul class="{{$project?->business_case?->risk_assessment != 1 ? 'd-none' : ''}}" style="margin-left: 0px ;">
                             <li>
                                 <div class="rating-container">
                                     People :
