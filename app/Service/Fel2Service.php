@@ -19,10 +19,13 @@ class Fel2Service
     public function getDataFel2($status, $newData){
         $userService = new UserService();
 
-        $data = Fel2::with(['project.assessment','user']);
+        $data = Fel2::with(['project.assessment','user'])->whereHas('project',function($q){
+            return $q->where('presented_year','2024');
+        });
+
         if($userService->isAdminDept()){
             $data = $data->whereHas('project', function($q) use ($newData,$userService){
-                $subQuery = $q->whereNull('deleted_at');
+                $subQuery = $q->where('presented_year','2024')->whereNull('deleted_at');
                 if($userService->isAdminDept()) $q->where('owner',Auth::user()->department);
                 return $subQuery;
             });
