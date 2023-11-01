@@ -10,7 +10,7 @@
     </div>
 </div>
 
-<div class="row mt-5 center-content">
+<div class="row mt-5">
    @include('page.project.capex_investment_option')
 </div>
 

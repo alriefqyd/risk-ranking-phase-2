@@ -159,7 +159,7 @@
                                 Final Impact Score :
                                 <div class="rating-container digits">
                                     <select class="u-rating-1to10" data-readonly="true" class="js-risk-final-impact" autocomplete="off">
-                                        @for($i=1;$i<7;$i++)
+                                        @for($i=1;$i<6;$i++)
                                             <option value="{{$i}}" {{$i == $project?->business_case?->riskAssessment?->final_impact_score ? 'selected' : ''}}>{{$i}}</option>
                                         @endfor
                                     </select>

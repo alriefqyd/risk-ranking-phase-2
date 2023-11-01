@@ -10,11 +10,15 @@ class Setting extends Model
     use HasFactory;
 
     public const PROJECT_CATEGORY = [
-        'betterment' => 'BETTERMENT',
-        'sustainability_development' => 'SUSTAINABILITY DEVELOPMENT',
         'replacement' => 'REPLACEMENT',
         'research_and_development' => 'RESEARCH AND DEVELOPMENT',
+        'growth' => 'GROWTH',
+        'volume' => 'VOLUME',
+        'cost_reduction' => 'COST REDUCTION',
+        'hse_and_legal' => 'HSE AND LEGAL'
     ];
+
+
 
     public const STATUS = [
         'draft' => 'DRAFT',

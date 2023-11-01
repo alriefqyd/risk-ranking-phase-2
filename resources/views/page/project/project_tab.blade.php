@@ -71,6 +71,10 @@
                 <td>{{$project?->subBaskets?->name}}</td>
             </tr>
             <tr>
+                <td style="width: 200px">Sub Basket Categories : </td>
+                <td>{{$project?->categories?->name ?? ''}}</td>
+            </tr>
+            <tr>
                 <td style="width: 200px">Project Number : </td>
                 <td>{{$project?->project_number}}</td>
             </tr>

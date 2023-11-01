@@ -90,7 +90,7 @@ class SettingController extends Controller
      * Get Project Type in setting table
      */
     public function getProjectType(Request $request){
-        $type = Setting::where('setting_name','=',$request->category)->get();
+        $type = Setting::where('setting_name','=',$request->category)->where('status','ACTIVE')->get();
         $response = array();
         foreach($type as $t){
             $response[] = array(

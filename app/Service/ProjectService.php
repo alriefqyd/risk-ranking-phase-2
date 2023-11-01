@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Project;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -63,27 +64,23 @@ class ProjectService
     public function getAllProject($paginate, $year){
         $department = auth()->user()->department;
 
-        $project = Project::with(['createdBy','assessment','fel1','fel2','fel3',
-            'business_case','cost_benefits'])
-            ->filter(request(['q','owner','sponsor','category','type']));
-
-        if($year){
-            $project = Project::withTrashed()->with(['createdBy','assessment','fel1','fel2','fel3',
-                'business_case','cost_benefits'])
-                ->filter(request(['q','owner','sponsor','category','type']));
+        if(!isset($year)) {
+            $year = date('Y') + 1;
         }
 
+        $project = Project::with(['createdBy','assessment','fel1','fel2','fel3',
+            'business_case','cost_benefits'])
+            ->filter(request(['q','owner','sponsor','category','type']))->where('presented_year', $year);
 
         /*
          * Get All Data based on Admin Dept
          */
         if($this->isAdminDept){
             $project = $project->where('owner',$department);
-
         }
 
         if($year) {
-            $project = $project->whereNotNull('deleted_at')->paginate(20)->withQueryString();
+            $project = $project->paginate(20)->withQueryString();
         }
 
         if($paginate && !$year){
@@ -345,17 +342,18 @@ class ProjectService
      * @return null
      */
     public function getCapexCategory($type,$parentId){
+        $data = CapexInvestment::with('basket.subBasket');
         if($type == CapexInvestment::type['capex_investment']) {
-            return CapexInvestment::where('type','CAPEX_INVESTMENT')->get();
+            return $data->where('type','CAPEX_INVESTMENT')->get();
         }
 
         if($type == CapexInvestment::type['basket'] && isset($parentId)){
-            return CapexInvestment::where('type',CapexInvestment::type['basket'])
+            return $data->where('type',CapexInvestment::type['basket'])
                 ->where('parent_id',$parentId)->get();
         }
 
         if($type == CapexInvestment::type['sub_basket']){
-            return CapexInvestment::where('type',CapexInvestment::type['sub_basket']);
+            return $data->where('type',CapexInvestment::type['sub_basket']);
         }
 
         return null;
