@@ -180,10 +180,11 @@ class Fel3Controller extends Controller
         }
 
         $fel3 = Fel3::with(['project','user'])->where('id',$request->id)->first();
+        $dataMaturity = $maturityService->getMaturityAnalysis($fel3, $fel3?->id);
 
         return view('fel3.edit',[
             'fel3' => $fel3,
-            'dataMaturity' => $maturityService->getMaturityAnalysis($fel3, $fel3?->id),
+            'dataMaturity' => $dataMaturity,
             'maturityOption' => Setting::MATURITY_VALUE
         ]);
     }

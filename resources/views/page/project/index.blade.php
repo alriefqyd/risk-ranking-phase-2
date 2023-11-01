@@ -12,8 +12,9 @@
                 </div>
                 <div class="col-sm-4 offset-md-4 mt-2">
                     <select class="select2 js-select-rr-project-list" data-allowClear="false" style="width: 100%">
-                        <option value="2023" {{request()->year == '2023' ? 'selected' : ''}}>Risk Ranking Project List 2023</option>
-                        <option value="" {{!request()->year ? 'selected' : ''}}>Risk Ranking Project List 2024</option>
+                        <option value="2022" {{request()->year == '2022' ? 'selected' : ''}}>Risk Ranking Project List 2023 - 2027 (Presented 2022)</option>
+                        <option value="2023" {{request()->year == '2023' ? 'selected' : ''}}>Risk Ranking Project List 2024 - 2028 (Presented 2023)</option>
+                        <option value="" {{!request()->year ? 'selected' : ''}}>Risk Ranking Project List 2025-2029</option>
                     </select>
                 </div>
             </div>
@@ -50,7 +51,7 @@
                         <div class="row mt-3 mb-0 ">
                             <h6>Filter Project</h6>
                         </div>
-                        <form method="get" action="{{isset($year) ? '2023' : 'project'}}">
+                        <form method="get" action="{{isset(request()->year) ? request()->year : 'project'}}">
                             <div class="row mt-0 mb-1">
                                 <div class="col-md-4 p-0">
                                     <div class="mb-2">
@@ -150,15 +151,9 @@
                                                     {{$project->project_number ?: '-'}}
                                                 </td>
                                                 <td>
-                                                    @if(request()->year == '2023')
-                                                        <a href="/project/{{$project->id}}/2023">
-                                                            <p class="alert-color-green">{{$project->project_name}}</p>
-                                                        </a>
-                                                    @else
-                                                        <a href="/project/{{$project->id}}">
-                                                            <p class="alert-color-green">{{$project->project_name}}</p>
-                                                        </a>
-                                                    @endif
+                                                    <a href="/project/{{$project->id}}">
+                                                        <p class="alert-color-green">{{$project->project_name}}</p>
+                                                    </a>
                                                 </td>
                                                 <td class="text-center">
                                                     {!! $project->getRelatedDataProjectAssessment() !!}

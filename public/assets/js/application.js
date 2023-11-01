@@ -2389,11 +2389,47 @@ $(function() {
         var _this = $(this);
         var _btn_next = _this.closest('.card').find('.js-next-capex-investment-form')
         var _isUpdate = _this.closest('.js-project-edit').length > 0 //to know the form is edit or not
-        validate_capex_investment(_this,_isUpdate)
+        validate_capex_investment(_this, _isUpdate)
         _this.on('change',function(){
             var __this = $(this)
             validate_capex_investment($(this),false)
             if(_check_capex_investment >= 1) disabledCheckbox(__this.data('id'))
+        })
+    })
+
+    $('.js-checkbox-sub-basket').each(function(){
+        var _this = $(this);
+        _this.on('change', function(){
+            var __this = $(this);
+            var _categories_list =  __this.closest('.js-sub-basket-item').find('.js-sub-basket-categories');
+            if(__this.is(':checked')){
+                _categories_list.removeClass('d-none')
+            } else {
+                _categories_list.addClass('d-none');
+            }
+        })
+
+    })
+
+    $('.js-checkbox-categories').each(function(){
+        var _this = $(this);
+        _this.on('change', function(){
+            var __this = $(this);
+            if(__this.is(':checked')){
+                _check_capex_investment += 1;
+                disableCategories(__this.data('id'));
+            } else {
+                _check_capex_investment -= 1;
+                $('.js-checkbox-categories').prop('disabled', false);
+            }
+
+            if(_check_capex_investment > 2){
+                $('.js-hidden-sub_basket_categories').val(__this.data('id'))
+                _this.closest('.card').find('.js-next-capex-investment-form').removeAttr('disabled')
+            } else {
+                _this.closest('.card').find('.js-next-capex-investment-form').attr('disabled','disabled');
+                $('.js-hidden-sub_basket_categories').val('');
+            }
         })
     })
 
@@ -2402,15 +2438,18 @@ $(function() {
     function validate_capex_investment(_this, _isUpdate){
         var __this = _this;
         var __sub_bucket_list = __this.closest('.js-basket-list-detail').find('.js-sub-basket-list');
+        var __sub_bucket_list_length = __this.closest('.js-basket-list-detail').find('.js-sub-basket-item');
+        var __categories_list_length = __this.closest('.js-basket-list-detail').find('.js-checkbox-categories');
         var _isErrorForm = _this.closest('form').hasClass('isError') //to know the form is edit or not
 
         if(__this.is(':checked')){
             _idx = __this.data('idx');
             __sub_bucket_list.removeClass('d-none');
-            if(__sub_bucket_list.length < 1) {
-                _check_capex_investment += 2;
+            if(__sub_bucket_list_length.length < 1) {
+                _check_capex_investment += 3;
             }
-            if(__sub_bucket_list.length > 0){
+
+            if(__sub_bucket_list_length.length > 0){
                 _check_capex_investment += 1;
             }
             $('.js-hidden-basket').val(__this.data('id'));
@@ -2424,13 +2463,16 @@ $(function() {
             if(!_isUpdate && !_isErrorForm){
                 $('.js-checkbox-sub-basket').prop('checked', false);
                 $('.js-checkbox-sub-basket').removeAttr('checked');
+                $('.js-checkbox-categories').prop('checked',false);
+                $('.js-checkbox-categories').removeAttr('disabled');
+                $('.js-sub-basket-categories').addClass('d-none');
                 $('.js-hidden-basket').val('');
                 $('.js-hidden-sub-basket').val('');
             }
             __sub_bucket_list.addClass('d-none');
         }
 
-        if(_check_capex_investment > 1){
+        if(_check_capex_investment > 2){
             _this.closest('.card').find('.js-next-capex-investment-form').removeAttr('disabled')
         } else {
             if(!_isUpdate){
@@ -2449,24 +2491,42 @@ $(function() {
 
     function processCheckboxSubBasket(_this, _isUpdate){
         if(_this.is(':checked')){
-            _check_capex_investment += 1;
+            if(_this.closest('.js-sub-basket-item').find('.js-checkbox-categories').length < 1){
+                _check_capex_investment += 2;
+            } else {
+                _check_capex_investment += 1;
+            }
         } else {
-            if(_check_capex_investment > 0) _check_capex_investment = 0
+            if(_check_capex_investment > 0) _check_capex_investment = 1
         }
 
-        if(_check_capex_investment > 0){
+        if(_check_capex_investment > 1){
             var _data_id = _this.closest('.js-basket-list-detail').find('.js-checkbox-open-bucket').data('id')
             disabledCheckbox(_data_id)
             disabledSubBasket(_this.data('id'))
-            _this.closest('.card').find('.js-next-capex-investment-form').removeAttr('disabled')
+
         } else {
-            $('.js-checkbox-sub-basket').removeAttr('disabled')
             if(!_isUpdate){
                 $('.js-hidden-sub-basket').val('')
+                $('.js-checkbox-sub-basket').removeAttr('disabled')
             }
+        }
+
+        if(_check_capex_investment > 2 ){
+            _this.closest('.card').find('.js-next-capex-investment-form').removeAttr('disabled');
+        } else {
             _this.closest('.card').find('.js-next-capex-investment-form').attr('disabled','disabled')
         }
+
+        var _categories_list =  _this.closest('.js-sub-basket-item').find('.js-sub-basket-categories');
+
+        if(!_isUpdate){
+            _categories_list.find('.js-checkbox-categories').prop('checked',false);
+            _categories_list.find('.js-checkbox-categories').removeAttr('disabled');
+        }
+
     }
+
 
     function disabledCheckbox(_id){
         $('.js-checkbox-open-bucket').each(function(){
@@ -2484,6 +2544,15 @@ $(function() {
             if($(this).data('id') == _id) $('.js-hidden-sub-basket').val($(this).data('id'))
         })
     }
+
+    function disableCategories(_id){
+        $('.js-checkbox-categories').each(function(){
+            if($(this).data('id') != _id){
+                $(this).attr('disabled','disabled')
+            }
+        })
+    }
+
 
     $('.js-next-capex-investment-form').on('click',function(e){
         e.preventDefault();
@@ -2605,6 +2674,32 @@ $(function() {
         if(_value != '')window.location.href = '/project/year/'+_value
         else window.location.href = '/project'
     })
+
+    /*
+     * budget tool form validation
+     */
+
+    function validateBudgetTool(){
+        var _criteria_length = $('.js-select-criteria-answer').length;
+        var _counter_criteria = 0;
+        var _btn_submit_criteria = $('.js-btn-submit-criteria');
+        $('.js-select-criteria-answer').each(function(){
+            var _this = $(this);
+            if(_this.val()){
+                _counter_criteria++;
+            }
+            if(_counter_criteria >= _criteria_length){
+                _btn_submit_criteria.removeAttr('disabled')
+            } else {
+                _btn_submit_criteria.attr('disabled','disabled');
+            }
+        })
+    }
+
+    validateBudgetTool();
+    $('.js-select-criteria-answer').on('change',function(){
+       validateBudgetTool();
+    });
 })
 
 

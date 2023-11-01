@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\Sending;
 use App\Models\Assessment;
 use App\Models\CapexInvestment;
+use App\Models\Criteria;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\RiskAssessments;
@@ -95,23 +96,17 @@ class ProjectController extends Controller
      */
     public function create(){
         $projectService = new ProjectService();
-
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
-        $capexCategory = $projectService->getCapexCategory(CapexInvestment::type['capex_investment'],null);
-        $sustaining = $projectService->getCapexCategory(CapexInvestment::type['basket'],1);
-        $randd = $projectService->getCapexCategory(CapexInvestment::type['basket'], 2);
-        $growth = $projectService->getCapexCategory(CapexInvestment::type['basket'], 3);
-         return view('page.project.create',[
+        $capexCategories =  CapexInvestment::with('basket.subBasket.categories')->where('type','CAPEX_INVESTMENT')->get();
+
+        return view('page.project.create',[
             'projectCategory' => $this->projectCategory,
             'projectType' => $this->projectType,
             'department' => $department,
             'subDepartment' => $subDepartment,
             'userDepartment' => $this->userDepartment,
-            'capexCategory' => $capexCategory,
-            'sustainingList' => $sustaining,
-            'randdList' => $randd,
-            'growthList' => $growth,
+            'capexCategories' => $capexCategories,
             'project' => null
         ]);
     }
@@ -137,6 +132,15 @@ class ProjectController extends Controller
         ]);
 
         try{
+            $currentDate = new \DateTime();
+            $october1st = new \DateTime(date('Y') . '-10-01');
+
+            if ($currentDate > $october1st) {
+                $presented_year = $currentDate->format('Y') + 1;
+            } else {
+                $presented_year = $currentDate->format('Y');
+            }
+
             $project = new Project([
                 'project_number' => $request->project_number,
                 'project_name' => $request->project_name,
@@ -151,6 +155,8 @@ class ProjectController extends Controller
                 'finance_analyst' => $request->finance_analyst,
                 'basket' => $request->basket,
                 'sub_basket' => $request->sub_basket,
+                'sub_basket_categories' => $request->sub_basket_categories,
+                'presented_year' => $presented_year,
                 'created_by' => Auth::user()->id
             ]);
 
@@ -165,40 +171,18 @@ class ProjectController extends Controller
             return redirect('project/create')->withErrors($e->getMessage());
         }
     }
-    public function detailYear(Request $request){
-        $project = Project::withTrashed()->with(['createdBy','assessment','fel1','fel2','fel3',
-            'business_case','cost_benefits'])->find($request->project_id);
-
-        $complexityScore = Assessment::COMPLEXITY_SCORE;
-        $riskLevel = RiskAssessments::SEVERITY;
-        $riskMatrix = RiskAssessments::RISK_MATRIX;
-        $probability = RiskAssessments::PROBABILITY;
-        return view('page.project.detail',[
-            'project' => $project,
-            'complexityScore' => $complexityScore,
-            'riskLevel' => $riskLevel,
-            'riskMatrix' => $riskMatrix,
-            'probability' => $probability,
-            'isAdmin' => auth()->user()->role == User::ROLE['admin'],
-            'isNotCurrentData' => true
-        ]);
-    }
 
     public function edit(Project $project, Request $request){
         $this->authorize('read');
-
         $projectService = new ProjectService();
         $maturityService = new MaturityService();
         if($projectService->projectNotAuthorized($project)){
             abort(404);
         }
 
-        $capexCategory = $projectService->getCapexCategory(CapexInvestment::type['capex_investment'],null);
-        $sustaining = $projectService->getCapexCategory(CapexInvestment::type['basket'],1);
-        $randd = $projectService->getCapexCategory(CapexInvestment::type['basket'], 2);
-        $growth = $projectService->getCapexCategory(CapexInvestment::type['basket'], 3);
         $dataMaturity = $maturityService->getMaturityAnalysis($project?->fel3, $project?->fel3?->id);
 
+        $capexCategories =  CapexInvestment::with('basket.subBasket')->where('type','CAPEX_INVESTMENT')->get();
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
 
@@ -206,6 +190,19 @@ class ProjectController extends Controller
         $riskLevel = RiskAssessments::SEVERITY;
         $riskMatrix = RiskAssessments::RISK_MATRIX;
         $probability = RiskAssessments::PROBABILITY;
+
+
+        $categoryId = $project->sub_basket_categories;
+        $subBasketId = $project->sub_basket;
+
+        $criteria = $project->criterias;
+
+        if(sizeof($criteria) < 1) {
+            $criteria = Criteria::whereHas('categories', function ($query) use ($categoryId, $subBasketId) {
+                $query->where('categories.id', $categoryId)
+                    ->where('criterias_categories.sub_basket_id', $subBasketId);
+            })->get();
+        }
 
         return view('page.project.detail',[
             'project' => $project,
@@ -218,15 +215,13 @@ class ProjectController extends Controller
             'riskLevel' => $riskLevel,
             'riskMatrix' => $riskMatrix,
             'probability' => $probability,
-            'capexCategory' => $capexCategory,
-            'sustainingList' => $sustaining,
-            'randdList' => $randd,
-            'growthList' => $growth,
+            'capexCategories' => $capexCategories,
             'sessionUpdate' => Session::get('projectUpdate'),
             'isAdmin' => auth()->user()->role == User::ROLE['admin'],
             'isNotCurrentData' => false,
             'dataMaturity' => $dataMaturity,
-            'maturityOption' => Setting::MATURITY_VALUE
+            'maturityOption' => Setting::MATURITY_VALUE,
+            'criterias' => $criteria
         ]);
     }
     /**
@@ -281,6 +276,7 @@ class ProjectController extends Controller
                 $project->bc_presenter = $request->bc_presenter;
                 $project->basket = $request->basket;
                 $project->sub_basket = $request->sub_basket;
+                $project->sub_basket_categories = $request->sub_basket_categories;
                 $project->project_category = $request->project_category;
                 $project->finance_analyst = $request->finance_analyst;
             }
@@ -394,4 +390,25 @@ class ProjectController extends Controller
     public function previewExport(){
         return view('page.project.export_project');
     }
+
+    public function storeBudgetTool(Request $request){
+        $criteriaIds = $request->input('criteria_id');
+        $answers = $request->input('answer');
+
+        foreach ($criteriaIds as $key => $criteriaId){
+            $answer = $answers[$key] ?? '';
+            $syncData[$criteriaId] = [
+                'answer' => $answer,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            $project = Project::find($request->projectId);
+            $project->criterias()->sync($syncData);
+        }
+
+        $request->session()->flash('alert-success', 'Data was successful updated!');
+        return redirect('/project/' . $project->id);
+    }
+
 }

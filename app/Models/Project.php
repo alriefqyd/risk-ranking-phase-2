@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Class\SubBasketCategories;
 use App\Service\MaturityService;
 use App\Service\ProjectService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -66,6 +67,14 @@ class Project extends Model
 
     public function features(){
         return $this->belongsTo(CapexInvestment::class,'feature');
+    }
+
+    public function categories(){
+        return $this->belongsTo(Category::class,'sub_basket_categories');
+    }
+
+    public function criterias(){
+        return $this->belongsToMany(Criteria::class,'criterias_projects')->withPivot('answer');
     }
 
     /*
@@ -177,7 +186,11 @@ class Project extends Model
     }
 
     public function getProjectCategory(){
-        return Setting::PROJECT_CATEGORY[$this->project_category];
+        $category = Setting::PROJECT_CATEGORY[$this->project_category] ?? null;
+        if(!$category){
+            return $this->project_category;
+        }
+        return $category;
     }
 
     public function getNoteTemplateForm(){
