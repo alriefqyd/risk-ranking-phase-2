@@ -21,7 +21,7 @@ class BusinessCaseService
         $data = BusinessCaseAssessment::with(['project.assessment','user']);
 
         $data = $data->whereHas('project', function($q) use ($newData,$userService){
-            $subQuery = $q->whereNull('deleted_at');
+            $subQuery = $q->where('presented_year','2024')->whereNull('deleted_at');
             if($userService->isAdminDept()) return $subQuery->where('owner',Auth::user()->department);
             return $subQuery;
         });
