@@ -117,11 +117,12 @@ class HomeController extends Controller
 
     public function getDataByProjectType($pt,$pc){
         $userService = new UserService();
+        $presented_year = config('constants.project_presented_year');
         $capexInvestmentCategory = CapexInvestment::where('code',$pc)->first();
         $data = Project::with('baskets')->whereHas('baskets',function ($q) use ($capexInvestmentCategory,$pt) {
             return $q->where('category',$capexInvestmentCategory->id)->where('type','BASKET')
                 ->where('code',$pt);
-        })->where('presented_year', '2024');
+        })->where('presented_year', $presented_year);
 
         if(!$userService->isAdmin() && !$userService->isViewer()){
             $data = $data->where('owner',auth()->user()->department);
@@ -133,6 +134,7 @@ class HomeController extends Controller
        $capexCollection = collect();
        $capexInvestment = CapexInvestment::CAPEX_INVESTMENT;
        $userService = new UserService();
+       $presented_year = config('constants.project_presented_year');
 
        foreach ($capexInvestment as $ciKey => $ciValue){
            $basketCollection = collect();
@@ -143,7 +145,7 @@ class HomeController extends Controller
                $ci = CapexInvestment::where('code',$s->code)
                    ->where('parent_id',$parent->id)
                    ->first();
-               $count = Project::where('presented_year','2024')
+               $count = Project::where('presented_year', $presented_year)
                     ->where('basket',$ci?->id)
                    ->when($userService->isAdminDept(),function ($q) use ($userService){
                        $q->where('owner',auth()->user()->department);

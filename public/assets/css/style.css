@@ -4372,7 +4372,7 @@ table tbody .border-bottom-warning td {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      width: 290px;
+      width: 260px;
       -webkit-box-pack: justify;
           -ms-flex-pack: justify;
               justify-content: space-between;
@@ -5167,7 +5167,7 @@ table tbody .border-bottom-warning td {
     line-height: inherit;
     background: #fff;
     border-right: 1px solid #e6edef;
-    width: 290px;
+    width: 260px;
     text-align: left;
     -webkit-transition: 0.3s ease;
     transition: 0.3s ease; }
@@ -5453,7 +5453,7 @@ table tbody .border-bottom-warning td {
       text-transform: uppercase; }
   .page-wrapper.compact-wrapper .page-body-wrapper .page-body {
     padding-top: 30px;
-    margin-left: 290px; }
+    margin-left: 260px; }
   .page-wrapper.compact-sidebar.compact-wrapper .page-body-wrapper .according-menu {
     display: none !important; }
   .page-wrapper.compact-sidebar.compact-wrapper .page-body-wrapper header.main-nav {
@@ -16340,7 +16340,7 @@ footer {
   padding: 15px;
   bottom: 0;
   left: 0;
-  margin-left: 275px;
+  margin-left: 260px;
 }
   footer a {
     font-weight: 600; }

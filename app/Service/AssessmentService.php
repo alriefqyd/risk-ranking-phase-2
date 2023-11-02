@@ -24,9 +24,10 @@ class AssessmentService
     public function getDataAssessment($status, $newData) {
         $userService = new UserService();
         $assessment = Assessment::with(['user','project']);
+        $presented_year = config('constants.project_presented_year');
 
-        $assessment = $assessment->whereHas('project', function($q) use ($newData,$userService){
-            $subQuery = $q->where('presented_year','2024')->whereNull('deleted_at');
+        $assessment = $assessment->whereHas('project', function($q) use ($newData,$userService, $presented_year){
+            $subQuery = $q->where('presented_year', $presented_year)->whereNull('deleted_at');
             if($userService->isAdminDept()) return $subQuery->where('owner',Auth::user()->department);
             return $subQuery;
         });
