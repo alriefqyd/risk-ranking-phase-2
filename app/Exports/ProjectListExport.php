@@ -23,13 +23,16 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     {
         $worksheet = new Worksheet();
         $this->worksheet = $worksheet;
-        $this->size = Project::all()->count();
+        $this->presented_year = config('constants.project_presented_year');
+        $this->size = Project::where('presented_year', $this->presented_year)->count();
     }
 
 
     public function view(): View
     {
-        $cb = Project::with(['owners','sponsors','assessment','baskets','subBaskets'])->get();
+        $cb = Project::with(['owners', 'sponsors', 'assessment', 'baskets', 'subBaskets'])
+            ->where('presented_year', $this->presented_year)
+            ->get();
         return view('page.project.export_project', [
             'project' => $cb
         ]);

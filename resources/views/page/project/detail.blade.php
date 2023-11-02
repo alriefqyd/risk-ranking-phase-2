@@ -71,32 +71,32 @@
                             </div>
 
                             @if(!isset($project->categories) || isset($project->categories) && sizeof($project->criterias) > 0)
-                                <div class="tab-pane fade js-tab-parent show" id="assessment" role="tabpanel" aria-labelledby="assessment-tab">
+                                <div class="tab-pane fade js-tab-parent show  {{Session::get('page-tab') == 'assessment' ? 'active show' : ''}}" id="assessment" role="tabpanel" aria-labelledby="assessment-tab">
                                     @include('page.assessment.assessment_tab')
                                 </div>
                             @endif
                             @if(isset($project->assessment))
-                                <div class="tab-pane fade js-tab-parent show" id="fel1" role="tabpanel" aria-labelledby="fel1-tab">
+                                <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'fel1' ? 'active show' : ''}}" id="fel1" role="tabpanel" aria-labelledby="fel1-tab">
                                     @include('page.fel1.fel1_tab')
                                 </div>
                             @endif
                             @if(isset($project->assessment))
-                                <div class="tab-pane fade js-tab-parent show" id="fel2" role="tabpanel" aria-labelledby="fel2-tab">
+                                <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'fel2' ? 'active show' : ''}}" id="fel2" role="tabpanel" aria-labelledby="fel2-tab">
                                     @include('page.fel2.fel2_tab')
                                 </div>
                             @endif
                             @if(isset($project->assessment))
-                                <div class="tab-pane fade js-tab-parent show" id="fel3" role="tabpanel" aria-labelledby="fel3-tab">
+                                <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'fel3' ? 'active show' : ''}}" id="fel3" role="tabpanel" aria-labelledby="fel3-tab">
                                     @include('page.fel3.fel3_tab')
                                 </div>
                             @endif
                             @if(isset($project->fel3) || isset($project->fel2) || isset($project->fel1))
-                                <div class="tab-pane fade js-tab-parent show" id="business-case" role="tabpanel" aria-labelledby="business-case-tab">
+                                <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'business-case' ? 'active show' : ''}}" id="business-case" role="tabpanel" aria-labelledby="business-case-tab">
                                     @include('page.business_case.bc_tab')
                                 </div>
                             @endif
                             @if(isset($project->business_case))
-                                <div class="tab-pane fade js-tab-parent show" id="cost-benefit" role="tabpanel" aria-labelledby="cost-benefit-tab">
+                                <div class="tab-pane fade js-tab-parent sho {{Session::get('page-tab') == 'cost-benefit' ? 'active show' : ''}}w" id="cost-benefit" role="tabpanel" aria-labelledby="cost-benefit-tab">
                                     @include('page.cost_benefit.cost_benefit_tab')
                                 </div>
                             @endif

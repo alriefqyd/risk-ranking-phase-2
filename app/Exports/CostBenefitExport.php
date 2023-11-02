@@ -18,14 +18,15 @@ class CostBenefitExport implements FromView, WithHeadingRow, ShouldAutoSize, Wit
     public function __construct()
     {
         $worksheet = new Worksheet();
+        $this->presented_year = config('constants.project_presented_year');
         $this->worksheet = $worksheet;
-        $this->size = Project::all()->count();
+        $this->size = Project::where('presented_year', $this->presented_year)->count();
     }
 
 
     public function view(): View
     {
-        $cb = Project::with('cost_benefits')->get();
+        $cb = Project::with('cost_benefits')->where('presented_year', $this->presented_year)->get();
         return view('page.project.export', [
             'project' => $cb
         ]);
