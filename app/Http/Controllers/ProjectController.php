@@ -98,7 +98,8 @@ class ProjectController extends Controller
         $projectService = new ProjectService();
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
-        $capexCategories =  CapexInvestment::with('basket.subBasket.categories')->where('type','CAPEX_INVESTMENT')->get();
+        /*$capexCategories =  CapexInvestment::with('basket.subBasket.categories')->where('type','CAPEX_INVESTMENT')->get();*/
+        $basketList = CapexInvestment::where('type','basket')->get();
 
         return view('page.project.create',[
             'projectCategory' => $this->projectCategory,
@@ -106,7 +107,7 @@ class ProjectController extends Controller
             'department' => $department,
             'subDepartment' => $subDepartment,
             'userDepartment' => $this->userDepartment,
-            'capexCategories' => $capexCategories,
+            'basketList' => $basketList,
             'project' => null
         ]);
     }
@@ -122,13 +123,15 @@ class ProjectController extends Controller
         $this->authorize('create');
         DB::beginTransaction();
         $data = $this->validate($request,[
-            'project_number' => 'nullable|unique:projects',
-            'project_category' => 'required',
             'project_name' => 'required',
+            'operation_area' => 'required',
+            'sponsor_area' => 'required',
             'owner' => 'required',
-            'project_type' => 'required',
-            'sponsor' => 'required',
-            'bc_presenter' => 'required'
+            'project_sponsor' => 'required',
+            'maintenance_reps' => 'required',
+            'operation_reps' => 'required',
+            'bc_presenter' => 'required',
+            'fel_123_project_ref' => 'required',
         ]);
 
         try{
@@ -142,15 +145,16 @@ class ProjectController extends Controller
             }
 
             $project = new Project([
-                'project_number' => $request->project_number,
                 'project_name' => $request->project_name,
-                'project_type' => $request->project_type,
+                'operation_area' => $request->operation_area,
+                'sponsor_area' => $request->sponsor_area,
                 'owner' => $request->owner,
-                'operating_area' => $request->operating_area,
-                'sponsor' => $request->sponsor,
-                'project_category' => $request->project_category,
+                'sponsor' => $request->project_sponsor,
+                'maintenance_reps' => $request->maintenance_reps,
+                'operation_reps' => $request->operation_reps,
                 'bc_presenter' => $request->bc_presenter,
                 'bc_status' => $request->bc_status,
+                'fel_123_project_ref' => $request->fel_123_project_ref,
                 'note' => $request->note,
                 'finance_analyst' => $request->finance_analyst,
                 'basket' => $request->basket,
@@ -204,6 +208,8 @@ class ProjectController extends Controller
             })->get();
         }
 
+        $basketList = CapexInvestment::where('type','basket')->get();
+
         return view('page.project.detail',[
             'project' => $project,
             'projectCategory' => $this->projectCategory,
@@ -221,7 +227,8 @@ class ProjectController extends Controller
             'isNotCurrentData' => false,
             'dataMaturity' => $dataMaturity,
             'maturityOption' => Setting::MATURITY_VALUE,
-            'criterias' => $criteria
+            'criterias' => $criteria,
+            'basketList' => $basketList,
         ]);
     }
     /**
@@ -244,15 +251,18 @@ class ProjectController extends Controller
 
         if(!$request->isQuickUpdate){
             $data = $this->validate($request,[
-                'project_number' => 'nullable|unique:projects,project_number,'.$project->id,
-                'project_category' => 'required',
                 'project_name' => 'required',
+                'operation_area' => 'required',
+                'sponsor_area' => 'required',
                 'owner' => 'required',
-                'project_type' => 'required',
-                'sponsor' => 'required',
-                'bc_presenter' => 'required'
+                'project_sponsor' => 'required',
+                'maintenance_reps' => 'required',
+                'operation_reps' => 'required',
+                'bc_presenter' => 'required',
+                'fel_123_project_ref' => 'required',
             ]);
         }
+
 
         DB::beginTransaction();
         try{
@@ -268,12 +278,15 @@ class ProjectController extends Controller
             if($request->has('bc_status')) $project->bc_status = $request->bc_status;
 
             if(!$request->isQuickUpdate){
-                $project->project_number = $request->project_number;
                 $project->project_name = $request->project_name;
-                $project->project_type = $request->project_type;
+                $project->operation_area = $request->operation_area;
+                $project->sponsor_area = $request->sponsor_area;
                 $project->owner = $request->owner;
-                $project->sponsor = $request->sponsor;
+                $project->sponsor = $request->project_sponsor;
+                $project->maintenance_reps = $request->maintenance_reps;
+                $project->operation_reps = $request->operation_reps;
                 $project->bc_presenter = $request->bc_presenter;
+                $project->fel_123_project_ref = $request->fel_123_project_ref;
                 $project->basket = $request->basket;
                 $project->sub_basket = $request->sub_basket;
                 $project->sub_basket_categories = $request->sub_basket_categories;

@@ -25,13 +25,32 @@
 </tr>
 </script>
 <script id="js-template-capex-investment" type="x-tmpl-mustache">
-
-    <div class="checkbox checkbox-primary">
-        <input id="checkbox-"
-               data-id=""
-               class="js-checkbox-margin js-checkbox-open-bucket"
-               type="checkbox">
-        <label for="checkbox-"></label>
-    </div>
-
+       @{{ #data }}
+           <div class="col-md-4 js-checkbox-sub-basket-item position-auto">
+                <div class="checkbox checkbox-primary ml-2 ">
+                    <input id="checkbox-@{{ code }}"
+                           data-id="@{{ id }}"
+                           value="@{{ id }}"
+                           class="js-checkbox-margin js-checkbox-open-sub-basket"
+                           type="checkbox">
+                    <label for="checkbox-@{{ code }}">@{{ name }}<br></label>
+                </div>
+            </div>
+        @{{ /data }}
 </script>
+
+<script id="js-template-categories" type="x-tmpl-mustache">
+       @{{ #data }}
+           <div class="col-md-4 js-checkbox-categories-item position-auto">
+                <div class="checkbox checkbox-primary ml-2 ">
+                    <input id="checkbox-@{{ code }}"
+                           data-id="@{{ id }}"
+                           value="@{{ id }}"
+                           class="js-checkbox-margin js-checkbox-open-categories"
+                           type="checkbox">
+                    <label for="checkbox-@{{ code }}">@{{ name }}<br></label>
+                </div>
+            </div>
+        @{{ /data }}
+</script>
+

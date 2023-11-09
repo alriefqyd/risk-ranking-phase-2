@@ -170,8 +170,8 @@
                                                 <td class="text-center">
                                                     {!! $project->getRelatedDataProjectBusinessCase() !!}
                                                 </td>
-                                                <td>{{$project->owners->name}}</td>
-                                                <td>{{$project->sponsors->name}}</td>
+                                                <td>{{$project->owners?->name ?? $project->owner}}</td>
+                                                <td>{{$project->sponsors?->name ?? $project->sponsor}}</td>
                                                 <td>{{$project->getProjectCategory()}}</td>
                                                 <td>{{$project->project_type}}</td>
                                                 <td>

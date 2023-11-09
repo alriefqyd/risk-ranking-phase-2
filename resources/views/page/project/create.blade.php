@@ -18,37 +18,14 @@
     {{ count($errors) > 0 ? 'isError' : ''}}
     js-project-form">
     @csrf
-        <div class="container-fluid js-capex-investment-form {{!$errors->isEmpty() ? 'd-none' : ''}}">
+        <div class="container-fluid js-capex-investment-form">
             <div class="row">
                 <div class="col-sm-12 col-xl-12">
                        <div class="row">
                         <div class="col-sm-12">
                             <div class="card">
                                 <div class="card-body">
-                                    @include('page.project.capex_investment_form',[
-                                        'subDepartment' => $subDepartment,
-                                        'department' => $department,
-                                        'user_department' => $userDepartment,
-                                        'errors' => $errors
-                                    ])
-                                </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary js-next-capex-investment-form" disabled="disabled">Submit and Next</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid js-project-form-card {{$errors->isEmpty() ? 'd-none' : ''}}">
-            <div class="row">
-                <div class="col-sm-12 col-xl-12">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="card">
-                                <div class="card-body">
-                                        @include('page.project.form',[
+                                    @include('page.project.form',[
                                             'subDepartment' => $subDepartment,
                                             'department' => $department,
                                             'user_department' => $userDepartment,
@@ -56,11 +33,33 @@
                                         ])
                                 </div>
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button class="btn btn-primary js-next-capex-investment-form">Submit and Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid js-project-form-card d-none">
+            <div class="row">
+                <div class="col-sm-12 col-xl-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    @include('page.project.capex_investment_form',[
+                                       'subDepartment' => $subDepartment,
+                                       'department' => $department,
+                                       'user_department' => $userDepartment,
+                                       'errors' => $errors
+                                    ])
+                                </div>
+                                <div class="card-footer">
+                                    <p class="mb-0"><small class="text-danger js-text-validation-basket"></small></p>
+                                    <button type="submit" class="btn btn-primary js-button-investment_category" disabled="disabled">Submit</button>
                                     <button class="btn btn-secondary">Cancel</button>
-                                    @if($errors->isEmpty())
-                                        <button class="btn btn-secondary js-back-capex-investment-form">Back To Capex Investment</button>
-                                    @endif
+                                    <button class="btn btn-secondary js-back-capex-investment-form">Back To Project Detail Form</button>
                                 </div>
                             </div>
                         </div>
@@ -69,5 +68,16 @@
             </div>
         </div>
     </form>
+
+    <div class="modal js-modal-loading" id="modal-loading" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="loading-spinner mb-2"></div>
+                    <div>Loading....</div>
+                </div>
+            </div>
+        </div>
+    </div>
     @include('page.project.notification')
 @endsection

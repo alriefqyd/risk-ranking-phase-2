@@ -363,7 +363,7 @@ $(function() {
      * TinyMce
      */
 
-    /*tinymce.init({
+    tinymce.init({
         selector: '.tinymce',
         plugins: 'table image fullscreen lists',
         toolbar: 'fullscreen | undo redo | fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
@@ -374,7 +374,7 @@ $(function() {
             {value: 'First.Name', title: 'First Name'},
             {value: 'Email', title: 'Email'},
         ]
-    });*/
+    });
     /**
      * Handle Hide Show Editor Form
      */
@@ -2383,172 +2383,182 @@ $(function() {
     /**
      * JS Checkbox Capex Investment
      */
-    var _project_form = $('.js-project-form')
-    var _check_capex_investment = 0
-    $('.js-checkbox-open-bucket').each(function(){
+
+    $(document).on('click','.js-checkbox-open-bucket', function(){
         var _this = $(this);
-        var _btn_next = _this.closest('.card').find('.js-next-capex-investment-form')
-        var _isUpdate = _this.closest('.js-project-edit').length > 0 //to know the form is edit or not
-        validate_capex_investment(_this, _isUpdate)
-        _this.on('change',function(){
-            var __this = $(this)
-            validate_capex_investment($(this),false)
-            if(_check_capex_investment >= 1) disabledCheckbox(__this.data('id'))
-        })
-    })
+        var _basket = _this.val();
 
-    $('.js-checkbox-sub-basket').each(function(){
-        var _this = $(this);
-        _this.on('change', function(){
-            var __this = $(this);
-            var _categories_list =  __this.closest('.js-sub-basket-item').find('.js-sub-basket-categories');
-            if(__this.is(':checked')){
-                _categories_list.removeClass('d-none')
-            } else {
-                _categories_list.addClass('d-none');
-            }
-        })
-
-    })
-
-    $('.js-checkbox-categories').each(function(){
-        var _this = $(this);
-        _this.on('change', function(){
-            var __this = $(this);
-            if(__this.is(':checked')){
-                _check_capex_investment += 1;
-                disableCategories(__this.data('id'));
-            } else {
-                _check_capex_investment -= 1;
-                $('.js-checkbox-categories').prop('disabled', false);
-            }
-
-            if(_check_capex_investment > 2){
-                $('.js-hidden-sub_basket_categories').val(__this.data('id'))
-                _this.closest('.card').find('.js-next-capex-investment-form').removeAttr('disabled')
-            } else {
-                _this.closest('.card').find('.js-next-capex-investment-form').attr('disabled','disabled');
-                $('.js-hidden-sub_basket_categories').val('');
-            }
-        })
-    })
-
-    var _idx = 0;
-    var _checked_id = '';
-    function validate_capex_investment(_this, _isUpdate){
-        var __this = _this;
-        var __sub_bucket_list = __this.closest('.js-basket-list-detail').find('.js-sub-basket-list');
-        var __sub_bucket_list_length = __this.closest('.js-basket-list-detail').find('.js-sub-basket-item');
-        var __categories_list_length = __this.closest('.js-basket-list-detail').find('.js-checkbox-categories');
-        var _isErrorForm = _this.closest('form').hasClass('isError') //to know the form is edit or not
-
-        if(__this.is(':checked')){
-            _idx = __this.data('idx');
-            __sub_bucket_list.removeClass('d-none');
-            if(__sub_bucket_list_length.length < 1) {
-                _check_capex_investment += 3;
-            }
-
-            if(__sub_bucket_list_length.length > 0){
-                _check_capex_investment += 1;
-            }
-            $('.js-hidden-basket').val(__this.data('id'));
-
-        } else {
-            $('.js-checkbox-sub-basket').removeAttr('disabled');
-            if(_isUpdate){
-                __this.attr('disabled','disabled')
-            }
-            _check_capex_investment = 0;
-            if(!_isUpdate && !_isErrorForm){
-                $('.js-checkbox-sub-basket').prop('checked', false);
-                $('.js-checkbox-sub-basket').removeAttr('checked');
-                $('.js-checkbox-categories').prop('checked',false);
-                $('.js-checkbox-categories').removeAttr('disabled');
-                $('.js-sub-basket-categories').addClass('d-none');
-                $('.js-hidden-basket').val('');
-                $('.js-hidden-sub-basket').val('');
-            }
-            __sub_bucket_list.addClass('d-none');
-        }
-
-        if(_check_capex_investment > 2){
-            _this.closest('.card').find('.js-next-capex-investment-form').removeAttr('disabled')
-        } else {
-            if(!_isUpdate){
-                $('.js-checkbox-open-bucket').removeAttr('disabled')
-            }
-            _this.closest('.card').find('.js-next-capex-investment-form').attr('disabled','disabled')
-        }
-    }
-    var _checkbox_sub_basket = $('.js-checkbox-sub-basket');
-    _checkbox_sub_basket.each(function(){
-        processCheckboxSubBasket($(this),true);
-        $(this).on('change',function(){
-            processCheckboxSubBasket($(this),false);
-        })
-    })
-
-    function processCheckboxSubBasket(_this, _isUpdate){
         if(_this.is(':checked')){
-            if(_this.closest('.js-sub-basket-item').find('.js-checkbox-categories').length < 1){
-                _check_capex_investment += 2;
-            } else {
-                _check_capex_investment += 1;
+            $('.js-modal-loading').modal('show')
+            disabledCheckbox(_this.data('id'), true)
+            $('.js-hidden-basket').val(_basket);
+            renderSubBasket(_basket)
+        } else {
+            disabledCheckbox(_this.data('id'), false);
+            $('.js-button-investment_category').attr('disabled','disabled');
+            $('.js-hidden-basket').val('')
+            $('.js-hidden-sub-basket').val('')
+            $('.js-hidden-sub_basket_categories').val('')
+            $('.js-checkbox-sub-basket-item').remove();
+            $('.js-checkbox-categories-item').remove();
+        }
+    });
+
+    $(document).on('click', '.js-checkbox-open-sub-basket', function(){
+        var _this = $(this);
+        var _subBasket = _this.val();
+
+        disabledSubBasket(_this.data('id'), true)
+        if(_this.is(':checked')){
+            $('.js-modal-loading').modal('show')
+            $('.js-hidden-sub-basket').val(_subBasket);
+            renderCategories(_subBasket, false)
+        } else {
+            disabledSubBasket(_this.data('id'), false)
+            $('.js-text-validation-basket').text('* Please select sub basket')
+            $('.js-button-investment_category').attr('disabled','disabled');
+            $('.js-checkbox-categories-item').remove();
+            $('.js-hidden-sub-basket').val('');
+            $('.js-hidden-sub_basket_categories').val('');
+        }
+    })
+
+    function renderSubBasket(_basket, callback){
+        if(_basket === null){
+            _basket = $('.js-checkbox-open-bucket:checked').val();
+        }
+
+        $.ajax({
+            url:'/getSubBasketByBasket',
+            data: {basket:_basket},
+            success:function(data){
+                if(data.length < 1){
+                    $('.js-button-investment_category').removeAttr('disabled');
+                    $('.js-text-validation-basket').text('')
+                    $('.js-modal-loading').modal('hide')
+                    return false;
+                }
+
+                $('.js-text-validation-basket').text('* Please select sub basket')
+                var template = $('#js-template-capex-investment').html();
+                Mustache.parse(template);
+                var data = {
+                    "data" : data
+                }
+                var _temp = Mustache.render(template, data)
+                $('.js-checkbox-sub-basket-form').append(_temp);
+                $('.js-modal-loading').modal('hide')
+
+                if (typeof callback === 'function') {
+                    checkSubBasket()
+                    callback(); // Call renderCategories after renderSubBasket completes
+                };
             }
-        } else {
-            if(_check_capex_investment > 0) _check_capex_investment = 1
+        })
+    }
+    function renderCategories(_subBasket, isEdit){
+        if(_subBasket === null){
+            _subBasket = $('.js-checkbox-open-sub-basket:checked').val();
         }
 
-        if(_check_capex_investment > 1){
-            var _data_id = _this.closest('.js-basket-list-detail').find('.js-checkbox-open-bucket').data('id')
-            disabledCheckbox(_data_id)
-            disabledSubBasket(_this.data('id'))
+        console.log(_subBasket)
+        $.ajax({
+            url : '/getCategoriesBySubBasket',
+            data : {sub_basket:_subBasket},
+            success:function(data){
+                if(data.length < 1){
+                    $('.js-button-investment_category').removeAttr('disabled');
+                    $('.js-text-validation-basket').text('')
+                    $('.js-modal-loading').modal('hide')
+                    return false;
+                }
 
-        } else {
-            if(!_isUpdate){
-                $('.js-hidden-sub-basket').val('')
-                $('.js-checkbox-sub-basket').removeAttr('disabled')
+                $('.js-text-validation-basket').text('* Please select category')
+                var template = $('#js-template-categories').html();
+                Mustache.parse(template);
+                var data = {
+                    "data" : data
+                }
+                var _temp = Mustache.render(template, data)
+                $('.js-checkbox-categories-form').append(_temp);
+                $('.js-modal-loading').modal('hide')
+
+                if(isEdit === true) checkCategories()
             }
-        }
-
-        if(_check_capex_investment > 2 ){
-            _this.closest('.card').find('.js-next-capex-investment-form').removeAttr('disabled');
-        } else {
-            _this.closest('.card').find('.js-next-capex-investment-form').attr('disabled','disabled')
-        }
-
-        var _categories_list =  _this.closest('.js-sub-basket-item').find('.js-sub-basket-categories');
-
-        if(!_isUpdate){
-            _categories_list.find('.js-checkbox-categories').prop('checked',false);
-            _categories_list.find('.js-checkbox-categories').removeAttr('disabled');
-        }
-
+        })
     }
 
+    function checkSubBasket(){
+        var _val = $('.js-hidden-sub-basket').val();
+        var _el = $('.js-checkbox-open-sub-basket[data-id="'+_val+'"]');
+        _el.prop('checked', true);
+        disabledSubBasket(_val, true);
+    }
 
-    function disabledCheckbox(_id){
+    function checkCategories(){
+        var _val = $('.js-hidden-sub_basket_categories').val();
+        var _el = $('.js-checkbox-open-categories[data-id="'+_val+'"]');
+        _el.prop('checked', true);
+        disableCategories(_val, true);
+    }
+
+    $(document).on('click','.js-btn-edit_project', function(){
+        disabledCheckbox($('.js-checkbox-open-bucket:checked').data('id'),true)
+        renderSubBasket(null,function(){
+            renderCategories(null, true)
+        })
+    })
+
+    $(document).on('click','.js-checkbox-open-categories', function(){
+        var _this = $(this);
+        var _val = _this.val();
+
+        if(_this.is(':checked')){
+            $('.js-text-validation-basket').text('')
+            $('.js-button-investment_category').removeAttr('disabled');
+            disableCategories(_this.data('id'), true)
+            $('.js-hidden-sub_basket_categories').val(_val)
+        } else {
+            $('.js-text-validation-basket').text('* Please select categories')
+            disableCategories(_this.data('id'), false)
+            $('.js-hidden-sub_basket_categories').val('');
+            $('.js-button-investment_category').attr('disabled','disabled');
+        }
+    })
+
+    function disabledCheckbox(_id, _isChecked){
         $('.js-checkbox-open-bucket').each(function(){
-            if($(this).data('id') != _id){
-                $(this).attr('disabled','disabled')
+            if(_isChecked){
+                if($(this).data('id') != _id){
+                    $(this).attr('disabled','disabled')
+                }
+            } else {
+                $(this).removeAttr('disabled')
+            }
+
+        })
+    }
+
+    function disabledSubBasket(_id, _isChecked){
+        $('.js-checkbox-open-sub-basket').each(function() {
+            if (_isChecked) {
+                if ($(this).data('id') != _id) {
+                    $(this).attr('disabled', 'disabled')
+                }
+            } else {
+                $(this).removeAttr('disabled')
             }
         })
     }
 
-    function disabledSubBasket(_id){
-        $('.js-checkbox-sub-basket').each(function(){
-            if($(this).data('id') != _id){
-                $(this).attr('disabled','disabled')
-            }
-            if($(this).data('id') == _id) $('.js-hidden-sub-basket').val($(this).data('id'))
-        })
-    }
-
-    function disableCategories(_id){
-        $('.js-checkbox-categories').each(function(){
-            if($(this).data('id') != _id){
-                $(this).attr('disabled','disabled')
+    function disableCategories(_id, _isChecked){
+        $('.js-checkbox-open-categories').each(function() {
+            if (_isChecked) {
+                if ($(this).data('id') != _id) {
+                    $(this).attr('disabled', 'disabled')
+                }
+            } else {
+                $(this).removeAttr('disabled')
             }
         })
     }
@@ -2560,7 +2570,6 @@ $(function() {
         $('.js-project-form-card').removeClass('d-none');
         window.scrollTo(0,0)
     });
-
     $('.js-back-capex-investment-form').on('click',function(e){
         e.preventDefault();
         $('.js-project-form-card').addClass('d-none');
@@ -2572,6 +2581,7 @@ $(function() {
      * Handle Project Form
      */
 
+    var _project_form = $('.js-project-form')
     _project_form.validate({
         rules:{
             checkbox_basket:{
