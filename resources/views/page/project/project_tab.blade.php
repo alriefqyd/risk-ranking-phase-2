@@ -19,43 +19,54 @@
     @endif
 </div>
 @can('update')
-    <div class="row js-form-project-edit d-none center-content p-4 mt-3 ">
-        <div class="col-md-12">
-            <h5 class="text-left">
-                <a class="mr-2 setting-primary-custom bg-draft">
-                    <i class="fa fa-dollar text-white"></i>
-                </a>
-                <span class="text-primary-template f-w-700">CAPEX INVESTMENT</span>
-            </h5>
-            <div class="col-md-6 text-center">
-                <div style="height: 3px; background-color: #24695c "></div>
-            </div>
-        </div>
-    </div>
     @if(!$isNotCurrentData)
         <form method="post" action="/project/{{$project?->id}}"
               class="theme-form js-project-edit js-project-form">
             @csrf
             @method('PUT')
-            <div class="row js-form-project-edit d-none center-content mb-0 p-4">
-                @include('page.project.capex_investment_option')
-            </div>
-            <div class="separator d-none js-form-project-edit"></div>
             <div class="row js-form-project-edit {{!$errors->any() ? 'd-none' : ''}} m-t-0">
                 <div class="p-4 pt-0">
-                        @include('page.project.form',[
-                            'subDepartment' => $subDepartment,
-                            'department' => $department,
-                            'user_department' => $userDepartment,
-                            'errors' => $errors
-                        ])
+                    @include('page.project.form',[
+                        'subDepartment' => $subDepartment,
+                        'department' => $department,
+                        'user_department' => $userDepartment,
+                        'errors' => $errors
+                    ])
                 </div>
+            </div>
+            <div class="separator d-none js-form-project-edit"></div>
+            <div class="row js-form-project-edit d-none center-content p-4 mt-3 ">
+                <div class="col-md-12">
+                    <h5 class="text-left">
+                        <a class="mr-2 setting-primary-custom bg-draft">
+                            <i class="fa fa-dollar text-white"></i>
+                        </a>
+                        <span class="text-primary-template f-w-700">CAPEX INVESTMENT</span>
+                    </h5>
+                    <div class="col-md-6 text-center">
+                        <div style="height: 3px; background-color: #24695c "></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row js-form-project-edit d-none center-content mb-0 p-4">
+                @include('page.project.capex_investment_option')
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary js-button-investment_category">Submit</button>
                     <button class="btn btn-secondary">Cancel</button>
                 </div>
             </div>
         </form>
+
+        <div class="modal js-modal-loading" id="modal-loading" data-backdrop="static">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <div class="loading-spinner mb-2"></div>
+                        <div>Loading....</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
 @endcan
 <div class="row js-form-project-detail m-b-30 {{!$errors->any() ? '' : 'd-none'}}">
@@ -88,11 +99,11 @@
             </tr>
             <tr>
                 <td>Owner Area :</td>
-                <td>{{$project?->owners->name}}</td>
+                <td>{{$project?->owners?->name ?? $project->owner}}</td>
             </tr>
             <tr>
                 <td>Project Sponsor :</td>
-                <td>{{$project?->sponsors->name}}</td>
+                <td>{{$project?->sponsors?->name ?? $project->sponsor}}</td>
             </tr>
             <tr>
                 <td>BC Presenter :</td>
