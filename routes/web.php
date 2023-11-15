@@ -20,6 +20,7 @@ Route::get('/getDataGraph',[\App\Http\Controllers\HomeController::class,'getData
 Route::get('/project',[\App\Http\Controllers\ProjectController::class,'index'])->name('project ')->middleware('auth');
 Route::get('/project/year/{year}',[\App\Http\Controllers\ProjectController::class,'index'])->name('project.year ')->middleware('auth');
 Route::post('/project',[\App\Http\Controllers\ProjectController::class,'store'])->name('project.store ')->middleware('auth');
+Route::post('/update-investment-strategy',[\App\Http\Controllers\ProjectController::class,'updateInvestmentStrategy'])->name('project.update-investment ')->middleware('auth');
 Route::get('/project/create',[\App\Http\Controllers\ProjectController::class,'create'])->name('project.create ')->middleware('auth');
 Route::put('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'update'])->name('project.update ')->middleware('auth');
 Route::get('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'edit'])->name('project.edit ')->middleware('auth');
@@ -27,6 +28,7 @@ Route::delete('/project/{project:id}',[\App\Http\Controllers\ProjectController::
 Route::get('/getProjectNote/{project:id}',[\App\Http\Controllers\ProjectController::class,'getProjectNote'])->name('project.get-project-note ')->middleware('auth');
 Route::get('/export',[\App\Http\Controllers\ExportController::class,'export'])->name('export')->middleware(['auth']);
 Route::post('/budget-tool',[\App\Http\Controllers\ProjectController::class,'storeBudgetTool'])->middleware(['auth']);
+
 
 Route::post('/assessment',[\App\Http\Controllers\AssessmentController::class,'store'])->middleware('auth');
 Route::get('/assessment',[\App\Http\Controllers\AssessmentController::class,'index'])->middleware('auth');

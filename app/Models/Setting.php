@@ -200,6 +200,7 @@ class Setting extends Model
         '0' => 'No',
     ];
 
+    public const INVESTMENT_STRATEGY = 'INVESTMENT_STRATEGY';
     public const sustaining = 'sustaining';
     public const r_and_d = 'r_and_d';
     public const growth = 'growth';
@@ -213,4 +214,7 @@ class Setting extends Model
     public const VOLUME_GROWTH = 'volume_growth';
     public const VOLUME_REPLACEMENT = 'volume_replacement';
     public const ADMINISTRATIVE_IMPROVEMENTS = 'administrative_improvements';
+
+
 }
+

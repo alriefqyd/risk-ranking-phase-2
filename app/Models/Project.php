@@ -288,4 +288,11 @@ class Project extends Model
         if(!$val) return "";
         return RiskAssessments::SEVERITY[$val];
     }
+
+    public function getInvestmentStrategy(){
+        $data = $this->investment_strategy;
+        if(!$data) return null;
+        $json = json_decode($data);
+        return $json;
+    }
 }

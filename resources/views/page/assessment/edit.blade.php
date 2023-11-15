@@ -8,7 +8,8 @@
             'subDepartment' => $subDepartment,
             'department' => $department,
             'user_department' => $userDepartment,
-            'errors' => $errors
+            'errors' => $errors,
+            'isEdit' => true
         ])
     <div class="card-footer">
         <button class="btn btn-secondary js-save-button js-btn-submit-assessment-non-confirm js-btn-submit-assessment

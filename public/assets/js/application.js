@@ -1062,6 +1062,98 @@ $(function() {
         })
     })
 
+    $(document).on('click', '.js-checkbox-investment-strategy', function(){
+        var _this = $(this);
+        var _not_checked_checkbox =  $('.js-checkbox-investment-strategy').not(this)
+        var _not_checked_element = $('.js-level-1').not(_this.closest('.js-level-1'))
+        if(_this.is(':checked')){
+            _not_checked_checkbox.attr('disabled','disabled')
+            _this.closest('.js-level-1').find('.js-level-2').removeClass('d-none')
+
+        } else {
+            _not_checked_checkbox.removeAttr('disabled')
+            _this.closest('.js-level-1').find('.js-level-2').addClass('d-none')
+            $('.js-next-assessment-form').attr('disabled','disabled')
+            $('.js-checkbox-investment-strategy-level-2').removeAttr('disabled')
+            $('.js-checkbox-investment-strategy-level-2').prop('checked',false)
+            $('.js-level-2').addClass('d-none')
+            $('.js-level-3').addClass('d-none')
+            $('.js-checkbox-investment-strategy-level-3').removeAttr('disabled')
+            $('.js-checkbox-investment-strategy-level-3').prop('checked',false)
+        }
+        $('.js-next-assessment-form').removeClass('d-none')
+        $('.js-button-submit-assessment').addClass('d-none');
+    })
+
+    $(document).on('click','.js-checkbox-investment-strategy-level-2',function(){
+        var _this = $(this);
+        var _not_checked_element = $('.js-level-2').not(_this.closest('.js-level-2'))
+        var _not_checked_checkbox =  $('.js-checkbox-investment-strategy-level-2').not(this)
+        if(_this.is(':checked')){
+            _not_checked_checkbox.attr('disabled','disabled')
+            _this.closest('.js-level-2').find('.js-level-3').removeClass('d-none');
+        } else {
+            _not_checked_checkbox.removeAttr('disabled')
+            _this.closest('.js-level-2').find('.js-level-3').addClass('d-none');
+            $('.js-next-assessment-form').attr('disabled','disabled')
+            $('.js-checkbox-investment-strategy-level-3').removeAttr('disabled')
+            $('.js-checkbox-investment-strategy-level-3').prop('checked',false)
+            $('.js-level-3').addClass('d-none')
+        }
+        $('.js-next-assessment-form').removeClass('d-none')
+        $('.js-button-submit-assessment').addClass('d-none');
+    });
+
+    $(document).on('click','.js-checkbox-investment-strategy-level-3',function(){
+        var _this = $(this);
+        var _not_checked_checkbox =  $('.js-checkbox-investment-strategy-level-3').not(this)
+        if(_this.is(':checked')){
+            _not_checked_checkbox.attr('disabled','disabled')
+            $('.js-next-assessment-form').removeAttr('disabled')
+        } else {
+            _not_checked_checkbox.removeAttr('disabled')
+            $('.js-next-assessment-form').attr('disabled','disabled')
+        }
+        $('.js-next-assessment-form').removeClass('d-none')
+        $('.js-button-submit-assessment').addClass('d-none');
+    });
+
+    $(document).on('click','.js-next-assessment-form', function(e){
+        var _this = $(this);
+        const path = window.location.pathname;
+
+        _this.attr('disabled','disabled');
+        _this.find('.loader-34-custom').removeClass('d-none');
+
+        // Extract the last segment of the path (assuming the ID is the last part of the URL)
+        const segments = path.split('/');
+        const id = segments[segments.length - 1];
+
+        var _data = {
+            'project_id' : id,
+            'level1' : $('.js-checkbox-investment-strategy:checked').val(),
+            'level2' : $('.js-checkbox-investment-strategy-level-2:checked').val(),
+            'level3' : $('.js-checkbox-investment-strategy-level-3:checked').val(),
+        };
+
+        $.ajax({
+            url : '/update-investment-strategy',
+            data : _data,
+            type: 'POST',
+            success:function(result){
+                if(result.status === 200){
+                    $('.js-table-form-assessment').removeClass('d-none');
+                    _this.addClass('d-none')
+                    _this.removeAttr('disabled')
+                    _this.find('.loader-34-custom').addClass('d-none');
+                    $('.js-button-submit-assessment').removeClass('d-none');
+                } else {
+                    console.log(result.message)
+                }
+            }
+        });
+    })
+
     /**
      * Fel 1 Section
      */
@@ -2711,5 +2803,7 @@ $(function() {
        validateBudgetTool();
     });
 })
+
+
 
 
