@@ -129,9 +129,9 @@
                 <td>
                     <small>(It is necessary to identify the overall reason for the initiative by relating it to one or more objectives of the organization that need to achieve).</small>
                     <textarea class="tinymce js-text-objective" name="objective"
-            {!! $project?->assessment?->objective != 1 ? 'style="display: none"' : '' !!}>
-                {!! $project?->assessment?->objective_text !!}
-            </textarea>
+                        {!! $project?->assessment?->objective != 1 ? 'style="display: none"' : '' !!}>
+                            {!! $project?->assessment?->objective_text !!}
+                    </textarea>
                     <input type="hidden" class="js-hidden-validate" name="validate_objective">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </td>
@@ -149,9 +149,9 @@
                 <td>
                     <small>(According to problem that has and objective that would to achieve, please mentioned what scope that this project need to cover).</small>
                     <textarea class="tinymce js-text-project-scope"
-            {!! $project?->assessment?->project_scope != 1 ? 'style="display: none"' : '' !!}>
-                {!! $project?->assessment?->project_scope_text !!}
-            </textarea>
+                        {!! $project?->assessment?->project_scope != 1 ? 'style="display: none"' : '' !!}>
+                            {!! $project?->assessment?->project_scope_text !!}
+                    </textarea>
                     <input type="hidden" class="js-hidden-validate" name="validate_project_scope">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </td>
@@ -169,9 +169,9 @@
                 <td>
                     <small>Key performance indicator assumption before and after investment, justification for proposed budget</small>
                     <textarea class="tinymce js-key-performance"
-            {!! $project?->assessment?->key_performance_metric != 1 ? 'style="display: none"' : '' !!}>
-                {!! $project?->assessment?->key_performance_metric_text !!}
-            </textarea>
+                        {!! $project?->assessment?->key_performance_metric != 1 ? 'style="display: none"' : '' !!}>
+                            {!! $project?->assessment?->key_performance_metric_text !!}
+                    </textarea>
                     <input type="hidden" class="js-hidden-validate" name="validate_kpm">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </td>
@@ -189,10 +189,9 @@
                 <td>
                     <small>List top 5 project risks, and where applicable the mitigation measures required</small>
                     <textarea class="tinymce js-key-project-risk"
-            {!! $project?->assessment?->key_project_risk_mitigants != 1 ? 'style="display: none"' : '' !!}>
-                {!! $project?->assessment?->key_project_risk_and_mitigants_text !!}
-
-            </textarea>
+                        {!! $project?->assessment?->key_project_risk_mitigants != 1 ? 'style="display: none"' : '' !!}>
+                            {!! $project?->assessment?->key_project_risk_and_mitigants_text !!}
+                    </textarea>
                     <input type="hidden" class="js-hidden-validate" name="validate_prm">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </td>
@@ -210,9 +209,9 @@
                 <td>
                     <small>What is the likely consequence of not executing on this capital item</small>
                     <textarea class="tinymce js-impact"
-            {!! $project?->assessment?->impact_if_not_executed != 1 ? 'style="display: none"' : '' !!}>
-                {!! $project?->assessment?->impact_if_not_executed_text !!}
-            </textarea>
+                        {!! $project?->assessment?->impact_if_not_executed != 1 ? 'style="display: none"' : '' !!}>
+                            {!! $project?->assessment?->impact_if_not_executed_text !!}
+                    </textarea>
                     <input type="hidden" class="js-hidden-validate" name="validate_iie">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </td>
@@ -230,9 +229,9 @@
                 <td>
                     <small>Discuss the next best alternative to the proposed spend (if applicable)</small>
                     <textarea class="tinymce js-alternative"
-                {!! $project?->assessment?->alternative_to_proposal != 1 ? 'style="display: none"' : '' !!}>
-                {!! $project?->assessment?->alternatives_to_proposal_text !!}
-            </textarea>
+                        {!! $project?->assessment?->alternative_to_proposal != 1 ? 'style="display: none"' : '' !!}>
+                        {!! $project?->assessment?->alternatives_to_proposal_text !!}
+                    </textarea>
                     <input type="hidden" class="js-hidden-validate" name="validate_alternative">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </td>
@@ -251,8 +250,8 @@
                 <td>
                     <small>(Develop rough cost estimate or reference (from similar project is acceptable) for assessment of complexity level).</small>
                     <div class="input-group mb-3 js-cost-estimate
-                {{$project?->assessment?->cost_estimate == 0 ? 'd-none' : ''}}"
-                    ><span class="input-group-text">$  </span>
+                        {{$project?->assessment?->cost_estimate == 0 ? 'd-none' : ''}}">
+                        <span class="input-group-text">$  </span>
                         <input class="form-control js-currency-format js-cost_estimate_assessment cold-md-12" type="text"
                                placeholder="xxx.xxx.xxx,xx"
                                value="{{$project?->assessment?->cost_estimate_text}}"
@@ -272,10 +271,10 @@
                     </div>
                 </td>
                 <td>
-            <textarea class="tinymce js-text-detail-cost"
-                {!! $project?->assessment?->detail_estimate_cost != 1 ? 'style="display: none"' : '' !!}>
-                    {{$project?->assessment?->detail_estimate_cost_text}}
-            </textarea>
+                    <textarea class="tinymce js-text-detail-cost"
+                        {!! $project?->assessment?->detail_estimate_cost != 1 ? 'style="display: none"' : '' !!}>
+                            {{$project?->assessment?->detail_estimate_cost_text}}
+                    </textarea>
                     <input type="hidden" class="js-hidden-validate" name="validate_detail_estimate">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                 </td>
@@ -291,14 +290,14 @@
                     </div>
                 </td>
                 <td>
-                <textarea class="tinymce js-text-level"
-                    {!! $project?->assessment?->level_project != 1 ? 'style="display: none"' : '' !!}>
-                    {{$project?->assessment?->level_project_text}}
-                </textarea>
+                    <textarea class="tinymce js-text-level"
+                        {!! $project?->assessment?->level_project != 1 ? 'style="display: none"' : '' !!}>
+                        {{$project?->assessment?->level_project_text}}
+                    </textarea>
                     <input type="hidden" class="js-hidden-validate" name="validate_level">
                     <div class="col-md-12 txt-danger js-error-message"></div>
                     <div class="js-complexity-analysis-head
-                {!! $project?->assessment?->level_project != 1 ? 'd-none' : '' !!}">
+                        {!! $project?->assessment?->level_project != 1 ? 'd-none' : '' !!}">
                         <div class="default-according style-1" id="accordionoc">
                             <h5 class="mb-3">
                                 <button class="p-0 btn btn-link js-btn-complexity-score-accordion text-primary-template" data-bs-toggle="collapse" data-bs-target="#collapseicon" aria-expanded="true" aria-controls="collapse11"><i class="icofont icofont-briefcase-alt-2"></i>
@@ -646,6 +645,56 @@
                         </div>
                         <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
                         <div class="js-error-file_size js-check-count-error text-danger"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Location (Location of Asset Capitalization)
+                </td>
+
+                <td>
+                    <div class="table table-hover">
+                        <table>
+                            <thead>
+                            <th>
+                                Area
+                            </th>
+                            <th>Cost Center</th>
+                            <th></th>
+                            </thead>
+                            <tbody class="js-row-area-capitalization">
+                            @if($isEdit)
+                                @foreach($project->assessment->getAllAreaAssetCapitalization() as $area)
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control js-form-area" value="{{$area->area}}">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control js-form-cost-center" value="{{$area->cost_center}}">
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-plus-circle cursor-pointer js-add-location-area-capitalization"></i>
+                                            <i class="fa fa-times-circle m-l-2 text-danger cursor-pointer js-delete-location-area-capitalization"></i>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control js-form-area">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control js-form-cost-center">
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-plus-circle cursor-pointer js-add-location-area-capitalization"></i>
+                                        <i class="fa fa-times-circle m-l-2 text-danger cursor-pointer js-delete-location-area-capitalization"></i>
+                                    </td>
+                                </tr>
+                            @endif
+                            </tbody>
+                        </table>
                     </div>
                 </td>
             </tr>

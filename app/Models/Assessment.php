@@ -44,4 +44,10 @@ class Assessment extends Model
         if(isset($value) && $value == 1) return 'checked';
         return '';
     }
+
+    public function getAllAreaAssetCapitalization(){
+        $json = json_decode($this->location_of_asset_capitalization);
+        if(!$json) return null;
+        return $json;
+    }
 }

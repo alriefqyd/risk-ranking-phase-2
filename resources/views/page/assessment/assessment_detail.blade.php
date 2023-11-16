@@ -5,21 +5,21 @@
             <table class="table table-striped js-table-assessment">
                 <tbody>
                 <tr>
-                    <td style="width: 17%">Problem Statement : </td>
+                    <td style="width: 17%">Problem Statement :</td>
                     <td style="width: 8%">{!! $project?->getCheckTemplate($project?->assessment->problems_statement) !!}</td>
                     <td style="width: 75%">
                         {!! $project?->getTemplateExpandChar($project?->assessment->problem_statement_text) !!}
                     </td>
                 </tr>
                 <tr>
-                    <td>Objective : </td>
+                    <td>Objective :</td>
                     <td>{!! $project?->getCheckTemplate($project?->assessment->objective) !!}</td>
                     <td>
                         {!! $project?->getTemplateExpandChar($project?->assessment->objective_text) !!}
                     </td>
                 </tr>
                 <tr>
-                    <td>Project Scope : </td>
+                    <td>Project Scope :</td>
                     <td>{!! $project?->getCheckTemplate($project?->assessment->project_scope) !!}</td>
                     <td>
                         {!! $project?->getTemplateExpandChar($project?->assessment->project_scope_text) !!}
@@ -89,7 +89,9 @@
                                     Technology Characteristic
                                 </td>
                                 <td>
-                                    <select data-readonly="true" id="u-rating-movie" data-idx="0" class="rating-custom js-complexity-assessment-technology js-complexity-assessment-score" name="rating" autocomplete="off">
+                                    <select data-readonly="true" id="u-rating-movie" data-idx="0"
+                                            class="rating-custom js-complexity-assessment-technology js-complexity-assessment-score"
+                                            name="rating" autocomplete="off">
                                         @for($i=1;$i<6;$i++)
                                             <option value></option>
                                             @if($i > 0)
@@ -106,7 +108,9 @@
                                     Engineering Characteristic
                                 </td>
                                 <td>
-                                    <select data-readonly="true" id="u-rating-movie" data-idx="1" class="rating-custom js-complexity-assessment-engineering js-complexity-assessment-score" name="rating" autocomplete="off">
+                                    <select data-readonly="true" id="u-rating-movie" data-idx="1"
+                                            class="rating-custom js-complexity-assessment-engineering js-complexity-assessment-score"
+                                            name="rating" autocomplete="off">
                                         @for($i=1;$i<6;$i++)
                                             <option value></option>
                                             @if($i > 0)
@@ -123,7 +127,9 @@
                                     Owner Business Impact Characteristic
                                 </td>
                                 <td>
-                                    <select data-readonly="true" id="u-rating-movie" data-idx="2" class="rating-custom js-complexity-assessment-owner_business js-complexity-assessment-score" name="rating" autocomplete="off">
+                                    <select data-readonly="true" id="u-rating-movie" data-idx="2"
+                                            class="rating-custom js-complexity-assessment-owner_business js-complexity-assessment-score"
+                                            name="rating" autocomplete="off">
                                         @for($i=1;$i<6;$i++)
                                             <option value></option>
                                             @if($i > 0)
@@ -140,7 +146,9 @@
                                     External Approval Characteristic
                                 </td>
                                 <td>
-                                    <select data-readonly="true" id="u-rating-movie" data-idx="3" class="rating-custom js-complexity-assessment-external-approval js-complexity-assessment-score" name="rating" autocomplete="off">
+                                    <select data-readonly="true" id="u-rating-movie" data-idx="3"
+                                            class="rating-custom js-complexity-assessment-external-approval js-complexity-assessment-score"
+                                            name="rating" autocomplete="off">
                                         @for($i=1;$i<6;$i++)
                                             <option value></option>
                                             @if($i > 0)
@@ -156,7 +164,8 @@
                                 <td>Total</td>
                                 <td>
                                     <p class="f-w-700 js-label-project-complexity-score">{{$project?->assessment?->complexity_score_assessment ?: 0}}</p>
-                                    <input type="hidden" class="js-hidden-project-level-assessment-score" value="{{$project?->assessment?->complexity_score_assessment ?: 0}}">
+                                    <input type="hidden" class="js-hidden-project-level-assessment-score"
+                                           value="{{$project?->assessment?->complexity_score_assessment ?: 0}}">
                                 </td>
                             </tr>
                         </table>
@@ -166,13 +175,17 @@
                     <td>Assessment of Level Project :</td>
                     <td>{!! $project?->getCheckTemplate($project?->assessment->level_project_text ? 1 : 0) !!}</td>
                     <td>
-                        <small>(According to cost estimate $ <span class="text-danger js-cost-estimate-label-assessment">
-                                <span class="js-currency-format-text"> {{$project?->assessment?->cost_estimate_text}} </span>
+                        <small>(According to cost estimate $ <span
+                                class="text-danger js-cost-estimate-label-assessment">
+                                <span
+                                    class="js-currency-format-text"> {{$project?->assessment?->cost_estimate_text}} </span>
                             </span> and complexity score
                             <span class="text-danger js-complexity-score-label-assessment">
                                 {{$project?->assessment?->complexity_score_assessment}}
                             </span> , that this categorize as
-                            <span class="text-danger text-large-custom js-assessment-level-status-auto">{{$project?->assessment?->level_project_text}}</span> project). </small>
+                            <span
+                                class="text-danger text-large-custom js-assessment-level-status-auto">{{$project?->assessment?->level_project_text}}</span>
+                            project). </small>
                     </td>
                 </tr>
                 <tr>
@@ -186,7 +199,8 @@
                                 </td>
                                 <td>
                                     @if($project?->getAllAttachment($project?->assessment?->attachment, $setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
-                                        <a target="_blank" href="/preview?id={{$project?->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))}}&dir={{urlencode($project?->project_name)}}">
+                                        <a target="_blank"
+                                           href="/preview?id={{$project?->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))}}&dir={{urlencode($project?->project_name)}}">
                                             <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                             {{$project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'])}}
                                         </a>
@@ -199,7 +213,8 @@
                                 </td>
                                 <td>
                                     @if($project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
-                                        <a target="_blank" href="/preview?id={{$project?->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))}}&dir={{urlencode($project?->project_name)}}">
+                                        <a target="_blank"
+                                           href="/preview?id={{$project?->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))}}&dir={{urlencode($project?->project_name)}}">
                                             <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                             {{$project?->getAllAttachment($project?->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix'])}}
                                         </a>
@@ -208,6 +223,42 @@
                             </tr>
                         </table>
                         <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        Location of Asset Capitalization
+                    </td>
+                    <td>
+                        @if($project->assessment->getAllAreaAssetCapitalization() !== null)
+                            <div class="table table-hover">
+                                <table>
+                                    <thead>
+                                    <th>
+                                        Area
+                                    </th>
+                                    <th>Cost Center</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($project->assessment->getAllAreaAssetCapitalization() as $area)
+                                        <tr>
+                                            <td>
+                                                {{$area->area}}
+                                            </td>
+                                            <td>
+                                                {{$area->cost_center}}
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <p> - </p>
+                        @endif
                     </td>
                 </tr>
                 </tbody>

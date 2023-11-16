@@ -8,6 +8,7 @@ use App\Service\ProjectService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Project extends Model
 {
@@ -75,6 +76,12 @@ class Project extends Model
 
     public function criterias(){
         return $this->belongsToMany(Criteria::class,'criterias_projects')->withPivot('answer');
+    }
+
+    public function isHaveCriterias(){
+        $data = DB::table('criterias_categories')->where('sub_basket_id', $this->sub_basket)->where('category_id', $this->categories?->id)->count();
+        if($data > 0) return true;
+        return false;
     }
 
     /*

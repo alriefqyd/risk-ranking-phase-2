@@ -77,6 +77,9 @@
     cursor: pointer;
 }
 
+.cursor-pointer {
+    cursor:pointer;
+}
 
 .alert-note .text-check:hover {
     color:#ab8218;

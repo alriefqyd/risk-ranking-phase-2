@@ -533,6 +533,19 @@ $(function() {
         _this.attr('disabled', 'disabled')
         _this.find('.loader-34').removeClass('d-none')
 
+        var _location_of_asset_capitalization = [];
+        $.each($('.js-row-area-capitalization').find('tr'), function(){
+            var _this = $(this);
+            var _data = {
+                'area' : _this.find('.js-form-area').val(),
+                'cost_center' : _this.find('.js-form-cost-center').val()
+            }
+
+            _location_of_asset_capitalization.push(_data);
+        })
+
+        _location_of_asset_capitalization = JSON.stringify(_location_of_asset_capitalization);
+
         var files = $('.js-assessment-attachment_initial_cost_estimate')[0].files;
         var files_complexity = $('.js-assessment-attachment_complexity_matrix')[0].files;
 
@@ -591,6 +604,7 @@ $(function() {
         formData.append('complexity_assessment_engineering',_complexity_assessment_engineering ?? '')
         formData.append('complexity_assessment_owner_business',_complexity_assessment_owner_business ?? '')
         formData.append('complexity_assessment_external_approval',_complexity_assessment_external_approval ?? '')
+        formData.append('location_of_asset_capitalization', _location_of_asset_capitalization)
 
         if(_form.valid()){
             $.ajax({
@@ -1152,6 +1166,28 @@ $(function() {
                 }
             }
         });
+    })
+
+    $(document).on('click','.js-add-location-area-capitalization', function(){
+        var _temp = ' <tr><td>\n' +
+            '              <input type="text" class="form-control js-form-area">\n' +
+            '         </td>\n' +
+            '         <td>\n' +
+            '              <input type="text" class="form-control js-form-cost-center">\n' +
+            '         </td>\n' +
+            '         <td>\n' +
+            '              <i class="fa fa-plus-circle cursor-pointer js-add-location-area-capitalization"></i>\n' +
+            '              <i class="fa fa-times-circle m-l-2 text-danger cursor-pointer js-delete-location-area-capitalization"></i>\n' +
+            '         </td></tr>'
+        $('.js-row-area-capitalization').append(_temp)
+    })
+
+    $(document).on('click','.js-delete-location-area-capitalization', function(){
+        var _area_form = $('.js-add-location-area-capitalization');
+        var _this = $(this);
+        if(_area_form.length > 1){
+            _this.closest('tr').remove();
+        }
     })
 
     /**

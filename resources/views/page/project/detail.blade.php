@@ -23,7 +23,7 @@
                     <div class="card-body p-0 b-b-info-custom">
                         <ul class="nav nav-tabs m-20" id="myTab" role="tablist">
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{!Session::has('page-tab') ? 'active' : ''}}" id="project-tab" data-bs-toggle="tab" href="#project" role="tab" aria-controls="project" aria-selected="true">Project</a></li>
-                            @if(isset($project->categories))
+                            @if($project->isHaveCriterias())
                                 <li class="nav-item">
                                     <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'budget_tool_training' ? 'active' : ''}}" id="budget_tool_training-tabs" data-bs-toggle="tab" href="#budget_tool_training" role="tab" aria-controls="budget_tool_training" aria-selected="false">
                                         Budget Tool {!!sizeof($project?->criterias) > 0 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}

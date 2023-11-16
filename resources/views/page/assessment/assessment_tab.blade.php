@@ -1,13 +1,13 @@
 <div class="row">
     @if(!$isNotCurrentData)
         @can('update')
-            <div class="col-md-7 m-l-50 m-b-10">
-                <button class="btn btn-sm btn-success m-t-10 float-end {{!$errors->any() ? '' : 'd-none'}}
+            <div class="col-md-12 m-b-10 ">
+                    <button class="btn btn-sm btn-success m-t-10 m-r-10 float-end {{!$errors->any() ? '' : 'd-none'}}
                     js-btn-edit_project">
                     {{$project->assessment ? 'Update' : 'Create'}} <i style="width: 20px; height: 15px;" data-feather="edit"></i>
                 </button>
 
-                <button class="btn btn-sm btn-success m-t-10 float-end {{!$errors->any() ? 'd-none' : ''}}
+                <button class="btn btn-sm btn-success m-r-10 m-t-10 float-end {{!$errors->any() ? 'd-none' : ''}}
                     js-btn-view_project">
                     View <i style="width: 20px; height: 15px;" data-feather="eye"></i>
                 </button>
@@ -29,7 +29,7 @@
                 @include('page.assessment.create')
             </div>
         @endcan
-        @include('page.assessment.assessment_detail')
     @endif
+    @include('page.assessment.assessment_detail')
 @endif
 

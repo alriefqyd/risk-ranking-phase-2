@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-//use App\Exports\AssessmentExport;
 use App\Models\Assessment;
 use App\Models\MaturityAnalysis;
 use App\Models\Project;
@@ -153,6 +152,15 @@ class AssessmentController extends Controller
                 $assessment->level_project_text = NULL;
             }
 
+            $assessment->project_schedule = 1;
+            $assessment->list_equipment_specification = 1;
+            $assessment->economic_evaluation = 1;
+
+            $assessment->project_schedule_text = 'None';
+            $assessment->list_equipment_specification_text = 'None';
+            $assessment->economic_evaluation_text = 'None';
+
+            $assessment->location_of_asset_capitalization = $request->location_of_asset_capitalization;
 
             $assessment->complexity_analysis_type = $request->complexity_analysis_type;
             $assessment->complexity_analysis = $complexityAnalysis;
@@ -306,6 +314,16 @@ class AssessmentController extends Controller
                 $maturity = MaturityAnalysis::where('fels_id',$project->fel3->id)->first();
                 $maturity->delete();
             }
+
+            $assessment->project_schedule = 1;
+            $assessment->list_equipment_specification = 1;
+            $assessment->economic_evaluation = 1;
+
+            $assessment->project_schedule_text = 'None';
+            $assessment->list_equipment_specification_text = 'None';
+            $assessment->economic_evaluation_text = 'None';
+
+            $assessment->location_of_asset_capitalization = $request->location_of_asset_capitalization;
 
             $assessment->saveOrFail();
             DB::commit();
