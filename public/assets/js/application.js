@@ -428,34 +428,54 @@ $(function() {
     var DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx','xlsm'];
     var ZIP_EXTENSION = ['zip','rar'];
 
-    $(document).on('change','.js-upload-attachment',function(){
-           var _this = $(this);
-           var _extension = _this.val().substr((_this.val().lastIndexOf('.') + 1));
-           var _size = _this[0].files[0].size
-           var _listExtension = DOCUMENT_EXTENSION;
+    var _check_count = [];
+    $(document).on('change', '.js-upload-attachment', function () {
+        var _this = $(this);
+        var _extension = _this.val().substr((_this.val().lastIndexOf('.') + 1));
+        var _size = _this[0].files[0].size;
+        var _listExtension = DOCUMENT_EXTENSION;
 
-           if (_this.hasClass('js-upload-zip')) {
-               _listExtension = ZIP_EXTENSION.concat(DOCUMENT_EXTENSION);
-           }
+        var _mandatory_attachment = $('.js-attachment-mandatory').length;
+        if (_this.hasClass('js-upload-zip')) {
+            _listExtension = ZIP_EXTENSION.concat(DOCUMENT_EXTENSION);
+        }
 
-           if (_size > 40000000) {
-               _this.closest('.row').find('.js-error-file_size').text('Error : File size cannot more than 40 MB ')
-           } else {
-               _this.closest('.row').find('.js-error-file_size').text('')
-           }
+        var _validate_size = true;
+        var _validate_extension = true;
 
-           if (_listExtension.indexOf(_extension) < 0) {
-               _this.closest('.row').find('.js-error-attachment_extension').text('Error: File extension not allowed ')
-           } else {
-               _this.closest('.row').find('.js-error-attachment_extension').text('')
-           }
+        if (_this.hasClass('js-attachment-mandatory') && _this[0].files[0]) {
+            if (_size > 40000000) {
+                _this.closest('.row').find('.js-error-file_size').text('Error : File size cannot be more than 40 MB ')
+                _validate_size = false;
+            } else {
+                _this.closest('.row').find('.js-error-file_size').text('');
+            }
 
-           var _errorCount = _this.closest('form').find('.js-check-count-error:contains("Error")').length
-           if (_errorCount > 0) {
-               _this.closest('form').find('.js-save-button').attr('disabled', 'disabled')
-           } else {
-               _this.closest('form').find('.js-save-button').removeAttr('disabled', 'disabled')
-           }
+            if (_listExtension.indexOf(_extension) < 0) {
+                _this.closest('.row').find('.js-error-attachment_extension').text('Error: File extension not allowed ')
+                _validate_extension = false;
+            } else {
+                _this.closest('.row').find('.js-error-attachment_extension').text('');
+            }
+        }
+
+        // Update validation status for this attachment
+        _this.data('validated', _validate_size && _validate_extension);
+
+        // Count the validated attachments
+        var validatedCount = $('.js-upload-attachment').filter(function () {
+            return $(this).data('validated');
+        }).length;
+
+        if (validatedCount >= _mandatory_attachment) {
+            // Enable save button and hide error message if mandatory count is met
+            _this.closest('form').find('.js-save-button').removeAttr('disabled', 'disabled');
+            _this.closest('form').find('.js-error-attachment').addClass('d-none');
+        } else {
+            // Disable save button and show error message if mandatory count is not met
+            _this.closest('form').find('.js-save-button').attr('disabled', 'disabled');
+            _this.closest('form').find('.js-error-attachment').removeClass('d-none');
+        }
     });
 
 
@@ -484,14 +504,20 @@ $(function() {
         var _check_problem_statement = $('#checkbox-problem-statement')
         var _check_objective = $('#checkbox-objective')
         var _check_project_scope = $('#checkbox-project-scope')
-        var _check_key_performance = $('#checkbox-kpm')
+        var _check_key_performance = $('#checkbox-key-performance-metric')
         var _check_project_risk = $('#checkbox-prm')
-        var _check_impact_not_executed = $('#checkbox-iie')
+        var _check_impact_not_executed = $('#checkbox-impact-if-not-executed')
         var _check_alternative = $('#checkbox-alternative')
         var _check_cost_estimate = $('#checkbox-cost-estimate')
         var _check_level = $('#checkbox-level')
         var _check_detail_cost = $('#checkbox-detail-estimate')
         var _check_project_complexity_assessment = $('#checkbox-complexity-assessment')
+        var _check_executive_summary = $('.js-executive-summary');
+        var _check_project_schedule = $('.js-project-schedule');
+        var _check_economic_evaluation = $('.js-check-economic-evaluation');
+        var _check_hazop_study = $('.js-checkbox-hazop-study');
+        var _check_list_equipment_specification = $('.js-checkbox-list-equipment-specification');
+
         var _text_problem_statement = _check_problem_statement.is(':checked') ? $('.js-text-problem-statement').val() : ''
         var _text_objective = _check_objective.is(':checked') ? $('.js-text-objective').val() : ''
         var _text_project_scope = _check_project_scope.is(':checked') ? $('.js-text-project-scope').val() : ''
@@ -530,24 +556,56 @@ $(function() {
         var _complexity_assessment_owner_business = $('.js-complexity-assessment-owner_business').val()
         var _complexity_assessment_external_approval = $('.js-complexity-assessment-external-approval').val()
 
+        var _list_equipment_specification_text = $('.js-text-list-equipment-specification').val();
+        var _executive_summary_text = $('.js-text-executive-summary').val();
+        var _hazop_study_text = $('.js-text-hazop-study').val();
+        var _project_schedule_text = $('.js-text-project-schedule').val();
+        var _economic_evaluation_text = $('.js-text-economic-evaluation').val();
+
         _this.attr('disabled', 'disabled')
         _this.find('.loader-34').removeClass('d-none')
 
         var _location_of_asset_capitalization = [];
         $.each($('.js-row-area-capitalization').find('tr'), function(){
             var _this = $(this);
+            var _area = _this.find('.js-form-area').val();
+            var _cost_center = _this.find('.js-form-cost-center').val()
             var _data = {
-                'area' : _this.find('.js-form-area').val(),
-                'cost_center' : _this.find('.js-form-cost-center').val()
+                'area' : _area,
+                'cost_center' : _cost_center
             }
-
-            _location_of_asset_capitalization.push(_data);
+            if(_area != '' && _cost_center != '') _location_of_asset_capitalization.push(_data);
         })
 
-        _location_of_asset_capitalization = JSON.stringify(_location_of_asset_capitalization);
+        var _kpi_indicator_kpm_text = [];
+        if(_check_key_performance.is(':checked')){
+            $.each($('.js-table-body-kpm-kpi').find('.js-row-kpi'), function (){
+                var _this = $(this);
+                var _data = {
+                    'description' : _this.find('.js-kpi-description').val(),
+                    'uom' : _this.find('.js-kpi-uom').val(),
+                    'time_benefit' : _this.find('.js-kpi-time-benefit').val(),
+                    'remarks': _this.find('.js-kpi-remarks').val()
+                }
+
+                _kpi_indicator_kpm_text.push(_data);
+            })
+        }
+
+        if(_location_of_asset_capitalization != '') _location_of_asset_capitalization = JSON.stringify(_location_of_asset_capitalization);
+        _kpi_indicator_kpm_text = JSON.stringify(_kpi_indicator_kpm_text);
 
         var files = $('.js-assessment-attachment_initial_cost_estimate')[0].files;
         var files_complexity = $('.js-assessment-attachment_complexity_matrix')[0].files;
+        var files_preliminary_design = $('.js-assessment-attachment_preliminary_design')[0].files;
+        var files_utility_infrastructure_facilities = $('.js-assessment-attachment_utility_infrastructure_facilities_diagram')[0].files;
+        var files_hazop_study = $('.js-assessment-attachment_hazop_study')[0].files;
+        var files_moc_document = $('.js-assessment-attachment_moc_document')[0].files;
+        var files_cost_estimate_with_rough = $('.js-assessment-attachment_cost_estimate_with_rough_of_magnitude')[0].files;
+        var files_quotation_of_equipment = $('.js-assessment-attachment_quotation_of_equipment')[0].files;
+        var files_project_assessment_level = $('.js-assessment-attachment_project_assessment_level')[0].files;
+        var files_fel1 = $('.js-assessment-attachment_fel1')[0].files;
+        var files_fel2 = $('.js-assessment-attachment_fel2')[0].files;
 
         var sub_basket = null;
         $('.js-checkbox-sub-basket').each(function(){
@@ -559,10 +617,26 @@ $(function() {
         var formData = new FormData();
         if(files.length > 0) formData.append('document_initial_cost_estimate', files[0])
         if(files_complexity.length > 0) formData.append('document_complexity_matrix', files_complexity[0])
+        if(files_preliminary_design.length > 0) formData.append('preliminary_design', files_preliminary_design[0])
+        if(files_utility_infrastructure_facilities.length > 0) formData.append('utility_infrastructure_facilities_diagram', files_utility_infrastructure_facilities[0])
+        if(files_hazop_study.length > 0) formData.append('document_hazop_study', files_hazop_study[0])
+        if(files_moc_document.length > 0) formData.append('moc_document', files_moc_document[0])
+        if(files_cost_estimate_with_rough.length > 0) formData.append('cost_estimate_with_rough_of_magnitude', files_cost_estimate_with_rough[0])
+        if(files_quotation_of_equipment.length > 0) formData.append('quotation_of_equipment', files_quotation_of_equipment[0])
+        if(files_project_assessment_level.length > 0) formData.append('project_assessment_level', files_project_assessment_level[0])
+        if(files_fel1.length > 0) formData.append('fel1', files_fel1[0])
+        if(files_fel2.length > 0) formData.append('fel2', files_fel2[0])
+
+
         formData.append('project_name', _form.data('name'))
         if (_form.data('method') === 'put') formData.append('_method', 'put')
         formData.append('file_category', 'Project Level Assessment')
         formData.append('project_id', _project_id)
+        formData.append('executive_summary', setBooleanNumber(_check_executive_summary.is(':checked')))
+        formData.append('project_schedule', setBooleanNumber(_check_project_schedule.is(':checked')))
+        formData.append('hazop_study', setBooleanNumber(_check_hazop_study.is(':checked')))
+        formData.append('economic_evaluation', setBooleanNumber(_check_economic_evaluation.is(':checked')))
+        formData.append('list_equipment_specification', setBooleanNumber(_check_list_equipment_specification.is(':checked')))
         formData.append('problems_statement', setBooleanNumber(_check_problem_statement.is(':checked')))
         formData.append('objective', setBooleanNumber(_check_objective.is(':checked')))
         formData.append('project_scope', setBooleanNumber(_check_project_scope.is(':checked')))
@@ -577,7 +651,7 @@ $(function() {
         formData.append('problem_statement_text', _text_problem_statement)
         formData.append('objective_text', _text_objective)
         formData.append('project_scope_text', _text_project_scope)
-        formData.append('key_performance_metric_text', _text_key_performance)
+        formData.append('key_performance_metric_text', _kpi_indicator_kpm_text)
         formData.append('key_project_risk_mitigants_text', _text_project_risk)
         formData.append('impact_if_not_executed_text', _text_impact)
         formData.append('alternatives_to_proposal_text', _text_alternative)
@@ -605,6 +679,11 @@ $(function() {
         formData.append('complexity_assessment_owner_business',_complexity_assessment_owner_business ?? '')
         formData.append('complexity_assessment_external_approval',_complexity_assessment_external_approval ?? '')
         formData.append('location_of_asset_capitalization', _location_of_asset_capitalization)
+        formData.append('list_equipment_specification_text', _list_equipment_specification_text)
+        formData.append('executive_summary_text', _executive_summary_text)
+        formData.append('hazop_study_text', _hazop_study_text)
+        formData.append('project_schedule_text', _project_schedule_text)
+        formData.append('economic_evaluation_text', _economic_evaluation_text)
 
         if(_form.valid()){
             $.ajax({
@@ -1189,6 +1268,45 @@ $(function() {
             _this.closest('tr').remove();
         }
     })
+
+    $(document).on('click','.js-checkbox-key-performance-metric', function (){
+        var _this = $(this);
+        if(_this.is(':checked')){
+            $('.js-table-kpm-kpi').removeClass('d-none')
+            if($('.js-table-kpm-kpi').find('.js-table-body-kpm-kpi tr').length < 1){
+                renderRowKpi(1);
+            }
+        } else {
+            $('.js-table-kpm-kpi').addClass('d-none');
+            $('.js-table-kpm-kpi').find('tbody tr').remove();
+        }
+    })
+
+    $(document).on('click','.js-add-kpm-kpi', function(){
+        var _num = $('.js-table-body-kpm-kpi').find('tr').length + 1;
+       renderRowKpi(_num);
+    });
+
+    $(document).on('click','.js-delete-kpm-kpi', function(){
+        if($('.js-table-body-kpm-kpi').find('tr').length > 1){
+            $(this).closest('tr').remove();
+        }
+    });
+
+    function renderRowKpi(_num){
+        var _temp = '<tr class="js-row-kpi">\n' +
+            '            <td>' + _num + '</td>\n' +
+            '            <td><input type="text" class="form-control js-kpi-description"></td>\n' +
+            '            <td><input type="text" class="form-control js-kpi-uom"></td>\n' +
+            '            <td><input type="text" class="form-control js-kpi-time-benefit"></td>\n' +
+            '            <td><input type="text" class="form-control js-kpi-remarks"></td>\n' +
+            '            <td>\n' +
+            '               <i class="fa fa-plus-circle cursor-pointer js-add-kpm-kpi"></i>\n' +
+            '               <i class="fa fa-times-circle m-l-2 text-danger cursor-pointer js-delete-kpm-kpi"></i>\n' +
+            '            </td>\n' +
+            '         </tr>'
+        $('.js-table-body-kpm-kpi').append(_temp)
+    }
 
     /**
      * Fel 1 Section

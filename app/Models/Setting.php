@@ -59,7 +59,16 @@ class Setting extends Model
 
     public const ASSESSMENT_ATTACHMENT = [
         'initial_cost_estimate' => 'initial_cost_estimate',
-        'complexity_matrix' => 'complexity_matrix'
+        'complexity_matrix' => 'complexity_matrix',
+        'preliminary_design' => 'preliminary_design',
+        'utility_infrastructure_facilities_diagram' => 'utility_infrastructure_facilities_diagram',
+        'hazop_study' => 'hazop_study',
+        'moc_document' => 'moc_document',
+        'cost_estimate_with_rough_of_magnitude' => 'cost_estimate_with_rough_of_magnitude',
+        'quotation_of_equipment' => 'quotation_of_equipment',
+        'project_assessment_level' => 'project_assessment_level',
+        'fel1' => 'fel1',
+        'fel2' => 'fel2'
     ];
 
     public const ASSESSMENT_LEVEL = [

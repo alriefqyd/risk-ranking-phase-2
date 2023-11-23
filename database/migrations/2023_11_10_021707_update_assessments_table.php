@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('assessments', function (Blueprint $table) {
-            $table->tinyInteger('project_schedule');
-            $table->tinyInteger('list_equipment_specification');
-            $table->tinyInteger('economic_evaluation');
-            $table->longText('project_schedule_text');
-            $table->longText('list_equipment_specification_text');
-            $table->longText('economic_evaluation_text');
+            $table->tinyInteger('project_schedule')->nullable();
+            $table->tinyInteger('list_equipment_specification')->nullable();
+            $table->tinyInteger('economic_evaluation')->nullable();
+            $table->longText('project_schedule_text')->nullable();
+            $table->longText('list_equipment_specification_text')->nullable();
+            $table->longText('economic_evaluation_text')->nullable();
         });
     }
 

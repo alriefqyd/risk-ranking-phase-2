@@ -50,4 +50,27 @@ class Assessment extends Model
         if(!$json) return null;
         return $json;
     }
+
+    public function getKpiList(){
+        $data = $this->key_performance_metric_text;
+        if(!$data) return '';
+        $json = json_decode($data);
+        if($this->isKpiJson()){
+            return $json;
+        }
+
+        return $data;
+
+    }
+
+    public function isKpiJson(){
+        $data = $this->key_performance_metric_text;
+        if(!$data) return false;
+        json_decode($data);
+        if(json_last_error() == JSON_ERROR_NONE){
+            return true;
+        }
+
+        return false;
+    }
 }

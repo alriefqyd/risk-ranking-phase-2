@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('assessments', function (Blueprint $table) {
-            $table->text('location_of_asset_capitalization')->nullable();
+            $table->longText('attachment')->change();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('assessments', function (Blueprint $table) {
-            $table->dropColumn('location_of_asset_capitalization');
+            $table->string('attachment')->change();
         });
     }
 };

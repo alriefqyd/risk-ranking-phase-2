@@ -30,8 +30,9 @@
                                     </a>
                                 </li>
                             @endif
+
                             <li class="nav-item">
-                                <a class="nav-link js-reset-check-count {!! isset($project->categories) && sizeof($project->criterias) < 1? 'disabled' : '' !!} {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">
+                                <a class="nav-link js-reset-check-count {!! $project->isHaveCriterias() && $project->criterias < 1 ? 'disabled' : '' !!} {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">
                                     Assessment {!!$project?->assessment ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
                                 </a>
                             </li>
@@ -70,7 +71,7 @@
                                 @include('page.project.budget_tool')
                             </div>
 
-                            @if(!isset($project->categories) || isset($project->categories) && sizeof($project->criterias) > 0)
+                            @if(!$project->isHaveCriterias() || $project->isHaveCriterias() && sizeof($project->criterias) > 0)
                                 <div class="tab-pane fade js-tab-parent show  {{Session::get('page-tab') == 'assessment' ? 'active show' : ''}}" id="assessment" role="tabpanel" aria-labelledby="assessment-tab">
                                     @include('page.assessment.assessment_tab')
                                 </div>
