@@ -426,7 +426,7 @@ $(function() {
      * Upload Attachment Validation
      */
     var DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx','xlsm'];
-    var ZIP_EXTENSION = ['zip','rar'];
+    v-ar ZIP_EXTENSION = ['zip','rar'];
 
     var _check_count = 0;
     $(document).on('change', '.js-upload-attachment', function () {
@@ -468,8 +468,6 @@ $(function() {
             return $(this).attr('data-validated') == 'true';
         }).length;
 
-        console.log(validatedCount);
-
         if (validatedCount >= _mandatory_attachment) {
             // Enable save button and hide error message if mandatory count is met
             _this.closest('form').find('.js-save-button').removeAttr('disabled', 'disabled');
@@ -480,7 +478,6 @@ $(function() {
             _this.closest('form').find('.js-error-attachment').removeClass('d-none');
         }
 
-        console.log(_check_count)
     });
 
     function validatedCount(){
@@ -2745,8 +2742,7 @@ $(function() {
         if(_subBasket === null){
             _subBasket = $('.js-checkbox-open-sub-basket:checked').val();
         }
-
-        console.log(_subBasket)
+        
         $.ajax({
             url : '/getCategoriesBySubBasket',
             data : {sub_basket:_subBasket},
