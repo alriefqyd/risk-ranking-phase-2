@@ -428,7 +428,7 @@ $(function() {
     var DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx','xlsm'];
     var ZIP_EXTENSION = ['zip','rar'];
 
-    var _check_count = [];
+    var _check_count = 0;
     $(document).on('change', '.js-upload-attachment', function () {
         var _this = $(this);
         var _extension = _this.val().substr((_this.val().lastIndexOf('.') + 1));
@@ -460,12 +460,15 @@ $(function() {
         }
 
         // Update validation status for this attachment
-        _this.data('validated', _validate_size && _validate_extension);
+        _this.attr('data-validated', _validate_size && _validate_extension);
+
 
         // Count the validated attachments
         var validatedCount = $('.js-upload-attachment').filter(function () {
-            return $(this).data('validated');
+            return $(this).attr('data-validated') == 'true';
         }).length;
+
+        console.log(validatedCount);
 
         if (validatedCount >= _mandatory_attachment) {
             // Enable save button and hide error message if mandatory count is met
@@ -476,7 +479,27 @@ $(function() {
             _this.closest('form').find('.js-save-button').attr('disabled', 'disabled');
             _this.closest('form').find('.js-error-attachment').removeClass('d-none');
         }
+
+        console.log(_check_count)
     });
+
+    function validatedCount(){
+        var validatedCount = $('.js-upload-attachment').filter(function () {
+            return $(this).attr('data-validated') == 'true';
+        }).length;
+        var _mandatory_attachment = $('.js-attachment-mandatory').length;
+
+        if(validatedCount >= _mandatory_attachment){
+            $('.js-save-button').removeAttr('disabled', 'disabled');
+            $('.js-error-attachment').addClass('d-none');
+        } else {
+            // Disable save button and show error message if mandatory count is not met
+            $('.js-save-button').attr('disabled', 'disabled');
+            $('.js-error-attachment').removeClass('d-none');
+        }
+    }
+    validatedCount();
+
 
 
     /**
@@ -1122,6 +1145,22 @@ $(function() {
         var _default_budget = _budget_value
         if(_budget_value) _default_budget = removeFormatCurrency(_budget_value)
         if(_setAssessment) setAssessmentLevelProject(_default_budget,_score)
+        setMessageMandatoryAssessment(_score)
+    }
+
+    function setMessageMandatoryAssessment(_score){
+        var _mandatory_message = "<span class='text-warning'> Complexity Score : " + _score + " . Mandatory Action Required: Submit Form "
+        if(_score >= 4 && _score <= 10){
+            _mandatory_message = _mandatory_message + "FEL 3</span>";
+        } else if (_score >= 11 && _score <= 16){
+            _mandatory_message = _mandatory_message + "FEL 2</span>";
+        } else if (_score >= 17 ) {
+            _mandatory_message = _mandatory_message + "FEL 1 & FEL 2</span>";
+        } else {
+            _mandatory_message = "";
+        }
+
+        $('.js-assessment-message-mandatory-form-fels').html(_mandatory_message)
     }
 
     /**

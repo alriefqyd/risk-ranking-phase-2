@@ -324,6 +324,7 @@
                                         </td>
                                     </tr>
                                 </table>
+                                <label class="m-t-3 js-assessment-message-mandatory-form-fels"></label>
                             </div>
                         </div>
                     </td>

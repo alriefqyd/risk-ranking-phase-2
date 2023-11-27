@@ -806,3 +806,7 @@
 .w-15{
     width: 15% !important;
 }
+
+.modal-dialog-large-custom {
+    max-width: 610px !important;
+}

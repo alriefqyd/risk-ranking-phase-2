@@ -30,9 +30,8 @@
                                     </a>
                                 </li>
                             @endif
-
                             <li class="nav-item">
-                                <a class="nav-link js-reset-check-count {!! $project->isHaveCriterias() && $project->criterias < 1 ? 'disabled' : '' !!} {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">
+                                <a class="nav-link js-reset-check-count {!! $project->isHaveCriterias() && sizeof($project->criterias) < 1 ? 'disabled' : '' !!} {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">
                                     Assessment {!!$project?->assessment ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
                                 </a>
                             </li>
@@ -53,12 +52,17 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link js-reset-check-count {!! !isset($project->fel3) && !isset($project->fel2) && !isset($project->fel1) ? 'disabled' : '' !!} {{Session::get('page-tab') == 'business-case' ? 'active' : ''}}" id="business-case-tabs" data-bs-toggle="tab" href="#business-case" role="tab" aria-controls="business-case" aria-selected="false">
+                                <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'business-case' ? 'active' : ''}}" id="business-case-tabs"
+                                   data-bs-toggle="tab"
+                                   href="#business-case"
+                                    >
                                     Business Case {!!$project?->business_case ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link js-reset-check-count {!! !isset($project->business_case) ? 'disabled' : '' !!} {{Session::get('page-tab') == 'cost-benefit' ? 'active' : ''}}" id="cost-benefit-tabs" data-bs-toggle="tab" href="#cost-benefit" role="tab" aria-controls="cost-benefit" aria-selected="false">
+                                <a class="nav-link js-reset-check-count {!! !isset($project->business_case) ? 'disabled' : '' !!}
+                                {{Session::get('page-tab') == 'cost-benefit' ? 'active' : ''}}" id="cost-benefit-tabs"
+                                   data-bs-toggle="tab" href="#cost-benefit" role="tab" aria-controls="cost-benefit" aria-selected="false">
                                     Cost Benefit {!!$project?->cost_benefits ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
                                 </a>
                             </li>
@@ -91,13 +95,13 @@
                                     @include('page.fel3.fel3_tab')
                                 </div>
                             @endif
-                            @if(isset($project->fel3) || isset($project->fel2) || isset($project->fel1))
+                            @if(isset($project->assessment))
                                 <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'business-case' ? 'active show' : ''}}" id="business-case" role="tabpanel" aria-labelledby="business-case-tab">
                                     @include('page.business_case.bc_tab')
                                 </div>
                             @endif
                             @if(isset($project->business_case))
-                                <div class="tab-pane fade js-tab-parent sho {{Session::get('page-tab') == 'cost-benefit' ? 'active show' : ''}}w" id="cost-benefit" role="tabpanel" aria-labelledby="cost-benefit-tab">
+                                <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'cost-benefit' ? 'active show' : ''}}w" id="cost-benefit" role="tabpanel" aria-labelledby="cost-benefit-tab">
                                     @include('page.cost_benefit.cost_benefit_tab')
                                 </div>
                             @endif
@@ -126,3 +130,4 @@
     @endif
     @include('page.project.notification')
 @endsection
+

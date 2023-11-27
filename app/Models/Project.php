@@ -302,4 +302,19 @@ class Project extends Model
         $json = json_decode($data);
         return $json;
     }
+
+    public function validateAssessmentBasedOnComplexityScore($isMessage){
+        $complexityScore = $this->assessment?->complexity_score_assessment;
+        if(!$complexityScore) return null;
+
+        if($complexityScore >=4 && $complexityScore <=10){
+            return $isMessage ? 'FEL 3' : isset($this->fel3);
+        } else if ($complexityScore >= 11 && $complexityScore <= 16){
+            return $isMessage ? 'FEL 2' : isset($this->fel2);
+        } else if ($complexityScore >= 17){
+            return $isMessage ? 'FEL 1 & 2' : isset($this->fel1) && isset($this->fel2);
+        } else {
+            return $isMessage ? 'Your complexity score doesnt match any condition of business case' : false;
+        }
+    }
 }
