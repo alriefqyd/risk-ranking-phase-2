@@ -426,7 +426,7 @@ $(function() {
      * Upload Attachment Validation
      */
     var DOCUMENT_EXTENSION = ['docx','doc','pdf','xlsx','xls','csv','xlx','ppt','pptx','xlsm'];
-    v-ar ZIP_EXTENSION = ['zip','rar'];
+    var ZIP_EXTENSION = ['zip','rar'];
 
     var _check_count = 0;
     $(document).on('change', '.js-upload-attachment', function () {
@@ -2742,7 +2742,7 @@ $(function() {
         if(_subBasket === null){
             _subBasket = $('.js-checkbox-open-sub-basket:checked').val();
         }
-        
+
         $.ajax({
             url : '/getCategoriesBySubBasket',
             data : {sub_basket:_subBasket},
