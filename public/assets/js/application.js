@@ -338,6 +338,9 @@ $(function() {
         _parent.find('.js-title-form').addClass('d-none')
         _parent.find('.js-title-detail').removeClass('d-none')
         _parent.find('.js-btn-edit_project').removeClass('d-none')
+        $('.js-upload-attachment').val('')
+        $('.js-error-attachment_extension').text('')
+        $('.js-error-file_size').text('')
     })
 
     /**
@@ -435,15 +438,19 @@ $(function() {
         var _size = _this[0].files[0].size;
         var _listExtension = DOCUMENT_EXTENSION;
 
-        var _mandatory_attachment = $('.js-attachment-mandatory').length;
+        var _mandatory_attachment = $(this).closest('table').find('.js-attachment-mandatory').length;
         if (_this.hasClass('js-upload-zip')) {
             _listExtension = ZIP_EXTENSION.concat(DOCUMENT_EXTENSION);
         }
 
-        var _validate_size = true;
-        var _validate_extension = true;
+        var _mandatory_attachment_valid = $(this).closest('table').find('.js-attachment-mandatory').filter(function (){
+            return $(this).val() != ''
+        }).length
 
-        if (_this.hasClass('js-attachment-mandatory') && _this[0].files[0]) {
+        var _validate_size = true
+        var _validate_extension = true
+
+        if (_this[0].files[0]) {
             if (_size > 40000000) {
                 _this.closest('.row').find('.js-error-file_size').text('Error : File size cannot be more than 40 MB ')
                 _validate_size = false;
@@ -459,16 +466,13 @@ $(function() {
             }
         }
 
-        // Update validation status for this attachment
-        _this.attr('data-validated', _validate_size && _validate_extension);
+        _this.attr('data-validate', _validate_extension && _validate_size)
 
+        var _error_validate = _this.closest('table').find('.js-upload-attachment').filter(function(){
+            return $(this).attr('data-validate') == 'false'
+        }).length
 
-        // Count the validated attachments
-        var validatedCount = $('.js-upload-attachment').filter(function () {
-            return $(this).attr('data-validated') == 'true';
-        }).length;
-
-        if (validatedCount >= _mandatory_attachment) {
+        if (_mandatory_attachment_valid >= _mandatory_attachment && (_error_validate < 1)) {
             // Enable save button and hide error message if mandatory count is met
             _this.closest('form').find('.js-save-button').removeAttr('disabled', 'disabled');
             _this.closest('form').find('.js-error-attachment').addClass('d-none');
@@ -480,13 +484,15 @@ $(function() {
 
     });
 
-    function validatedCount(){
-        var validatedCount = $('.js-upload-attachment').filter(function () {
-            return $(this).attr('data-validated') == 'true';
-        }).length;
-        var _mandatory_attachment = $('.js-attachment-mandatory').length;
+    function validatedCount(_this){
+        var _mandatory_attachment = _this.closest('.js-row-header-tab').siblings('.js-form-project-edit').find('.js-attachment-mandatory').length;
 
-        if(validatedCount >= _mandatory_attachment){
+        var _mandatory_attachment_valid = _this.closest('.js-row-header-tab').siblings('.js-form-project-edit').find('.js-attachment-existing-assessment').filter(function (){
+            return $(this).text() != ''
+        }).length
+
+        console.log(_mandatory_attachment_valid, _mandatory_attachment)
+        if(_mandatory_attachment_valid >= _mandatory_attachment){
             $('.js-save-button').removeAttr('disabled', 'disabled');
             $('.js-error-attachment').addClass('d-none');
         } else {
@@ -495,7 +501,8 @@ $(function() {
             $('.js-error-attachment').removeClass('d-none');
         }
     }
-    validatedCount();
+
+
 
 
 
@@ -1357,12 +1364,12 @@ $(function() {
         tinyMCE.triggerSave();
 
         var _form = _this.closest('.js-fel1-form');
-        var _project_scope = $('#checkbox-project_scope');
+        var _project_scope = $('#checkbox-project_scope-fel1');
         var _identified_parameter = $('#checkbox-identified_parameter');
         var _alternative = $('#checkbox-alternatives');
         var _list_of_stakeholder = $('#checkbox-list_of_stakeholder')
         var _schedule_project = $('#checkbox-schedule');
-        var _project_scope_text = $('#checkbox-project_scope').is(':checked') ? $('.js-fel1-text-project-scope').val() : '';
+        var _project_scope_text = $('#checkbox-project-scope-fel1').is(':checked') ? $('.js-fel1-text-project-scope').val() : '';
         var _identified_parameter_text = $('#checkbox-identified_parameter').is(':checked') ? $('.js-text-identified_parameter_text').val() : '';
         var _alternative_text = $('#checkbox-alternatives').is(':checked') ? $('.js-text-alternatives_text').val() : '';
         var _list_of_stakeholder_text = $('#checkbox-list_of_stakeholder').is(':checked') ? $('.js-text-list_of_stakeholder_text').val() : '';
@@ -1378,6 +1385,7 @@ $(function() {
         var _initial_schedule = $('.js-fel1-attachment_initial_schedule')[0].files;
         var _project_level_assessment = $('.js-fel1-attachment_project_level_assessment')[0].files;
         var _stakeholder_list = $('.js-fel1-attachment_stakeholder_list')[0].files;
+        var _fel1_approve = $('.js-fel1-attachment_fel1_approve')[0].files;
 
         var formData = new FormData();
         if (_form.data('method') === 'put') formData.append('_method', 'put')
@@ -1401,6 +1409,7 @@ $(function() {
         if(_initial_schedule.length > 0) formData.append('initial_schedule',_initial_schedule[0])
         if(_project_level_assessment.length > 0) formData.append('project_level_assessment',_project_level_assessment[0])
         if(_stakeholder_list.length > 0) formData.append('stakeholder_list',_stakeholder_list[0])
+        if(_fel1_approve.length > 0) formData.append('fel1_approve',_fel1_approve[0])
         formData.append('project_name',_form.data('name'))
 
         if($('.js-fel1-form').valid()){
@@ -1460,50 +1469,6 @@ $(function() {
                     }
                 }
             },
-            validate_fel1_identified: {
-                required: {
-                    depends: function () {
-                        if ($('#checkbox-identified_parameter').is(':checked') &&
-                            removeHtmlTag($('.js-text-identified_parameter_text').val()) === '') {
-                            return true
-                        }
-                        return false;
-                    }
-                }
-            },
-            validate_fel1_alternatives: {
-                required: {
-                    depends: function () {
-                        if ($('#checkbox-alternatives').is(':checked') &&
-                            removeHtmlTag($('.js-text-alternatives_text').val()) === '') {
-                            return true
-                        }
-                        return false;
-                    }
-                }
-            },
-            validate_fel1_list_stakeholder: {
-                required: {
-                    depends: function () {
-                        if ($('#checkbox-list_of_stakeholder').is(':checked') &&
-                            removeHtmlTag($('.js-text-list_of_stakeholder_text').val()) === '') {
-                            return true
-                        }
-                        return false;
-                    }
-                }
-            },
-            validate_fel1_schedule: {
-                required: {
-                    depends: function () {
-                        if ($('#checkbox-schedule').is(':checked') &&
-                            removeHtmlTag($('.js-text-schedule_project_text').val()) === '') {
-                            return true
-                        }
-                        return false;
-                    }
-                }
-            },
             validate_check_empty_count:{
                 required: {
                     depends:function(){
@@ -1522,21 +1487,6 @@ $(function() {
             validate_fel1_project_scope: {
                 required: "Since you check Project Scope Statement this field is required"
             },
-            validate_fel1_identified: {
-                required: "Since you check Identified Parameter, Requirement & Regulation this field is required"
-            },
-            validate_fel1_alternatives: {
-                required: "Since you check Alternatives this field is required"
-            },
-            validate_fel1_list_stakeholder: {
-                required: "Since you check List of Stakeholder this field is required"
-            },
-            validate_fel1_schedule: {
-                required: "Since you check Schedule Project this field is required"
-            },
-            validate_check_empty_count: {
-                required: "Please fill the checkbox form"
-            }
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {
@@ -2788,6 +2738,7 @@ $(function() {
         renderSubBasket(null,function(){
             renderCategories(null, true)
         })
+        validatedCount($(this))
     })
 
     $(document).on('click','.js-checkbox-open-categories', function(){

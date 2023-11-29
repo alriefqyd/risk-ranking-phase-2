@@ -25,7 +25,7 @@
                 </button>
             </div>
         @endcan
-        @endif
+    @endif
 </div>
 
 @if(isset($project->assessment) && !$project->validateAssessmentBasedOnComplexityScore(false))

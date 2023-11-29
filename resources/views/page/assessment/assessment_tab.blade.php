@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row js-row-header-tab">
     @if(!$isNotCurrentData)
         @can('update')
             <div class="col-md-12 m-b-10 ">

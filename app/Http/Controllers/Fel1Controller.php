@@ -126,15 +126,7 @@ class Fel1Controller extends Controller
                 $fel1->status = 'DRAFT';
             }
 
-
-            $documentRequest = collect([]);
-
-            if(isset($request->parameter_regulation)) $documentRequest->put(Setting::FEL1_ATTACHMENT['parameter_regulation_requirement'],$request->parameter_regulation);
-            if(isset($request->initial_process_diagram)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_process_diagram'],$request->initial_process_diagram);
-            if(isset($request->data_of_alternatives)) $documentRequest->put(Setting::FEL1_ATTACHMENT['data_of_alternatives'],$request->data_of_alternatives);
-            if(isset($request->initial_schedule)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_schedule'],$request->initial_schedule);
-            if(isset($request->project_level_assessment)) $documentRequest->put(Setting::FEL1_ATTACHMENT['project_level_assessment'],$request->project_level_assessment);
-            if(isset($request->stakeholder_list)) $documentRequest->put(Setting::FEL1_ATTACHMENT['stakeholder_list'],$request->stakeholder_list);
+            $documentRequest = $this->setDocumentRequest($request);
 
             if(sizeof($documentRequest) > 0){
                 $documents = $documentController->multipleUploadDocument($request, $documentRequest,null,$request->project_name,Setting::DOCUMENT_EXTENSION);
@@ -235,15 +227,8 @@ class Fel1Controller extends Controller
                 $fel1->status = 'DRAFT';
             }
 
-            $documentRequest = collect([]);
+            $documentRequest = $this->setDocumentRequest($request);;
             $existingDocument = collect([]);
-
-            if(isset($request->parameter_regulation)) $documentRequest->put(Setting::FEL1_ATTACHMENT['parameter_regulation_requirement'],$request->parameter_regulation);
-            if(isset($request->initial_process_diagram)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_process_diagram'],$request->initial_process_diagram);
-            if(isset($request->data_of_alternatives)) $documentRequest->put(Setting::FEL1_ATTACHMENT['data_of_alternatives'],$request->data_of_alternatives);
-            if(isset($request->initial_schedule)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_schedule'],$request->initial_schedule);
-            if(isset($request->project_level_assessment)) $documentRequest->put(Setting::FEL1_ATTACHMENT['project_level_assessment'],$request->project_level_assessment);
-            if(isset($request->stakeholder_list)) $documentRequest->put(Setting::FEL1_ATTACHMENT['stakeholder_list'],$request->stakeholder_list);
 
             if($fel1?->attachment){
                 $existingDocuments = json_decode($fel1?->attachment,true);
@@ -282,5 +267,19 @@ class Fel1Controller extends Controller
     public function destroy(Fel1 $fel1)
     {
         //
+    }
+
+    public function setDocumentRequest(Request $request){
+        $documentRequest = collect([]);
+
+        if(isset($request->parameter_regulation)) $documentRequest->put(Setting::FEL1_ATTACHMENT['parameter_regulation_requirement'],$request->parameter_regulation);
+        if(isset($request->initial_process_diagram)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_process_diagram'],$request->initial_process_diagram);
+        if(isset($request->data_of_alternatives)) $documentRequest->put(Setting::FEL1_ATTACHMENT['data_of_alternatives'],$request->data_of_alternatives);
+        if(isset($request->initial_schedule)) $documentRequest->put(Setting::FEL1_ATTACHMENT['initial_schedule'],$request->initial_schedule);
+        if(isset($request->project_level_assessment)) $documentRequest->put(Setting::FEL1_ATTACHMENT['project_level_assessment'],$request->project_level_assessment);
+        if(isset($request->stakeholder_list)) $documentRequest->put(Setting::FEL1_ATTACHMENT['stakeholder_list'],$request->stakeholder_list);
+        if(isset($request->fel1_approve)) $documentRequest->put(Setting::FEL1_ATTACHMENT['fel1_approve'],$request->fel1_approve);
+
+        return $documentRequest;
     }
 }

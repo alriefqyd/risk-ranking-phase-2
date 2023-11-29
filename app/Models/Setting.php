@@ -84,7 +84,8 @@ class Setting extends Model
         'data_of_alternatives' => 'data_of_alternatives',
         'initial_schedule' => 'initial_schedule',
         'project_level_assessment' => 'project_level_assessment',
-        'stakeholder_list' => 'stakeholder_list'
+        'stakeholder_list' => 'stakeholder_list',
+        'fel1_approve' => 'fel1_approve'
     ];
 
     public const FEL2_ATTACHMENT = [
