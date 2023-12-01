@@ -472,7 +472,14 @@ $(function() {
             return $(this).attr('data-validate') == 'false'
         }).length
 
-        if (_mandatory_attachment_valid >= _mandatory_attachment && (_error_validate < 1)) {
+        //for update
+        var _existing_attachment = _this.closest('table').find('.js-upload-attachment').filter(function(){
+            return $(this).attr('data-validated') == 'true'
+        }).length
+
+        _mandatory_attachment_valid = _mandatory_attachment_valid + _existing_attachment
+
+        if ((_mandatory_attachment_valid >= _mandatory_attachment && (_error_validate < 1))) {
             // Enable save button and hide error message if mandatory count is met
             _this.closest('form').find('.js-save-button').removeAttr('disabled', 'disabled');
             _this.closest('form').find('.js-error-attachment').addClass('d-none');
@@ -491,7 +498,6 @@ $(function() {
             return $(this).text() != ''
         }).length
 
-        console.log(_mandatory_attachment_valid, _mandatory_attachment)
         if(_mandatory_attachment_valid >= _mandatory_attachment){
             $('.js-save-button').removeAttr('disabled', 'disabled');
             $('.js-error-attachment').addClass('d-none');
@@ -501,9 +507,6 @@ $(function() {
             $('.js-error-attachment').removeClass('d-none');
         }
     }
-
-
-
 
 
     /**
@@ -1364,7 +1367,7 @@ $(function() {
         tinyMCE.triggerSave();
 
         var _form = _this.closest('.js-fel1-form');
-        var _project_scope = $('#checkbox-project_scope-fel1');
+        var _project_scope = $('#checkbox-project-scope-fel1');
         var _identified_parameter = $('#checkbox-identified_parameter');
         var _alternative = $('#checkbox-alternatives');
         var _list_of_stakeholder = $('#checkbox-list_of_stakeholder')
@@ -1521,6 +1524,7 @@ $(function() {
         var _analysis_of_option = _form.find('#checkbox-analysis_of_option')
         var _permit_list = _form.find('#checkbox-permit_list');
         var _schedule_project = _form.find('#checkbox_fel2-schedule_project');
+        var _alternative_and_analysis = _form.find('#checkbox-alternatives_and_analysis')
         var _cost_estimate = _form.find('#checkbox-cost_estimate_fel2');
         var _project_id = _form.find('.js-project-id').val();
 
@@ -1531,6 +1535,7 @@ $(function() {
         var _permit_list_text = _permit_list.is(':checked') ? _form.find('.js-text-permit_list_text').val() : '';
         var _schedule_project_text = _schedule_project.is(':checked') ? _form.find('.js-text-fel2-schedule_project_text').val() : '';
         var _cost_estimate_text = _cost_estimate.is(':checked') ? _form.find('.js-cost_estimate_assessment').val() : '';
+        var _alternative_and_analysis_text = _alternative_and_analysis.is(':checked') ? _form.find('.js-text-alternatives_and_analysis').val() : '';
         var _status = _this.data('status') ? _this.data('status') : 'draft';
 
         var _file_calculation_of_capacity = $('.js-fel2-attachment_calculation_of_capacity')[0].files;
@@ -1571,6 +1576,7 @@ $(function() {
         formData.append('permit_list',setBooleanNumber(_permit_list.is(':checked')))
         formData.append('schedule_project',setBooleanNumber(_schedule_project.is(':checked')))
         formData.append('cost_estimate',setBooleanNumber(_cost_estimate.is(':checked')))
+        formData.append('alternatives_and_analysis',setBooleanNumber(_alternative_and_analysis.is(':checked')))
         formData.append('project_scope_text',_project_scope_text)
         formData.append('identify_main_equipment_text',_identify_main_equipment_text)
         formData.append('boundary_and_assumption_text',_boundary_assumption_text)
@@ -1578,6 +1584,7 @@ $(function() {
         formData.append('permit_list_text',_permit_list_text)
         formData.append('schedule_project_text',_schedule_project_text)
         formData.append('cost_estimate_text',_cost_estimate_text)
+        formData.append('alternatives_and_analysis_text',_alternative_and_analysis_text)
         formData.append('status',_status)
 
         var _url = _form.attr('action')
@@ -1640,74 +1647,17 @@ $(function() {
                     }
                 }
             },
-            validate_fel2_boundary_and_assumption_text: {
+            validate_fel2_alternatives_and_analysis: {
                 required: {
                     depends: function () {
-                        if ($('#checkbox-boundary_assumption').is(':checked') &&
-                            removeHtmlTag($('.js-text-boundary_and_assumption_text').val()) === '') {
+                        if ($('#checkbox-alternatives_and_analysis').is(':checked') &&
+                            removeHtmlTag($('.js-text-alternatives_and_analysis').val()) === '') {
                             return true
                         }
                         return false;
                     }
                 }
             },
-            validate_fel2_analysis_of_option: {
-                required: {
-                    depends: function () {
-                        if ($('#checkbox-analysis_of_option').is(':checked') &&
-                            removeHtmlTag($('.js-text-analysis_of_option_text').val()) === '') {
-                            return true
-                        }
-                        return false;
-                    }
-                }
-            },
-            validate_fel2_permit_list: {
-                required: {
-                    depends: function () {
-                        if ($('#checkbox-schedule').is(':checked') &&
-                            removeHtmlTag($('.js-text-permit_list_text').val()) === '') {
-                            return true
-                        }
-                        return false;
-                    }
-                }
-            },
-            validate_fel2_schedule: {
-                required: {
-                    depends: function () {
-                        if ($('#checkbox-schedule').is(':checked') &&
-                            removeHtmlTag($('.js-text-permit_list_text').val()) === '') {
-                            return true
-                        }
-                        return false;
-                    }
-                }
-            },
-            fel2_cost_estimate: {
-                required: {
-                    depends: function () {
-                        if ($('#checkbox-cost_estimate_fel2').is(':checked') &&
-                            removeHtmlTag($('.js-cost_estimate_fel2').val()) === '') {
-                            return true
-                        }
-                        return false;
-                    }
-                }
-            },
-            validate_check_empty_count:{
-                required: {
-                    depends:function(){
-                        var _count = 0;
-                        $('.js-checkbox-fel2').each(function(){
-                            if($(this).is(':checked')){
-                                _count += 1;
-                            }
-                        })
-                        return _count < 1;
-                    }
-                }
-            }
         },
         messages: {
             validate_fel2_project_scope: {
@@ -1716,24 +1666,9 @@ $(function() {
             validate_fel2_identify_main_equipment: {
                 required: "Since you check Identify Main Equipment, Requirement & Regulation this field is required"
             },
-            validate_fel2_boundary_and_assumption_text: {
-                required: "Since you check Boundary and Assumption this field is required"
+            validate_fel2_alternatives_and_analysis: {
+                required: "Since you check Alternatives and Analysis of Alternatives this field is required"
             },
-            validate_fel2_analysis_of_option: {
-                required: "Since you check Analysis of Option this field is required"
-            },
-            validate_fel2_schedule: {
-                required: "Since you check Schedule this field is required"
-            },
-            validate_fel2_permit_list: {
-                required: "Since you check Permit List this field is required"
-            },
-            fel2_cost_estimate: {
-                required: "Since you check Cost Estimate this field is required"
-            },
-            validate_check_empty_count: {
-                required: "Please fill the checkbox form"
-            }
         },
         errorElement: 'span',
         errorPlacement: function (error, element) {

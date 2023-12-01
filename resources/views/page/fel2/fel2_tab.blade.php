@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row js-row-header-tab">
     <div class="col-md-4 m-l-10 m-t-15 m-b-10">
         <h6 class="font-roboto js-title-detail {{!$errors->any() ? '' : 'd-none'}} title">FEL 2 Detail</h6>
         <h6 class="font-roboto js-title-form {{!$errors->any() ? 'd-none' : ''}} title">FEL 2 Form</h6>
@@ -47,7 +47,7 @@
 @if(!$isNotCurrentData)
     @if($project?->fel2)
         @can('update')
-            <div class="row js-form-project-edit {{!$errors->any() ? 'd-none' : ''}} m-t-0">
+            <div class="row js-form-project-edit is-edit {{!$errors->any() ? 'd-none' : ''}} m-t-0">
                 @include('page.fel2.edit')
             </div>
         @endcan

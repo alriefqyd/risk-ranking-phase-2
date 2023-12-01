@@ -46,7 +46,9 @@
                                         <div class="col-md-12">
                                             @php($attachmentParameterRegulation = $project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['parameter_regulation_requirement']))
                                             <label>Parameter, Regulation, Requirement <span class="text-danger f-w-550">*</span> </label>
-                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_parameter_regulation_requirement col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_parameter_regulation_requirement col-md-10"
+                                                   data-validated="{{isset($attachmentParameterRegulation) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                                             @if(isset($attachmentParameterRegulation))
                                                 <a target="_blank"
                                                    class="js-attachment-existing-assessment"
@@ -67,7 +69,9 @@
                                         <div class="col-md-12">
                                             @php($attachmentProcessDiagram = $project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_process_diagram']))
                                             <label>Initial Process Diagram (Alur)<span class="text-danger f-w-550">*</span> </label>
-                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_initial_progress_diagram col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_initial_progress_diagram col-md-10" value="{{$project?->project_name}}"
+                                                   data-validated="{{isset($attachmentProcessDiagram) ? 'true' : 'false'}}"
+                                                   name="document" id="inputFile" multiple type="file">
                                             @if(isset($attachmentProcessDiagram))
                                                 <a target="_blank"
                                                    class="js-attachment-existing-assessment"
@@ -88,7 +92,9 @@
                                         <div class="col-md-12">
                                             @php($attachmentDataOfAlternative = $project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['data_of_alternatives']))
                                             <label>Data of Alternatives (drawing/figure, cost of investment & operation, maintenance, etc.)<span class="text-danger f-w-550">*</span> </label>
-                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_data_of_alternatives col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_data_of_alternatives col-md-10"
+                                                   data-validated="{{isset($attachmentDataOfAlternative) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                                             @if(isset($attachmentDataOfAlternative))
                                                 <a target="_blank"
                                                    class="js-attachment-existing-assessment"
@@ -109,7 +115,9 @@
                                         <div class="col-md-12">
                                             @php($attachmentInitialSchedule = $project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['initial_schedule']))
                                             <label>Initial schedule until level 1 </label>
-                                            <input class="form-control js-upload-attachment js-fel1-attachment_initial_schedule col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                                            <input class="form-control js-upload-attachment js-fel1-attachment_initial_schedule col-md-10"
+                                                   data-validated="{{isset($attachmentInitialSchedule) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                                             @if(isset($attachmentInitialSchedule))
                                                 <a target="_blank"
                                                    class="js-attachment-existing-assessment"
@@ -130,7 +138,9 @@
                                         <div class="col-md-12">
                                             @php($projectLevelAssessment = $project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['project_level_assessment']))
                                             <label>Project Level Assessment<span class="text-danger f-w-550">*</span> </label>
-                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_project_level_assessment col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_project_level_assessment col-md-10"
+                                                   data-validated="{{isset($projectLevelAssessment) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                                             @if(isset($projectLevelAssessment))
                                                 <a target="_blank"
                                                    class="js-attachment-existing-assessment"
@@ -151,7 +161,9 @@
                                         <div class="col-md-12">
                                             @php($stakeholderList = $project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['stakeholder_list']))
                                             <label>Stakeholder List </label>
-                                            <input class="form-control js-upload-attachment js-fel1-attachment_stakeholder_list col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                                            <input class="form-control js-upload-attachment js-fel1-attachment_stakeholder_list col-md-10"
+                                                   data-validated="{{isset($stakeholderList) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                                             @if(isset($stakeholderList))
                                                 <a target="_blank"
                                                    class="js-attachment-existing-assessment"
@@ -172,7 +184,9 @@
                                         <div class="col-md-12">
                                             @php($attachmentFel1Approve = $project?->getAllAttachment($project->fel1?->attachment,$setting::FEL1_ATTACHMENT['fel1_approve']))
                                             <label>FEL 1 Approve<span class="text-danger f-w-550">*</span> </label>
-                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_fel1_approve col-md-10" value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
+                                            <input class="form-control js-upload-attachment js-attachment-mandatory js-fel1-attachment_fel1_approve col-md-10"
+                                                   data-validated="{{isset($attachmentFel1Approve) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" multiple type="file">
                                             @if(isset($attachmentFel1Approve))
                                                 <a target="_blank"
                                                    class="js-attachment-existing-assessment"
