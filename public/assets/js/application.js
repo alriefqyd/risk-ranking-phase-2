@@ -1708,7 +1708,7 @@ $(function() {
         _this.find('.loader-34').removeClass('d-none')
 
         var _form = _this.closest('.js-fel3-form');
-        var _executive_summary = _form.find('#checkbox-executive_summary-fel3');
+        var _executive_summary = _form.find('#checkbox-executive_summary_fel3');
         var _problem_statement = _form.find('#checkbox-problem_statement_fel3');
         var _project_scope = _form.find('#checkbox-project_scope_fel3');
         var _alternatives = _form.find('#checkbox-alternatives_best_option_fel3')
@@ -1721,7 +1721,7 @@ $(function() {
         var _problem_statement_text = _problem_statement.is(':checked') ? _form.find('.js-fel3-problem_statement_text').val() : '';
         var _project_scope_text = _project_scope.is(':checked') ? _form.find('.js-fel3-project_scope_text').val() : '';
         var _alternatives_text = _alternatives.is(':checked') ? _form.find('.js-fel3-alternatives_and_best_option_text').val() : '';
-        var _project_schedule_text = _project_schedule.is(':checked') ? _form.find('.js-fel3-project_schedule_text').val() : '';
+        var _project_schedule_text = _project_schedule.is(':checked') ? generateJsonSchedule() : "";
         var _list_of_equipment_text = _list_of_equipment.is(':checked') ? _form.find('.js-fel3-list_of_equipment_text').val() : '';
         var _hazop_text = _hazop.is(':checked') ? _form.find('.js-fel3-hazop_study_text').val() : '';
         var _cost_estimate_text = _cost_estimate.is(':checked') ? _form.find('.js-fel3-cost_estimate_text').val() : '';
@@ -1740,53 +1740,6 @@ $(function() {
         var _project_level_assessment =  $('.js-fel3-attachment_project_level_assessment')[0].files;
         var _fel1 =  $('.js-fel3-attachment_fel1')[0].files;
         var _fel2 =  $('.js-fel3-attachment_fel2 ')[0].files;
-
-        // Maturity Analysis
-        var _investment_estimate = $('.js-maturity-analysis_investment_estimate').val();
-        var _scope = $('.js-maturity-analysis_scope').val();
-        var _integrated_project_timeline = $('.js-maturity-analysis_integrated_project_timeline').val();
-        var _supply_plan = $('.js-maturity-analysis_supply_plan').val();
-        var _physical_and_financial = $('.js-maturity-analysis_physical_and_financial').val();
-        var _scope_statement = $('.js-maturity-analysis_scope_statement').val();
-        var _project_opening_term = $('.js-maturity-analysis_project_opening_term').val();
-        var _save_baseline = $('.js-maturity-analysis_save_baseline').val();
-        var _definition_of_physical = $('.js-maturity-analysis_definition_of_physical').val();
-        var _develop_basic_engineering = $('.js-maturity-analysis_develop_basic_engineering').val();
-        var _identification_all_license = $('.js-maturity-analysis_identification_all_license').val();
-        var _on_site_conditions = $('.js-maturity-analysis_on_site_conditions').val();
-        var _rental_plants = $('.js-maturity-analysis_rental_plants').val();
-        var _health_and_safety = $('.js-maturity-analysis_health_and_safety').val();
-        var _detailed_schedule_of_project = $('.js-maturity-analysis_detailed_schedule_of_project').val();
-        var _list_document_engineer = $('.js-maturity-analysis_list_document_engineer').val();
-        var _involve_environment = $('.js-maturity-analysis_involve_environment').val();
-        var _alignment_of_interface = $('.js-maturity-analysis_alignment_of_interface').val();
-        var _change_management_plan = $('.js-maturity-analysis_change_management_plan').val();
-        var _identification_all_licenses = $('.js-maturity-analysis_identification_all_licenses').val();
-        var _risk_plan = $('.js-maturity-analysis_risk_plan').val();
-        var _preliminary_risk_analysis = $('.js-maturity-analysis_preliminary_risk_analysis').val();
-        var _stakeholder_matrix = $('.js-maturity-analysis_stakeholder_matrix').val();
-        var _land_management_report = $('.js-maturity-analysis_land_management_report').val();
-        var _definition_of_interlocutor = $('.js-maturity-analysis_definition_of_interlocutor').val();
-        var _constructive_methodology = $('.js-maturity-analysis_constructive_methodology').val();
-        var _interference_and_tie_ins = $('.js-maturity-analysis_interference_and_tie_ins').val();
-        var _capex_management = $('.js-maturity-analysis_capex_management').val();
-        var _engineering_development = $('.js-maturity-analysis_engineering_development').val();
-        var _survey_local_conditions = $('.js-maturity-analysis_survey_local_conditions').val();
-        var _logistic_studies = $('.js-maturity-analysis_logistic_studies').val();
-        var _executive_report = $('.js-maturity-analysis_executive_report').val();
-        var _environmental_licensing = $('.js-maturity-analysis_environmental_licensing').val();
-        var _work_breakdown_structure = $('.js-maturity-analysis_work_breakdown_structure').val();
-        var _integrated_project_schedule = $('.js-maturity-analysis_integrated_project_schedule').val();
-        var _detailed_fte_schedule = $('.js-maturity-analysis_detailed_fte_schedule').val();
-        var _operational_readiness = $('.js-maturity-analysis_operational_readiness').val();
-        var _quality_plan = $('.js-maturity-analysis_quality_plan').val();
-        var _risk_analysis_report = $('.js-maturity-analysis_risk_analysis_report').val();
-        var _apr = $('.js-maturity-analysis_apr').val();
-        var _integrated_management_system = $('.js-maturity-analysis_integrated_management_system').val();
-        var _pae = $('.js-maturity-analysis_pae').val();
-        var _procurement_tracking_map = $('.js-maturity-analysis_procurement_tracking_map').val();
-        var _construction_sites = $('.js-maturity-analysis_construction_sites').val();
-        var _summary_status = $('.js-fel3-form').find('.js-maturity-status').text();
 
         var formData = new FormData()
         formData.append('file_category','FEL 3')
@@ -1812,54 +1765,6 @@ $(function() {
         formData.append('status',_status)
         formData.append('project_name',_form.data('name'))
 
-        // maturity analysis
-        if(_investment_estimate != null) formData.append('investment_estimate',_investment_estimate)
-        if(_scope != null) formData.append('scope',_scope)
-        if(_integrated_project_timeline != null) formData.append('integrated_project_timeline',_integrated_project_timeline)
-        if(_supply_plan != null) formData.append('supply_plan',_supply_plan)
-        if(_physical_and_financial != null) formData.append('physical_and_financial',_physical_and_financial)
-        if(_scope_statement != null) formData.append('scope_statement',_scope_statement)
-        if(_project_opening_term != null) formData.append('project_opening_term',_project_opening_term)
-        if(_integrated_project_timeline != null) formData.append('integrated_project_timeline',_integrated_project_timeline)
-        if(_save_baseline != null) formData.append('save_baseline',_save_baseline)
-        if(_definition_of_physical != null) formData.append('definition_of_physical',_definition_of_physical)
-        if(_develop_basic_engineering != null) formData.append('develop_basic_engineering',_develop_basic_engineering)
-        if(_identification_all_license != null) formData.append('identification_all_license',_identification_all_license)
-        if(_on_site_conditions != null) formData.append('on_site_conditions',_on_site_conditions)
-        if(_rental_plants != null) formData.append('rental_plants',_rental_plants)
-        if(_health_and_safety != null) formData.append('health_and_safety',_health_and_safety)
-        if(_detailed_schedule_of_project != null) formData.append('detailed_schedule_of_project',_detailed_schedule_of_project)
-        if(_list_document_engineer != null) formData.append('list_document_engineer',_list_document_engineer)
-        if(_involve_environment != null) formData.append('involve_environment',_involve_environment)
-        if(_alignment_of_interface != null) formData.append('alignment_of_interface',_alignment_of_interface)
-        if(_change_management_plan != null) formData.append('change_management_plan',_change_management_plan)
-        if(_identification_all_licenses != null) formData.append('identification_all_licenses',_identification_all_licenses)
-        if(_risk_plan != null) formData.append('risk_plan',_risk_plan)
-        if(_preliminary_risk_analysis != null) formData.append('preliminary_risk_analysis',_preliminary_risk_analysis)
-        if(_stakeholder_matrix != null) formData.append('stakeholder_matrix',_stakeholder_matrix)
-        if(_land_management_report != null) formData.append('land_management_report',_land_management_report)
-        if(_definition_of_interlocutor != null) formData.append('definition_of_interlocutor',_definition_of_interlocutor)
-        if(_constructive_methodology != null) formData.append('constructive_methodology',_constructive_methodology)
-        if(_interference_and_tie_ins != null) formData.append('interference_and_tie_ins',_interference_and_tie_ins)
-        if(_capex_management != null) formData.append('capex_management',_capex_management)
-        if(_engineering_development != null) formData.append('engineering_development',_engineering_development)
-        if(_survey_local_conditions != null) formData.append('survey_local_conditions',_survey_local_conditions)
-        if(_logistic_studies != null) formData.append('logistic_studies',_logistic_studies)
-        if(_executive_report != null) formData.append('executive_report',_executive_report)
-        if(_environmental_licensing != null) formData.append('environmental_licensing',_environmental_licensing)
-        if(_work_breakdown_structure != null) formData.append('work_breakdown_structure',_work_breakdown_structure)
-        if(_integrated_project_schedule != null) formData.append('integrated_project_schedule',_integrated_project_schedule)
-        if(_operational_readiness != null) formData.append('operational_readiness',_operational_readiness)
-        if(_quality_plan != null) formData.append('quality_plan',_quality_plan)
-        if(_risk_analysis_report != null) formData.append('risk_analysis_report',_risk_analysis_report)
-        if(_apr != null) formData.append('apr',_apr)
-        if(_integrated_management_system != null) formData.append('integrated_management_system',_integrated_management_system)
-        if(_pae != null) formData.append('pae',_pae)
-        if(_procurement_tracking_map != null) formData.append('procurement_tracking_map',_procurement_tracking_map)
-        if(_construction_sites != null) formData.append('construction_sites',_construction_sites)
-        if(_detailed_fte_schedule != null) formData.append('detailed_fte_schedule',_detailed_fte_schedule)
-
-        if(_summary_status !== null) formData.append('summary',_summary_status)
         if($('.js-maturity-analysis-type').val() !== null) formData.append('maturity_type',$('.js-maturity-analysis-type').val())
 
         // attachment
@@ -1881,6 +1786,7 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
+                    console.log(data)
                     if (data.status === 200) window.location.href = data.url;
                     else {
                         notification('danger', data, 'fa fa-time', data.message)
@@ -1895,53 +1801,76 @@ $(function() {
         }
     })
 
-    /**
-     * Maturity Analysis Summary
-     */
-    var _maturity_analysis_form = $('.js-maturity-analysis')
-    var _label_maturity_status = $('.js-maturity-status')
+    function generateJsonSchedule(){
+        var _schedule = [];
+        var _form_schedule = $('.js-table-schedule').find('.js-table-row-schedule')
 
-    //check existing maturity label
-    if(_label_maturity_status.text() != ""){
-        if(_label_maturity_status.text() == _label_maturity_status.data('ready')){
-            _label_maturity_status.removeClass('badge-danger')
-            _label_maturity_status.addClass('badge-primary')
-            _label_maturity_status.text(_label_maturity_status.data('ready'))
-        }
-        if(_label_maturity_status.text() == _label_maturity_status.data('not-ready')){
-            _label_maturity_status.removeClass('badge-primary')
-            _label_maturity_status.addClass('badge-danger')
-            _label_maturity_status.text(_label_maturity_status.data('not-ready'))
-        }
-    } else {
-        _label_maturity_status.text(_label_maturity_status.data('ready'))
+        $.each(_form_schedule, function(){
+            var _this = $(this);
+            var _desc = _this.find('.js-schedule-desc').val();
+            var _start_date = _this.find('.js-schedule-start-date').val();
+            var _end_date = _this.find('.js-schedule-end-date').val();
+            var _data = {
+                "desc": _desc,
+                "start_date": _start_date,
+                "end_date": _end_date
+            };
+
+            _schedule.push(_data);
+        })
+
+        var jsonSchedule = JSON.stringify(_schedule);
+
+        return jsonSchedule;
     }
 
-    _maturity_analysis_form.on('change',function(){
+    $(document).on('change', '.js-checkbox-schedule-fel3', function(){
         var _this = $(this);
-        var isReady = checkMaturityVal();
-        if(isReady){
-            _this.closest('.js-parent-detail').find('.js-maturity-status').removeClass('badge-danger')
-            _this.closest('.js-parent-detail').find('.js-maturity-status').addClass('badge-primary')
-            _this.closest('.js-parent-detail').find('.js-maturity-status').text(_label_maturity_status.data('ready'))
-        } else {
-            _this.closest('.js-parent-detail').find('.js-maturity-status').removeClass('badge-primary')
-            _this.closest('.js-parent-detail').find('.js-maturity-status').addClass('badge-danger')
-            _this.closest('.js-parent-detail').find('.js-maturity-status').text(_label_maturity_status.data('not-ready'))
-        }
-
-    })
-    function checkMaturityVal(){
-        var _ready = true
-        _maturity_analysis_form.each(function(){
-            var _this = $(this)
-            var _val = _this.val()
-            if(_val == '0'){
-                _ready = false
+        var _row_schedule = _this.closest('.js-row-schedule').find('tr');
+        if(_this.is(':checked')){
+            $('.js-table-schedule').removeClass('d-none');
+            if(_row_schedule.length < 1){
+                $('.js-table-schedule').find('tbody').append(rowScheduleTemp())
             }
-        });
-        return _ready
+        } else {
+            $('.js-table-schedule').addClass('d-none');
+            _row_schedule.remove();
+        }
+    })
+
+    function rowScheduleTemp(){
+        var _temp = ' <tr class="js-table-row-schedule" data-idx="0">\n' +
+            '              <td class="w-25">\n' +
+            '                    <input class="form-control js-schedule-desc" name="schedule_desc[]">\n' +
+            '              </td>\n' +
+            '              <td>\n' +
+            '                     <input class="form-control js-schedule-start-date" type="date" name="schedule_start_date[]">\n' +
+            '              </td>\n' +
+            '              <td>\n' +
+            '                      <input class="form-control js-schedule-end-date" type="date" name="schedule_end_date[]">\n' +
+            '              </td>\n' +
+            '              <td>\n' +
+            '                    <i class="fa fa-trash-o text-danger js-remove-schedule-fel3"></i>\n' +
+            '                    <i class="fa fa-plus-circle cursor-pointer js-add-new-schedule-fel3"></i>\n' +
+            '               </td>\n' +
+            '             </tr>';
+
+        return _temp;
     }
+
+
+    $(document).on('click', '.js-add-new-schedule-fel3', function(){
+        console.log("op")
+        var _this = $(this);
+        _this.closest('tbody').append(rowScheduleTemp())
+    })
+
+
+    $(document).on('click', '.js-remove-schedule-fel3', function(){
+        var _this = $(this)
+        if(_this.closest('tbody').find('.js-table-row-schedule').length > 1) _this.closest('tr').remove()
+    })
+
 
     $('.js-fel3-form').validate({
         ignore: [],
@@ -2082,15 +2011,6 @@ $(function() {
             var __this = $((this))
             checkDisableButton(__this, _btn_submit_fel3, false, false)
         })
-    })
-
-    // hide and show button submit
-    $('.js-next-btn-fel3').on('click',function(){
-        $('.js-create-fel3').removeClass('d-none')
-    })
-
-    $('.js-prev-btn-fel3').on('click',function(){
-        $('.js-create-fel3').addClass('d-none')
     })
 
     /**

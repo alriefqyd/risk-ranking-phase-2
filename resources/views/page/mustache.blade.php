@@ -54,3 +54,17 @@
         @{{ /data }}
 </script>
 
+<script id="js-template-schedule-fel3" type="x-tmpl-mustache">
+    <tr data-idx="@{{ idx }}">
+        <td class="w-25">
+            <input class="form-control js-schedule-desc" name="schedule_desc[]">
+        </td>
+        <td>
+            <input class="form-control js-schedule-start-date" type="date" name="schedule_start_date[]">
+        </td>
+        <td>
+            <input class="form-control js-schedule-end-date" type="date" name="schedule_end_date[]">
+        </td>
+    </tr>
+</script>
+

@@ -32,4 +32,20 @@ class Fel3 extends Model
             $fel3->maturityAnalysis()->delete();
         });
     }
+
+    public function getScheduleList(){
+        if($this->project_schedule_text == "") return "";
+        $data = json_decode($this->project_schedule_text);
+        $isMileStone = false;
+            // Check if the decoding was successful
+        if ($data !== null && json_last_error() === JSON_ERROR_NONE) {
+            $isMileStone = true;
+        }
+
+        return [
+            "isMilestone" => $isMileStone,
+            "data" => $isMileStone ? $data : $this->project_schedule_text
+        ];
+
+    }
 }

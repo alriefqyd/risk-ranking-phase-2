@@ -107,6 +107,7 @@ class Fel3Controller extends Controller
             ]);
 
             $documentRequest = collect([]);
+
             if(isset($request->preliminary_design)) $documentRequest->put(Setting::FEL3_ATTACHMENT['preliminary_design'],$request->preliminary_design);
             if(isset($request->utility_infrastructure_facilities_diagram)) $documentRequest->put(Setting::FEL3_ATTACHMENT['utility_infrastructure_facilities_diagram'],$request->utility_infrastructure_facilities_diagram);
             if(isset($request->hazop)) $documentRequest->put(Setting::FEL3_ATTACHMENT['hazop'],$request->hazop);
@@ -132,8 +133,6 @@ class Fel3Controller extends Controller
             }
 
             $fel3->saveOrFail();
-            $maturityAnalysis = new MaturityAnalysis();
-            $maturityService->saveMaturity($request, $fel3, $maturityAnalysis);
             DB::commit();
             $request->session()->flash('page-tab', 'fel3');
             $request->session()->flash('alert-success', 'FEL 3 was saved');
@@ -261,9 +260,6 @@ class Fel3Controller extends Controller
             }
 
             $fel3->saveOrFail();
-            $maturityAnalysis = $project?->fel3?->maturityAnalysis;
-            if(!$maturityAnalysis) $maturityAnalysis = new MaturityAnalysis();
-            $maturityService->saveMaturity($request,$fel3, $maturityAnalysis);
             DB::commit();
             $request->session()->flash('page-tab', 'fel3');
             $request->session()->flash('alert-success', 'FEL 3 was saved');
