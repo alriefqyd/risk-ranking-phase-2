@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row js-row-header-tab">
     <div class="col-md-4 m-l-10 m-t-15 m-b-10">
         <h6 class="font-roboto js-title-detail {{!$errors->any() ? '' : 'd-none'}} title">Business Case Detail</h6>
         <h6 class="font-roboto js-title-form {{!$errors->any() ? 'd-none' : ''}} title">Business Case Form</h6>

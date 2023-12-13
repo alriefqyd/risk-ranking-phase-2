@@ -297,7 +297,7 @@
 
                 <div class="row">
                     <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
+                        <table class="table-striped js-ta" style="width: 100%">
                             <tr>
                                 <td>
                                     <div class="row">
@@ -320,12 +320,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
                             <tr>
                                 <td>
                                     <div class="row">
@@ -348,12 +342,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
                             <tr>
                                 <td>
                                     <div class="row">
@@ -376,12 +364,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
                             <tr>
                                 <td>
                                     <div class="row">
@@ -404,13 +386,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
                             <tr>
                                 <td>
                                     <div class="row">
@@ -433,12 +408,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
                             <tr>
                                 <td>
                                     <div class="row">
@@ -462,12 +431,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
                             <tr>
                                 <td>
                                     <div class="row">
@@ -491,12 +454,7 @@
                                     </div>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
+
                             <tr>
                                 <td>
                                     <div class="row">
@@ -520,12 +478,6 @@
                                     </div>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table-striped" style="width: 100%">
                             <tr>
                                 <td>
                                     <div class="row">

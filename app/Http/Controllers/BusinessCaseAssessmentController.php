@@ -149,6 +149,7 @@ class BusinessCaseAssessmentController extends Controller
 
             $documentRequest = collect([]);
             if(isset($request->attachment)) $documentRequest->put('business_case',$request->attachment);
+            if(isset($request->fel3_approved)) $documentRequest->put('fel3',$request->fel3_approved);
 
             $extension = array_merge(Setting::DOCUMENT_EXTENSION,Setting::ARCHIVE_EXTENSION);
             if(sizeof($documentRequest) > 0){
@@ -295,6 +296,7 @@ class BusinessCaseAssessmentController extends Controller
             $existingDocument = collect([]);
 
             if(isset($request->attachment)) $documentRequest->put('business_case',$request->attachment);
+            if(isset($request->fel3_approved)) $documentRequest->put('fel3',$request->fel3_approved);
 
             if(isset($request->change_management_request)) {
                 $documentsChangeManagementRequest = $documentController->uploadDocument($request, $request->change_management_request,

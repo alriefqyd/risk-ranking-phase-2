@@ -446,7 +446,7 @@ $(function() {
         var _mandatory_attachment_valid = $(this).closest('table').find('.js-attachment-mandatory').filter(function (){
             return $(this).val() != ''
         }).length
-
+        
         var _validate_size = true
         var _validate_extension = true
 
@@ -2101,12 +2101,14 @@ $(function() {
         var _additional_information_text = $('.js-bc_additional_information').val();
 
         var _attachment = $('.js-bc-attachment_file')[0].files
+        var _fel3_approved = $('.js-business_case-fel3_approved')[0].files
         var _change_management_request = $('.js-bc-change_management_request')[0].files
 
         var formData = new FormData();
         formData.append('problem_statement_and_objective_text',_problem_statement_text)
         if (_form.data('method') === 'put') formData.append('_method', 'put')
         if(_attachment.length > 0) formData.append('attachment',_attachment[0])
+        if(_fel3_approved.length > 0) formData.append('fel3_approved',_fel3_approved[0])
         if(_change_management_request.length > 0) {
             formData.append('change_management_request',_change_management_request[0])
         }

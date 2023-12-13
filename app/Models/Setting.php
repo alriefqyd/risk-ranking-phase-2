@@ -115,6 +115,11 @@ class Setting extends Model
         'fel2' => 'fel2'
     ];
 
+    public const BUSINESS_CASE_ATTACHMENT = [
+      'fel3' => "fel3",
+      'business_case' => 'business_case'
+    ];
+
     public const CAPITAL_VALUE = [
         'THIRTY_MILLION' => 30000000,
         'FIVE_MILLION' => 5000000,
