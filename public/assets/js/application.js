@@ -446,7 +446,7 @@ $(function() {
         var _mandatory_attachment_valid = $(this).closest('table').find('.js-attachment-mandatory').filter(function (){
             return $(this).val() != ''
         }).length
-        
+
         var _validate_size = true
         var _validate_extension = true
 
@@ -2414,11 +2414,30 @@ $(function() {
         _this.select2();
     })
 
-    $('.js-create-cb').on('click', function (e) {
+    $('.js-save-bc').on('click', function (e){
         $(this).find('.loader-34').removeClass('d-none')
+        $(this).attr('disabled','disabled')
         e.preventDefault();
         var _form = $('.js-cb-form');
         _form.submit()
+    })
+
+    $('.js-create-cb').on('click', function (e) {
+        // $(this).find('.loader-34').removeClass('d-none')
+        e.preventDefault();
+        var _form = $('.js-cb-form');
+        _form.find('.js-content-cost-benefit').addClass('d-none');
+        _form.find('.js-form-attachment-cb').removeClass('d-none');
+        _form.find('.js-create-cb').addClass('d-none');
+        // _form.submit()
+    })
+
+    $('.js-back-bc').on('click', function (e){
+        e.preventDefault();
+        var _form = $('.js-cb-form');
+        _form.find('.js-content-cost-benefit').removeClass('d-none');
+        _form.find('.js-form-attachment-cb').addClass('d-none');
+        _form.find('.js-create-cb').removeClass('d-none');
     })
 
     //!!Alert

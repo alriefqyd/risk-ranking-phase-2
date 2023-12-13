@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\CostBenefit;
+use App\Models\Project;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class CostBenefitController extends Controller
@@ -36,8 +38,10 @@ class CostBenefitController extends Controller
     public function store(Request $request)
     {
         $project_id = $request->project_id;
+        $project = Project::findOrFail($project_id);
         $cost = CostBenefit::where('project_id',$project_id)->first();
         $isUpdate = $request->isEdit;
+        $documentController = new DocumentController();
 
         if($cost && $isUpdate){
             $cost->forceDelete();
@@ -54,10 +58,15 @@ class CostBenefitController extends Controller
                'net_incremental_benefits' => $request->net_incremental_benefits[$index]
            ]);
         }
+
+        $attachment = $documentController->uploadDocument($request, $request->attachment, $cost->attachment ?? null, $project->project_name,Setting::DOCUMENT_EXTENSION);
+
         $cb = new CostBenefit([
             'project_id' => $project_id,
-            'value' => $costBenefitCollection
+            'value' => $costBenefitCollection,
+            'attachment' => $attachment
         ]);
+
         $cb->saveOrFail();
         $request->session()->flash('alert-success', 'Cost Benefit was successful added!');
         $request->session()->flash('page-tab', 'cost-benefit');
