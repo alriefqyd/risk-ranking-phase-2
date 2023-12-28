@@ -458,4 +458,24 @@ class ProjectController extends Controller
 
     }
 
+    public function getSubDepartment(Request $request){
+        $dept = $request->owner;
+        $projectService = new ProjectService();
+        $data = $projectService->getDepartment(Department::TYPE['sub-department'], $dept);
+        $response = array();
+
+        foreach ($data as $d){
+            $response[] = array(
+                "id"=>$d->id,
+                "text" =>$d->name,
+                "data" => [
+                    "owner" => $d->supervisor,
+                    "sponsor" => $d->sponsors->supervisor
+                ]
+            );
+        }
+
+        return $response;
+    }
+
 }

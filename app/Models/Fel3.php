@@ -34,13 +34,20 @@ class Fel3 extends Model
     }
 
     public function getScheduleList(){
-        if($this->project_schedule_text == "") return "";
-        $data = json_decode($this->project_schedule_text);
         $isMileStone = false;
+        if($this->project_schedule_text == "") {
+            return [
+                "isMilestone" => $isMileStone,
+                "data" => $this->project_schedule_text
+            ];
+        }
+
+        $data = json_decode($this->project_schedule_text);
             // Check if the decoding was successful
         if ($data !== null && json_last_error() === JSON_ERROR_NONE) {
             $isMileStone = true;
         }
+
 
         return [
             "isMilestone" => $isMileStone,

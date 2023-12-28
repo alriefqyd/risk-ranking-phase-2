@@ -263,11 +263,10 @@ $(function() {
             allowClear: true,
             width: '100%',
             ajax: {
-                url: _this.data('url'),
+                url: '/getSubDepartment',
                 data: function (params) {
                     var owner = _this.closest('.js-project-form').find('.js-select-owner').val();
                     return {
-                        user_department: _this.data('id'),
                         owner: owner,
                         q: params.term
                     }
@@ -276,9 +275,29 @@ $(function() {
                     return {
                         results: resp
                     }
-                }
+                },
             }
         })
+
+        _this.on('change', function() {
+            var selectedData = _this.select2('data')[0];
+
+            if (selectedData && selectedData.data && selectedData.data.owner) {
+                var owner = selectedData.data.owner;
+                var sponsor = selectedData.data.sponsor;
+                $('.js-project-owner').val(sponsor); // Update form text input value with the owner data
+                $('.js-project-sponsor').val(owner); // Update form text input value with the owner data
+            } else{
+                var $selectedOption = _this.find(':selected');
+
+                var selectedValue = $selectedOption.val(); // Get the value attribute of the selected option
+                var selectedText = $selectedOption.text(); // Get the text of the selected option
+                var sponsor = $selectedOption.data('sponsor'); // Get custom data attribute value
+                var owner = $selectedOption.data('owner'); // Get custom data attribute value
+                $('.js-project-owner').val(owner); // Update form text input value with the owner data
+                $('.js-project-sponsor').val(sponsor); // Update form text input value with the owner data
+            }
+        });
     }
 
     var _projectCategory = $('.js-project-type');
@@ -497,7 +516,7 @@ $(function() {
         var _mandatory_attachment_valid = _this.closest('.js-row-header-tab').siblings('.js-form-project-edit').find('.js-attachment-existing-assessment').filter(function (){
             return $(this).text() != ''
         }).length
-
+        
         if(_mandatory_attachment_valid >= _mandatory_attachment){
             $('.js-save-button').removeAttr('disabled', 'disabled');
             $('.js-error-attachment').addClass('d-none');

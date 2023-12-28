@@ -46,12 +46,12 @@ class Project extends Model
         return $this->hasOne(BusinessCaseAssessment::class,'project_id')->withTrashed();
     }
 
-    public function owners(){
-        return $this->belongsTo(Department::class,'owner');
+    public function ownersProject(){
+        return $this->belongsTo(Department::class,'operation_area');
     }
 
-    public function sponsors(){
-        return $this->belongsTo(Department::class,'sponsor');
+    public function sponsorsProject(){
+        return $this->belongsTo(Department::class,'sponsor_area');
     }
 
     public function cost_benefits(){

@@ -107,7 +107,7 @@
                 <td>{{$p->project_name}}</td>
                 <td>{{$p->baskets?->name}}</td>
                 <td>{{$p->subBaskets?->name}}</td>
-                <td>{{$setting::PROJECT_CATEGORY[$p->project_category] }}</td>
+                <td>{{$setting::PROJECT_CATEGORY[$p->project_category] ?? ""}}</td>
                 <td>{{$p->project_type}}</td>
                 <td>{{$p->owners?->name}}</td>
                 <td>{{$p->sponsors?->name}}</td>

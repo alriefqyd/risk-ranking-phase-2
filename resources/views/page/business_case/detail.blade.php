@@ -201,7 +201,7 @@
                                     <tr>
                                         <td>Additional Attachment</td>
                                         <td>
-                                            @if($project->business_case?->change_management_request)
+                                            @if($project?->getAllAttachment($project->business_case?->attachment, 'business_case'))
                                                   <a target="_blank"
                                                        href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project?->getAllAttachment($project->business_case?->attachment,'business_case'))}}">
                                                         <i class="mt-2 fa fa-file-text-o txt-info"></i>

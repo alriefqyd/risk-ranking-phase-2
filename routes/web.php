@@ -53,6 +53,7 @@ Route::put('/business-case/{project:id}',[\App\Http\Controllers\BusinessCaseAsse
 Route::get('/setSession',[\App\Http\Controllers\SettingController::class,'setSession'])->middleware('auth');
 Route::get('/getProjectType',[\App\Http\Controllers\SettingController::class,'getProjectType'])->middleware('auth');
 Route::get('/getSponsorByOwner',[\App\Http\Controllers\ProjectController::class,'getSponsorByOwner'])->middleware('auth');
+Route::get('/getSubDepartment',[\App\Http\Controllers\ProjectController::class,'getSubDepartment'])->middleware('auth');
 
 Route::post('/cost_benefit',[\App\Http\Controllers\CostBenefitController::class,'store'])->name('cost_benefit_post')->middleware(['auth']);
 

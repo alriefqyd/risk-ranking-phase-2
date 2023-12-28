@@ -43,7 +43,7 @@ class ProjectService
             && $type == Department::TYPE['sub-department']){
             $dep->where('parent', auth()->user()->department);
         }
-        return $dep->get();
+        return $dep->where('status','ACTIVE')->get();
     }
 
     public function projectNotAuthorized(Project $project){

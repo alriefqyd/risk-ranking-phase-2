@@ -309,6 +309,7 @@
                                                    value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="0" multiple type="file">
                                             @if($attachmentPreliminaryDesign)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['preliminary_design']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentPreliminaryDesign}}
@@ -331,6 +332,7 @@
                                                    value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="0" multiple type="file">
                                             @if($attachmentUtilityDiagram)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['utility_infrastructure_facilities_diagram']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentUtilityDiagram}}
@@ -353,6 +355,7 @@
                                                    name="document" id="inputFile" multiple type="file">
                                             @if($attachmentHazop)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['hazop']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentHazop}}
@@ -375,6 +378,7 @@
                                                    name="document" id="inputFile" multiple type="file">
                                             @if($attachmentMoc)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['hazop']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentMoc}}
@@ -397,6 +401,7 @@
                                                    name="document" id="inputFile" multiple type="file">
                                             @if($attachmentCostEstimate)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['cost_estimate']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentCostEstimate}}
@@ -420,6 +425,7 @@
                                                    name="document" id="inputFile" multiple type="file">
                                             @if($attachmentQuotation)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['quotation_of_equipment']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['quotation_of_equipment'])}}
@@ -443,6 +449,7 @@
                                                    name="document" id="inputFile" multiple type="file">
                                             @if($attachmentAssessment)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['project_level_assessment']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentAssessment}}
@@ -467,6 +474,7 @@
                                                    name="document" id="inputFile" multiple type="file">
                                             @if($attachmentFel1)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel1']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentFel1}}
@@ -490,6 +498,7 @@
                                                    name="document" id="inputFile" multiple type="file">
                                             @if($attachmentFel2)
                                                 <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
                                                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['fel3']}}&file={{urlencode($project?->getAllAttachment($project->fel3?->attachment,$setting::FEL3_ATTACHMENT['fel2']))}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentFel2}}

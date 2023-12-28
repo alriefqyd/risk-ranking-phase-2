@@ -15,7 +15,9 @@ class Setting extends Model
         'growth' => 'GROWTH',
         'volume' => 'VOLUME',
         'cost_reduction' => 'COST REDUCTION',
-        'hse_and_legal' => 'HSE AND LEGAL'
+        'hse_and_legal' => 'HSE AND LEGAL',
+        'betterment' => 'BETTERMENT',
+        'sustainability_development' => 'SUSTAINABILITY AND DEVELOPMENT'
     ];
 
 
