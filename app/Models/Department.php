@@ -23,6 +23,18 @@ class Department extends Model
     }
 
     public function projectSponsor(){
-        return $this->hasMany(Project::class,'sponsor');
+        return $this->hasMany(Project::class,'operation_area');
+    }
+
+    public function projectOwner(){
+        return $this->hasMany(Project::class,'sponsor_area');
+    }
+
+    public function owners(){
+        return $this->hasOne(Department::class, 'parent');
+    }
+
+    public function sponsors(){
+        return $this->belongsTo(Department::class, 'parent');
     }
 }

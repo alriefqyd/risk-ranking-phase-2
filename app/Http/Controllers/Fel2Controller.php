@@ -72,6 +72,7 @@ class Fel2Controller extends Controller
                 'permit_list' => $request->permit_list,
                 'schedule_project' => $request->schedule_project,
                 'cost_estimate' => $request->cost_estimate,
+                'alternatives_and_analysis' => $request->alternatives_and_analysis,
                 'project_scope_text' => $request->project_scope_text,
                 'identify_main_equipment_text' => $request->identify_main_equipment_text,
                 'boundary_and_assumption_text' => $request->boundary_and_assumption_text,
@@ -79,6 +80,7 @@ class Fel2Controller extends Controller
                 'permit_list_text' => $request->permit_list_text,
                 'schedule_project_text' => $request->schedule_project_text,
                 'cost_estimate_text' => $request->cost_estimate_text,
+                'alternatives_and_analysis_text' => $request->alternatives_and_analysis_text,
                 'department' => auth()->user()->department,
                 'created_by' => auth()->user()->id
             ]);
@@ -185,6 +187,8 @@ class Fel2Controller extends Controller
             $fel2->schedule_project_text = $request->schedule_project_text;
             $fel2->cost_estimate_text = $request->cost_estimate_text;
             $fel2->permit_list_text = $request->permit_list_text;
+            $fel2->alternatives_and_analysis = $request->alternatives_and_analysis;
+            $fel2->alternatives_and_analysis_text = $request->alternatives_and_analysis_text;
 
             $documentRequest = collect([]);
             $existingDocument = collect([]);

@@ -72,7 +72,7 @@ class ProjectController extends Controller
         $projectList = $projectService->getAllProject(true, null);
         $year = null;
         if($request->year){
-            $year = '2023';
+            $year = config('constants.project_presented_year');
             $projectList = $projectService->getAllProject(true, $request->year);
         }
         $department = $projectService->getDepartment($department, null);
@@ -180,10 +180,13 @@ class ProjectController extends Controller
         $this->authorize('read');
         $projectService = new ProjectService();
         $maturityService = new MaturityService();
-        if($projectService->projectNotAuthorized($project)){
-            abort(404);
-        }
+//        if($projectService->projectNotAuthorized($project)){
+//            abort(404);
+//        }
 
+
+        $settingService = new SettingService();
+        $investmentStrategyList = $settingService->getAllInvestmentStrategy();
         $dataMaturity = $maturityService->getMaturityAnalysis($project?->fel3, $project?->fel3?->id);
 
         $capexCategories =  CapexInvestment::with('basket.subBasket')->where('type','CAPEX_INVESTMENT')->get();
@@ -208,6 +211,7 @@ class ProjectController extends Controller
             })->get();
         }
 
+
         $basketList = CapexInvestment::where('type','basket')->get();
 
         return view('page.project.detail',[
@@ -229,6 +233,7 @@ class ProjectController extends Controller
             'maturityOption' => Setting::MATURITY_VALUE,
             'criterias' => $criteria,
             'basketList' => $basketList,
+            'investmentStrategyList' => $investmentStrategyList
         ]);
     }
     /**
@@ -422,6 +427,55 @@ class ProjectController extends Controller
 
         $request->session()->flash('alert-success', 'Data was successful updated!');
         return redirect('/project/' . $project->id);
+    }
+
+    public function updateInvestmentStrategy(Request $request){
+        try{
+
+            $data = [
+                'level1' => $request->level1,
+                'level2' => $request->level2,
+                'level3' => $request->level3
+            ];
+
+            $value = json_encode($data);
+
+
+            $project = Project::find($request->project_id);
+
+            $project->investment_strategy = $value;
+            $project->save();
+
+            return response()->json([
+                'status' => 200
+            ]);
+        } catch (Exception $e){
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+    }
+
+    public function getSubDepartment(Request $request){
+        $dept = $request->owner;
+        $projectService = new ProjectService();
+        $data = $projectService->getDepartment(Department::TYPE['sub-department'], $dept);
+        $response = array();
+
+        foreach ($data as $d){
+            $response[] = array(
+                "id"=>$d->id,
+                "text" =>$d->name,
+                "data" => [
+                    "owner" => $d->supervisor,
+                    "sponsor" => $d->sponsors->supervisor
+                ]
+            );
+        }
+
+        return $response;
     }
 
 }

@@ -25,16 +25,17 @@
             <select name="operation_area"
                     style="width: 100% !important;"
                     data-placeholder="Select Operation Area"
+                    name="owner"
                     class="js-example-basic-single col-sm-12
-                    js-select-project-category
+                    js-select-owner
                     select2">
                 <option></option>
-                @foreach($projectCategory as $key=>$value)
-                    <option {{old('operation_area') == $key ||
+                @foreach($department as $dep)
+                    <option {{old('operation_area') == $dep->id ||
                             (isset($project->operation_area)
-                            && $project->operation_area == $key) ?
+                            && $project->operation_area == $dep->id) ?
                              'selected="selected"' : ''}}
-                            value="{{$key}}">{{$value}}
+                            value="{{$dep->id}}">{{$dep->name}}
                     </option>
                 @endforeach
             </select>
@@ -51,15 +52,11 @@
             @enderror">
             <select id="" name="sponsor_area" data-url="/getProjectType" data-id="{{$user_department}}"
                     class="select2
-             js-example-basic-single form-control js-project-type">
+             js-example-basic-single form-control js-select-sponsor">
                 <option value="" disabled selected>Select your option</option>
-                @foreach($projectType as $value)
-                    <option value="{{$value->setting_value}}"
-                        {{old('sponsor_area') == $value->setting_value ||
-                        (isset($project->sponsor_area) && $project->sponsor_area == $value->setting_value)
-                        ? 'selected="selected"' : ''}}>{{$value->setting_value}}
-                    </option>
-                @endforeach
+                @if(isset($project->sponsorsProject?->name))
+                    <option value="{{$project->sponsorsProject?->id}}" data-sponsor="{{$project->sponsorsProject?->supervisor}}" data-owner="{{$project->ownersProject->supervisor}}" selected>{{$project->sponsorsProject?->name}}</option>
+                @endif
             </select>
         </div>
         @error('sponsor_area')
@@ -74,10 +71,10 @@
             @error('owner')
                 b-danger
             @enderror">
-            <input type="text" name="owner"
+            <input type="text" name="owner" readonly
                    value="{{old('owner') ?: (isset($project->owner) ?
                 $project->owner : '')}}"
-                   class="form-control
+                   class="form-control js-project-owner
             @error('owner')
                is-invalid
             @enderror">
@@ -92,10 +89,10 @@
             @error('project_sponsor')
                 b-danger
             @enderror">
-            <input type="text" name="project_sponsor"
+            <input type="text" name="project_sponsor" readonly
                    value="{{old('project_sponsor') ?: (isset($project->sponsor) ?
                 $project->sponsor : '')}}"
-                   class="form-control
+                   class="form-control js-project-sponsor
                 @error('project_sponsor')
                    is-invalid
                 @enderror">

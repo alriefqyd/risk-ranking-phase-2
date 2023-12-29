@@ -15,7 +15,9 @@ class Setting extends Model
         'growth' => 'GROWTH',
         'volume' => 'VOLUME',
         'cost_reduction' => 'COST REDUCTION',
-        'hse_and_legal' => 'HSE AND LEGAL'
+        'hse_and_legal' => 'HSE AND LEGAL',
+        'betterment' => 'BETTERMENT',
+        'sustainability_development' => 'SUSTAINABILITY AND DEVELOPMENT'
     ];
 
 
@@ -59,7 +61,16 @@ class Setting extends Model
 
     public const ASSESSMENT_ATTACHMENT = [
         'initial_cost_estimate' => 'initial_cost_estimate',
-        'complexity_matrix' => 'complexity_matrix'
+        'complexity_matrix' => 'complexity_matrix',
+        'preliminary_design' => 'preliminary_design',
+        'utility_infrastructure_facilities_diagram' => 'utility_infrastructure_facilities_diagram',
+        'hazop_study' => 'hazop_study',
+        'moc_document' => 'moc_document',
+        'cost_estimate_with_rough_of_magnitude' => 'cost_estimate_with_rough_of_magnitude',
+        'quotation_of_equipment' => 'quotation_of_equipment',
+        'project_assessment_level' => 'project_assessment_level',
+        'fel1' => 'fel1',
+        'fel2' => 'fel2'
     ];
 
     public const ASSESSMENT_LEVEL = [
@@ -75,7 +86,8 @@ class Setting extends Model
         'data_of_alternatives' => 'data_of_alternatives',
         'initial_schedule' => 'initial_schedule',
         'project_level_assessment' => 'project_level_assessment',
-        'stakeholder_list' => 'stakeholder_list'
+        'stakeholder_list' => 'stakeholder_list',
+        'fel1_approve' => 'fel1_approve'
     ];
 
     public const FEL2_ATTACHMENT = [
@@ -103,6 +115,11 @@ class Setting extends Model
         'project_level_assessment' => 'project_level_assessment',
         'fel1' => 'fel1',
         'fel2' => 'fel2'
+    ];
+
+    public const BUSINESS_CASE_ATTACHMENT = [
+      'fel3' => "fel3",
+      'business_case' => 'business_case'
     ];
 
     public const CAPITAL_VALUE = [
@@ -200,6 +217,7 @@ class Setting extends Model
         '0' => 'No',
     ];
 
+    public const INVESTMENT_STRATEGY = 'INVESTMENT_STRATEGY';
     public const sustaining = 'sustaining';
     public const r_and_d = 'r_and_d';
     public const growth = 'growth';
@@ -213,4 +231,7 @@ class Setting extends Model
     public const VOLUME_GROWTH = 'volume_growth';
     public const VOLUME_REPLACEMENT = 'volume_replacement';
     public const ADMINISTRATIVE_IMPROVEMENTS = 'administrative_improvements';
+
+
 }
+

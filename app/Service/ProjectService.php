@@ -43,7 +43,7 @@ class ProjectService
             && $type == Department::TYPE['sub-department']){
             $dep->where('parent', auth()->user()->department);
         }
-        return $dep->get();
+        return $dep->where('status','ACTIVE')->get();
     }
 
     public function projectNotAuthorized(Project $project){
@@ -68,15 +68,21 @@ class ProjectService
             $year = date('Y') + 1;
         }
 
+        $owner = 'owner';
+        if($year >= 2024){
+            $owner = 'operation_area';
+        }
+
         $project = Project::with(['createdBy','assessment','fel1','fel2','fel3',
             'business_case','cost_benefits'])
             ->filter(request(['q','owner','sponsor','category','type']))->where('presented_year', $year);
+
 
         /*
          * Get All Data based on Admin Dept
          */
         if($this->isAdminDept){
-            $project = $project->where('owner',$department);
+            $project = $project->where($owner,$department);
         }
 
         if($year) {

@@ -99,11 +99,11 @@
             </tr>
             <tr>
                 <td>Owner Area :</td>
-                <td>{{$project?->owners?->name ?? $project->owner}}</td>
+                <td> {{$project->ownersProject?->name}}</td>
             </tr>
             <tr>
-                <td>Project Sponsor :</td>
-                <td>{{$project?->sponsors?->name ?? $project->sponsor}}</td>
+                <td>Sponsor Area :</td>
+                <td>{{$project?->sponsorsProject?->name}}</td>
             </tr>
             <tr>
                 <td>BC Presenter :</td>

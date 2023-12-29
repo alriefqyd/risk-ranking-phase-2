@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-//use App\Exports\AssessmentExport;
 use App\Models\Assessment;
 use App\Models\MaturityAnalysis;
 use App\Models\Project;
@@ -117,7 +116,6 @@ class AssessmentController extends Controller
                 'problem_statement_text' => $request->problem_statement_text,
                 'objective_text' => $request->objective_text,
                 'project_scope_text' => $request->project_scope_text,
-                'key_performance_metric_text' => $request->key_performance_metric_text,
                 'key_project_risk_and_mitigants_text' => $request->key_project_risk_mitigants_text,
                 'impact_if_not_executed_text' => $request->impact_if_not_executed_text,
                 'alternatives_to_proposal_text' => $request->alternatives_to_proposal_text,
@@ -125,6 +123,7 @@ class AssessmentController extends Controller
                 //'cost_estimate_text' => $projectService->priceToText($request->cost_estimate_text), //temporary not used until phase 2 start
                 'level_project_text' => $request->level_project_text,
                 'detail_estimate_cost_text' => $request->detail_estimate_cost_text,
+                'location_of_asset_capitalization' => $request->location_of_asset_capitalization
             ]);
 
             if($request?->status == 'publish'){
@@ -134,9 +133,7 @@ class AssessmentController extends Controller
                 $assessment->status = 'DRAFT';
             }
 
-            $documentsRequest = collect([]);
-            if(isset($request->document_initial_cost_estimate)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'],$request->document_initial_cost_estimate);
-            if(isset($request->document_complexity_matrix)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['complexity_matrix'],$request->document_complexity_matrix);
+            $documentsRequest = $this->uploadDocumentRequestAssessment($request);
 
             if(sizeof($documentsRequest) > 0){
                 $documents = $documentController->multipleUploadDocument($request, $documentsRequest, null, $request->project_name, Setting::DOCUMENT_EXTENSION);
@@ -153,6 +150,19 @@ class AssessmentController extends Controller
                 $assessment->level_project_text = NULL;
             }
 
+            $assessment->executive_summary = $request->executive_summary;
+            $assessment->project_schedule = $request->project_schedule;
+            $assessment->list_equipment_specification = $request->list_equipment_specification;
+            $assessment->economic_evaluation = $request->economic_evaluation;
+            $assessment->hazop_study = $request->hazop_study;
+
+            $assessment->list_equipment_specification_text = $request->list_equipment_specification_text;
+            $assessment->executive_summary_text = $request->executive_summary_text;
+            $assessment->project_schedule_text = $request->project_schedule_text;
+            $assessment->economic_evaluation_text = $request->economic_evaluation_text;
+            $assessment->hazop_study_text = $request->hazop_study_text;
+
+            $assessment->key_performance_metric_text = $request->key_performance_metric_text;
 
             $assessment->complexity_analysis_type = $request->complexity_analysis_type;
             $assessment->complexity_analysis = $complexityAnalysis;
@@ -227,7 +237,6 @@ class AssessmentController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-
         $documentController = new DocumentController();
         $this->authorize('update');
         $assessmentService = new AssessmentService();
@@ -261,6 +270,11 @@ class AssessmentController extends Controller
             $assessment->impact_if_not_executed_text = $request->impact_if_not_executed_text;
             $assessment->alternatives_to_proposal_text = $request->alternatives_to_proposal_text;
             $assessment->cost_estimate_text = $projectService->convertCurrency($request->cost_estimate_text);
+            $assessment->executive_summary = $request->executive_summary;
+            $assessment->project_schedule = $request->project_schedule;
+            $assessment->list_equipment_specification = $request->list_equipment_specification;
+            $assessment->economic_evaluation = $request->economic_evaluation;
+            $assessment->hazop_study = $request->hazop_study;
             if($request?->status == 'publish'){
                 $assessment->status = 'PUBLISH';
             }
@@ -268,7 +282,7 @@ class AssessmentController extends Controller
                 $assessment->status = 'DRAFT';
             }
 
-            $documentsRequest = collect([]);
+            $documentsRequest = $this->uploadDocumentRequestAssessment($request);
             $existingDocument = collect([]);
             if($assessment->attachment){
                 $existingDocuments = json_decode($assessment?->attachment,true);
@@ -276,9 +290,6 @@ class AssessmentController extends Controller
                     $existingDocument->put($key,$value);
                 }
             }
-
-            if($request->document_initial_cost_estimate) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'],$request->document_initial_cost_estimate);
-            if($request->document_complexity_matrix) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['complexity_matrix'],$request->document_complexity_matrix);
 
             $documents = $documentController->multipleUploadDocument($request, $documentsRequest, $existingDocument, $request->project_name,Setting::DOCUMENT_EXTENSION);
 
@@ -306,6 +317,20 @@ class AssessmentController extends Controller
                 $maturity = MaturityAnalysis::where('fels_id',$project->fel3->id)->first();
                 $maturity->delete();
             }
+
+            $assessment->executive_summary = $request->executive_summary;
+            $assessment->project_schedule = $request->project_schedule;
+            $assessment->list_equipment_specification = $request->hazop_study;
+            $assessment->economic_evaluation = $request->economic_evaluation;
+            $assessment->hazop_study = $request->hazop_study;
+
+            $assessment->list_equipment_specification_text = $request->list_equipment_specification_text;
+            $assessment->executive_summary_text = $request->executive_summary_text;
+            $assessment->project_schedule_text = $request->project_schedule_text;
+            $assessment->economic_evaluation_text = $request->economic_evaluation_text;
+            $assessment->hazop_study_text = $request->hazop_study_text;
+
+            $assessment->location_of_asset_capitalization = $request->location_of_asset_capitalization;
 
             $assessment->saveOrFail();
             DB::commit();
@@ -386,5 +411,22 @@ class AssessmentController extends Controller
         if(isset($request->complexity_assessment_external_approval)) $complexityAnalysis->put('complexity_assessment_external_approval' , $request->complexity_assessment_external_approval);
 
         return $complexityAnalysis;
+    }
+
+    public function uploadDocumentRequestAssessment(Request $request){
+        $documentsRequest = collect([]);
+        if(isset($request->document_initial_cost_estimate)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate'],$request->document_initial_cost_estimate);
+        if(isset($request->document_complexity_matrix)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['complexity_matrix'],$request->document_complexity_matrix);
+        if(isset($request->preliminary_design)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['preliminary_design'],$request->preliminary_design);
+        if(isset($request->utility_infrastructure_facilities_diagram)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram'],$request->utility_infrastructure_facilities_diagram);
+        if(isset($request->document_hazop_study)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['hazop_study'], $request->document_hazop_study);
+        if(isset($request->moc_document)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['moc_document'],$request->moc_document);
+        if(isset($request->cost_estimate_with_rough_of_magnitude)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude'],$request->cost_estimate_with_rough_of_magnitude);
+        if(isset($request->quotation_of_equipment)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment'],$request->quotation_of_equipment);
+        if(isset($request->project_assessment_level)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['project_assessment_level'],$request->project_assessment_level);
+        if(isset($request->fel1)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['fel1'],$request->fel1);
+        if(isset($request->fel2)) $documentsRequest->put(Setting::ASSESSMENT_ATTACHMENT['fel2'],$request->fel2);
+
+        return $documentsRequest;
     }
 }

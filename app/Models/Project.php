@@ -8,6 +8,7 @@ use App\Service\ProjectService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class Project extends Model
 {
@@ -45,12 +46,12 @@ class Project extends Model
         return $this->hasOne(BusinessCaseAssessment::class,'project_id')->withTrashed();
     }
 
-    public function owners(){
-        return $this->belongsTo(Department::class,'owner');
+    public function ownersProject(){
+        return $this->belongsTo(Department::class,'operation_area');
     }
 
-    public function sponsors(){
-        return $this->belongsTo(Department::class,'sponsor');
+    public function sponsorsProject(){
+        return $this->belongsTo(Department::class,'sponsor_area');
     }
 
     public function cost_benefits(){
@@ -75,6 +76,12 @@ class Project extends Model
 
     public function criterias(){
         return $this->belongsToMany(Criteria::class,'criterias_projects')->withPivot('answer');
+    }
+
+    public function isHaveCriterias(){
+        $data = DB::table('criterias_categories')->where('sub_basket_id', $this->sub_basket)->where('category_id', $this->categories?->id)->count();
+        if($data > 0) return true;
+        return false;
     }
 
     /*
@@ -287,5 +294,27 @@ class Project extends Model
     public function getSeverityValue($val){
         if(!$val) return "";
         return RiskAssessments::SEVERITY[$val];
+    }
+
+    public function getInvestmentStrategy(){
+        $data = $this->investment_strategy;
+        if(!$data) return null;
+        $json = json_decode($data);
+        return $json;
+    }
+
+    public function validateAssessmentBasedOnComplexityScore($isMessage){
+        $complexityScore = $this->assessment?->complexity_score_assessment;
+        if(!$complexityScore) return null;
+
+        if($complexityScore >=4 && $complexityScore <=10){
+            return $isMessage ? 'FEL 3' : isset($this->fel3);
+        } else if ($complexityScore >= 11 && $complexityScore <= 16){
+            return $isMessage ? 'FEL 2' : isset($this->fel2);
+        } else if ($complexityScore >= 17){
+            return $isMessage ? 'FEL 1 & 2' : isset($this->fel1) && isset($this->fel2);
+        } else {
+            return $isMessage ? 'Your complexity score doesnt match any condition of business case' : false;
+        }
     }
 }

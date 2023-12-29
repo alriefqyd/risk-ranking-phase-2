@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row js-row-header-tab">
     <div class="col-md-4 m-l-10 m-t-15 m-b-10">
 
     </div>
