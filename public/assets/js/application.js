@@ -516,7 +516,7 @@ $(function() {
         var _mandatory_attachment_valid = _this.closest('.js-row-header-tab').siblings('.js-form-project-edit').find('.js-attachment-existing-assessment').filter(function (){
             return $(this).text() != ''
         }).length
-        
+
         if(_mandatory_attachment_valid >= _mandatory_attachment){
             $('.js-save-button').removeAttr('disabled', 'disabled');
             $('.js-error-attachment').addClass('d-none');

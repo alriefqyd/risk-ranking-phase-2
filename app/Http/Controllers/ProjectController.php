@@ -72,7 +72,7 @@ class ProjectController extends Controller
         $projectList = $projectService->getAllProject(true, null);
         $year = null;
         if($request->year){
-            $year = '2023';
+            $year = config('constants.project_presented_year');
             $projectList = $projectService->getAllProject(true, $request->year);
         }
         $department = $projectService->getDepartment($department, null);
