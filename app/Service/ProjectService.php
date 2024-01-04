@@ -6,10 +6,12 @@ use App\Models\CapexInvestment;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\Setting;
+use http\Client\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PHPUnit\Exception;
 
 class ProjectService
 {
@@ -86,7 +88,7 @@ class ProjectService
         }
 
         if($year) {
-            $project = $project->paginate(20)->withQueryString();
+            $project = $project->orderBy('created_at', 'DESC')->paginate(20)->withQueryString();
         }
 
         if($paginate && !$year){
@@ -413,6 +415,27 @@ class ProjectService
             $documents->put($key,$value);
         }
         return $documents;
+    }
+
+    public function updateBudgetToolCriteria(Project $project, $request){
+        $existingBasket = $project->basket;
+        $existingSubBasket = $project->sub_basket;
+        $existingCriteria = $project->criteria;
+
+        $newBasket = $request->basket;
+        $newSubBasket = $request->sub_basket;
+        $newCriteria = $request->criteria;
+
+        try {
+            if($existingBasket == $newBasket
+                && $existingSubBasket == $newSubBasket
+                && $existingCriteria == $newCriteria){
+
+                DB::table('criterias_projects')->where('project_id', $project->id)->delete();
+            }
+        } catch (Exception $e){
+            return $e->getMessage();
+        }
     }
 
     /**
