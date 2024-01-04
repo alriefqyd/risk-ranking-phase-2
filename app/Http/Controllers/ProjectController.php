@@ -69,7 +69,7 @@ class ProjectController extends Controller
         $projectType = $this->projectType;
         $isAdmin = $this->isAdmin;
 
-        $projectList = $projectService->getAllProject(true, null);
+        $projectList = $projectService->getAllProject(true, config('constants.project_presented_year'));
         $year = null;
         if($request->year){
             $year = config('constants.project_presented_year');
@@ -282,6 +282,9 @@ class ProjectController extends Controller
             }
             if($request->has('bc_status')) $project->bc_status = $request->bc_status;
 
+            $projectService = new ProjectService();
+            $projectService->updateBudgetToolCriteria($project, $request);
+
             if(!$request->isQuickUpdate){
                 $project->project_name = $request->project_name;
                 $project->operation_area = $request->operation_area;
@@ -386,7 +389,6 @@ class ProjectController extends Controller
         ];
 
         Notification::send($user, new ProjectNote($details));
-        dd($user->notifications);
 
     }
 
