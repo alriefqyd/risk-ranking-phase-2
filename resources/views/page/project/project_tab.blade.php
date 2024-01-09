@@ -93,10 +93,12 @@
                 <td>Project Name : </td>
                 <td>{{$project?->project_name}}</td>
             </tr>
-            <tr>
-                <td>Project Type : </td>
-                <td>{{$project?->project_type}}</td>
-            </tr>
+            @if(isset($project?->project_type))
+                <tr>
+                    <td>Project Type : </td>
+                    <td>{{$project?->project_type}}</td>
+                </tr>
+            @endif
             <tr>
                 <td>Owner Area :</td>
                 <td> {{$project->ownersProject?->name}}</td>

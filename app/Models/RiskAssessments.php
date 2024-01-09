@@ -20,6 +20,13 @@ class RiskAssessments extends Model
             52,4,6,10,26
     ];
 
+    const NEW_RISK_MATRIX = [
+        64,96,160,256,416,32,
+        48,80,128,208,16,24,
+        40,104,8,12,20,
+        52,4,6,10,26
+    ];
+
     /*
      * since risk level change to severity this const not used anymore
      */
@@ -35,6 +42,15 @@ class RiskAssessments extends Model
         4 => 'Severe',
         5 => 'Critical',
         6 => 'Very Critical'
+    ];
+
+    const NEW_SEVERITY = [
+        0 => 'N/A',
+        1 => 'LOW',
+        2 => 'MODERATE',
+        3 => 'SIGNIFICANT',
+        4 => 'CRITICAL',
+        5 => 'VERY CRITICAL',
     ];
 
     const PROBABILITY = [

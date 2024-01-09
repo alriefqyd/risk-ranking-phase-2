@@ -146,7 +146,7 @@
                                 </div>
                             </li>
                             <li>
-                                Reputation
+                                Reputational
                                 <select id="u-rating-movie" class="rating-custom js-risk-reputation js-risk-assessment-field" name="rating" autocomplete="off">
                                     <option value></option>
                                     @foreach($riskLevel as $index => $value)
@@ -187,6 +187,13 @@
                                         @endif
                                     @endforeach
                                 </select>
+                            </li>
+                            <li class="mt-2">
+                                <p>Severity :
+                                    <span class="js-set-label-severity">
+                                {{$project?->business_case?->riskAssessment?->severity}}
+                            </span>
+                                </p>
                             </li>
                             <li class="mt-2">
                                 <p>Priority Level :

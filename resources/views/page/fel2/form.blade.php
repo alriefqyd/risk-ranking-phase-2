@@ -352,7 +352,7 @@
                                         <td>
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    @php($attachmentCostEstimate = $project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate'])))
+                                                    @php($attachmentCostEstimate = $project?->getAllAttachment($project->fel2?->attachment,$setting::FEL2_ATTACHMENT['cost_estimate']))
                                                     <label>Cost Estimate <span class="text-danger f-w-550">*</span></label>
                                                     <input class="form-control js-upload-attachment js-attachment-mandatory js-fel2-attachment_cost_estimate col-md-10"
                                                            data-validated="{{isset($attachmentCostEstimate) ? 'true' : 'false'}}"

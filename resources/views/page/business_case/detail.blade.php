@@ -154,6 +154,13 @@
                                                 @endforeach
                                             </select>
                                         </li>
+                                        <li class="mt-2">
+                                            <p>Severity :
+                                                <span class="js-set-label-severity">
+                                                    {{$project?->business_case?->riskAssessment?->severity}}
+                                                </span>
+                                            </p>
+                                        </li>
                                         <li>
                                             Priority Level :
                                             <span class="js-set-label-priority-level setting-primary">
@@ -161,6 +168,18 @@
                                             </span>
                                         </li>
                                 </ul>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Cost Estimate :</label>
+                            </div>
+                            <div class="col-md-8">
+                                USD {!! $project?->business_case?->cost_estimate !!}
                             </div>
                         </div>
                     </td>

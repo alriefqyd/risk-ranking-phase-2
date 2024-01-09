@@ -2099,6 +2099,7 @@ $(function() {
         var _risk_reputation = $('.js-risk-reputation').val();
         var _risk_human_rights = $('.js-risk-human-rights').val();
         var _risk_priority = _form.find('.js-set-label-priority-level').text();
+        var _severity = _form.find('.js-set-label-severity').text();
         var _risk_probability = $('.js-risk-probability').val();
 
         var _cost_estimate = $('.js-cost_estimate_bc').val();
@@ -2160,6 +2161,7 @@ $(function() {
         formData.append('finance',_risk_finance)
         formData.append('probability',_risk_probability)
         formData.append('priority_level',!isNaN(parseInt(_risk_priority)) ? parseInt(_risk_priority) : '')
+        formData.append('severity', _severity)
         formData.append('status',_status)
         formData.append('cost_estimate',_cost_estimate)
         formData.append('npv',_npv || 0)
@@ -2341,6 +2343,7 @@ $(function() {
             var _priority_level = setPriorityLevel(_final_impact_score_value, $('.js-risk-probability').val());
             $('.js-set-label-priority-level').text(_priority_level);
             setBackgroundPriority(_priority_level);
+            $('.js-set-label-severity').text(setSeverity(_final_impact_score_value))
         })
     })
 
@@ -2350,10 +2353,27 @@ $(function() {
         setBackgroundPriority(_existing_priority_element.text(), _existing_priority_element)
     }
 
+    function setSeverity(_final_impact_score){
+        var _severity = '';
+        if(_final_impact_score == 1){
+            _severity = "Low"
+        } else if (_final_impact_score == 2){
+            _severity = "Moderate"
+        } else if (_final_impact_score == 3){
+            _severity = "Severe"
+        } else if (_final_impact_score == 4){
+            _severity = "Critical"
+        } else if (_final_impact_score == 5){
+            _severity = "Very Critical"
+        } else {
+            _severity = ""
+        }
+
+        return _severity;
+    }
     function setPriorityLevel(_final_impact_score, _probability) {
 
         var _risk_matrix = [
-            [30, 27, 25, 23, 22],
             [29, 26, 24, 17, 16],
             [28, 20, 18, 10, 9],
             [21, 19, 11, 7, 4],

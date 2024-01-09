@@ -138,6 +138,7 @@ class BusinessCaseAssessmentController extends Controller
                 'final_impact_score' => $this->getFinalImpactScore($request),
                 'probability' => $request->probability,
                 'priority_level' => $request->priority_level,
+                'severity' => $request->severity,
             );
 
             if($request->status == 'publish'){
@@ -283,6 +284,7 @@ class BusinessCaseAssessmentController extends Controller
                 'final_impact_score' => $this->getFinalImpactScore($request),
                 'probability' => $request->probability,
                 'priority_level' => $request->priority_level,
+                'severity' => $request->severity,
             ]);
 
             if($request->status == 'publish'){

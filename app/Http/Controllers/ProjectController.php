@@ -194,7 +194,7 @@ class ProjectController extends Controller
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
 
         $complexityScore = Assessment::COMPLEXITY_SCORE;
-        $riskLevel = RiskAssessments::SEVERITY;
+        $riskLevel = RiskAssessments::NEW_SEVERITY;
         $riskMatrix = RiskAssessments::RISK_MATRIX;
         $probability = RiskAssessments::PROBABILITY;
 

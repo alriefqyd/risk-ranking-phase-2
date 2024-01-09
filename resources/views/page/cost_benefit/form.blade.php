@@ -82,6 +82,7 @@
 <div class="js-form-attachment-cb d-none">
     <div class="row m-2">
         <div class="col-md-12 mt-3">
+            <label>Please Upload Cost Benefit File</label>
             <input type="file" name="attachment" id="inputFile" class="form-control" multiple>
             <input type="hidden" name="file_category" class="form-control" value="Cost Benefit">
         </div>
