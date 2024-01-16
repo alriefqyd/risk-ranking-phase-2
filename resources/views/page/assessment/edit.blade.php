@@ -12,9 +12,8 @@
             'isEdit' => true
         ])
     <div class="card-footer">
-        <button class="btn btn-secondary js-save-button js-btn-submit-assessment-non-confirm js-btn-submit-assessment
+        <button class="btn btn-secondary js-btn-submit-assessment-non-confirm js-btn-submit-assessment
          js-create-assessment"
-                disabled="disabled"
              data-status="draft">
            <span class="text-button loader-box loader-box-custom"  style="height: 21px">
                 Save As Draft <span class="m-l-5 loader-34 loader-34-custom d-none"></span>

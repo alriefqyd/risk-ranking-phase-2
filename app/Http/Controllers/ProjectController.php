@@ -6,6 +6,7 @@ use App\Events\Sending;
 use App\Models\Assessment;
 use App\Models\CapexInvestment;
 use App\Models\Criteria;
+use App\Models\CriteriasProjects;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\RiskAssessments;
@@ -478,6 +479,26 @@ class ProjectController extends Controller
         }
 
         return $response;
+    }
+
+    public function duplicate(Request $request){
+        try{
+            DB::beginTransaction();
+            $projects = Project::with(['assessment'])->where('id',$request->id)->first();
+            $projectService = new ProjectService();
+            $projectService->duplicate($projects);
+            DB::commit();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Duplicate Success'
+            ]);
+        } catch (Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'status' => 500,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
 }

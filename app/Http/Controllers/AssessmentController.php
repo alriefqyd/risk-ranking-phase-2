@@ -27,7 +27,7 @@ class AssessmentController extends Controller
         $this->authorize('read');
         $project_id = $request->id;
         $assessment = Assessment::with(['user','project'])->whereHas('project',function ($q){
-            return $q->filter(request(['q','owner','sponsor','category','type']));
+            return $q->filter(request(['q','owner','sponsor','category','type']))->where('presented_year', config('constants.project_presented_year'));
         });
 
         if($project_id){

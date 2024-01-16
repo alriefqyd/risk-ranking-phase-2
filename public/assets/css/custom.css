@@ -170,7 +170,7 @@
 
 @media only screen and (min-width: 481px){
     .img-responsive {
-        width: 35%;
+        width: 50%;
     }
 }
 
@@ -783,6 +783,13 @@
     left: 1.6em;
     -webkit-transform: rotate(295deg);
     transform: rotate(295deg);
+}
+
+.card-body-custom {
+    padding-left:0.1rem !important;
+    padding-right:0.1rem !important;
+    padding-top: 0.1rem; !important;
+    padding-bottom: 0.1rem; !important;
 }
 /**
 

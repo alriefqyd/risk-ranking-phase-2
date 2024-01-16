@@ -20,6 +20,7 @@ Route::get('/getDataGraph',[\App\Http\Controllers\HomeController::class,'getData
 Route::get('/project',[\App\Http\Controllers\ProjectController::class,'index'])->name('project ')->middleware('auth');
 Route::get('/project/year/{year}',[\App\Http\Controllers\ProjectController::class,'index'])->name('project.year ')->middleware('auth');
 Route::post('/project',[\App\Http\Controllers\ProjectController::class,'store'])->name('project.store ')->middleware('auth');
+Route::post('/project/duplicate',[\App\Http\Controllers\ProjectController::class,'duplicate'])->name('project.duplicate ')->middleware('auth');
 Route::post('/update-investment-strategy',[\App\Http\Controllers\ProjectController::class,'updateInvestmentStrategy'])->name('project.update-investment ')->middleware('auth');
 Route::get('/project/create',[\App\Http\Controllers\ProjectController::class,'create'])->name('project.create ')->middleware('auth');
 Route::put('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'update'])->name('project.update ')->middleware('auth');

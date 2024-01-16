@@ -40,17 +40,11 @@
                         <div class="col-sm-12 col-lg-12 col-xl-12">
                             <div class="table-responsive">
                                 <table class="table table-striped">
-                                    <thead class="bg-primary">
+                                    <thead  class="bg-primary">
                                     <tr class="text-center">
                                         <th>Project Name</th>
-                                        <th>Project Type</th>
                                         <th>Project Scope</th>
-                                        <th>Identify Main Equipment</th>
-                                        <th>Boundary and Assumption</th>
-                                        <th>Analysis of Option</th>
-                                        <th>Permit List</th>
-                                        <th>Schedule Project </th>
-                                        <th>Cost Estimate </th>
+                                        <th>Alternatives and Analysis of Alternatives</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -64,28 +58,10 @@
                                                     </a>
                                                 </td>
                                                 <td class="text-center">
-                                                    {!! $fel2?->project?->project_type !!}
-                                                </td>
-                                                <td class="text-center">
                                                     {!! $fel2?->project?->getCheckTemplate($fel2?->project_scope) !!}
                                                 </td>
                                                 <td class="text-center js-row-bc_status">
-                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->identify_main_equipment) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->boundary_and_assumption) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->analysis_of_option) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->permit_list) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->schedule_project) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->cost_estimate) !!}
+                                                    {!! $fel2?->project?->getCheckTemplate($fel2?->alternatives_and_analysis) !!}
                                                 </td>
                                                 <td class="text-center js-row-bc_status">
                                                     {{$fel2->status}}

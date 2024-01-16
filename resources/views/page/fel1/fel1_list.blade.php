@@ -41,15 +41,9 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead class="bg-primary">
-                                    <tr class="text-center">
+                                    <tr class="text-center f-12">
                                         <th>Project Name</th>
-                                        <th>Project Type</th>
                                         <th>Project Scope</th>
-                                        <th>Identified Parameter,
-                                            Requirement & Regulation</th>
-                                        <th>Alternative</th>
-                                        <th>List Of Stakeholder</th>
-                                        <th>Schedule Project </th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -63,22 +57,7 @@
                                                     </a>
                                                 </td>
                                                 <td class="text-center">
-                                                    {!! $fel1?->project?->project_type !!}
-                                                </td>
-                                                <td class="text-center">
                                                     {!! $fel1?->project?->getCheckTemplate($fel1?->project_scope) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->identified_parameter_requirement_regulation) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->alternatives) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->list_of_stakeholder) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $fel1?->project?->getCheckTemplate($fel1?->schedule_project) !!}
                                                 </td>
                                                 <td class="text-center js-row-bc_status">
                                                     {{$fel1->status}}

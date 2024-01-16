@@ -23,7 +23,7 @@ class Fel2Controller extends Controller
         $this->authorize('read');
         $project_id = $request->id;
         $fel2 = Fel2::with(['project','user'])->whereHas('project',function($q){
-            $q->filter(request(['q','owner','sponsor','category','type']));
+            $q->filter(request(['q','owner','sponsor','category','type']))->where('presented_year', config('constants.project_presented_year'));
         });
 
         if(Auth::user()->role == User::ROLE['admin-dept']){

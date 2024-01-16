@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Models\CapexInvestment;
+use App\Models\CriteriasProjects;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\Setting;
@@ -447,7 +448,64 @@ class ProjectService
         return $valueConvert;
     }
 
+    public function duplicate($projects){
+        $newProject = $projects->replicate();
+        $newProject->project_name = $projects->project_name . ' - Copy';
+        if(isset($this->project_no)){
+            $newProject->project_no = $projects->project_no . 'C-' .uniqid();
+        }
+        $newProject->save();
 
+        if(isset($projects->assessment)){
+            $newAssessment = $projects->assessment->replicate();
+            $newAssessment->project_id = $newProject->id;
+            $newAssessment->save();
+        }
+
+        $budgetTool = CriteriasProjects::where('project_id', $projects->id)->get();
+        foreach ($budgetTool as $bt){
+            $newBudgetTool = $bt->replicate();
+            $newBudgetTool->project_id = $newProject->id;
+            $newBudgetTool->save();
+        }
+
+
+        if(isset($projects->fel1)){
+            $newFel1 = $projects->fel1->replicate();
+            $newFel1->project_id = $newProject->id;
+            $newFel1->save();
+        }
+
+        if(isset($projects->fel2)){
+            $newFel2 = $projects->fel2->replicate();
+            $newFel2->project_id = $newProject->id;
+            $newFel2->save();
+        }
+
+        if(isset($projects->fel3)){
+            $newFel3 = $projects->fel3->replicate();
+            $newFel3->project_id = $newProject->id;
+            $newFel3->save();
+        }
+
+        if(isset($projects->business_case)){
+            $newBc = $projects->business_case->replicate();
+            $newBc->project_id = $newProject->id;
+            $newBc->save();
+
+            if(isset($projects->business_case->riskAssessment)){
+                $newRiskAssessment = $projects->business_case->riskAssessment->replicate();
+                $newRiskAssessment->business_case_assessment_id = $newBc->id;
+                $newRiskAssessment->save();
+            }
+        }
+
+        if(isset($projects->cost_benefits)){
+            $newCostBenefit = $projects->cost_benefits->replicate();
+            $newCostBenefit->project_id = $newProject->id;
+            $newCostBenefit->save();
+        }
+    }
 
 }
 

@@ -90,7 +90,7 @@
             <button class="btn btn-danger js-back-bc">Back</button>
             <button class="btn btn-primary js-save-bc" data-status="publish">
             <span class="text-button loader-box loader-box-custom"  style="height: 21px">
-                Continue <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
+                Save <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
             </span>
             </button>
         </div>

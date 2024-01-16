@@ -33,7 +33,7 @@
                                         ])
                                 </div>
                                 <div class="card-footer">
-                                    <button class="btn btn-primary js-next-capex-investment-form">Submit and Next</button>
+                                    <button class="btn btn-primary js-next-capex-investment-form">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <p class="mb-0"><small class="text-danger js-text-validation-basket"></small></p>
-                                    <button type="submit" class="btn btn-primary js-button-investment_category" disabled="disabled">Submit</button>
+                                    <button type="submit" class="btn btn-primary js-button-investment_category" disabled="disabled">Save</button>
                                     <button class="btn btn-secondary">Cancel</button>
                                     <button class="btn btn-secondary js-back-capex-investment-form">Back To Project Detail Form</button>
                                 </div>

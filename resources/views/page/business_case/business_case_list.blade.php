@@ -43,21 +43,10 @@
                                     <thead class="bg-primary">
                                     <tr class="text-center">
                                         <th>Project Name</th>
-                                        <th>Project Type</th>
-                                        <th>Problem Statement And Objective</th>
-                                        <th>Project Alternative</th>
                                         <th>Project Scope of Work</th>
-                                        <th>Major Equipment</th>
-                                        <th>Utility Requirements</th>
-                                        <th>Permitting</th>
-                                        <th>Social, Community and Government</th>
                                         <th>Cost Estimate</th>
                                         <th>Financial Evaluation</th>
                                         <th>Risk Assessment</th>
-                                        <th>Additional Information</th>
-                                        <th>NPV ($)</th>
-                                        <th>IRR (%)</th>
-                                        <th>Payback Period</th>
                                         <th>Status</th>
                                     </tr>
                                     </thead>
@@ -70,29 +59,8 @@
                                                         <p class="alert-color-green">{{$business_case?->project->project_name}}</p>
                                                     </a>
                                                 </td>
-                                                <td class="text-center">
-                                                    {!! $business_case?->project?->project_type !!}
-                                                </td>
-                                                <td class="text-center">
-                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->problem_statement_and_objective) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->project_alternatives) !!}
-                                                </td>
                                                 <td class="text-center js-row-bc_status">
                                                     {!! $business_case?->project?->getCheckTemplate($business_case?->project_scope_of_work) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->major_equipment) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->utility_requirements) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->permitting) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->social_community_and_government) !!}
                                                 </td>
                                                 <td class="text-center js-row-bc_status">
                                                     {!! $business_case?->project?->getCheckTemplate($business_case?->cost_estimate > 0 ? 1 : 0) !!}
@@ -102,18 +70,6 @@
                                                 </td>
                                                 <td class="text-center js-row-bc_status">
                                                     {!! $business_case?->project?->getCheckTemplate($business_case?->risk_assessment) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {!! $business_case?->project?->getCheckTemplate($business_case?->additional_information) !!}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {{$business_case?->npv,'0',',','.'}}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {{$business_case->irr}}
-                                                </td>
-                                                <td class="text-center js-row-bc_status">
-                                                    {{$business_case->payback_period}} Years
                                                 </td>
                                                 <td class="text-center js-row-bc_status">
                                                     {{$business_case->status}}

@@ -24,7 +24,7 @@ class Fel1Controller extends Controller
         $this->authorize('read');
         $project_id = $request->id;
         $fel1 = Fel1::with(['project.assessment','user'])->whereHas('project',function ($q){
-            return $q->filter(request(['q','owner','sponsor','category','type']));
+            return $q->filter(request(['q','owner','sponsor','category','type']))->where('presented_year', config('constants.project_presented_year'));
         });
         if($project_id){
             $fel1 = $fel1->orwhere('id',$project_id);

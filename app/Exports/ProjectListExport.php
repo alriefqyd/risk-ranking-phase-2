@@ -30,7 +30,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
 
     public function view(): View
     {
-        $cb = Project::with(['owners', 'sponsors', 'assessment', 'baskets', 'subBaskets'])
+        $cb = Project::with(['ownersProject', 'sponsorsProject', 'assessment', 'baskets', 'subBaskets'])
             ->where('presented_year', $this->presented_year)
             ->get();
         return view('page.project.export_project', [

@@ -41,7 +41,7 @@
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead class="bg-primary">
-                                    <tr class="text-center">
+                                    <tr class="text-center f-12">
                                         <th>Project Name</th>
                                         <th>Project Type</th>
                                         <th>Problem Statement</th>

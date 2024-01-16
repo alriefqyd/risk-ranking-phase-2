@@ -44,7 +44,6 @@
                                     <thead class="bg-primary">
                                     <tr class="text-center">
                                         <th>Project Name</th>
-                                        <th>Project Type</th>
                                         <th>Executive Summary</th>
                                         <th>Problem Statement</th>
                                         <th>Project Scope</th>
@@ -64,9 +63,6 @@
                                                     <a class="js-set-session" data-id="{{$fel3?->project->id}}" href="/project/{{$fel3?->project->id}}">
                                                         <p class="alert-color-green">{{$fel3?->project->project_name}}</p>
                                                     </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    {!! $fel3?->project?->project_type !!}
                                                 </td>
                                                 <td class="text-center">
                                                     {!! $fel3?->project?->getCheckTemplate($fel3?->executive_summary) !!}

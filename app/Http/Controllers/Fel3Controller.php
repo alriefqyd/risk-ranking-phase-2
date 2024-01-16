@@ -25,7 +25,7 @@ class Fel3Controller extends Controller
         $this->authorize('read');
         $project_id = $request->id;
         $fel3 = Fel3::with(['project','user'])->whereHas('project',function($q){
-            $q->filter(request(['q','owner','sponsor','category','type']));
+            $q->filter(request(['q','owner','sponsor','category','type']))->where('presented_year', config('constants.project_presented_year'));
         });
 
         if($project_id){

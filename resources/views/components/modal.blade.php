@@ -52,3 +52,23 @@
         </div>
     </div>
 </div>
+
+{{-- modal for duplicate data --}}
+<div class="modal fade" id="projectDuplicate" tabindex="-1" role="dialog" aria-labelledby="projectDuplicate" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Duplicate Project</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" value="" class="js-id-duplicate"/>
+                Are you sure you want to duplicate this project ?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-success js-confirm-duplicate-project" type="button">Duplicate</button>
+            </div>
+        </div>
+    </div>
+</div>

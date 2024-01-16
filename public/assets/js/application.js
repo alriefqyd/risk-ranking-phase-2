@@ -137,6 +137,7 @@ $(function() {
     /**
      * Delete Project
      */
+
     $('.js-delete-project').on('click', function () {
         var _this = $(this);
         var _parent = _this.closest('#projectDelete');
@@ -2727,6 +2728,48 @@ $(function() {
     /**
      * Handle Project Form
      */
+
+
+    $('#projectDuplicate').on('shown.bs.modal', function (e) {
+        var relatedTarget = $(e.relatedTarget)
+        var _id = relatedTarget.data('id');
+        var _this = $(this);
+        _this.find('.js-id-duplicate').val(_id)
+    })
+
+    $('#projectDuplicate').on('hide.bs.modal', function (e) {
+        var relatedTarget = $(e.relatedTarget)
+        var _id = relatedTarget.data('id');
+        var _this = $(this);
+        _this.find('.js-id-duplicate').val('')
+    })
+
+    $(document).on('click','.js-confirm-duplicate-project', function(){
+        var _id = $('.js-id-duplicate').val();
+        $.ajax({
+            'method': 'POST',
+            'url' : '/project/duplicate/',
+            data: {id : _id},
+            success: function(result){
+               if(result.status == 200){
+                   $('#projectDuplicate').modal('hide');
+                   notification('success',result.message,'','success');
+                   window.location.href = '/project/'
+               } else {
+                   $('#projectDuplicate').modal('hide');
+                   notification('danger',result.message,'','danger');
+               }
+
+            }
+        })
+    })
+
+    $(document).on('change', '.js-search-project', function(){
+        var _this = $(this);
+        var _form = _this.closest('form');
+
+        _form.submit();
+    });
 
     var _project_form = $('.js-project-form')
     _project_form.validate({
