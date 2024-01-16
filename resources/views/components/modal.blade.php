@@ -62,7 +62,7 @@
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input type="text" value="" class="js-id-duplicate"/>
+                <input type="hidden" value="" class="js-id-duplicate"/>
                 Are you sure you want to duplicate this project ?
             </div>
             <div class="modal-footer">
