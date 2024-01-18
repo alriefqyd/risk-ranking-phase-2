@@ -73,4 +73,23 @@ class Assessment extends Model
 
         return false;
     }
+
+    public function breakdownKeyPerformanceMetric(){
+        $data = $this->key_performance_metric_text;
+        $json = json_decode($data, true);
+        $list = [];
+
+        foreach ($json as $item) {
+            $list[] = [
+                'description' => $item['description'],
+                'uom' => $item['uom'],
+                'time_benefit' => $item['time_benefit'],
+                'remarks' => $item['remarks'],
+            ];
+        }
+
+        return $list;
+
+    }
+
 }

@@ -33,6 +33,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
         $cb = Project::with(['ownersProject', 'sponsorsProject', 'assessment', 'baskets', 'subBaskets'])
             ->where('presented_year', $this->presented_year)
             ->get();
+
         return view('page.project.export_project', [
             'project' => $cb
         ]);
@@ -52,15 +53,15 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
             ],
         ]);
 
-        $sheet->getStyle('A1:CC3')
+        $sheet->getStyle('A1:BR3')
             ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
-        $sheet->getStyle('A1:CC3')->getFill()
+        $sheet->getStyle('A1:BR3')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('3fa7fd');
         //$sheet->getColumnDimension('A')->setWidth('30'); work if shouldAutoSize is disable
 
 
-        $column = "A1:CC3".($columnSize) ;
+        $column = "A1:BR3".($columnSize) ;
         $sheet->getStyle($column)->applyFromArray([
             'borders' => [
                 'allBorders' => [
@@ -82,9 +83,10 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     public function columnFormats(): array
     {
         return [
-            'AE' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
-            'CA' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
-            'CB' => NumberFormat::FORMAT_PERCENTAGE
+            'W' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'AK' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'BP' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'BQ' => NumberFormat::FORMAT_PERCENTAGE
         ];
     }
 }
