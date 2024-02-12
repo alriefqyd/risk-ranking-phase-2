@@ -188,11 +188,14 @@
                                                 </td>
                                             @endcan
                                             <td>
-                                                <a class="js-duplicate-project" data-bs-toggle="modal" data-original-title="test"
-                                                   data-id="{{$project->id}}"
-                                                   data-bs-target="#projectDuplicate">
-                                                    <i class="cursor-pointer" style="color: #246a5d" data-feather="copy"></i>
-                                                </a>
+                                                <button class="example-popover btn" data-bs-trigger="hover" data-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="" data-offset="-20px -20px" data-bs-original-title="Duplicate">
+                                                    <a class="js-duplicate-project" data-bs-toggle="modal" data-original-title="test"
+                                                       data-id="{{$project->id}}"
+                                                       data-bs-target="#projectDuplicate">
+                                                            <i class="cursor-pointer" style="color: #246a5d" data-feather="copy"></i>
+                                                    </a>
+                                                </button>
+
                                             </span>
                                             </td>
                                         </tr>
