@@ -134,7 +134,7 @@
                             <div class="checkbox-rect">
                                 <input id="checkbox-problem-statement"
                                        {{$project?->assessment?->problems_statement == 1 ? 'checked' : ''}}
-                                       class="js-checkbox-assessment js-project-schedule" type="checkbox">
+                                       class="js-checkbox-assessment js-problem-statement" type="checkbox">
                                 <label for="checkbox-problem-statement"></label>
                             </div>
                         </div>
