@@ -51,7 +51,7 @@ class ProjectService
 
     public function projectNotAuthorized(Project $project){
         return (!$this->isAdmin &&
-            $project->owner != Auth::user()->department);
+            $project->operation_area != Auth::user()->department);
     }
 
     public function priceToText($price){
