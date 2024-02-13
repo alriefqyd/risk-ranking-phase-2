@@ -116,7 +116,7 @@
                                 <thead class="bg-primary">
                                 <tr class="text-center f-12">
                                     <th scope="col">Priority Level</th>
-                                    <th scope="col" >Project No</th>
+                                    {{--<th scope="col" >Project No</th>--}}
                                     <th scope="col" >Project Name</th>
                                     <th scope="col">Project Level Assessment</th>
                                     <th scope="col">FEL 1</th>
@@ -141,9 +141,9 @@
                                             <td>
                                                 {!! $project?->getPriorityTemplate($project?->business_case?->riskAssessment?->priority_level)!!}
                                             </td>
-                                            <td>
+                                            {{--<td>
                                                 {{$project->project_number ?: '-'}}
-                                            </td>
+                                            </td>--}}
                                             <td>
                                                 <a href="/project/{{$project->id}}">
                                                     <p class="alert-color-green">{{$project->project_name}}</p>

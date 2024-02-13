@@ -1,7 +1,7 @@
 
 <div class="row">
     <div class="col-md-3 m-l-40 m-t-15">
-        <h6 class="font-roboto title">Budget Tool</h6>
+        <h6 class="font-roboto title">Prioritization Criteria</h6>
     </div>
 </div>
 <div class="row js-form-project-edit center-content p-4 mt-1 ">
@@ -47,7 +47,7 @@
                 </tbody>
             </table>
         </div>
-        <button type="submit" class="btn btn-success js-btn-submit-criteria mt-3 float-end" disabled>Submit</button>
+        <button type="submit" class="btn btn-success js-btn-submit-criteria mt-3 float-end" disabled>Save</button>
     </div>
     </form>
 </div>

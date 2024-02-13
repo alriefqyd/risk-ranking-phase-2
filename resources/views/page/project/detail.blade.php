@@ -26,13 +26,13 @@
                             @if($project->isHaveCriterias())
                                 <li class="nav-item">
                                     <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'budget_tool_training' ? 'active' : ''}}" id="budget_tool_training-tabs" data-bs-toggle="tab" href="#budget_tool_training" role="tab" aria-controls="budget_tool_training" aria-selected="false">
-                                        Budget Tool {!!sizeof($project?->criterias) > 0 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                        Prioritization Criteria {!!sizeof($project?->criterias) > 0 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
                                     </a>
                                 </li>
                             @endif
                             <li class="nav-item">
                                 <a class="nav-link js-reset-check-count {!! $project->isHaveCriterias() && sizeof($project->criterias) < 1 ? 'disabled' : '' !!} {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">
-                                    Assessment {!!$project?->assessment ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
+                                    Level Assessment {!!$project?->assessment ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
                                 </a>
                             </li>
                             <li class="nav-item">
