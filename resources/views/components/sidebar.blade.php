@@ -1,6 +1,6 @@
 <header class="main-nav">
     <div class="sidebar-user text-center">
-        <div class="badge-bottom"></div><a href="user-profile.html">
+        <div class="badge-bottom"></div><a href="">
             <h6 class="mt-3 f-14 f-w-600">{{auth()->user()->name}}</h6></a>
         <p class="mb-0 font-roboto">{{auth()->user()->role}}</p>
     </div>
@@ -24,11 +24,13 @@
                             <i data-feather="box"></i><span>Project</span></a>
                         <ul class="nav-submenu menu-content">
                             <li><a class="{{request()->is('project*') ? 'active' : ''}}" href="/project">Project List</a></li>
-                            <li><a class="{{request()->is('assessment*') ? 'active' : ''}}" href="/assessment">Project Level Assessment List</a></li>
-                            <li><a class="{{request()->is('fel1*') ? 'active' : ''}}" href="/fel1">FEL 1 List</a></li>
-                            <li><a class="{{request()->is('fel2*') ? 'active' : ''}}" href="/fel2">FEL 2 List</a></li>
-                            <li><a class="{{request()->is('fel3*') ? 'active' : ''}}" href="/fel3">FEL 3 List</a></li>
-                            <li><a class="{{request()->is('business-case*') ? 'active' : ''}}" href="/business-case">Business Case List</a></li>
+                            @if(auth()->user()->role != 'Admin Department')
+                                <li><a class="{{request()->is('assessment*') ? 'active' : ''}}" href="/assessment">Project Level Assessment List</a></li>
+                                <li><a class="{{request()->is('fel1*') ? 'active' : ''}}" href="/fel1">FEL 1 List</a></li>
+                                <li><a class="{{request()->is('fel2*') ? 'active' : ''}}" href="/fel2">FEL 2 List</a></li>
+                                <li><a class="{{request()->is('fel3*') ? 'active' : ''}}" href="/fel3">FEL 3 List</a></li>
+                                <li><a class="{{request()->is('business-case*') ? 'active' : ''}}" href="/business-case">Business Case List</a></li>
+                            @endif
                         </ul>
                     </li>
                 </ul>
