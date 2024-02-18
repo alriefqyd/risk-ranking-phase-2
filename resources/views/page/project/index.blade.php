@@ -209,6 +209,15 @@
                             </table>
                         </div>
                     </div>
+                    @if($projectList->total() > 19)
+                        <div class="col-sm-12 mt-3">
+                            <nav aria-label="..." class="p-2">
+                                <ul class="pagination pagination-primary justify-content-end">
+                                    {{$projectList->onEachSide(1)->links()}}
+                                </ul>
+                            </nav>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

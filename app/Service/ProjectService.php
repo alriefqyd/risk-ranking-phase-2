@@ -64,7 +64,7 @@ class ProjectService
      * @param $paginate
      * @return mixed
      */
-    public function getAllProject($paginate, $year){
+    public function getAllProject($paginate, $year, $isHomePage = null){
         $department = auth()->user()->department;
 
         if(!isset($year)) {
@@ -89,7 +89,8 @@ class ProjectService
         }
 
         if($year) {
-            $project = $project->orderBy('created_at', 'DESC')->paginate(20)->withQueryString();
+            $project = $project->orderBy('created_at', 'DESC');
+            if(!$isHomePage) $project = $project->paginate(20)->withQueryString();
         }
 
         if($paginate && !$year){
