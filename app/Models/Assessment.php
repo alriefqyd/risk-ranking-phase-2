@@ -92,4 +92,21 @@ class Assessment extends Model
 
     }
 
+
+    public function breakdownLocationOfAssetCapitalization(){
+        $data = $this->location_of_asset_capitalization;
+        $json = json_decode($data, true);
+        if(!$data) return [];
+        $list = [];
+        foreach ($json as $item) {
+            $list[] = [
+                'area' => $item['area'],
+                'cost_center' => $item['cost_center'],
+            ];
+        }
+
+        return $list;
+
+    }
+
 }

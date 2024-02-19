@@ -317,4 +317,18 @@ class Project extends Model
             return $isMessage ? 'Your complexity score doesnt match any condition of business case' : false;
         }
     }
+
+    public function breakdownPrioritizationCriteria(){
+        if(!$this->criterias) return null;
+        $data = [];
+        foreach ($this->criterias as $criteria){
+            $temp = [
+                'question' => $criteria->title,
+                'answer' => $criteria->answer
+            ];
+            array_push($data, $temp);
+        }
+
+        return $data;
+    }
 }

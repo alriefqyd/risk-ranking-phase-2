@@ -109,7 +109,7 @@ class BusinessCaseAssessmentController extends Controller
                 'utility_requirements' => $request->utility_requirements,
                 'permitting' => $request->permitting,
                 'social_community_and_government' => $request->social_community_and_government,
-                'cost_estimate' => $request->cost_estimate,
+                'cost_estimate' => $projectService->convertCurrency($request->cost_estimate),
                 'financial_evaluation' => $request->financial_evaluation,
                 'risk_assessment' => $request->risk_assessment,
                 'additional_information' => $request->additional_information,
@@ -257,7 +257,7 @@ class BusinessCaseAssessmentController extends Controller
             $businessCaseAssessment->utility_requirements = $request->utility_requirements;
             $businessCaseAssessment->permitting = $request->permitting;
             $businessCaseAssessment->social_community_and_government = $request->social_community_and_government;
-            $businessCaseAssessment->cost_estimate = $request->cost_estimate;
+            $businessCaseAssessment->cost_estimate = $projectService->convertCurrency($request->cost_estimate);
             $businessCaseAssessment->financial_evaluation = $request->financial_evaluation;
             $businessCaseAssessment->risk_assessment = $request->risk_assessment;
             $businessCaseAssessment->additional_information = $request->additional_information;

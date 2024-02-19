@@ -6,6 +6,7 @@
             <th rowspan="3">Project Name</th>
             <th rowspan="3">Basket</th>
             <th rowspan="3">Sub Basket</th>
+            <th rowspan="3">Sub Basket Categories</th>
             <th rowspan="3">Owner</th>
             <th rowspan="3">Project Sponsor</th>
             <th rowspan="3">BC Presenter</th>
@@ -13,11 +14,12 @@
             <th rowspan="3">Narrative</th>
             <th rowspan="3">Project Submit Date</th>
             <th rowspan="3">Assessment of Level Project</th>
-            <th rowspan="1" colspan="28">1. Form Assessment of Project Level</th>
+            <th rowspan="1" colspan="29">1. Form Assessment of Project Level</th>
             <th rowspan="1" colspan="2">2. Form Project Level Complexity</th>
             <th rowspan="1" colspan="1">2. Form Fel 1 Engineering Report</th>
             <th rowspan="1" colspan="3">3. Form Fel 2 Engineering Report</th>
-            <th rowspan="1" colspan="24">4. Project FEL 3 or Business Case Form</th>
+            <th rowspan="1" colspan="25">4. Project FEL 3 or Business Case Form</th>
+            <th rowspan="3">Prioritization Criteria</th>
         </tr>
         {{-- column header row 2 start here--}}
         <tr>
@@ -48,6 +50,7 @@
             <td rowspan="2">Hazop Study</td>
             <td rowspan="2">Cost Estimate</td>
             <td rowspan="2">Complexity Score</td>
+            <td rowspan="2">Location of Asset Capitalization</td>
             <td rowspan="2">Assessment of Level Project</td>
             <td rowspan="2">1. Cost Estimate</td>
             <td rowspan="2">2. Complexity Score</td>
@@ -101,6 +104,7 @@
                 <td>{{$p->project_name}}</td>
                 <td>{{$p->baskets?->name}}</td>
                 <td>{{$p->subBaskets?->name}}</td>
+                <td>{{$p->categories?->name}}</td>
                 <td>{{$p->ownersProject?->name}}</td>
                 <td>{{$p->sponsorsProject?->name}}</td>
                 <td>{{$p->bc_presenter}}</td>
@@ -161,6 +165,19 @@
                 <td>{{ html_entity_decode(strip_tags($p->assessment?->hazop_study_text)) }}</td>
                 <td>{!! ($p->assessment?->cost_estimate_text)  !!}</td>
                 <td>{{ html_entity_decode(strip_tags($p->assessment?->complexity_score_assessment)) }}</td>
+                <td>
+                    @if ($p->assessment)
+                        <ul>
+                            @foreach ($p->assessment?->breakdownLocationOfAssetCapitalization() ?? [] as $value)
+                                <li>
+                                    {{$loop->index + 1}}).
+                                    Area: {{ $value['area'] ?? "" }},
+                                    Cost Center: {{ $value['cost_center'] ?? "" }}.
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </td>
                 <td>{{ html_entity_decode(strip_tags($p->assessment?->level_project_text)) }}</td>
                 <td>{{$p?->assessment?->cost_estimate ? '1' : '0'}}</td>
                 <td>{{$p?->assessment?->complexity_score_assessment ? '1' : '0'}}</td>
@@ -196,6 +213,18 @@
                 <td>{!!$p?->business_case?->npv ?: '0' !!}</td>
                 <td>{{($p?->business_case?->irr / 100) ?: '0'}}</td>
                 <td>{{$p?->business_case?->payback_period ?: '0'}}</td>
+                <td>
+                    <div class="row">
+                        @foreach($p->breakdownPrioritizationCriteria() as $data)
+                        <div class="col-md-12">
+                            <p>{{$loop->index + 1}}) </p>
+                            <p>Criteria : {{$data['question']}}</p>
+                            <p>Answer : {{$data['answer']}}</p>
+                        </div>
+                        @endforeach
+                    </div>
+                </td>
+
             </tr>
         @endforeach
     </tbody>
