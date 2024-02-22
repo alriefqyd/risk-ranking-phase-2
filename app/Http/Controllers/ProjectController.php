@@ -100,7 +100,7 @@ class ProjectController extends Controller
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
         /*$capexCategories =  CapexInvestment::with('basket.subBasket.categories')->where('type','CAPEX_INVESTMENT')->get();*/
-        $basketList = CapexInvestment::where('type','basket')->get();
+        $basketList = CapexInvestment::where('type','basket')->where('status','ACTIVE')->get();
 
         return view('page.project.create',[
             'projectCategory' => $this->projectCategory,
@@ -213,7 +213,7 @@ class ProjectController extends Controller
         }
 
 
-        $basketList = CapexInvestment::where('type','basket')->get();
+        $basketList = CapexInvestment::where('type','basket')->where('status','ACTIVE')->get();
 
         return view('page.project.detail',[
             'project' => $project,
