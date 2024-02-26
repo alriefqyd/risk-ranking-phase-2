@@ -13,8 +13,7 @@
                 <div class="js-level-1">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="checkbox checkbox-primary height-40">
-                                <input id="checkbox-{{$investment->key}}"
+                            <div class="checkbox checkbox-primary height-40"><input id="checkbox-{{$investment->key}}"
                                        data-id="{{$investment->key}}"
                                        name="checkbox_investment"
                                        value="{{$investment->key}}"
@@ -55,16 +54,15 @@
                                     <div class="row m-l-45 m-t-0 ">
                                         <div class="col-md-12">
                                             <div class="checkbox checkbox-primary checkbox-width-auto height-35">
-                                                <input id="checkbox_level3-{{$c->key}}"
+                                                <input id="checkbox_level3-21{{$c->key}}"
                                                        data-id="{{$c->key}}"
                                                        name="checkbox_child_3"
-                                                       data-url="/getSubBasetByBasket"
                                                        value="{{$c->key}}"
                                                        {{!empty($project->investment_strategy) && $c->key != $project->getInvestmentStrategy()?->level3 ? 'disabled' : ''}}
                                                        {{$c->key == $project->getInvestmentStrategy()?->level3 ? 'checked' : ''}}
                                                        class="js-checkbox-{{$c->key}} js-checkbox-investment-strategy-level-3"
                                                        type="checkbox">
-                                                <label for="checkbox_level3-{{$c->key}}">{{$c->value}}</label>
+                                                <label for="checkbox_level3-21{{$c->key}}">{{$c->value}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -1052,7 +1050,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentFel1 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
                                                 <label>FEL 1 <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_fel1 col-md-10"
+                                                <input class="form-control  js-upload-attachment js-assessment-attachment_fel1 col-md-10"
                                                        data-validated="{{isset($attachmentFel1) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="9" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
@@ -1075,7 +1073,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentFel2 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))
                                                 <label>FEL 2 <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_fel2 col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_fel2 col-md-10"
                                                        data-validated="{{isset($attachmentFel2) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="10" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))

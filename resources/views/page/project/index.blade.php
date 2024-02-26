@@ -214,8 +214,13 @@
                             <nav aria-label="..." class="p-2">
                                 <ul class="pagination pagination-primary justify-content-end">
                                     {{$projectList->onEachSide(1)->links()}}
+
                                 </ul>
+                                <small class="pagination justify-content-end mt-2"> showing {{$projectList->firstItem()}} -
+                                    {{$projectList->lastItem()}} of {{$projectList->total()}} records</small>
+
                             </nav>
+
                         </div>
                     @endif
                 </div>
