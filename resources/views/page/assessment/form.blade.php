@@ -1050,7 +1050,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentFel1 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
                                                 <label>FEL 1 <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control  js-upload-attachment js-assessment-attachment_fel1 col-md-10"
+                                                <input class="form-control js-attachment-mandatory js-mandatory-conditional-attachment  js-upload-attachment js-assessment-attachment_fel1 col-md-10"
                                                        data-validated="{{isset($attachmentFel1) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="9" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
@@ -1073,7 +1073,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentFel2 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))
                                                 <label>FEL 2 <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_fel2 col-md-10"
+                                                <input class="form-control js-attachment-mandatory js-mandatory-conditional-attachment js-upload-attachment js-assessment-attachment_fel2 col-md-10"
                                                        data-validated="{{isset($attachmentFel2) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="10" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))

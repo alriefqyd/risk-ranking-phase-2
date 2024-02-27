@@ -458,6 +458,17 @@ $(function() {
         var _size = _this[0].files[0].size;
         var _listExtension = DOCUMENT_EXTENSION;
 
+        if($(this).hasClass('js-mandatory-conditional-attachment')){
+            if($(this).val() != ''){
+                var attachmentConditional = $('.js-mandatory-conditional-attachment').not($(this))
+                $.each(attachmentConditional, function(){
+                    $(this).siblings('label').find('.text-danger').remove()
+                    $(this).removeClass('js-attachment-mandatory');
+                })
+            }
+
+        }
+
         var _mandatory_attachment = $(this).closest('table').find('.js-attachment-mandatory').length;
         if (_this.hasClass('js-upload-zip')) {
             _listExtension = ZIP_EXTENSION.concat(DOCUMENT_EXTENSION);
