@@ -78,7 +78,7 @@
                                 <div class="row mt-0">
                                     <div class="col-md-2 m-l-5 p-0">
                                         <div class="mb-2">
-                                            <select name="sponsor" data-placeholder="Select Sponsor Area" class="js-search-project js-example-basic-single col-sm-12 select2">
+                                            <select name="sponsor_area" data-placeholder="Select Sponsor Area" class="js-search-project js-example-basic-single col-sm-12 select2">
                                                 <option></option>
                                                 @foreach($subDepartment as $sd)
                                                     <option {{$sd->id == request('sponsor_area') ? 'selected' : ''}} value="{{$sd->id}}">{{$sd->name}}</option>

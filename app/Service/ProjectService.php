@@ -78,7 +78,7 @@ class ProjectService
 
         $project = Project::with(['createdBy','assessment','fel1','fel2','fel3',
             'business_case','cost_benefits'])
-            ->filter(request(['q','owner','sponsor','category','type']))->where('presented_year', $year);
+            ->filter(request(['q','operation_area','sponsor_area','category','type']))->where('presented_year', $year);
 
 
         /*
