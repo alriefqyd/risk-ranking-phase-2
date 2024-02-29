@@ -100,12 +100,12 @@ class Project extends Model
     }
 
     public function scopeFilter($query, array $filters){
-        $query->when($filters['owner'] ?? false, fn($query, $owner) =>
-        $query->where('owner', '=', $owner)
+        $query->when($filters['operation_area'] ?? false, fn($query, $owner) =>
+        $query->where('operation_area', '=', $owner)
         );
 
-        $query->when($filters['sponsor'] ?? false, fn($query, $sponsor) =>
-        $query->where('sponsor', '=', $sponsor)
+        $query->when($filters['sponsor_area'] ?? false, fn($query, $sponsor) =>
+        $query->where('sponsor_area', '=', $sponsor)
         );
 
         $query->when($filters['category'] ?? false, fn($query, $category) =>

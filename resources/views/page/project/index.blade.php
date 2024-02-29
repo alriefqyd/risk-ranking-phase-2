@@ -66,10 +66,10 @@
                                     </div>
                                     <div class="col-md-2 m-l-5 p-0">
                                         <div class="mb-2">
-                                            <select name="owner" data-placeholder="Select Owner Area" class="js-example-basic-single js-search-project col-sm-12 select2">
+                                            <select name="operation_area" data-placeholder="Select Operation Area" class="js-example-basic-single js-search-project col-sm-12 select2">
                                                 <option></option>
                                                 @foreach($department as $d)
-                                                    <option {{$d->id == request('owner') ? 'selected' : ''}} value="{{$d->id}}">{{$d->name}}</option>
+                                                    <option {{$d->id == request('operation_area') ? 'selected' : ''}} value="{{$d->id}}">{{$d->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -78,10 +78,10 @@
                                 <div class="row mt-0">
                                     <div class="col-md-2 m-l-5 p-0">
                                         <div class="mb-2">
-                                            <select name="sponsor" data-placeholder="Select Sponsor" class="js-search-project js-example-basic-single col-sm-12 select2">
+                                            <select name="sponsor" data-placeholder="Select Sponsor Area" class="js-search-project js-example-basic-single col-sm-12 select2">
                                                 <option></option>
                                                 @foreach($subDepartment as $sd)
-                                                    <option {{$sd->id == request('sponsor') ? 'selected' : ''}} value="{{$sd->id}}">{{$sd->name}}</option>
+                                                    <option {{$sd->id == request('sponsor_area') ? 'selected' : ''}} value="{{$sd->id}}">{{$sd->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

@@ -1028,7 +1028,7 @@ $(function() {
     function getIntervalScore(_val){
         if(_val > 3 && _val < 11) return 0;
         if(_val > 10 && _val < 17) return 1;
-        if(_val > 17) return 2;
+        if(_val >= 17) return 2;
         return null;
     }
 
