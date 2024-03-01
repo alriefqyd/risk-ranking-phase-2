@@ -72,62 +72,82 @@ class HomeController extends Controller
    }
 
     public function getDataGraph(Request $request){
-        $project_category = [Setting::sustaining,Setting::r_and_d, Setting::growth];
-        $label = [Setting::sustaining,Setting::r_and_d,Setting::growth];
-        $margin = array();
-        $maintain = array();
-        $hsor = array();
-        $sustainability = array();
-        $administrative = array();
-        $engineering = array();
-        $exploration = array();
-        $innovation_technology = array();
-        $volume_growth = array();
-        $volume_replacement = array();
 
-        foreach ($project_category as $l){
-            array_push($margin,$this->getDataByProjectType(Setting::MARGIN,$l));
-            array_push($maintain,$this->getDataByProjectType(Setting::MAINTAIN_CAPACITY,$l));
-            array_push($hsor,$this->getDataByProjectType(Setting::HEALTH_AND_SAFETY,$l));
-            array_push($sustainability,$this->getDataByProjectType(Setting::SUSTAINABILITY,$l));
-            array_push($administrative,$this->getDataByProjectType(Setting::ADMINISTRATIVE_IMPROVEMENTS,$l));
-            array_push($engineering,$this->getDataByProjectType(Setting::ENGINEERING,$l));
-            array_push($exploration,$this->getDataByProjectType(Setting::EXPLORATION,$l));
-            array_push($innovation_technology,$this->getDataByProjectType(Setting::INNOVATION_AND_TECHNOLOGY,$l));
-            array_push($volume_growth,$this->getDataByProjectType(Setting::VOLUME_GROWTH,$l));
-            array_push($volume_replacement,$this->getDataByProjectType(Setting::VOLUME_REPLACEMENT,$l));
-        }
+       $project = $this->getDataByProjectType();
+       $investmentStrategy = $this->getInvestmentStrategy($project);
+       $basket = $this->getBasketChart($project);
+       if($request->type == 'investment_strategy') return $investmentStrategy;
+       if($request->type == 'basket') return $basket;
 
-        $result = array(
-            'label' => $label,
-            'margin' => $margin,
-            'administrative' => $administrative,
-            'maintain' => $maintain,
-            'hsor' => $hsor,
-            'sustainability' => $sustainability,
-            'engineering' => $engineering,
-            'exploration' => $exploration,
-            'innovation_technology' => $innovation_technology,
-            'volume_growth' => $volume_growth,
-            'volume_replacement' => $volume_replacement,
-        );
-
-        return response()->json($result);
+       return null;
     }
 
-    public function getDataByProjectType($pt,$pc){
+    public function getBasketChart($project){
+        $countSubBasket = [];
+
+        foreach ($project as $p) {
+
+            $subBasket = $p->sub_basket;
+            $basket = $p->baskets->code;
+            if (!isset($countSubBasket[$basket][$subBasket])) {
+                $countSubBasket[$basket][$subBasket] = 1;
+            } else {
+                $countSubBasket[$basket][$subBasket]++;
+            }
+
+            // Check and count occurrences for level1
+        }
+
+
+        return (object) $countSubBasket;
+    }
+
+    public function getInvestmentStrategy($project){
+        $countLevels = [];
+
+        foreach ($project as $p) {
+            $investment = $p->investment_strategy;
+            $json = json_decode($investment, true);
+
+            // Check and count occurrences for level1
+            if (isset($json['level1'])) {
+                $level1Key = $json['level1'];
+                if (!isset($countLevels['level1'][$level1Key])) {
+                    $countLevels['level1'][$level1Key] = 1;
+                } else {
+                    $countLevels['level1'][$level1Key]++;
+                }
+            }
+
+            // Check and count occurrences for level2
+            if (isset($json['level2'])) {
+                $level2Key = $json['level2'];
+                if (!isset($countLevels['level2'][$level2Key])) {
+                    $countLevels['level2'][$level2Key] = 1;
+                } else {
+                    $countLevels['level2'][$level2Key]++;
+                }
+            }
+        }
+
+        // Now $countLevels contains the counts for each level
+        // You can use these counts as needed.
+
+        return (object) $countLevels;
+    }
+
+    public function getDataByProjectType(){
         $userService = new UserService();
         $presented_year = config('constants.project_presented_year');
-        $capexInvestmentCategory = CapexInvestment::where('code',$pc)->first();
-        $data = Project::with('baskets')->whereHas('baskets',function ($q) use ($capexInvestmentCategory,$pt) {
-            return $q->where('category',$capexInvestmentCategory->id)->where('type','BASKET')
-                ->where('code',$pt);
-        })->where('presented_year', $presented_year);
+        $data = Project::with('baskets')->whereHas('baskets',function ($q) {
+            return $q->where('type','BASKET');
+        })->where('presented_year', $presented_year)->get();
 
         if(!$userService->isAdmin() && !$userService->isViewer()){
             $data = $data->where('owner',auth()->user()->department);
         }
-        return $data->count() ?: 0;
+
+        return $data;
     }
 
     public function getDataBasket(){
