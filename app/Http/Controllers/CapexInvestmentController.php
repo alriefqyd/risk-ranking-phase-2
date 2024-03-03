@@ -14,7 +14,7 @@ class CapexInvestmentController extends Controller
 
         if($cacheBasket !== null) return $cacheBasket;
 
-        $data = CapexInvestment::where('type',CapexInvestment::type['sub_basket'])->where('parent_id',$request->basket)->get();
+        $data = CapexInvestment::where('type',CapexInvestment::type['sub_basket'])->where('parent_id',$request->basket)->where('status','ACTIVE')->get();
 
         if(!$data) return null;
         Cache::put($key, $data, 43200);
