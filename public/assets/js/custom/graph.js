@@ -409,4 +409,66 @@ $(function (){
         var ctx = document.getElementById('stacked-bar-chart-investment-strategy').getContext('2d');
         var chart = new Chart(ctx, options);
     }
+
+    if($('#project-stacked-bar-chart').length > 0){
+        $.ajax({
+            url:'/getProjectByOperationArea',
+            success:function (result){
+                setGraphsubmissionDepartment(result);
+            }
+        });
+    }
+
+    function setGraphsubmissionDepartment(result){
+        var labels = Object.keys(result);
+        var data = Object.values(result);
+
+        var ctx = document.getElementById('project-stacked-bar-chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Project Count',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins:{
+                    datalabels:{
+                        labels:{
+                            index:{
+                                color : "black",
+                                font: {
+                                    weight: 'bold',
+                                    size: 13,
+                                },
+                                formatter: (value, context) => {
+                                    const datasetArray = [];
+                                    context.chart.data.datasets.forEach((dataset) => {
+                                        if(dataset.data[context.dataIndex] != undefined){
+                                            datasetArray.push(dataset.data[context.dataIndex]);
+                                        }
+                                    });
+                                    function totalSum(total, dataPoint){
+                                        return total + dataPoint;
+                                    }
+
+                                    if(context.datasetIndex === datasetArray.length - 1){
+                                        return datasetArray.reduce(totalSum, 0);
+                                    }
+                                    return '';
+                                }
+                            },
+                        },
+                    }
+                },
+            },
+            plugins:[ChartDataLabels]
+        });
+    }
+
 });

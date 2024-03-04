@@ -501,4 +501,19 @@ class ProjectController extends Controller
         }
     }
 
+    public function getProjectByOperation(){
+        $projects = Project::where('presented_year', config('constants.project_presented_year'))
+            ->with('ownersProject')
+            ->get()
+            ->groupBy(function($project) {
+                return optional($project->ownersProject)->name;
+            });
+
+        $groupedCounts = $projects->map(function ($group) {
+            return $group->count();
+        });
+
+        return $groupedCounts;
+    }
+
 }

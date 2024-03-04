@@ -206,6 +206,18 @@
             @endforeach
         </div>--}}
         <div class="row">
+            <div class="col-lg-5">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h5>Project Submission</h5>
+                    </div>
+                    <div class="card-body chart-block m-t-30" >
+                        <div class="flot-chart-container" style="height:auto">
+                            <canvas class="flot-chart-placeholder" width="800" height="625" id="project-stacked-bar-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-7 col-sm-6 box-col-6">
                 <div class="card">
                     <div class="card-header pb-0">
