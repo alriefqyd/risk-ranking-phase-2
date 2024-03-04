@@ -843,7 +843,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentInitialCostEstimate = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
                                                 <label>Initial Cost Estimate <span class="text-danger f-w-550">*</span> </label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_initial_cost_estimate col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_initial_cost_estimate col-md-10"
                                                        data-validated="{{isset($attachmentInitialCostEstimate) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="0" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
@@ -866,7 +866,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentComplexity = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
                                                 <label>Complexity Matrix <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_complexity_matrix col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_complexity_matrix col-md-10"
                                                        data-validated="{{isset($attachmentComplexity) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="1" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
@@ -889,7 +889,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentPreliminaryDesign = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['preliminary_design']))
                                                 <label>Preliminary Design <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_preliminary_design col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_preliminary_design col-md-10"
                                                        data-validated="{{isset($attachmentPreliminaryDesign) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="2" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['preliminary_design']))
@@ -912,7 +912,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentUtility = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram']))
                                                 <label>Utility/Infrastructure/Facilities Diagram <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_utility_infrastructure_facilities_diagram col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_utility_infrastructure_facilities_diagram col-md-10"
                                                        data-validated="{{isset($attachmentUtility) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" data-idx="3" id="inputFile" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram']))
@@ -935,7 +935,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentHazop = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['hazop_study']))
                                                 <label>HAZOP Study <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_hazop_study col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_hazop_study col-md-10"
                                                        data-validated="{{isset($attachmentHazop) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="4" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['hazop_study']))
@@ -958,7 +958,7 @@
                                             <div class="col-md-12">
                                                 @php($assessmentMOC = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['moc_document']))
                                                 <label>MOC Document <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_moc_document col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_moc_document col-md-10"
                                                        data-validated="{{isset($assessmentMOC) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="5" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['moc_document']))
@@ -981,7 +981,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentCostEstimate = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude']))
                                                 <label>Cost Estimate with rough of magnitude 15-20% <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_cost_estimate_with_rough_of_magnitude col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_cost_estimate_with_rough_of_magnitude col-md-10"
                                                        data-validated="{{isset($attachmentCostEstimate) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" data-idx="6" name="document" id="inputFile" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude']))
@@ -1004,7 +1004,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentQuotationEquipment = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment']))
                                                 <label>Quotation of Equipment <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_quotation_of_equipment col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_quotation_of_equipment col-md-10"
                                                        data-validated="{{isset($attachmentQuotationEquipment) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" data-idx="7" id="inputFile" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment']))
@@ -1027,7 +1027,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentAssessment = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['project_assessment_level']))
                                                 <label>Project Assessment Level <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_project_assessment_level col-md-10"
+                                                <input class="form-control js-upload-attachment js-assessment-attachment_project_assessment_level col-md-10"
                                                        data-validated="{{isset($attachmentAssessment) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" data-idx="8" id="inputFile" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['project_assessment_level']))
@@ -1050,7 +1050,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentFel1 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
                                                 <label>FEL 1 <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-mandatory-conditional-attachment  js-upload-attachment js-assessment-attachment_fel1 col-md-10"
+                                                <input class="form-control js-mandatory-conditional-attachment  js-upload-attachment js-assessment-attachment_fel1 col-md-10"
                                                        data-validated="{{isset($attachmentFel1) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="9" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
@@ -1073,7 +1073,7 @@
                                             <div class="col-md-12">
                                                 @php($attachmentFel2 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))
                                                 <label>FEL 2 <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-attachment-mandatory js-mandatory-conditional-attachment js-upload-attachment js-assessment-attachment_fel2 col-md-10"
+                                                <input class="form-control js-mandatory-conditional-attachment js-upload-attachment js-assessment-attachment_fel2 col-md-10"
                                                        data-validated="{{isset($attachmentFel2) ? 'true' : 'false'}}"
                                                        value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="10" multiple type="file">
                                                 @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))
