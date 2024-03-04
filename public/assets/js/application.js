@@ -2614,8 +2614,8 @@ $(function() {
                     callback(); // Call renderCategories after renderSubBasket completes
                 };
 
-                if($('.js-checkbox-open-sub-bucket:checked').length < 1){
-                    $('.js-checkbox-open-sub-bucket').removeAttr('disabled');
+                if($('.js-checkbox-open-sub-basket:checked').length < 1){
+                    $('.js-checkbox-open-sub-basket').removeAttr('disabled');
                 }
             }
         })
