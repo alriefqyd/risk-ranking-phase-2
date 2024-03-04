@@ -52,7 +52,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'business-case' ? 'active' : ''}}" id="business-case-tabs"
+                                <a class="nav-link js-reset-check-count {!! !isset($project->fel1) && !isset($project->fel2) && !isset($project->fel3)  ? 'disabled' : '' !!} {{Session::get('page-tab') == 'business-case' ? 'active' : ''}}" id="business-case-tabs"
                                    data-bs-toggle="tab"
                                    href="#business-case"
                                     >
