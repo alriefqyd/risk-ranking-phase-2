@@ -2598,6 +2598,7 @@ $(function() {
                     return false;
                 }
 
+
                 $('.js-text-validation-basket').text('* Please select sub basket')
                 var template = $('#js-template-capex-investment').html();
                 Mustache.parse(template);
@@ -2612,6 +2613,10 @@ $(function() {
                     checkSubBasket()
                     callback(); // Call renderCategories after renderSubBasket completes
                 };
+
+                if($('.js-checkbox-open-sub-bucket:checked').length < 1){
+                    $('.js-checkbox-open-sub-bucket').removeAttr('disabled');
+                }
             }
         })
     }
@@ -2642,6 +2647,10 @@ $(function() {
                 $('.js-modal-loading').modal('hide')
 
                 if(isEdit === true) checkCategories()
+
+                if($('.js-checkbox-open-categories:checked').length < 1){
+                    $('.js-checkbox-open-categories').removeAttr('disabled');
+                }
             }
         })
     }
