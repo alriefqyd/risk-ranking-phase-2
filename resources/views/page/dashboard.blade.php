@@ -206,6 +206,7 @@
             @endforeach
         </div>--}}
         <div class="row">
+            @if($isAdmin)
             <div class="col-lg-5">
                 <div class="card">
                     <div class="card-header pb-0">
@@ -218,6 +219,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-lg-7 col-sm-6 box-col-6">
                 <div class="card">
                     <div class="card-header pb-0">

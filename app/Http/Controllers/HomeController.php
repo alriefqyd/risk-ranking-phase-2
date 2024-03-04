@@ -24,6 +24,8 @@ class HomeController extends Controller
        $fel3Service = new Fel3Service();
        $bcService = new BusinessCaseService();
 
+       $userService = new UserService();
+
        //count all data
        $project = $getProject->getAllProject(false, config('constants.project_presented_year'), true);
        $countAssessment = $assessmentService->countAssessment(null);
@@ -59,7 +61,8 @@ class HomeController extends Controller
            'countBC' => $countBC,
            'countBCDraft' => $countBCDraft,
            'countBCPublish' => $countBCPublish,
-           'countBasketCategory' => $this->getDataBasket()
+           'countBasketCategory' => $this->getDataBasket(),
+           'isAdmin'=> $userService->isAdmin()
        ]);
    }
 
