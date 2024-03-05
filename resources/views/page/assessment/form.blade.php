@@ -828,330 +828,330 @@
                 </td>
             </tr>
 
-            <tr>
-                <td colspan="3">
-                    <div class="row mb-3">
-                        <label class="float-start">Attachment File : </label>
-                    </div>
+        <tr>
+            <td colspan="3">
+                <div class="row mb-3">
+                    <label class="float-start">Attachment File : </label>
+                </div>
 
-                    <div class="row">
-                        <div class="table-responsive">
-                            <table class="table-striped" style="width: 100%">
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentInitialCostEstimate = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
-                                                <label>Initial Cost Estimate <span class="text-danger f-w-550">*</span> </label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_initial_cost_estimate col-md-10"
-                                                       data-validated="{{isset($attachmentInitialCostEstimate) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="0" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentInitialCostEstimate}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table-striped" style="width: 100%">
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentInitialCostEstimate = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
+                                            <label>Initial Cost Estimate <span class="text-danger f-w-550">*</span> </label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_initial_cost_estimate col-md-10"
+                                                   data-validated="{{isset($attachmentInitialCostEstimate) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="0" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['initial_cost_estimate']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentInitialCostEstimate}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentComplexity = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
-                                                <label>Complexity Matrix <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_complexity_matrix col-md-10"
-                                                       data-validated="{{isset($attachmentComplexity) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="1" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentComplexity}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentComplexity = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
+                                            <label>Complexity Matrix <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_complexity_matrix col-md-10"
+                                                   data-validated="{{isset($attachmentComplexity) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="1" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['complexity_matrix']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentComplexity}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentPreliminaryDesign = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['preliminary_design']))
-                                                <label>Preliminary Design <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_preliminary_design col-md-10"
-                                                       data-validated="{{isset($attachmentPreliminaryDesign) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="2" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['preliminary_design']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['preliminary_design']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentPreliminaryDesign}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentPreliminaryDesign = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['preliminary_design']))
+                                            <label>Preliminary Design <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_preliminary_design col-md-10"
+                                                   data-validated="{{isset($attachmentPreliminaryDesign) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="2" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['preliminary_design']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['preliminary_design']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentPreliminaryDesign}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentUtility = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram']))
-                                                <label>Utility/Infrastructure/Facilities Diagram <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_utility_infrastructure_facilities_diagram col-md-10"
-                                                       data-validated="{{isset($attachmentUtility) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" data-idx="3" id="inputFile" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentUtility}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentUtility = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram']))
+                                            <label>Utility/Infrastructure/Facilities Diagram <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_utility_infrastructure_facilities_diagram col-md-10"
+                                                   data-validated="{{isset($attachmentUtility) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" data-idx="3" id="inputFile" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['utility_infrastructure_facilities_diagram']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentUtility}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentHazop = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['hazop_study']))
-                                                <label>HAZOP Study <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_hazop_study col-md-10"
-                                                       data-validated="{{isset($attachmentHazop) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="4" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['hazop_study']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['hazop_study']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentHazop}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentHazop = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['hazop_study']))
+                                            <label>HAZOP Study <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_hazop_study col-md-10"
+                                                   data-validated="{{isset($attachmentHazop) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="4" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['hazop_study']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['hazop_study']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentHazop}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($assessmentMOC = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['moc_document']))
-                                                <label>MOC Document <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_moc_document col-md-10"
-                                                       data-validated="{{isset($assessmentMOC) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="5" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['moc_document']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['moc_document']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$assessmentMOC}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($assessmentMOC = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['moc_document']))
+                                            <label>MOC Document <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_moc_document col-md-10"
+                                                   data-validated="{{isset($assessmentMOC) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="5" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['moc_document']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['moc_document']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$assessmentMOC}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentCostEstimate = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude']))
-                                                <label>Cost Estimate with rough of magnitude 15-20% <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_cost_estimate_with_rough_of_magnitude col-md-10"
-                                                       data-validated="{{isset($attachmentCostEstimate) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" data-idx="6" name="document" id="inputFile" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentCostEstimate}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentCostEstimate = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude']))
+                                            <label>Cost Estimate with rough of magnitude 15-20% <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_cost_estimate_with_rough_of_magnitude col-md-10"
+                                                   data-validated="{{isset($attachmentCostEstimate) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" data-idx="6" name="document" id="inputFile" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['cost_estimate_with_rough_of_magnitude']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentCostEstimate}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentQuotationEquipment = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment']))
-                                                <label>Quotation of Equipment <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_quotation_of_equipment col-md-10"
-                                                       data-validated="{{isset($attachmentQuotationEquipment) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" data-idx="7" id="inputFile" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentQuotationEquipment}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentQuotationEquipment = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment']))
+                                            <label>Quotation of Equipment <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_quotation_of_equipment col-md-10"
+                                                   data-validated="{{isset($attachmentQuotationEquipment) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" data-idx="7" id="inputFile" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['quotation_of_equipment']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentQuotationEquipment}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentAssessment = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['project_assessment_level']))
-                                                <label>Project Assessment Level <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-upload-attachment js-assessment-attachment_project_assessment_level col-md-10"
-                                                       data-validated="{{isset($attachmentAssessment) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" data-idx="8" id="inputFile" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['project_assessment_level']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['project_assessment_level']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentAssessment}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentAssessment = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['project_assessment_level']))
+                                            <label>Project Assessment Level <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-upload-attachment js-assessment-attachment_project_assessment_level col-md-10"
+                                                   data-validated="{{isset($attachmentAssessment) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" data-idx="8" id="inputFile" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['project_assessment_level']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['project_assessment_level']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentAssessment}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentFel1 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
-                                                <label>FEL 1 <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-mandatory-conditional-attachment  js-upload-attachment js-assessment-attachment_fel1 col-md-10"
-                                                       data-validated="{{isset($attachmentFel1) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="9" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                        {{$attachmentFel1}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentFel1 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
+                                            <label>FEL 1 <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-mandatory-conditional-attachment  js-upload-attachment js-assessment-attachment_fel1 col-md-10"
+                                                   data-validated="{{isset($attachmentFel1) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="9" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel1']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentFel1}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                @php($attachmentFel2 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))
-                                                <label>FEL 2 <span class="text-danger f-w-550">*</span></label>
-                                                <input class="form-control js-mandatory-conditional-attachment js-upload-attachment js-assessment-attachment_fel2 col-md-10"
-                                                       data-validated="{{isset($attachmentFel2) ? 'true' : 'false'}}"
-                                                       value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="10" multiple type="file">
-                                                @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))
-                                                    <a target="_blank"
-                                                       class="js-attachment-existing-assessment"
-                                                       href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))}}&dir={{$project->project_name}}">
-                                                        <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                            {{$attachmentFel2}}
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
-                                            <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php($attachmentFel2 = $project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))
+                                            <label>FEL 2 <span class="text-danger f-w-550">*</span></label>
+                                            <input class="form-control js-attachment-mandatory js-mandatory-conditional-attachment js-upload-attachment js-assessment-attachment_fel2 col-md-10"
+                                                   data-validated="{{isset($attachmentFel2) ? 'true' : 'false'}}"
+                                                   value="{{$project?->project_name}}" name="document" id="inputFile" data-idx="10" multiple type="file">
+                                            @if($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))
+                                                <a target="_blank"
+                                                   class="js-attachment-existing-assessment"
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['assessment']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::ASSESSMENT_ATTACHMENT['fel2']))}}&dir={{$project->project_name}}">
+                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                    {{$attachmentFel2}}
+                                                </a>
+                                            @endif
                                         </div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                                        <div class="js-error-attachment_extension js-check-count-error text-danger"></div>
+                                        <div class="js-error-file_size js-check-count-error text-danger"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <div class="row">
-                        <div class="col-md-12 mb-3 padding-right-0">
-                            <label class="float-start"> Location (Location of Asset Capitalization) <span class="text-danger f-w-550">*</span> </label>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="table table-hover">
-                                <table>
-                                    <thead>
-                                    <th>
-                                        Area
-                                    </th>
-                                    <th>Cost Center</th>
-                                    <th></th>
-                                    </thead>
-                                    <tbody class="js-row-area-capitalization">
-                                    @if($isEdit && $project->assessment?->getAllAreaAssetCapitalization() > 0)
-                                        @foreach($project->assessment?->getAllAreaAssetCapitalization() as $area)
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class="form-control js-form-area" value="{{$area->area}}">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control js-form-cost-center" value="{{$area->cost_center}}">
-                                                </td>
-                                                <td>
-                                                    <i class="fa fa-plus-circle cursor-pointer js-add-location-area-capitalization"></i>
-                                                    <i class="fa fa-times-circle m-l-2 text-danger cursor-pointer js-delete-location-area-capitalization"></i>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div class="row">
+                    <div class="col-md-12 mb-3 padding-right-0">
+                        <label class="float-start"> Location (Location of Asset Capitalization) <span class="text-danger f-w-550">*</span> </label>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table table-hover">
+                            <table>
+                                <thead>
+                                <th>
+                                    Area
+                                </th>
+                                <th>Cost Center</th>
+                                <th></th>
+                                </thead>
+                                <tbody class="js-row-area-capitalization">
+                                @if($isEdit && $project->assessment?->getAllAreaAssetCapitalization() > 0)
+                                    @foreach($project->assessment?->getAllAreaAssetCapitalization() as $area)
                                         <tr>
                                             <td>
-                                                <input type="text" class="form-control js-form-area">
+                                                <input type="text" class="form-control js-form-area" value="{{$area->area}}">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control js-form-cost-center">
+                                                <input type="text" class="form-control js-form-cost-center" value="{{$area->cost_center}}">
                                             </td>
                                             <td>
                                                 <i class="fa fa-plus-circle cursor-pointer js-add-location-area-capitalization"></i>
                                                 <i class="fa fa-times-circle m-l-2 text-danger cursor-pointer js-delete-location-area-capitalization"></i>
                                             </td>
                                         </tr>
-                                    @endif
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control js-form-area">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control js-form-cost-center">
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-plus-circle cursor-pointer js-add-location-area-capitalization"></i>
+                                            <i class="fa fa-times-circle m-l-2 text-danger cursor-pointer js-delete-location-area-capitalization"></i>
+                                        </td>
+                                    </tr>
+                                @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <div class="row">
-<input type="hidden" name="validate_check_empty_count" class="js-validate-checkbox-count">
+    <input type="hidden" name="validate_check_empty_count" class="js-validate-checkbox-count">
 </div>
