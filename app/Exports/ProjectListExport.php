@@ -24,7 +24,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
         $worksheet = new Worksheet();
         $this->worksheet = $worksheet;
         $this->presented_year = config('constants.project_presented_year');
-        $this->size = 200;
+        $this->size = Project::where('presented_year', $this->presented_year)->count();
     }
 
 
@@ -53,9 +53,26 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
             ],
         ]);
 
+        $sheet->getStyle('A1:BU3')
+            ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
+        $sheet->getStyle('A1:BU3')->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setARGB('3fa7fd');
+        //$sheet->getColumnDimension('A')->setWidth('30'); work if shouldAutoSize is disable
 
 
         $column = "A1:BU3".($columnSize) ;
+        $sheet->getStyle($column)->applyFromArray([
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => '000000'],
+                ],
+            ],
+            'background' => [
+                'color'=> '#2978ff'
+            ],
+        ]);
     }
 
     public function title(): string
