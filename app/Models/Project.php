@@ -279,21 +279,21 @@ class Project extends Model
         return '';
     }
 
-    public function getSeverityRiskAssessment(){
-        $impactScore = $this?->business_case?->riskAssessment?->final_impact_score;
+    public function getSeverityRiskAssessment($value){
+        $impactScore = $value;
         if($impactScore == null) return "";
         return RiskAssessments::SEVERITY[$impactScore];
     }
 
-    public function getProbabilityRiskAssessment(){
-        $probability = $this?->business_case?->riskAssessment?->probability;
+    public function getProbabilityRiskAssessment($value){
+        $probability = $value;
         if($probability == null) return "";
         return RiskAssessments::PROBABILITY[$probability];
     }
 
     public function getSeverityValue($val){
         if(!$val) return "";
-        return RiskAssessments::SEVERITY[$val];
+        return RiskAssessments::NEW_SEVERITY[$val];
     }
 
     public function getInvestmentStrategy(){
@@ -318,16 +318,105 @@ class Project extends Model
         }
     }
 
+    /** Decode Text */
+
+    public function getExecutiveSummaryTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getProblemStatementTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getObjectiveTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getProjectScopeTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getAlternativesToProposalTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getProjectScheduleTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getListEquipmentSpecificationTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getKeyProjectRiskAndMitigantsTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getImpactIfNotExecutedTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getHazopStudyTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getComplexityScoreAssessmentTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getLevelProjectTextAttribute($value){
+        return html_entity_decode(strip_tags($value));
+    }
+
+    public function getLocationOfAssetCapitalizationAttribute($value)
+    {
+        $data = $value;
+        $json = json_decode($data, true);
+
+        if (!$data) return [];
+
+        $list = [];
+
+        foreach ($json as $item) {
+            $list[] = [
+                'area' => $item['area'] ?? "",
+                'cost_center' => $item['cost_center'] ?? "",
+            ];
+        }
+
+        return $list;
+    }
+
+    public function getKeyPerformanceMetricTextAttribute($value){
+        if(!$value) return [];
+
+        $data = $value;
+        $json = json_decode($data, true);
+        $list = [];
+
+        foreach ($json as $item) {
+            $list[] = [
+                'description' => $item['description'],
+                'uom' => $item['uom'],
+                'time_benefit' => $item['time_benefit'],
+                'remarks' => $item['remarks'],
+            ];
+        }
+
+        return $list;
+    }
+
     public function breakdownPrioritizationCriteria(){
         if(!$this->criterias) return null;
         $data = [];
         foreach ($this->criterias as $criteria){
             $temp = [
                 'question' => $criteria->title,
-                'answer' => $criteria->answer
+                'answer' => $criteria?->pivot?->answer
             ];
             array_push($data, $temp);
         }
+
 
         return $data;
     }

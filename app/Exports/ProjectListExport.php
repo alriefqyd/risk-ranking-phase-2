@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Project;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
@@ -30,12 +31,35 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
 
     public function view(): View
     {
-        $cb = Project::with(['ownersProject', 'sponsorsProject', 'assessment', 'baskets', 'subBaskets'])
-            ->where('presented_year', $this->presented_year)
-            ->get();
+
+        $projects = Project::select('projects.id','projects.project_number', 'projects.project_name', 'basket.name as basket', 'subBasket.name as subBasket', 'categories.name as categoriesName','operation.name as operation','sponsor.name as sponsor',
+            'bc_presenter','finance_analyst','projects.note','projects.created_at','assessments.level_project_text','assessments.executive_summary as executive_summary_assessment','assessments.problems_statement','assessments.objective','assessments.project_scope as project_scope_assessment'
+            ,'assessments.alternative_to_proposal','assessments.project_schedule as project_schedule_assessment','assessments.list_equipment_specification','assessments.key_performance_metric','assessments.key_project_risk_mitigants','assessments.impact_if_not_executed','assessments.impact_if_not_executed_text'
+            ,'assessments.hazop_study as hazop_study_assessment','assessments.cost_estimate_text','assessments.complexity_score_assessment','assessments.level_project','assessments.executive_summary_text','assessments.problem_statement_text','assessments.objective_text','assessments.hazop_study_text'
+            ,'assessments.project_scope_text','assessments.alternatives_to_proposal_text','assessments.project_schedule_text','assessments.list_equipment_specification_text','assessments.key_performance_metric_text','assessments.key_project_risk_and_mitigants_text'
+            ,'assessments.location_of_asset_capitalization', 'assessments.cost_estimate','fel1.project_scope as project_scope_fel1','fel2.project_scope as project_scope_fel2','fel2.identify_main_equipment','fel2.alternatives_and_analysis','fel3.executive_summary','fel3.problem_statement'
+            ,'fel3.project_scope as project_scope_fel3','fel3.alternatives_and_best_option','fel3.project_schedule as project_schedule_fel3','fel3.list_of_equipment_and_specification','fel3.hazop_study as hazop_study_fel3','fel3.cost_estimate','business_case.project_scope_of_work'
+            ,'business_case.financial_evaluation','business_case.risk_assessment','business_case.cost_estimate','risk_assessment.people','risk_assessment.environment','risk_assessment.social_and_human_rights'
+            ,'risk_assessment.reputation','risk_assessment.finance','risk_assessment.final_impact_score','business_case.npv','business_case.irr','business_case.payback_period'
+
+        )
+            ->leftJoin('capex_investment_categories as basket', 'basket.id', '=', 'projects.basket')
+            ->leftJoin('capex_investment_categories as subBasket', 'subBasket.id', '=', 'projects.sub_basket')
+            ->leftJoin('categories', 'projects.sub_basket_categories', '=', 'categories.id')
+            ->leftJoin('departments as operation','operation.id', '=','projects.operation_area')
+            ->leftJoin('departments as sponsor','sponsor.id', '=','projects.sponsor_area')
+            ->leftJoin('assessments','assessments.project_id', '=','projects.id')
+            ->leftJoin('fel1s as fel1','fel1.project_id', '=','projects.id')
+            ->leftJoin('fel2s as fel2','fel2.project_id', '=','projects.id')
+            ->leftJoin('fel3s as fel3','fel3.project_id', '=','projects.id')
+            ->leftJoin('business_case_assessments as business_case','business_case.project_id', '=','projects.id')
+            ->leftJoin('risk_assessments as risk_assessment','risk_assessment.business_case_assessment_id', '=','business_case.id')
+            ->with('criterias')
+            ->where('presented_year', $this->presented_year)->get();
+
 
         return view('page.project.export_project', [
-            'project' => $cb
+            'project' => $projects
         ]);
     }
 

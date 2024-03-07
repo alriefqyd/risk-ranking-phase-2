@@ -102,54 +102,42 @@
             <tr>
                 <td>{{$p->project_number}}</td>
                 <td>{{$p->project_name}}</td>
-                <td>{{$p->baskets?->name}}</td>
-                <td>{{$p->subBaskets?->name}}</td>
-                <td>{{$p->categories?->name}}</td>
-                <td>{{$p->ownersProject?->name}}</td>
-                <td>{{$p->sponsorsProject?->name}}</td>
+                <td>{{$p->basket}}</td>
+                <td>{{$p->subBasket}}</td>
+                <td>{{$p->categoriesName}}</td>
+                <td>{{$p->operation}}</td>
+                <td>{{$p->sponsor}}</td>
                 <td>{{$p->bc_presenter}}</td>
                 <td>{{$p->finance_analyst}}</td>
                 <td style="background-color:{!! $p->updated_at > now()->startOfDay() ? "#fefe00" : '' !!}">{!! $p->note !!}</td>
                 <td>{{$p->created_at}}</td>
-                <td style="background-color:
-                @if($p?->assessment?->level_project_text == $setting::ASSESSMENT_LEVEL['COMPLEX'])
-                    {!! '#fe0000' !!}
-                @elseif($p?->assessment?->level_project_text == $setting::ASSESSMENT_LEVEL['MODERATE'])
-                    {!! '#00af50' !!}
-                @elseif($p?->assessment?->level_project_text == $setting::ASSESSMENT_LEVEL['LIGHT'])
-                    {!! '#fefe00' !!}
-                @elseif($p?->assessment?->level_project_text == $setting::ASSESSMENT_LEVEL['PDS'])
-                    {!! '#5b9bd5' !!}
-                @else
-                    {!! '' !!}
-                @endif
-                ;text-align: center">
-                    {{$p?->assessment?->level_project_text}}</td>
-                <td>{{$p?->assessment?->executive_summary ?: '0'}}</td>
-                <td>{{$p?->assessment?->problems_statement ?: '0'}}</td>
-                <td>{{$p?->assessment?->objective ?: '0'}}</td>
-                <td>{{$p?->assessment?->project_scope ?: '0'}}</td>
-                <td>{{$p?->assessment?->alternative_to_proposal ?: '0'}}</td>
-                <td>{{$p?->assessment?->project_schedule ?: '0'}}</td>
-                <td>{{$p?->assessment?->list_equipment_specification ?: '0'}}</td>
-                <td>{{$p?->assessment?->key_performance_metric ?: '0'}}</td>
-                <td>{{$p?->assessment?->key_project_risk_mitigants ? '1' : '0'}}</td>
-                <td>{{$p?->assessment?->impact_if_not_executed ? '1' : '0'}}</td>
-                <td>{{$p?->assessment?->hazop_study ? '1' : '0'}}</td>
-                <td>{{$p?->assessment?->cost_estimate_text}}</td>
-                <td>{{$p?->assessment?->complexity_score_assessment ? '1' : '0'}}</td>
-                <td>{{$p?->assessment?->level_project}}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->executive_summary_text)) }}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->problem_statement_text)) }}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->objective_text)) }}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->project_scope_text)) }}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->alternatives_to_proposal_text)) }}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->project_schedule_text)) }}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->list_equipment_specification_text)) }}</td>
+                <td style="text-align: center">
+                    {{$p?->level_project_text}}</td>
+                <td>{{$p?->executive_summary_assessment ?: '0'}}</td>
+                <td>{{$p?->problems_statement ?: '0'}}</td>
+                <td>{{$p?->objective ?: '0'}}</td>
+                <td>{{$p?->project_scope_assessment ?: '0'}}</td>
+                <td>{{$p?->alternative_to_proposal ?: '0'}}</td>
+                <td>{{$p?->project_schedule_assessment ?: '0'}}</td>
+                <td>{{$p?->list_equipment_specification ?: '0'}}</td>
+                <td>{{$p?->key_performance_metric ?: '0'}}</td>
+                <td>{{$p?->key_project_risk_mitigants ? '1' : '0'}}</td>
+                <td>{{$p?->impact_if_not_executed ? '1' : '0'}}</td>
+                <td>{{$p?->hazop_study_assessment ? '1' : '0'}}</td>
+                <td>{{$p?->cost_estimate_text}}</td>
+                <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
+                <td>{{$p?->level_project}}</td>
+                <td>{{ $p?->executive_summary_text }}</td>
+                <td>{{ $p?->problem_statement_text }}</td>
+                <td>{{ $p?->objective_text }}</td>
+                <td>{{ $p?->project_scope_text }}</td>
+                <td>{{ $p?->alternatives_to_proposal_text }}</td>
+                <td>{{ $p?->project_schedule_text }}</td>
+                <td>{{ $p?->list_equipment_specification_text }}</td>
                 <td>
                     <ol>
-                        @if ($p->assessment)
-                            @foreach ($p->assessment->breakdownKeyPerformanceMetric() ?? [] as $value)
+                        @if ($p->key_performance_metric_text)
+                            @foreach ($p->key_performance_metric_text ?? [] as $value)
                                 <li>
                                     Description: {{ $value['description'] ?? "" }},
                                     UOM: {{ $value['uom'] ?? "" }},
@@ -160,67 +148,66 @@
                         @endif
                     </ol>
                 </td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->key_project_risk_and_mitigants_text)) }}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->impact_if_not_executed_text)) }}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->hazop_study_text)) }}</td>
-                <td>{!! ($p->assessment?->cost_estimate_text)  !!}</td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->complexity_score_assessment)) }}</td>
+                <td>{{ $p?->key_project_risk_and_mitigants_text }}</td>
+                <td>{{ $p?->impact_if_not_executed_text }}</td>
+                <td>{{ $p?->hazop_study_text }}</td>
+                <td>{!! ($p?->cost_estimate_text)  !!}</td>
+                <td>{{ $p?->complexity_score_assessment }}</td>
                 <td>
-                    @if ($p->assessment)
+                    @if ($p->location_of_asset_capitalization)
                         <ul>
-                            @foreach ($p->assessment?->breakdownLocationOfAssetCapitalization() ?? [] as $value)
+                            @foreach ($p->location_of_asset_capitalization ?? [] as $value)
                                 <li>
-                                    {{$loop->index + 1}}).
-                                    Area: {{ $value['area'] ?? "" }},
-                                    Cost Center: {{ $value['cost_center'] ?? "" }}.
+                                    Area: {{ $value['area'] }},
+                                    Cost Center: {{ $value['cost_center'] }}
                                 </li>
                             @endforeach
                         </ul>
                     @endif
                 </td>
-                <td>{{ html_entity_decode(strip_tags($p->assessment?->level_project_text)) }}</td>
-                <td>{{$p?->assessment?->cost_estimate ? '1' : '0'}}</td>
-                <td>{{$p?->assessment?->complexity_score_assessment ? '1' : '0'}}</td>
-                <td>{{$p?->fel1?->project_scope ?: '0'}}</td>
+                <td>{{$p?->level_project_text }}</td>
+                <td>{{$p?->cost_estimate ? '1' : '0'}}</td>
+                <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
+                <td>{{$p?->project_scope_fel1 ?: '0'}}</td>
 
-                <td>{{$p?->fel2?->project_scope ?: '0'}}</td>
-                <td>{{$p?->fel2?->identify_main_equipment ?: '0'}}</td>
-                <td>{{$p?->fel3?->alternatives_and_best_option ?: '0'}}</td>
+                <td>{{$p?->project_scope_fel2 ?: '0'}}</td>
+                <td>{{$p?->identify_main_equipment ?: '0'}}</td>
+                <td>{{$p?->alternatives_and_analysis ?: '0'}}</td>
 
-                <td>{{$p?->fel3?->executive_summary ?: '0'}}</td>
-                <td>{{$p?->fel3?->problem_statement ?: '0'}}</td>
-                <td>{{$p?->fel3?->project_scope ?: '0'}}</td>
-                <td>{{$p?->fel3?->alternatives_and_best_option ?: '0'}}</td>
-                <td>{{$p?->fel3?->project_schedule ? '1' : '0'}}</td>
-                <td>{{$p?->fel3?->list_of_equipment_and_specification ? '1' : '0'}}</td>
-                <td>{{$p?->fel3?->hazop_study ? '1' : '0'}}</td>
-                <td>{{$p?->fel3?->cost_estimate ? '1' : '0'}}</td>
-                <td>{{$p?->business_case?->project_scope_of_work ?: '0'}}</td>
-                <td>{{$p?->business_case?->financial_evaluation ?: '0'}}</td>
-                <td>{{$p?->business_case?->risk_assessment ?: '0'}}</td>
-                <td>{{$p?->business_case?->cost_estimate}}</td>
+                <td>{{$p?->executive_summary ?: '0'}}</td>
+                <td>{{$p?->problem_statement ?: '0'}}</td>
+                <td>{{$p?->project_scope_fel3 ?: '0'}}</td>
+                <td>{{$p?->alternatives_and_best_option ?: '0'}}</td>
+                <td>{{$p->project_schedule_fel3 ? '1' : '0'}}</td>
+                <td>{{$p?->list_of_equipment_and_specification ? '1' : '0'}}</td>
+                <td>{{$p?->hazop_study_fel3 ? '1' : '0'}}</td>
+                <td>{{$p?->cost_estimate ? '1' : '0'}}</td>
+                <td>{{$p?->project_scope_of_work ?: '0'}}</td>
+                <td>{{$p?->financial_evaluation ?: '0'}}</td>
+                <td>{{$p?->risk_assessment ?: '0'}}</td>
+                <td>{{$p?->cost_estimate}}</td>
 
-                <td>{{$p?->getSeverityValue($p->business_case?->riskAssessment?->people)}}</td>
-                <td>{{$p?->getSeverityValue($p?->business_case?->riskAssessment?->environment)}}</td>
-                <td>{{$p?->getSeverityValue($p?->business_case?->riskAssessment?->social_and_human_rights)}}</td>
-                <td>{{$p?->getSeverityValue($p?->business_case?->riskAssessment?->reputation)}}</td>
-                <td>{{$p?->getSeverityValue($p?->business_case?->riskAssessment?->finance)}}</td>
-                <td>{{$p?->business_case?->riskAssessment?->final_impact_score}}</td>
-                <td>{{$p->getSeverityRiskAssessment()}}</td>
-                <td>{{$p->getProbabilityRiskAssessment()}}</td>
-                <td>{{$p?->business_case?->riskAssessment?->priority_level}}</td>
-                <td>{{$p?->business_case?->change_management_request ? '1' : '0'}}</td>
-                <td>{!!$p?->business_case?->npv ?: '0' !!}</td>
-                <td>{{($p?->business_case?->irr / 100) ?: '0'}}</td>
-                <td>{{$p?->business_case?->payback_period ?: '0'}}</td>
+                <td>{{$p?->getSeverityValue($p->people)}}</td>
+                <td>{{$p?->getSeverityValue($p?->environment)}}</td>
+                <td>{{$p?->getSeverityValue($p?->social_and_human_rights)}}</td>
+                <td>{{$p?->getSeverityValue($p?->reputation)}}</td>
+                <td>{{$p?->getSeverityValue($p?->finance)}}</td>
+                <td>{{$p?->final_impact_score}}</td>
+                <td>{{$p->getSeverityRiskAssessment($p->final_impact_score)}}</td>
+                <td>{{$p->getProbabilityRiskAssessment($p->final_impact_score)}}</td>
+                <td>{{$p?->priority_level}}</td>
+                <td>{{$p?->change_management_request ? '1' : '0'}}</td>
+                <td>{!!$p?->npv ?: '0' !!}</td>
+                <td>{{($p?->irr / 100) ?: '0'}}</td>
+                <td>{{$p?->payback_period ?: '0'}}</td>
                 <td>
                     <div class="row">
                         @foreach($p->breakdownPrioritizationCriteria() as $data)
-                        <div class="col-md-12">
-                            <p>{{$loop->index + 1}}) </p>
-                            <p>Criteria : {{$data['question']}}</p>
-                            <p>Answer : {{$data['answer']}}</p>
-                        </div>
+                            <div class="col-md-12">
+                                <p>{{$loop->index + 1}}) </p>
+                                <p>Criteria : {{$data['question']}}</p>
+                                <p>Answer : {{$data['answer']}}</p>
+                            </div>
                         @endforeach
                     </div>
                 </td>

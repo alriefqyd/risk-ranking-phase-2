@@ -14,9 +14,11 @@ class ExportController extends Controller
     public function export()
     {
         try{
+            Log::info('Start exporting');
             $this->authorize('export');
             $fileName = 'document\risk-ranking-2023.xlsx';
             Excel::store(new RiskRankingExport(), $fileName);
+            Log::info('Finish exporting');
             return response()->download(storage_path('app/document/risk-ranking-2023.xlsx'));
         } catch (\Exception $e){
             Log::error($e->getMessage());
