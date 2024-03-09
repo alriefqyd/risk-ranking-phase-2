@@ -251,7 +251,7 @@
                                             @if($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['fel3']))
                                                 <a target="_blank"
                                                    class="js-attachment-existing-assessment"
-                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project?->getAllAttachment($project->assessment?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['fel3']))}}&dir={{$project->project_name}}">
+                                                   href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['fel3']))}}&dir={{$project->project_name}}">
                                                     <i class="mt-2 fa fa-file-text-o txt-info"></i>
                                                     {{$attachmentFel3}}
                                                 </a>
