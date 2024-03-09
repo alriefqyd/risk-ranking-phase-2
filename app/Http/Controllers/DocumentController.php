@@ -83,6 +83,7 @@ class DocumentController extends Controller
             $extension = $file->getClientOriginalExtension();
             $check = in_array($extension, $allowedFileExtension);
             if($check){
+                $project_name = preg_replace("/\r|\n/", " ", $project_name);
                 $document_name = $request->file_category .'-' . $project_name . '-' . uniqid() . '.' . $extension;
                 $dir = 'documents/'.$project_name.'/'.$request->file_category;
                 Storage::disk('local')->putFileAs($dir, $file, $document_name);
