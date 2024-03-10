@@ -5,7 +5,7 @@
     </div>
     @if(!$isNotCurrentData)
         @can('update')
-            @if(auth()->user()->role == \App\Models\User::ROLE['admin'])
+{{--            @if(auth()->user()->role == \App\Models\User::ROLE['admin'])--}}
                 <div class="col-md-8 m-l-50 m-b-10">
                     <button class="btn btn-sm btn-success m-t-10 float-end {{!$errors->any() ? '' : 'd-none'}}
                         js-btn-edit_project">
@@ -16,11 +16,11 @@
                         View <i style="width: 20px; height: 15px;" data-feather="eye"></i>
                     </button>
                 </div>
-           @endif
+{{--           @endif--}}
         @endcan
     @endif
 </div>
-@if(auth()->user()->role == \App\Models\User::ROLE['admin'])
+{{--@if(auth()->user()->role == \App\Models\User::ROLE['admin'])--}}
 @can('update')
     @if(!$isNotCurrentData)
         <form method="post" action="/project/{{$project?->id}}"
@@ -72,7 +72,7 @@
         </div>
     @endif
 @endcan
-@endif
+{{--@endif--}}
 <div class="row js-form-project-detail m-b-30 {{!$errors->any() ? '' : 'd-none'}}">
     <div class="table-responsive">
         <table class="table table-striped">

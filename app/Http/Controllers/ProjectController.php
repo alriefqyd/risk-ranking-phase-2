@@ -185,10 +185,10 @@ class ProjectController extends Controller
 
     public function edit(Project $project, Request $request){
         /**temporary disabled**/
-        if(auth()->user()->role == User::ROLE['admin-dept']){
-            abort(401);
-        }
-        
+//        if(auth()->user()->role == User::ROLE['admin-dept']){
+//            abort(401);
+//        }
+
         $this->authorize('read');
         $projectService = new ProjectService();
         $maturityService = new MaturityService();
@@ -262,10 +262,10 @@ class ProjectController extends Controller
         $userService = new UserService();
         $user = $userService->getCurrentUser();
 
-        /**temporary disabled**/
-        if(auth()->user()->role == User::ROLE['admin-dept']){
-            abort(401);
-        }
+//        /**temporary disabled**/
+//        if(auth()->user()->role == User::ROLE['admin-dept']){
+//            abort(401);
+//        }
 
         if($projectService->projectNotAuthorized($project)){
             abort(404);
