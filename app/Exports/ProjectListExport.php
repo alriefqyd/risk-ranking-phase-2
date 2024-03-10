@@ -65,7 +65,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
 
     public function styles(Worksheet $sheet)
     {
-        $columnSize = $this->size * 5 + 2;
+        $columnSize = $this->size + 5;
         $sheet->getStyle('A1:CC3')->applyFromArray([
             'font' => [
                 'bold' => true,

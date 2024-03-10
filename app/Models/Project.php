@@ -321,7 +321,7 @@ class Project extends Model
     /** Decode Text */
 
     public function getExecutiveSummaryTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return str_replace(html_entity_decode(strip_tags($value)),"\"","");
     }
 
     public function getProblemStatementTextAttribute($value){

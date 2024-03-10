@@ -127,7 +127,7 @@
                 <td>{{$p?->cost_estimate_text}}</td>
                 <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->level_project}}</td>
-                <td>{{ $p?->executive_summary_text }}</td>
+                <td>{!! $p?->executive_summary_text !!} </td>
                 <td>{{ $p?->problem_statement_text }}</td>
                 <td>{{ $p?->objective_text }}</td>
                 <td>{{ $p?->project_scope_text }}</td>
