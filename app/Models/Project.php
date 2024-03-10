@@ -322,7 +322,7 @@ class Project extends Model
 
     public function getExecutiveSummaryTextAttribute($value){
         $plainText = htmlspecialchars_decode(strip_tags($value));
-        return substr($plainText,0,2500);
+        return substr($plainText,0,2450);
     }
 
     public function getProblemStatementTextAttribute($value){
