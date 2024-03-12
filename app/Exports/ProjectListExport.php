@@ -32,15 +32,15 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     public function view(): View
     {
 
-        $projects = Project::select('projects.id','projects.project_number', 'projects.project_name', 'basket.name as basket', 'subBasket.name as subBasket', 'categories.name as categoriesName','operation.name as operation','sponsor.name as sponsor',
-            'bc_presenter','finance_analyst','projects.note','projects.created_at','assessments.level_project_text','assessments.executive_summary as executive_summary_assessment','assessments.problems_statement','assessments.objective','assessments.project_scope as project_scope_assessment'
-            ,'assessments.alternative_to_proposal','assessments.project_schedule as project_schedule_assessment','assessments.list_equipment_specification','assessments.key_performance_metric','assessments.key_project_risk_mitigants','assessments.impact_if_not_executed','assessments.impact_if_not_executed_text'
-            ,'assessments.hazop_study as hazop_study_assessment','assessments.cost_estimate_text','assessments.complexity_score_assessment','assessments.level_project','assessments.executive_summary_text','assessments.problem_statement_text','assessments.objective_text','assessments.hazop_study_text'
-            ,'assessments.project_scope_text','assessments.alternatives_to_proposal_text','assessments.project_schedule_text','assessments.list_equipment_specification_text','assessments.key_performance_metric_text','assessments.key_project_risk_and_mitigants_text'
-            ,'assessments.location_of_asset_capitalization', 'assessments.cost_estimate','fel1.project_scope as project_scope_fel1','fel2.project_scope as project_scope_fel2','fel2.identify_main_equipment','fel2.alternatives_and_analysis','fel3.executive_summary','fel3.problem_statement'
-            ,'fel3.project_scope as project_scope_fel3','fel3.alternatives_and_best_option','fel3.project_schedule as project_schedule_fel3','fel3.list_of_equipment_and_specification','fel3.hazop_study as hazop_study_fel3','fel3.cost_estimate','business_case.project_scope_of_work'
+        $projects = Project::select('projects.id', 'projects.project_name', 'basket.name as basket', 'subBasket.name as subBasket', 'categories.name as categoriesName','operation.name as operation','sponsor.name as sponsor',
+            'bc_presenter','finance_analyst','projects.created_at','assessments.level_project_text','assessments.executive_summary as executive_summary_assessment','assessments.problems_statement','assessments.objective','assessments.project_scope as project_scope_assessment'
+            ,'assessments.alternative_to_proposal','assessments.project_schedule as project_schedule_assessment','assessments.list_equipment_specification','assessments.key_performance_metric','assessments.key_project_risk_mitigants','assessments.impact_if_not_executed',
+            'assessments.hazop_study as hazop_study_assessment','assessments.complexity_score_assessment','assessments.level_project','assessments.attachment as assessment_attachment','assessments.cost_estimate_text'
+//            ,'projects.note','assessments.impact_if_not_executed_text', 'assessments.executive_summary_text','assessments.problem_statement_text','assessments.objective_text','assessments.hazop_study_text','assessments.project_scope_text','assessments.alternatives_to_proposal_text','assessments.project_schedule_text','assessments.list_equipment_specification_text','assessments.key_performance_metric_text', 'assessments.key_project_risk_and_mitigants_text'
+            ,'assessments.location_of_asset_capitalization', 'assessments.cost_estimate','fel1.project_scope as project_scope_fel1','fel1.attachment as fel1_attachment','fel2.project_scope as project_scope_fel2','fel2.identify_main_equipment','fel2.alternatives_and_analysis','fel2.attachment as fel2_attachment','fel3.executive_summary','fel3.problem_statement'
+            ,'fel3.project_scope as project_scope_fel3','fel3.alternatives_and_best_option','fel3.project_schedule as project_schedule_fel3','fel3.list_of_equipment_and_specification','fel3.hazop_study as hazop_study_fel3','fel3.cost_estimate','fel3.attachment as fel3_attachment','business_case.project_scope_of_work'
             ,'business_case.financial_evaluation','business_case.risk_assessment','business_case.cost_estimate','risk_assessment.people','risk_assessment.environment','risk_assessment.social_and_human_rights'
-            ,'risk_assessment.reputation','risk_assessment.finance','risk_assessment.final_impact_score','business_case.npv','business_case.irr','business_case.payback_period'
+            ,'risk_assessment.reputation','risk_assessment.finance','risk_assessment.final_impact_score','business_case.npv','business_case.irr','business_case.payback_period','business_case.attachment as business_case_attachment'
 
         )
             ->leftJoin('capex_investment_categories as basket', 'basket.id', '=', 'projects.basket')
@@ -77,15 +77,15 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
             ],
         ]);
 
-        $sheet->getStyle('A1:BU3')
+        $sheet->getStyle('A1:BK3')
             ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
-        $sheet->getStyle('A1:BU3')->getFill()
+        $sheet->getStyle('A1:BK3')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('3fa7fd');
         //$sheet->getColumnDimension('A')->setWidth('30'); work if shouldAutoSize is disable
 
 
-        $column = "A1:BU3".($columnSize) ;
+        $column = "A1:BK3".($columnSize) ;
         $sheet->getStyle($column)->applyFromArray([
             'borders' => [
                 'allBorders' => [
@@ -108,10 +108,11 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     {
         return [
             'X' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
-            'AL' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'AA' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'AV' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
             'BG' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
             'BR' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
-            'BS' => NumberFormat::FORMAT_PERCENTAGE
+            'BH' => NumberFormat::FORMAT_PERCENTAGE
         ];
     }
 }

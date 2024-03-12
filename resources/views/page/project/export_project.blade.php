@@ -14,12 +14,13 @@
             <th rowspan="3">Narrative</th>
             <th rowspan="3">Project Submit Date</th>
             <th rowspan="3">Assessment of Level Project</th>
-            <th rowspan="1" colspan="29">1. Form Assessment of Project Level</th>
+            <th rowspan="1" colspan="18">1. Form Assessment of Project Level</th>
             <th rowspan="1" colspan="2">2. Form Project Level Complexity</th>
             <th rowspan="1" colspan="1">2. Form Fel 1 Engineering Report</th>
             <th rowspan="1" colspan="3">3. Form Fel 2 Engineering Report</th>
             <th rowspan="1" colspan="25">4. Project FEL 3 or Business Case Form</th>
             <th rowspan="3">Prioritization Criteria</th>
+            <th rowspan="3">Remark</th>
         </tr>
         {{-- column header row 2 start here--}}
         <tr>
@@ -37,17 +38,6 @@
             <td rowspan="2">12 Cost Estimate</td>
             <td rowspan="2">13 Complexity Score</td>
             <td rowspan="2">14 Assessment of Level Project</td>
-            <td rowspan="2">Executive Summary</td>
-            <td rowspan="2">Problem Statement</td>
-            <td rowspan="2">Objective</td>
-            <td rowspan="2">Project Scope</td>
-            <td rowspan="2">Alternatives and Best Option</td>
-            <td rowspan="2">Project Schedule</td>
-            <td rowspan="2">List of Equipment and Specification</td>
-            <td rowspan="2">Key Performance Metric</td>
-            <td rowspan="2">Key Project Risk Mitigants</td>
-            <td rowspan="2">Impact if Not Executed</td>
-            <td rowspan="2">Hazop Study</td>
             <td rowspan="2">Cost Estimate</td>
             <td rowspan="2">Complexity Score</td>
             <td rowspan="2">Location of Asset Capitalization</td>
@@ -99,6 +89,9 @@
     </thead>
     <tbody>
         @foreach($project as $p)
+            @foreach($p->getRemark() as $key => $value)
+                <li>{{$loop->index + 1}}). {{$value}} </li>
+            @endforeach
             <tr>
                 <td>{{$p->project_number}}</td>
                 <td>{{$p->project_name}}</td>
@@ -127,30 +120,6 @@
                 <td>{{$p?->cost_estimate_text}}</td>
                 <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->level_project}}</td>
-                <td>{{$p?->executive_summary_text}}</td>
-                <td>{{ $p?->problem_statement_text }}</td>
-                <td>{{ $p?->objective_text }}</td>
-                <td>{{ $p?->project_scope_text }}</td>
-                <td>{{ $p?->alternatives_to_proposal_text }}</td>
-                <td>{{ $p?->project_schedule_text }}</td>
-                <td>{{ $p?->list_equipment_specification_text }}</td>
-                <td>
-                    <ol>
-                        @if ($p->key_performance_metric_text)
-                            @foreach ($p->key_performance_metric_text ?? [] as $value)
-                                <li>
-                                    Description: {{ $value['description'] ?? "" }},
-                                    UOM: {{ $value['uom'] ?? "" }},
-                                    Time Benefit: {{ $value['time_benefit'] ?? "" }},
-                                    Remarks: {{ $value['remarks'] ?? "" }}.
-                                </li>
-                            @endforeach
-                        @endif
-                    </ol>
-                </td>
-                <td>{{ $p?->key_project_risk_and_mitigants_text }}</td>
-                <td>{{ $p?->impact_if_not_executed_text }}</td>
-                <td>{{ $p?->hazop_study_text }}</td>
                 <td>{!! ($p?->cost_estimate_text)  !!}</td>
                 <td>{{ $p?->complexity_score_assessment }}</td>
                 <td>
@@ -211,7 +180,14 @@
                         @endforeach
                     </div>
                 </td>
+                <td>
+                    <ul>
+                        @foreach($p->getRemark() as $key => $value)
+                            <li>{{$loop->index + 1}}). {{$value}} </li>
+                        @endforeach
+                    </ul>
 
+                </td>
             </tr>
         @endforeach
     </tbody>
