@@ -1053,6 +1053,7 @@ $(function() {
         var _val = _this.val()
         var _default_val = removeFormatCurrency(_val)
         setAssessmentLevelProject(_default_val,$('.js-hidden-project-level-assessment-score').val())
+        setNewMessageMandatoryAssessment($('.js-select-score').val())
     })
 
     function removeFormatCurrency(_val){
@@ -1183,12 +1184,13 @@ $(function() {
         var _default_budget = _budget_value
         if(_budget_value) _default_budget = removeFormatCurrency(_budget_value)
         if(_setAssessment) setAssessmentLevelProject(_default_budget,_score)
-        setMessageMandatoryAssessment(_score)
+        // setMessageMandatoryAssessment(_score)
+        setNewMessageMandatoryAssessment($('.js-select-score').val())
     }
 
     function setMessageMandatoryAssessment(_score){
         var _mandatory_message = "<span class='text-warning'> Complexity Score : " + _score + " . Mandatory Action Required: Submit Form "
-        if(_score >= 4 && _score <= 10){
+        if(_score >= 4 && _score <= 10 ){
             _mandatory_message = _mandatory_message + "FEL 3</span>";
         } else if (_score >= 11 && _score <= 16){
             _mandatory_message = _mandatory_message + "FEL 2</span>";
@@ -1196,6 +1198,21 @@ $(function() {
             _mandatory_message = _mandatory_message + "FEL 1 & FEL 2</span>";
         } else {
             _mandatory_message = "";
+        }
+
+        $('.js-assessment-message-mandatory-form-fels').html(_mandatory_message)
+    }
+
+    function setNewMessageMandatoryAssessment(_level){
+        var _mandatory_message = "<span class='text-danger'> Mandatory Action Required: Submit Form "
+        if (_level === "COMPLEX" || _level === "PDS"){
+            _mandatory_message = _mandatory_message + "FEL 1, FEL 2 & FEL 3 </span>";
+        } else if (_level === "MODERATE"){
+            _mandatory_message = _mandatory_message + "FEL 1/2, FEL 3 </span>";
+        } else if (_level === "LIGHT"){
+            _mandatory_message = _mandatory_message + "FEL 1/2/3   </span>";
+        } else {
+            _mandatory_message = _mandatory_message
         }
 
         $('.js-assessment-message-mandatory-form-fels').html(_mandatory_message)

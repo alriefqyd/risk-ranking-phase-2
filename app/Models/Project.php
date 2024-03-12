@@ -318,6 +318,23 @@ class Project extends Model
         }
     }
 
+    public function newValidateAssessmentBasedOnComplexityScore($isMessage){
+        $complexityScore = $this->assessment?->level_project_text;
+        if(!$complexityScore) return null;
+        if($complexityScore === Setting::ASSESSMENT_LEVEL["COMPLEX"]
+            || $complexityScore === Setting::ASSESSMENT_LEVEL["PDS"]){
+            return $isMessage ? 'FEL 1, FEL 2 & FEL 3 ' :
+                (isset($this->fel3) && isset($this->fel2)) && isset($this->fel1);
+        } if($complexityScore === Setting::ASSESSMENT_LEVEL["MODERATE"]){
+            return $isMessage ? 'FEL 1/2 & FEL 3' : (isset($this->fel1) || isset($this->fel2)) && isset($this->fel3);
+        } else if ($complexityScore === Setting::ASSESSMENT_LEVEL['LIGHT']){
+            return $isMessage ? 'FEL 1/2/3' : (isset($this->fel3)
+                || isset($this->fel2) || isset($this->fel1));
+        } else {
+            return $isMessage ? 'Your complexity score doesnt match any condition of business case' : false;
+        }
+    }
+
     /** Decode Text */
 
     private function sanitizeTextAttribute($value)

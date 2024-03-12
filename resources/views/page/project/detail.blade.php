@@ -77,7 +77,7 @@
 
                             @if(!$project->isHaveCriterias() || $project->isHaveCriterias() && sizeof($project->criterias) > 0)
                                 @if(isset($project->categories))
-                                    <div class="tab-pane fade js-tab-parent show  {{Session::get('page-tab') == 'assessment' ? 'active show' : ''}}" id="assessment" role="tabpanel" aria-labelledby="assessment-tab">
+                                    <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'assessment' ? 'active show' : ''}}" id="assessment" role="tabpanel" aria-labelledby="assessment-tab">
                                         @include('page.assessment.assessment_tab')
                                     </div>
                                 @endif

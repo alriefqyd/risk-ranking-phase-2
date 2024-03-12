@@ -584,7 +584,6 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <label class="m-t-3 js-assessment-message-mandatory-form-fels"></label>
                             </div>
                         </div>
                     </div>
@@ -608,6 +607,7 @@
                                 <div class="col-md-12 txt-danger js-error-message"></div>
                             </div>
                         </div>
+                        <label class="m-t-3 js-assessment-message-mandatory-form-fels"></label>
                     </div>
                 </td>
             </tr>

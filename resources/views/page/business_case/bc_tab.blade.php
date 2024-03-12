@@ -6,7 +6,7 @@
     @if(!$isNotCurrentData)
         @can('update')
             <div class="col-md-7 m-l-50 m-b-10">
-                @if(!$project->validateAssessmentBasedOnComplexityScore(false))
+                @if(!$project->newValidateAssessmentBasedOnComplexityScore(false))
                     <button class="btn btn-sm btn-success m-t-10 float-end {{!$errors->any() ? '' : 'd-none'}}"
                             data-bs-target="#errorCreateBusinessCase"
                             data-bs-toggle="modal"
@@ -28,7 +28,7 @@
     @endif
 </div>
 
-@if(isset($project->assessment) && !$project->validateAssessmentBasedOnComplexityScore(false))
+@if(isset($project->assessment) && !$project->newValidateAssessmentBasedOnComplexityScore(false))
     @php($score = $project->assessment?->complexity_score_assessment)
     <div class="modal fade" id="errorCreateBusinessCase" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -37,7 +37,7 @@
                     <h5 class="modal-title error" id="exampleModalLabel">Error</h5>
                     <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">Complexity Score : {{$project->assessment?->complexity_score_assessment}} . Mandatory Action Required: Submit Form {{ $project->validateAssessmentBasedOnComplexityScore(true) }}</div>
+                <div class="modal-body">Project Level Assessmnet : {{$project->assessment?->level_project_text}} . Mandatory Action Required: Submit Form {{ $project->newValidateAssessmentBasedOnComplexityScore(true) }}</div>
                 <div class="modal-footer">
                     <button class="btn btn-danger js-btn-submit-assessment" data-bs-dismiss="modal">Close</button>
                 </div>
