@@ -419,28 +419,46 @@ $(function (){
         });
     }
 
-    function setGraphsubmissionDepartment(result){
-        var labels = Object.keys(result);
-        var data = Object.values(result);
+    function setGraphsubmissionDepartment(result) {
+        const data = {
+            label: result.label,
+            submittedBC: result.submittedBC,
+            remaining: result.remaining
+        };
 
-        var ctx = document.getElementById('project-stacked-bar-chart').getContext('2d');
-        var chart = new Chart(ctx, {
+        const ctx = document.getElementById('project-stacked-bar-chart').getContext('2d');
+
+        const stackedBarChart = new Chart(ctx, {
             type: 'horizontalBar',
             data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Project Count',
-                    data: data,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
+                labels: data.label.map(label => label.replace('&','amp&').split('amp')),
+                datasets: [
+                    {
+                        label: 'Submitted BC',
+                        data: data.submittedBC,
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Remaining',
+                        data: data.remaining,
+                        backgroundColor: 'rgba(168, 168, 168, 0.7)',
+                        borderWidth: 1
+                    }
+                ]
             },
             options: {
+                maintainAspectRatio: false,
+                responsive:true,
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
                 plugins:{
                     datalabels:{
                         labels:{
                             index:{
+                                align:"right",
                                 color : "black",
                                 font: {
                                     weight: 'bold',
@@ -453,8 +471,13 @@ $(function (){
                                             datasetArray.push(dataset.data[context.dataIndex]);
                                         }
                                     });
+
                                     function totalSum(total, dataPoint){
-                                        return total + dataPoint;
+                                        const submittedBC = context.chart.data.datasets[0].data[context.dataIndex];
+                                        const remaining = context.chart.data.datasets[1].data[context.dataIndex];
+                                        const res = submittedBC + remaining;
+                                        const percentage = (submittedBC / res) * 100;
+                                        return percentage.toFixed(2) + '%';
                                     }
 
                                     if(context.datasetIndex === datasetArray.length - 1){
@@ -465,6 +488,22 @@ $(function (){
                             },
                         },
                     }
+                },
+                scales: {
+                    xAxes: [{
+                        stacked: true,
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            steps: 10,
+                            stepValue: 5,
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    }]
                 },
             },
             plugins:[ChartDataLabels]

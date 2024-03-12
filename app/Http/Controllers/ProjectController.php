@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\Sending;
 use App\Models\Assessment;
+use App\Models\BusinessCaseAssessment;
 use App\Models\CapexInvestment;
 use App\Models\Criteria;
 use App\Models\CriteriasProjects;
@@ -518,19 +519,40 @@ class ProjectController extends Controller
         }
     }
 
-    public function getProjectByOperation(){
+    public function getProjectByOperation()
+    {
         $projects = Project::where('presented_year', config('constants.project_presented_year'))
-            ->with('ownersProject')
+            ->with(['ownersProject', 'business_case'])
             ->get()
-            ->groupBy(function($project) {
-                return optional($project->ownersProject)->name;
-            });
+            ->groupBy('ownersProject.name');
 
-        $groupedCounts = $projects->map(function ($group) {
-            return $group->count();
+        $labels = [];
+        $submittedBC = [];
+        $remaining = [];
+
+        $groupedCounts = $projects->map(function ($group) use (&$labels, &$submittedBC, &$remaining) {
+            $label = $group->first()->ownersProject->name;
+            $total = $group->count();
+
+            $submittedBc = $group->filter(function ($d) {
+                return $d->business_case?->status == "PUBLISH";
+            })->count();
+
+            $remainingBc = $total - $submittedBc;
+
+            $labels[] = $label;
+            $submittedBC[] = $submittedBc;
+            $remaining[] = $remainingBc;
+
         });
 
-        return $groupedCounts;
+        $result = [
+            'label' => $labels,
+            'submittedBC' => $submittedBC,
+            'remaining' => $remaining
+        ];
+
+        return $result;
     }
 
 }

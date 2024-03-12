@@ -320,53 +320,57 @@ class Project extends Model
 
     /** Decode Text */
 
+    private function sanitizeTextAttribute($value)
+    {
+        return preg_replace('/[^\w\s.,?!-]/u', '', html_entity_decode(strip_tags($value)));
+    }
     public function getExecutiveSummaryTextAttribute($value){
-        $plainText = htmlspecialchars_decode(strip_tags($value));
-        return substr($plainText,0,2450);
+        // Remove HTML tags and decode HTML entities
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getProblemStatementTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getObjectiveTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getProjectScopeTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getAlternativesToProposalTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getProjectScheduleTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getListEquipmentSpecificationTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getKeyProjectRiskAndMitigantsTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getImpactIfNotExecutedTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getHazopStudyTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getComplexityScoreAssessmentTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getLevelProjectTextAttribute($value){
-        return html_entity_decode(strip_tags($value));
+        return $this->sanitizeTextAttribute($value);
     }
 
     public function getLocationOfAssetCapitalizationAttribute($value)

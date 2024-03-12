@@ -213,7 +213,7 @@
                         <h5>Project Submission</h5>
                     </div>
                     <div class="card-body chart-block m-t-30" >
-                        <div class="flot-chart-container" style="height:auto">
+                        <div class="flot-chart-container" style="height:650px">
                             <canvas class="flot-chart-placeholder" width="800" height="625" id="project-stacked-bar-chart"></canvas>
                         </div>
                     </div>
@@ -226,7 +226,7 @@
                         <h5>Project Basket</h5>
                     </div>
                     <div class="card-body chart-block m-t-30" >
-                        <div class="flot-chart-container" style="height:auto">
+                        <div class="flot-chart-container" style="height:650px">
                             <canvas class="flot-chart-placeholder" width="800" height="400" id="stacked-bar-chart"></canvas>
                         </div>
                     </div>
