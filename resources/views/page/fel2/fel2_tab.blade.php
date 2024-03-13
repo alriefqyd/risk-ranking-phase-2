@@ -27,7 +27,7 @@
     @endif
 </div>
 
-@if(!$project?->assessment?->complexity_analysis_type)
+@if(!isset($project?->assessment?->level_project_text))
     <div class="modal fade" id="errorCreateFel2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
