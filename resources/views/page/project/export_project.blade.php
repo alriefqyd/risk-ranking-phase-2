@@ -114,7 +114,7 @@
                 <td>{{$p?->key_project_risk_mitigants_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->impact_if_not_executed_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->hazop_study_assessment ? '1' : '0'}}</td>
-                <td>{{$p?->cost_estimate_text}}</td>
+                <td>{{$p?->cost_estimate_text_assessment}}</td>
                 <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->level_project_assessment}}</td>
                 <td>{!! ($p?->cost_estimate_text_assessment)  !!}</td>
