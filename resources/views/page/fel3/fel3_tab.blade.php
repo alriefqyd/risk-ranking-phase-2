@@ -5,7 +5,7 @@
     @if(!$isNotCurrentData)
         @can('update')
             <div class="col-md-7 m-l-50 m-b-10">
-                @if(!$project?->assessment?->complexity_analysis_type)
+                @if(!$project?->assessment?->level_project_text)
                     <button class="btn btn-sm btn-success m-t-10 float-end {{!$errors->any() ? '' : 'd-none'}}"
                             data-bs-target="#errorCreateFel3"
                             data-bs-toggle="modal"
