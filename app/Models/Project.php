@@ -391,7 +391,7 @@ class Project extends Model
         return $this->sanitizeTextAttribute($value);
     }
 
-    public function getLocationOfAssetCapitalizationAttribute($value)
+    public function getLocationOfAssetCapitalizationAssessmentAttribute($value)
     {
         $data = $value;
         $json = json_decode($data, true);
@@ -446,167 +446,134 @@ class Project extends Model
 
     public function getRemark(){
         $nullColumns = [];
-        $excludeColumns = ['reputation','people','environment','social_and_human_rights','fel1_attachment','fel2_attachment','fel3_attachment','business_case_attachment'];
+        $excludeColumns = ['reputation','people','environment','social_and_human_rights','fel1_attachment','fel2_attachment','fel3_attachment','business_case_attachment', 'change_management_request'];
 
-        if ($this->level_project_text == 'MODERATE') {
+        $assessment = [];
+        $fel1 = [];
+        $fel2 = [];
+        $fel2 = [];
+        $case = [];
+
+        if ($this->level_project_text_assessment == 'MODERATE') {
             if (($this->project_scope_fel1 == null || $this->project_scope_fel1 == '')
                 && ($this->project_scope_fel2 == null || $this->project_scope_fel2 == '')) {
-                $nullColumns[] = 'Please fill all form fel1/fel2';
+                $fel1[] = 'Form FEL 1/2 must be completed';
             }
 
             if(($this->project_scope_fel3 == '' || $this->project_scope_fel3 == null) ||
-            ($this->problem_statement == '' || $this->problem_statement == null)){
-                $nullColumns[] = 'Please fill all form fel3';
+            ($this->problem_statement_fel3 == '' || $this->problem_statement_fel3 == null)){
+                $fel1[] = 'Form FEL 3 must be completed';
             }
         }
-
-        if ($this->level_project_text == 'LIGHT') {
+        if ($this->level_project_text_assessment == 'LIGHT') {
             if (($this->project_scope_fel1 == null || $this->project_scope_fel1 == '')
-                && ($this->project_scope_fel1 == null || $this->project_scope_fel1 == '')
+                && ($this->project_scope_fel2 == null || $this->project_scope_fel2 == '')
                 && ($this->project_scope_fel3 == null || $this->project_scope_fel3 == '')) {
-                $nullColumns[] = 'Please fill all form fel1/fel2/fel3';
+                $nullColumns[] = 'Form FEL 1/2/3 must be completed';
             }
 
         }
-
-        if ($this->level_project_text == 'COMPLEX' || $this->level_project_text == "PDS") {
+        if ($this->level_project_text_assessment == 'COMPLEX' || $this->level_project_text_assessment == "PDS") {
             if ($this->project_scope_fel1 == null || $this->project_scope_fel1 == '') {
-                $nullColumns[] = 'Please fill all form fel1';
+                $nullColumns[] = 'Form FEL 1 must be completed';
             }
 
 
             if (($this->project_scope_fel2 == null || $this->project_scope_fel2 == '') ||
-                ($this->identify_main_equipment == null || $this->identify_main_equipment == '') ||
-                ($this->alternatives_and_analysis == null || $this->alternatives_and_analysis == '')) {
-                $nullColumns[] = 'Please fill all form fel2';
+                ($this->identify_main_equipment_fel2 == null || $this->identify_main_equipment_fel2 == '') ||
+                ($this->alternatives_and_analysis_fel2 == null || $this->alternatives_and_analysis_fel2 == '')) {
+                $nullColumns[] = 'Form FEL 2 must be completed';
             }
 
             if (($this->project_scope_fel3 == null || $this->project_scope_fel3 == '') ||
-                ($this->cost_estimate == null || $this->cost_estimate == '') ||
-                ($this->project_scope_of_work == null || $this->project_scope_of_work == '')) {
-                $nullColumns[] = 'Please fill all form fel3';
+                ($this->cost_estimate_fel3 == null || $this->cost_estimate_fel3 == '')) {
+                $nullColumns[] = 'Form FEL 3 must be completed';
+            }
+
+            if(($this->project_scope_of_work_business_case == null || $this->project_scope_of_work_business_case == '')
+            || $this->priority_level == null || $this->priority_level == ''){
+                $nullColumns[] = "Form Business Case must be completed";
             }
 
         }
 
+        /** Checking Attachment Existing */
         if($this->project_scope_fel1 != '' || $this->project_scope_fel1 != null){
             $value = $this->fel1_attachment;
-            if(isset($value)) {
+            if(isset($value) && $value != "" && $value != null) {
                 $mandatoryFel1tAttachment = Setting::FEL1_ATTACHMENT;
                 $json = json_decode($value,true);
                 $keys = array_keys($json);
                 $notPresentValues = array_diff($mandatoryFel1tAttachment,$keys);
 
                 foreach ($notPresentValues as $diff){
-                    $nullColumns[] = "Please attach file fel1 ".ucwords((str_replace('_',' ',$diff))). " if through fel 1";
+                    $nullColumns[] = "Attachment: FEL1  ".ucwords((str_replace('_',' ',$diff))). " (if applicable for FEL 1)";
                 }
             }
         }
 
         if($this->project_scope_fel2 != '' || $this->project_scope_fel2 != null){
             $value = $this->fel2_attachment;
-            if(isset($value)) {
+            if(isset($value) && $value != "" && $value != null) {
                 $mandatoryFel2tAttachment = Setting::FEL2_ATTACHMENT;
                 $json = json_decode($value,true);
                 $keys = array_keys($json);
                 $notPresentValues = array_diff($mandatoryFel2tAttachment,$keys);
 
                 foreach ($notPresentValues as $diff){
-                    $nullColumns[] = "Please attach file fel2 ".ucwords((str_replace('_',' ',$diff))). " if through fel 2";
+                    $nullColumns[] = "Attachment: FEL2 ".ucwords((str_replace('_',' ',$diff))). " (if applicable for FEL 2)";
                 }
             }
         }
 
         if($this->project_scope_fel3 != '' || $this->project_scope_fel3 != null){
             $value = $this->fel3_attachment;
-            if(isset($value)) {
+            if(isset($value) && $value != "" && $value != null) {
                 $mandatoryFel3tAttachment = Setting::FEL3_ATTACHMENT;
                 $json = json_decode($value,true);
                 $keys = array_keys($json);
                 $notPresentValues = array_diff($mandatoryFel3tAttachment,$keys);
 
                 foreach ($notPresentValues as $diff){
-                    $nullColumns[] = "Please attach file fel3 ".ucwords((str_replace('_',' ',$diff)));
+                    $nullColumns[] = "Attachment: FEL3 ".ucwords((str_replace('_',' ',$diff))) . " (if applicable for FEL 3)";
                 }
             }
         }
 
-
+        /* Checking Field Assessment, FEL1,2,3, BC */
         foreach ($this->getAttributes() as $column => $value){
+            $type = $this->getType($column);
             if(!in_array($column, $excludeColumns)){
                 if($value == null || $value == '' || $value == 0){
-                    $nullColumns[] = "Please fill the form " .ucwords(str_replace('_',' ',$column));
+                    $nullColumns[] =  ucwords(str_replace('_',' ',$column));
                 }
 
                 if ($column === 'npv' && $value < 0){
-                    $nullColumns[] = "NPV cannot be less than 0";
+                    $nullColumns[] = "NPV cannot have a negative value";
                 }
 
                 if ($column === 'assessment_attachment'){
                     $mandatoryAssessmentAttachment = Setting::ASSESSMENT_ATTACHMENT;
-                    if(!$value) return [];
-                    $json = json_decode($value,true);
-                    $keys = array_keys($json);
-                    $notPresentValues = array_diff($mandatoryAssessmentAttachment,$keys);
+                    if(isset($value) && $value != "" && $value != null) {
+                        $json = json_decode($value,true);
+                        $keys = array_keys($json);
+                        $notPresentValues = array_diff($mandatoryAssessmentAttachment,$keys);
 
-                    foreach ($notPresentValues as $diff){
-                        $nullColumns[] = "Please attach file assessment ".ucwords((str_replace('_',' ',$diff)));
+                        foreach ($notPresentValues as $diff){
+                            $nullColumns[] = "Level Assessment Attachment: ".ucwords((str_replace('_',' ',$diff)));
+                        }
                     }
                 }
 
             }
         }
 
-
-
-//        if($this->column === 'fel1_attachment'){
-//            $mandatoryFel1tAttachment = Setting::FEL1_ATTACHMENT;
-//            if(!$value) return [];
-//            $json = json_decode($value,true);
-//            $keys = array_keys($json);
-//            $notPresentValues = array_diff($mandatoryFel1tAttachment,$keys);
-//
-//            foreach ($notPresentValues as $diff){
-//                $nullColumns[] = "Please attach file fel1 ".ucwords((str_replace('_',' ',$diff))). " if through fel 1";
-//            }
-//        }
-//
-//        if($column === 'fel2_attachment'){
-//            $mandatoryFel2tAttachment = Setting::FEL2_ATTACHMENT;
-//            if(!$value) return [];
-//            $json = json_decode($value,true);
-//            $keys = array_keys($json);
-//            $notPresentValues = array_diff($mandatoryFel2tAttachment,$keys);
-//
-//            foreach ($notPresentValues as $diff){
-//                $nullColumns[] = "Please attach file fel2 ".ucwords((str_replace('_',' ',$diff))). " if through fel 2";
-//            }
-//        }
-//
-//        if($column === 'fel3_attachment'){
-//            $mandatoryFel3Attachment = Setting::FEL3_ATTACHMENT;
-//            if(!$value) return [];
-//            $json = json_decode($value,true);
-//            $keys = array_keys($json);
-//            $notPresentValues = array_diff($mandatoryFel3Attachment,$keys);
-//
-//            foreach ($notPresentValues as $diff){
-//                $nullColumns[] = "Please attach file fel3 ".ucwords((str_replace('_',' ',$diff))). " if through fel 3";
-//            }
-//        }
-//
-//        if($column === 'business_case_attachment'){
-//            $mandatoryBcAttachment = Setting::BUSINESS_CASE_ATTACHMENT;
-//            if(!$value) return [];
-//            $json = json_decode($value,true);
-//            $keys = array_keys($json);
-//            $notPresentValues = array_diff($mandatoryBcAttachment,$keys);
-//
-//            foreach ($notPresentValues as $diff){
-//                $nullColumns[] = "Please attach file business case ".ucwords((str_replace('_',' ',$diff)));
-//            }
-//        }
-
         return $nullColumns;
+    }
+
+    public function getType($str){
+        $words = explode("_", $str);
+        $lastWord = end($words);
+        return $lastWord;
     }
 }

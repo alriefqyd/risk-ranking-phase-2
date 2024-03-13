@@ -89,9 +89,6 @@
     </thead>
     <tbody>
         @foreach($project as $p)
-            @foreach($p->getRemark() as $key => $value)
-                <li>{{$loop->index + 1}}). {{$value}} </li>
-            @endforeach
             <tr>
                 <td>{{$p->project_number}}</td>
                 <td>{{$p->project_name}}</td>
@@ -105,27 +102,27 @@
                 <td style="background-color:{!! $p->updated_at > now()->startOfDay() ? "#fefe00" : '' !!}">{!! $p->note !!}</td>
                 <td>{{$p->created_at}}</td>
                 <td style="text-align: center">
-                    {{$p?->level_project_text}}</td>
+                    {{$p?->level_project_text_assessment}}</td>
                 <td>{{$p?->executive_summary_assessment ?: '0'}}</td>
-                <td>{{$p?->problems_statement ?: '0'}}</td>
-                <td>{{$p?->objective ?: '0'}}</td>
+                <td>{{$p?->problem_statement_assessment ?: '0'}}</td>
+                <td>{{$p?->objective_assessment ?: '0'}}</td>
                 <td>{{$p?->project_scope_assessment ?: '0'}}</td>
-                <td>{{$p?->alternative_to_proposal ?: '0'}}</td>
+                <td>{{$p?->alternative_to_proposal_assessment ?: '0'}}</td>
                 <td>{{$p?->project_schedule_assessment ?: '0'}}</td>
-                <td>{{$p?->list_equipment_specification ?: '0'}}</td>
-                <td>{{$p?->key_performance_metric ?: '0'}}</td>
-                <td>{{$p?->key_project_risk_mitigants ? '1' : '0'}}</td>
-                <td>{{$p?->impact_if_not_executed ? '1' : '0'}}</td>
+                <td>{{$p?->list_equipment_specification_assessment ?: '0'}}</td>
+                <td>{{$p?->key_performance_metric_assessment ?: '0'}}</td>
+                <td>{{$p?->key_project_risk_mitigants_assessment ? '1' : '0'}}</td>
+                <td>{{$p?->impact_if_not_executed_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->hazop_study_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->cost_estimate_text}}</td>
                 <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
-                <td>{{$p?->level_project}}</td>
-                <td>{!! ($p?->cost_estimate_text)  !!}</td>
+                <td>{{$p?->level_project_assessment}}</td>
+                <td>{!! ($p?->cost_estimate_text_assessment)  !!}</td>
                 <td>{{ $p?->complexity_score_assessment }}</td>
                 <td>
-                    @if ($p->location_of_asset_capitalization)
+                    @if ($p->location_of_asset_capitalization_assessment)
                         <ul>
-                            @foreach ($p->location_of_asset_capitalization ?? [] as $value)
+                            @foreach ($p->location_of_asset_capitalization_assessment ?? [] as $value)
                                 <li>
                                     Area: {{ $value['area'] }},
                                     Cost Center: {{ $value['cost_center'] }}
@@ -134,27 +131,27 @@
                         </ul>
                     @endif
                 </td>
-                <td>{{$p?->level_project_text }}</td>
-                <td>{{$p?->cost_estimate ? '1' : '0'}}</td>
+                <td>{{$p?->level_project_text_assessment }}</td>
+                <td>{{$p?->cost_estimate_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->project_scope_fel1 ?: '0'}}</td>
 
                 <td>{{$p?->project_scope_fel2 ?: '0'}}</td>
-                <td>{{$p?->identify_main_equipment ?: '0'}}</td>
-                <td>{{$p?->alternatives_and_analysis ?: '0'}}</td>
+                <td>{{$p?->identify_main_equipment_fel2 ?: '0'}}</td>
+                <td>{{$p?->alternatives_and_analysis_fel2 ?: '0'}}</td>
 
-                <td>{{$p?->executive_summary ?: '0'}}</td>
-                <td>{{$p?->problem_statement ?: '0'}}</td>
+                <td>{{$p?->executive_summary_fel3 ?: '0'}}</td>
+                <td>{{$p?->problem_statement_fel3 ?: '0'}}</td>
                 <td>{{$p?->project_scope_fel3 ?: '0'}}</td>
-                <td>{{$p?->alternatives_and_best_option ?: '0'}}</td>
+                <td>{{$p?->alternatives_and_best_option_fel3 ?: '0'}}</td>
                 <td>{{$p->project_schedule_fel3 ? '1' : '0'}}</td>
-                <td>{{$p?->list_of_equipment_and_specification ? '1' : '0'}}</td>
+                <td>{{$p?->list_of_equipment_and_specification_fel3 ? '1' : '0'}}</td>
                 <td>{{$p?->hazop_study_fel3 ? '1' : '0'}}</td>
-                <td>{{$p?->cost_estimate ? '1' : '0'}}</td>
-                <td>{{$p?->project_scope_of_work ?: '0'}}</td>
-                <td>{{$p?->financial_evaluation ?: '0'}}</td>
-                <td>{{$p?->risk_assessment ?: '0'}}</td>
-                <td>{{$p?->cost_estimate}}</td>
+                <td>{{$p?->cost_estimate_fel3 ? '1' : '0'}}</td>
+                <td>{{$p?->project_scope_of_work_business_case ?: '0'}}</td>
+                <td>{{$p?->financial_evaluation_business_case ?: '0'}}</td>
+                <td>{{$p?->risk_assessment_business_case ?: '0'}}</td>
+                <td>{{$p?->cost_estimate_business_case}}</td>
 
                 <td>{{$p?->getSeverityValue($p->people)}}</td>
                 <td>{{$p?->getSeverityValue($p?->environment)}}</td>
@@ -166,9 +163,9 @@
                 <td>{{$p->getProbabilityRiskAssessment($p->final_impact_score)}}</td>
                 <td>{{$p?->priority_level}}</td>
                 <td>{{$p?->change_management_request ? '1' : '0'}}</td>
-                <td>{!!$p?->npv ?: '0' !!}</td>
-                <td>{{($p?->irr / 100) ?: '0'}}</td>
-                <td>{{$p?->payback_period ?: '0'}}</td>
+                <td>{!!$p?->npv_business_case ?: '0' !!}</td>
+                <td>{{($p?->irr_business_case / 100) ?: '0'}}</td>
+                <td>{{$p?->payback_period_business_case ?: '0'}}</td>
                 <td>
                     <div class="row">
                         @foreach($p->breakdownPrioritizationCriteria() as $data)
@@ -182,6 +179,7 @@
                 </td>
                 <td>
                     <ul>
+                        For the following fields, please ensure they are filled out:
                         @foreach($p->getRemark() as $key => $value)
                             <li>{{$loop->index + 1}}). {{$value}} </li>
                         @endforeach
