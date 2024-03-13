@@ -107,7 +107,6 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     public function columnFormats(): array
     {
         return [
-            'X' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
             'AA' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
             'AV' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
             'BG' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
