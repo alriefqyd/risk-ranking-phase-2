@@ -20,6 +20,8 @@
             <th rowspan="1" colspan="3">3. Form Fel 2 Engineering Report</th>
             <th rowspan="1" colspan="25">4. Project FEL 3 or Business Case Form</th>
             <th rowspan="3">Prioritization Criteria</th>
+            <th rowspan="3">Level Assessment Status</th>
+            <th rowspan="3">Business Case Status</th>
             <th rowspan="3">Remark</th>
         </tr>
         {{-- column header row 2 start here--}}
@@ -176,6 +178,12 @@
                             </div>
                         @endforeach
                     </div>
+                </td>
+                <td>
+                    {{$p->isSubmitAssessment()}}
+                </td>
+                <td>
+                    {{$p->isSubmitBusinessCase()}}
                 </td>
                 <td>
                     <ul>

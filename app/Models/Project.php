@@ -582,6 +582,32 @@ class Project extends Model
         return $lastWord;
     }
 
+    public function isSubmitAssessment(){
+        if($this->assessment){
+            if($this->assessment->status === 'PUBLISH'
+                && isset($this->assessment->complexity_analysis_type)
+                && isset($this->assessment->level_project_text)){
+                return 1 ;
+            }
+        }
+
+        return 0;
+    }
+
+    public function isSubmitBusinessCase(){
+        if($this->business_case){
+            if($this->business_case->status === 'PUBLISH'
+                && isset($this->business_case->risk_assessment)
+                && isset($this->business_case->npv)
+                && isset($this->business_case->irr)
+                && isset($this->business_case->payback_period)){
+                return 1 ;
+            }
+        }
+
+        return 0;
+    }
+
     public function getOldDepartment($value){
         return Department::where('id',$value)->first()->name;
     }
