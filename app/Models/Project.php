@@ -104,9 +104,14 @@ class Project extends Model
         $query->when($filters['operation_area'] ?? false, fn($query, $owner) =>
         $query->where('operation_area', '=', $owner)
         );
-
+        $query->when($filters['owner'] ?? false, fn($query, $owner) =>
+            $query->where('owner', '=', $owner)
+        );
         $query->when($filters['sponsor_area'] ?? false, fn($query, $sponsor) =>
         $query->where('sponsor_area', '=', $sponsor)
+        );
+        $query->when($filters['sponsor'] ?? false, fn($query, $owner) =>
+        $query->where('sponsor', '=', $owner)
         );
 
         $query->when($filters['category'] ?? false, fn($query, $category) =>
@@ -575,5 +580,9 @@ class Project extends Model
         $words = explode("_", $str);
         $lastWord = end($words);
         return $lastWord;
+    }
+
+    public function getOldDepartment($value){
+        return Department::where('id',$value)->first()->name;
     }
 }

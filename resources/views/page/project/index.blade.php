@@ -68,24 +68,42 @@
                                     </div>
                                     <div class="col-md-2 m-l-5 p-0">
                                         <div class="mb-2">
-                                            <select name="operation_area" data-placeholder="Select Operation Area" class="js-example-basic-single js-search-project col-sm-12 select2">
-                                                <option></option>
-                                                @foreach($department as $d)
-                                                    <option {{$d->id == request('operation_area') ? 'selected' : ''}} value="{{$d->id}}">{{$d->name}}</option>
-                                                @endforeach
-                                            </select>
+                                            @if(isset(request()->year) && request()->year <= config('constants.project_presented_year'))
+                                                <select name="owner" data-placeholder="Select Operation Area" class="js-example-basic-single js-search-project col-sm-12 select2">
+                                                    <option></option>
+                                                    @foreach($department as $d)
+                                                        <option {{$d->id == request('owner') ? 'selected' : ''}} value="{{$d->id}}">{{$d->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            @else
+                                                <select name="operation_area" data-placeholder="Select Operation Area" class="js-example-basic-single js-search-project col-sm-12 select2">
+                                                    <option></option>
+                                                    @foreach($department as $d)
+                                                        <option {{$d->id == request('operation_area') ? 'selected' : ''}} value="{{$d->id}}">{{$d->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mt-0">
                                     <div class="col-md-2 m-l-5 p-0">
                                         <div class="mb-2">
-                                            <select name="sponsor_area" data-placeholder="Select Sponsor Area" class="js-search-project js-example-basic-single col-sm-12 select2">
+                                            @if(isset(request()->year) && request()->year <= config('constants.project_presented_year'))
+                                            <select name="sponsor" data-placeholder="Select Sponsor Area" class="js-search-project js-example-basic-single col-sm-12 select2">
                                                 <option></option>
                                                 @foreach($subDepartment as $sd)
-                                                    <option {{$sd->id == request('sponsor_area') ? 'selected' : ''}} value="{{$sd->id}}">{{$sd->name}}</option>
+                                                    <option {{$sd->id == request('sponsor') ? 'selected' : ''}} value="{{$sd->id}}">{{$sd->name}}</option>
                                                 @endforeach
                                             </select>
+                                            @else
+                                                <select name="sponsor_area" data-placeholder="Select Sponsor Area" class="js-search-project js-example-basic-single col-sm-12 select2">
+                                                    <option></option>
+                                                    @foreach($subDepartment as $sd)
+                                                        <option {{$sd->id == request('sponsor_area') ? 'selected' : ''}} value="{{$sd->id}}">{{$sd->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-md-2 m-l-5 p-0">
@@ -166,8 +184,8 @@
                                             <td class="text-center">
                                                 {!! $project->getRelatedDataProjectBusinessCase() !!}
                                             </td>
-                                            <td>{{$project->ownersProject?->name ?? $project->owner}}</td>
-                                            <td>{{$project?->sponsorsProject?->name ?? $project->sponsor}}</td>
+                                            <td>{{$project->ownersProject?->name ?? $project->getOldDepartment($project->owner)}}</td>
+                                            <td>{{$project?->sponsorsProject?->name ?? $project->getOldDepartment($project->sponsor)}}</td>
                                             <td>
                                                 <a data-bs-toggle="modal"
                                                    class="modal-note"

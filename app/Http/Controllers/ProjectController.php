@@ -71,12 +71,12 @@ class ProjectController extends Controller
         $projectType = $this->projectType;
         $isAdmin = $this->isAdmin;
 
-        $projectList = $projectService->getAllProject(true, config('constants.project_presented_year'));
-        $year = null;
+
+        $year = config('constants.project_presented_year');
         if($request->year){
-            $year = config('constants.project_presented_year');
-            $projectList = $projectService->getAllProject(true, $request->year);
+            $year = $request->year;
         }
+        $projectList = $projectService->getAllProject(true, $year);
         $department = $projectService->getDepartment($department, null);
         $subDepartment = $projectService->getDepartment($subDepartment, null);
 

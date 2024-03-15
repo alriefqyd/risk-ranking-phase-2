@@ -104,12 +104,20 @@
                 </tr>
             @endif
             <tr>
-                <td>Owner Area :</td>
+                <td>Operation Area :</td>
                 <td> {{$project->ownersProject?->name}}</td>
             </tr>
             <tr>
                 <td>Sponsor Area :</td>
                 <td>{{$project?->sponsorsProject?->name}}</td>
+            </tr>
+            <tr>
+                <td>Owner :</td>
+                <td>{{$project?->owner}}</td>
+            </tr>
+            <tr>
+                <td>Project Sponsor :</td>
+                <td>{{$project?->sponsor}}</td>
             </tr>
             <tr>
                 <td>BC Presenter :</td>

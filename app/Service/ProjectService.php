@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PHPUnit\Exception;
+use function Sodium\add;
 
 class ProjectService
 {
@@ -72,13 +73,18 @@ class ProjectService
         }
 
         $owner = 'owner';
-        if($year >= 2024){
+        if($year >= config('constants.project_presented_year')){
             $owner = 'operation_area';
         }
 
+        $filter = ['q','operation_area','sponsor_area','category','type'];
+        if($year < config('constants.project_presented_year')){
+            $new = ['owner','sponsor'];
+            $filter = array_merge($new,$filter);
+        }
         $project = Project::with(['createdBy','assessment','fel1','fel2','fel3',
             'business_case','cost_benefits'])
-            ->filter(request(['q','operation_area','sponsor_area','category','type']))->where('presented_year', $year);
+            ->filter(request($filter))->where('presented_year', $year);
 
 
         /*
