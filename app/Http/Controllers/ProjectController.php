@@ -555,4 +555,45 @@ class ProjectController extends Controller
         return $result;
     }
 
+
+    public function getProjectByOperationSubmitted()
+    {
+        $projects = Project::where('presented_year', config('constants.project_presented_year'))
+            ->with(['ownersProject', 'business_case'])
+            ->get()
+            ->groupBy('ownersProject.name');
+
+        $labels = [];
+        $totalPerDepartmentArr = [];
+        $submittedBCArr = [];
+        $submittedAssessmentArr = [];
+
+        $projects->each(function ($group, $label) use (&$labels, &$totalPerDepartmentArr, &$submittedBCArr, &$submittedAssessmentArr) {
+            $labels[] = $label;
+
+            $totalPerDepartment = $group->count(); // Total projects for the department
+
+            $submittedBC = $group->filter(function ($d) {
+                return $d->isSubmitBusinessCase() === 1;
+            })->count();
+
+            $submittedAssessment = $group->filter(function ($d) {
+                return $d->isSubmitAssessment() === 1;
+            })->count();
+
+            $totalPerDepartmentArr[] = $totalPerDepartment;
+            $submittedBCArr[] = $submittedBC;
+            $submittedAssessmentArr[] = $submittedAssessment;
+        });
+
+        $result = [
+            'label' => $labels,
+            'totalPerDepartment' => $totalPerDepartmentArr,
+            'submittedBC' => $submittedBCArr,
+            'submittedAssessment' => $submittedAssessmentArr
+        ];
+
+        return $result;
+    }
+
 }

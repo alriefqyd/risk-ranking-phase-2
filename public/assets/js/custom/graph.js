@@ -412,9 +412,9 @@ $(function (){
 
     if($('#project-stacked-bar-chart').length > 0){
         $.ajax({
-            url:'/getProjectByOperationArea',
+            url:'/getProjectByOperationSubmitted',
             success:function (result){
-                setGraphsubmissionDepartment(result);
+                setGraphsubmissionDepartmentBcAssessment(result);
             }
         });
     }
@@ -495,6 +495,92 @@ $(function (){
                     }],
                     yAxes: [{
                         stacked: true,
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            steps: 10,
+                            stepValue: 5,
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    }]
+                },
+            },
+            plugins:[ChartDataLabels]
+        });
+    }
+
+
+    function setGraphsubmissionDepartmentBcAssessment(result) {
+        const data = {
+            label: result.label,
+            submittedBC: result.submittedBC,
+            submittedAssessment: result.submittedAssessment,
+            totalPerDepartment: result.totalPerDepartment
+        };
+
+        const ctx = document.getElementById('project-stacked-bar-chart').getContext('2d');
+
+        const stackedBarChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: data.label.map(label => label.replace('&','amp&').split('amp')),
+                datasets: [
+                    {
+                        label: 'Project',
+                        data: data.totalPerDepartment,
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Assessment',
+                        data: data.submittedAssessment,
+                        backgroundColor: 'rgba(236,175,175,0.7)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Business Case',
+                        data: data.submittedBC,
+                        backgroundColor: 'rgba(183,236,157,0.7)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive:true,
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                },
+                plugins:{
+                    datalabels:{
+                        labels:{
+                            index:{
+                                align:"right",
+                                color : "black",
+                                font: {
+                                    weight: 'bold',
+                                    size: 13,
+                                },
+                                formatter: (value, context) => {
+                                    const datasetArray = [];
+                                    context.chart.data.datasets.forEach((dataset) => {
+                                        if(dataset.data[context.dataIndex] != undefined){
+                                            datasetArray.push(dataset.data[context.dataIndex]);
+                                        }
+                                    });
+                                }
+                            },
+                        },
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        stacked: false,
+                    }],
+                    yAxes: [{
+                        stacked: false,
                         display: true,
                         ticks: {
                             beginAtZero: true,

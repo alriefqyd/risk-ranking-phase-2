@@ -66,5 +66,6 @@ Route::get('/preview-export',[\App\Http\Controllers\ProjectController::class,'pr
 Route::get('/getSubBasketByBasket', [\App\Http\Controllers\CapexInvestmentController::class, 'getSubBasketByBasket'])->middleware(['auth']);
 Route::get('/getCategoriesBySubBasket', [\App\Http\Controllers\CapexInvestmentController::class, 'getCategoriesBySubBasket'])->middleware(['auth']);
 Route::get('/getProjectByOperationArea', [\App\Http\Controllers\ProjectController::class, 'getProjectByOperation'])->middleware(['auth']);
+Route::get('/getProjectByOperationSubmitted', [\App\Http\Controllers\ProjectController::class, 'getProjectByOperationSubmitted'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';
