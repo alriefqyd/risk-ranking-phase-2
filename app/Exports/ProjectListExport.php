@@ -32,7 +32,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     public function view(): View
     {
 
-        $projects = Project::select('projects.id', 'projects.project_name', 'basket.name as basket', 'subBasket.name as subBasket', 'categories.name as categoriesName','operation.name as operation','sponsor.name as sponsor',
+        $projects = Project::select('projects.id as project_id', 'projects.project_name', 'basket.name as basket', 'subBasket.name as subBasket', 'categories.name as categoriesName','operation.name as operation','sponsor.name as sponsor',
             'bc_presenter','finance_analyst','projects.created_at','assessments.level_project_text as level_project_text_assessment','assessments.executive_summary as executive_summary_assessment','assessments.problems_statement as problem_statement_assessment','assessments.objective as objective_assessment','assessments.project_scope as project_scope_assessment'
             ,'assessments.alternative_to_proposal as alternative_to_proposal_assessment','assessments.project_schedule as project_schedule_assessment','assessments.list_equipment_specification as list_equipment_specification_assessment','assessments.key_performance_metric as key_performance_metric_assessment','assessments.key_project_risk_mitigants as key_project_risk_mitigants_assessment','assessments.impact_if_not_executed as impact_if_not_executed_assessment',
             'assessments.hazop_study as hazop_study_assessment','assessments.complexity_score_assessment as complexity_score_assessment','assessments.level_project as level_project_assessment','assessments.attachment as assessment_attachment','assessments.cost_estimate_text as cost_estimate_text_assessment'
