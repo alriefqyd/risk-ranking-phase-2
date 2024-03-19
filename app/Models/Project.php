@@ -584,7 +584,8 @@ class Project extends Model
 
     public function isSubmitAssessment(){
         if($this->assessment){
-            if( isset($this->assessment->complexity_analysis_type)
+            if($this->assessment->status === 'PUBLISH'
+                && isset($this->assessment->complexity_analysis_type)
                 && isset($this->assessment->level_project_text)){
                 return 1 ;
             }
@@ -595,7 +596,8 @@ class Project extends Model
 
     public function isSubmitBusinessCase(){
         if($this->business_case){
-            if( isset($this->business_case->risk_assessment)
+            if($this->business_case->status === 'PUBLISH'
+                && isset($this->business_case->risk_assessment)
                 && isset($this->business_case->npv)
                 && isset($this->business_case->irr)
                 && isset($this->business_case->payback_period)){
