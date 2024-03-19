@@ -28,7 +28,7 @@
             <th rowspan="3">FEL 2 Form Status</th>
             <th rowspan="3">FEL 3 Form Status</th>
             <th rowspan="3">BC Form Status</th>
-
+            <th rowspan="3">Identifier</th>
         </tr>
         {{-- column header row 2 start here--}}
         <tr>
@@ -215,6 +215,7 @@
                 <td>
                     {{$p->bc_status}}
                 </td>
+                <td>{{$p->project_id}}</td>
             </tr>
         @endforeach
     </tbody>
