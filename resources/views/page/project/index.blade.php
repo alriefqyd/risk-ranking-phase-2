@@ -207,17 +207,19 @@
                                                     </a>
                                                 </td>
                                             @endcan
-                                            <td>
-                                                <button class="example-popover btn" data-bs-trigger="hover" data-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="" data-offset="-20px -20px" data-bs-original-title="Duplicate">
-                                                    <a class="js-duplicate-project" data-bs-toggle="modal" data-original-title="test"
-                                                       data-id="{{$project->id}}"
-                                                       data-bs-target="#projectDuplicate">
-                                                            <i class="cursor-pointer" style="color: #246a5d" data-feather="copy"></i>
-                                                    </a>
-                                                </button>
+                                            @if(auth()->user()->role !== 'Viewer')
+                                                <td>
+                                                    <button class="example-popover btn" data-bs-trigger="hover" data-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="" data-offset="-20px -20px" data-bs-original-title="Duplicate">
+                                                        <a class="js-duplicate-project" data-bs-toggle="modal" data-original-title="test"
+                                                           data-id="{{$project->id}}"
+                                                           data-bs-target="#projectDuplicate">
+                                                                <i class="cursor-pointer" style="color: #246a5d" data-feather="copy"></i>
+                                                        </a>
+                                                    </button>
 
-                                            </span>
+                                                </span>
                                             </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 @else

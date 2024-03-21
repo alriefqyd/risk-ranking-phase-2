@@ -24,7 +24,7 @@
                             <i data-feather="box"></i><span>Project</span></a>
                         <ul class="nav-submenu menu-content">
                             <li><a class="{{request()->is('project*') ? 'active' : ''}}" href="/project">Project List</a></li>
-                            @if(auth()->user()->role != 'Admin Department')
+                            @if(auth()->user()->role != 'Admin Department' && auth()->user()->role !== 'Viewer')
                                 <li><a class="{{request()->is('assessment*') ? 'active' : ''}}" href="/assessment">Project Level Assessment List</a></li>
                                 <li><a class="{{request()->is('fel1*') ? 'active' : ''}}" href="/fel1">FEL 1 List</a></li>
                                 <li><a class="{{request()->is('fel2*') ? 'active' : ''}}" href="/fel2">FEL 2 List</a></li>

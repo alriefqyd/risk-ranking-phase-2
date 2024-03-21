@@ -47,7 +47,10 @@
                 </tbody>
             </table>
         </div>
-        <button type="submit" class="btn btn-success js-btn-submit-criteria mt-3 float-end" disabled>Save</button>
+        @if(auth()->user()->role !== 'Viewer')
+            <button type="submit" class="btn btn-success js-btn-submit-criteria mt-3 float-end" disabled>Save</button>
+        @endif
+
     </div>
     </form>
 </div>
