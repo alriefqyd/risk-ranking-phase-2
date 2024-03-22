@@ -55,8 +55,11 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
             ->leftJoin('business_case_assessments as business_case','business_case.project_id', '=','projects.id')
             ->leftJoin('risk_assessments as risk_assessment','risk_assessment.business_case_assessment_id', '=','business_case.id')
             ->with('criterias')
-            ->where('presented_year', $this->presented_year)->get();
-
+            ->where('presented_year', $this->presented_year);
+            if(auth()->user()->department == 6){
+                $projects = $projects->where('operation_area', 6);
+            };
+            $projects = $projects->get();
 
         return view('page.project.export_project', [
             'project' => $projects

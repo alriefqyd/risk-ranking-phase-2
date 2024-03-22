@@ -207,7 +207,7 @@
                                                     </a>
                                                 </td>
                                             @endcan
-                                            @if(auth()->user()->role !== 'Viewer')
+                                            @if(auth()->user()->role !== 'Viewer' && auth()->user()->role !== 'Admin Department')
                                                 <td>
                                                     <button class="example-popover btn" data-bs-trigger="hover" data-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="" data-offset="-20px -20px" data-bs-original-title="Duplicate">
                                                         <a class="js-duplicate-project" data-bs-toggle="modal" data-original-title="test"
