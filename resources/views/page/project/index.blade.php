@@ -149,9 +149,11 @@
                                     @can('delete')
                                         <th scope="col">Action</th>
                                     @endcan
-                                    <th>
-
-                                    </th>
+                                    @if(auth()->user()->role === 'Administrator')
+                                        <th>
+                                            Duplicate
+                                        </th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -216,7 +218,6 @@
                                                                 <i class="cursor-pointer" style="color: #246a5d" data-feather="copy"></i>
                                                         </a>
                                                     </button>
-
                                                 </span>
                                             </td>
                                             @endif

@@ -62,7 +62,7 @@ class HomeController extends Controller
            'countBCDraft' => $countBCDraft,
            'countBCPublish' => $countBCPublish,
            'countBasketCategory' => $this->getDataBasket(),
-           'isAdmin'=> $userService->isAdmin()
+           'isAdmin'=> $userService->isAdmin() || $userService->isViewer()
        ]);
    }
 

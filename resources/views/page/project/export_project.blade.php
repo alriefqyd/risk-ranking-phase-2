@@ -23,12 +23,6 @@
             <th rowspan="3">Level Assessment Document Status</th>
             <th rowspan="3">Business Case Document Status</th>
             <th rowspan="3">Remark</th>
-            <th rowspan="3">Assessment Form Status</th>
-            <th rowspan="3">FEL 1 Form Status</th>
-            <th rowspan="3">FEL 2 Form Status</th>
-            <th rowspan="3">FEL 3 Form Status</th>
-            <th rowspan="3">BC Form Status</th>
-            <th rowspan="3">Identifier</th>
         </tr>
         {{-- column header row 2 start here--}}
         <tr>
@@ -200,22 +194,6 @@
                     </ul>
 
                 </td>
-                <td>
-                    {{$p->assessment_status}}
-                </td>
-                <td>
-                    {{$p->fel1_status}}
-                </td>
-                <td>
-                    {{$p->fel2_status}}
-                </td>
-                <td>
-                    {{$p->fel3_status}}
-                </td>
-                <td>
-                    {{$p->bc_status}}
-                </td>
-                <td>{{$p->project_id}}</td>
             </tr>
         @endforeach
     </tbody>

@@ -121,7 +121,7 @@
 }
 
 .modal {
-    z-index: 9999999999;
+    z-index: 1100;
 }
 
 .br-theme-bars-movie .br-widget a {
