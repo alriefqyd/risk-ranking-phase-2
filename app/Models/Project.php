@@ -611,4 +611,21 @@ class Project extends Model
     public function getOldDepartment($value){
         return Department::where('id',$value)->first()->name;
     }
+
+    public function getInvestmentStrategyAttribute($value)
+    {
+        if(!$value) return null;
+        // Decode the JSON string to an associative array
+        $json = json_decode($value, true);
+
+        // Create an object from the array
+        $investmentStrategy = (object)$json;
+
+        // Replace underscores with spaces and convert to sentence case
+        foreach ($investmentStrategy as $key => $val) {
+            $investmentStrategy->$key = ucfirst(str_replace('_', ' ', $val));
+        }
+
+        return $investmentStrategy;
+    }
 }

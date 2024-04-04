@@ -4,6 +4,7 @@
         <tr>
             <th rowspan="3">Project Number</th>
             <th rowspan="3">Project Name</th>
+            <th rowspan="3">Investment Strategy</th>
             <th rowspan="3">Basket</th>
             <th rowspan="3">Sub Basket</th>
             <th rowspan="3">Sub Basket Categories</th>
@@ -94,6 +95,7 @@
             <tr>
                 <td>{{$p->project_number}}</td>
                 <td>{{$p->project_name}}</td>
+                <td>{{$p->investment_strategy?->level1}}</td>
                 <td>{{$p->basket}}</td>
                 <td>{{$p->subBasket}}</td>
                 <td>{{$p->categoriesName}}</td>

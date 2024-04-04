@@ -40,6 +40,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
             ,'assessments.location_of_asset_capitalization as location_of_asset_capitalization_assessment', 'assessments.cost_estimate as cost_estimate_assessment','fel1.project_scope as project_scope_fel1','fel1.attachment as fel1_attachment','fel2.project_scope as project_scope_fel2','fel2.identify_main_equipment as identify_main_equipment_fel2','fel2.alternatives_and_analysis as alternatives_and_analysis_fel2','fel2.attachment as fel2_attachment','fel3.executive_summary as executive_summary_fel3','fel3.problem_statement as problem_statement_fel3'
             ,'fel3.project_scope as project_scope_fel3','fel3.alternatives_and_best_option as alternatives_and_best_option_fel3','fel3.project_schedule as project_schedule_fel3','fel3.list_of_equipment_and_specification as list_of_equipment_and_specification_fel3','fel3.hazop_study as hazop_study_fel3','fel3.cost_estimate as cost_estimate_fel3','fel3.attachment as fel3_attachment','business_case.project_scope_of_work as project_scope_of_work_business_case'
             ,'business_case.financial_evaluation as financial_evaluation_business_case','business_case.risk_assessment as risk_assessment_business_case','business_case.cost_estimate as cost_estimate_business_case','risk_assessment.people','risk_assessment.environment','risk_assessment.social_and_human_rights'
+            ,'projects.investment_strategy'
             ,'risk_assessment.reputation','risk_assessment.finance','risk_assessment.final_impact_score','business_case.npv as npv_business_case','business_case.irr as irr_business_case','business_case.payback_period as payback_period_business_case','business_case.attachment as business_case_attachment','priority_level','assessments.status as assessment_status','fel1.status as fel1_status','fel2.status as fel2_status','fel3.status as fel3_status','business_case.status as bc_status'
 
         )
@@ -69,7 +70,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     public function styles(Worksheet $sheet)
     {
         $columnSize = $this->size + 5;
-        $sheet->getStyle('A1:CC3')->applyFromArray([
+        $sheet->getStyle('A1:CD3')->applyFromArray([
             'font' => [
                 'bold' => true,
                 'italic' => false,
@@ -80,15 +81,15 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
             ],
         ]);
 
-        $sheet->getStyle('A1:BM3')
+        $sheet->getStyle('A1:BN3')
             ->getFont()->getColor()->setARGB(\PhpOffice\PhpSpreadsheet\Style\Color::COLOR_WHITE);
-        $sheet->getStyle('A1:BM3')->getFill()
+        $sheet->getStyle('A1:BN3')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('3fa7fd');
         //$sheet->getColumnDimension('A')->setWidth('30'); work if shouldAutoSize is disable
 
 
-        $column = "A1:BM3".($columnSize) ;
+        $column = "A1:BN3".($columnSize) ;
         $sheet->getStyle($column)->applyFromArray([
             'borders' => [
                 'allBorders' => [
@@ -104,17 +105,17 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
 
     public function title(): string
     {
-       return 'Risk Ranking 2023';
+       return 'Risk Ranking 2024';
     }
 
     public function columnFormats(): array
     {
         return [
-            'AA' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
-            'AV' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
-            'BG' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
-            'BR' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
-            'BH' => NumberFormat::FORMAT_PERCENTAGE
+            'AB' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'AW' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'BH' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'BS' => NumberFormat::FORMAT_ACCOUNTING_USD_2,
+            'BI' => NumberFormat::FORMAT_PERCENTAGE
         ];
     }
 }
