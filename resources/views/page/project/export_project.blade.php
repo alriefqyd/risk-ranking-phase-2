@@ -95,7 +95,7 @@
             <tr>
                 <td>{{$p->project_number}}</td>
                 <td>{{$p->project_name}}</td>
-                <td>{{$p->investment_strategy?->level1}}</td>
+                <td>{{$p->getInvestmentStrategy()}}</td>
                 <td>{{$p->basket}}</td>
                 <td>{{$p->subBasket}}</td>
                 <td>{{$p->categoriesName}}</td>

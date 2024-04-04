@@ -303,10 +303,13 @@ class Project extends Model
     }
 
     public function getInvestmentStrategy(){
-        $data = $this->investment_strategy;
-        if(!$data) return null;
-        $json = json_decode($data);
-        return $json;
+//        $data = $this->investment_strategy;
+//        if(!$data) return null;
+//        $json = json_decode($data);
+//        return $json;
+        $value = $this->investment_strategy;
+        if (!$value) return null;
+        else return Setting::INVESTMENT_STRATEGY_CATEGORY[$value->level1];
     }
 
     public function validateAssessmentBasedOnComplexityScore($isMessage){
@@ -617,15 +620,9 @@ class Project extends Model
         if(!$value) return null;
         // Decode the JSON string to an associative array
         $json = json_decode($value, true);
-
         // Create an object from the array
         $investmentStrategy = (object)$json;
-
         // Replace underscores with spaces and convert to sentence case
-        foreach ($investmentStrategy as $key => $val) {
-            $investmentStrategy->$key = ucfirst(str_replace('_', ' ', $val));
-        }
-
         return $investmentStrategy;
     }
 }

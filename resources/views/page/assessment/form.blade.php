@@ -17,8 +17,8 @@
                                        data-id="{{$investment->key}}"
                                        name="checkbox_investment"
                                        value="{{$investment->key}}"
-                                       {{!empty($project->investment_strategy) && $investment->key != $project->getInvestmentStrategy()?->level1 ? 'disabled' : ''}}
-                                       {{$investment->key == $project->getInvestmentStrategy()?->level1 ? 'checked' : ''}}
+                                       {{!empty($project->investment_strategy) && $investment->key != $project->investment_strategy?->level1 ? 'disabled' : ''}}
+                                       {{$investment->key == $project->investment_strategy?->level1 ? 'checked' : ''}}
                                        class="js-checkbox-{{$investment->key}} js-checkbox-investment-strategy"
                                        type="checkbox">
 
@@ -30,7 +30,7 @@
                     @foreach($investment->child as $child)
                         <div class="js-level-2
                         {{!isset($project->investment_category) && ($investment->key
-                        != $project->getInvestmentStrategy()?->level1) ? 'd-none' : ''}}">
+                        != $project->investment_strategy?->level1) ? 'd-none' : ''}}">
                             <div class="row m-l-15">
                                 <div class="col-md-12">
                                     <div class="checkbox checkbox-primary checkbox-width-auto height-35">
@@ -38,8 +38,8 @@
                                                data-id="{{$child->key}}"
                                                name="checkbox_child_2"
                                                value="{{$child->key}}"
-                                               {{!empty($project->investment_strategy) && $child->key != $project->getInvestmentStrategy()?->level2 ? 'disabled' : ''}}
-                                               {{$child->key == $project->getInvestmentStrategy()?->level2 ? 'checked' : ''}}
+                                               {{!empty($project->investment_strategy) && $child->key != $project->investment_strategy?->level2 ? 'disabled' : ''}}
+                                               {{$child->key == $project->investment_strategy?->level2 ? 'checked' : ''}}
                                                class="js-checkbox-{{$child->key}} js-checkbox-investment-strategy-level-2"
                                                type="checkbox">
 
@@ -50,7 +50,7 @@
                             @foreach($child->child as $c)
                                 <div class="js-level-3
                                 {{!isset($project->investment_category) && ($child->key
-                                != $project->getInvestmentStrategy()?->level2) ? 'd-none' : ''}}">
+                                != $project->investment_strategy?->level2) ? 'd-none' : ''}}">
                                     <div class="row m-l-45 m-t-0 ">
                                         <div class="col-md-12">
                                             <div class="checkbox checkbox-primary checkbox-width-auto height-35">
@@ -58,8 +58,8 @@
                                                        data-id="{{$c->key}}"
                                                        name="checkbox_child_3"
                                                        value="{{$c->key}}"
-                                                       {{!empty($project->investment_strategy) && $c->key != $project->getInvestmentStrategy()?->level3 ? 'disabled' : ''}}
-                                                       {{$c->key == $project->getInvestmentStrategy()?->level3 ? 'checked' : ''}}
+                                                       {{!empty($project->investment_strategy) && $c->key != $project->investment_strategy?->level3 ? 'disabled' : ''}}
+                                                       {{$c->key == $project->investment_strategy?->level3 ? 'checked' : ''}}
                                                        class="js-checkbox-{{$c->key}} js-checkbox-investment-strategy-level-3"
                                                        type="checkbox">
                                                 <label for="checkbox_level3-21{{$c->key}}">{{$c->value}}</label>

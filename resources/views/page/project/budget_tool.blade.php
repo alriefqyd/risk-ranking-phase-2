@@ -7,7 +7,7 @@
 <div class="row js-form-project-edit center-content p-4 mt-1 ">
     <div class="col-md-12">
         <div class="col-md-6">
-            Basket : {{$project->baskets->name}}
+            Basket : {{$project->baskets?->name}}
         </div>
         <div class="col-md-9">
             Sub Basket : {{$project->subBaskets?->name}}

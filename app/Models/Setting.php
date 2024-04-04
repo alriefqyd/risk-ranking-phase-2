@@ -217,6 +217,11 @@ class Setting extends Model
         '0' => 'No',
     ];
 
+    public const INVESTMENT_STRATEGY_CATEGORY = [
+        'sustaining' => 'Sustaining',
+        'r_and_d_growth' => 'R & D / Growth'
+    ];
+
     public const INVESTMENT_STRATEGY = 'INVESTMENT_STRATEGY';
     public const sustaining = 'sustaining';
     public const r_and_d = 'r_and_d';
