@@ -20,7 +20,7 @@
             <th rowspan="1" colspan="2">2. Form Fel 1 Engineering Report</th>
             <th rowspan="1" colspan="6">3. Form Fel 2 Engineering Report</th>
             <th rowspan="1" colspan="34">4. Project FEL 3 or Business Case Form</th>
-{{--            <th rowspan="3">Prioritization Criteria</th>--}}
+            <th rowspan="3">Prioritization Criteria</th>
 {{--            <th rowspan="3">Level Assessment Document Status</th>--}}
 {{--            <th rowspan="3">Business Case Document Status</th>--}}
         </tr>
@@ -68,7 +68,6 @@
             <td rowspan="2">1. Project Scope</td>
             <td rowspan="2">2. Identify Main Equipment</td>
             <td rowspan="2">3. Alternatives and Analysis of Alternatives</td>
-
 
             <td rowspan="1" colspan="16">Form Fel 3</td>
             <td rowspan="1" colspan="4">Business Case</td>
@@ -232,6 +231,7 @@
                 <td>{!!$p?->npv_business_case ?: '0' !!}</td>
                 <td>{{($p?->irr_business_case / 100) ?: '0'}}</td>
                 <td>{{$p?->payback_period_business_case ?: '0'}}</td>
+                <td></td>
 {{--                <td>--}}
 {{--                    <div class="row">--}}
 {{--                        @foreach($p->breakdownPrioritizationCriteria() as $data)--}}
