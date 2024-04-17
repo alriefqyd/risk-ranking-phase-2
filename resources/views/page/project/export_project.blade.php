@@ -19,10 +19,10 @@
             <th rowspan="1" colspan="2">2. Form Project Level Complexity</th>
             <th rowspan="1" colspan="2">2. Form Fel 1 Engineering Report</th>
             <th rowspan="1" colspan="6">3. Form Fel 2 Engineering Report</th>
-            <th rowspan="1" colspan="25">4. Project FEL 3 or Business Case Form</th>
-            <th rowspan="3">Prioritization Criteria</th>
-            <th rowspan="3">Level Assessment Document Status</th>
-            <th rowspan="3">Business Case Document Status</th>
+            <th rowspan="1" colspan="34">4. Project FEL 3 or Business Case Form</th>
+{{--            <th rowspan="3">Prioritization Criteria</th>--}}
+{{--            <th rowspan="3">Level Assessment Document Status</th>--}}
+{{--            <th rowspan="3">Business Case Document Status</th>--}}
         </tr>
         {{-- column header row 2 start here--}}
         <tr>
@@ -70,9 +70,9 @@
             <td rowspan="2">3. Alternatives and Analysis of Alternatives</td>
 
 
-            <td rowspan="1" colspan="8">Form Fel 3</td>
+            <td rowspan="1" colspan="16">Form Fel 3</td>
             <td rowspan="1" colspan="4">Business Case</td>
-            <td rowspan="1" colspan="9">Business Case Risk Assessment</td>
+            <td rowspan="1" colspan="10">Business Case Risk Assessment</td>
             <td rowspan="2">Change Management Request</td>
             <td rowspan="1" colspan="3">Financial Evaluation</td>
         </tr>
@@ -86,11 +86,20 @@
             <td> 6. List of Equipment and Specification</td>
             <td> 7. Hazop Study</td>
             <td> 8. Cost Estimate</td>
+            <td> 1. Executive Summary</td>
+            <td> 2. Problem Statement</td>
+            <td> 3. Project Scope</td>
+            <td> 4. Alternatives and Best Option</td>
+            <td> 5. Project Schedule</td>
+            <td> 6. List of Equipment and Specification</td>
+            <td> 7. Hazop Study</td>
+            <td> 8. Cost Estimate</td>
 
             <td> 1. Project Scope of Work</td>
             <td> 2. Financial Evaluation  </td>
             <td> 3. Risk Assessment  </td>
             <td> 4. Cost Estimate </td>
+            <td> 1. Project Scope of Work</td>
 
             <td>People</td>
             <td>Environment</td>
@@ -195,10 +204,20 @@
                 <td>{{$p?->list_of_equipment_and_specification_fel3 ? '1' : '0'}}</td>
                 <td>{{$p?->hazop_study_fel3 ? '1' : '0'}}</td>
                 <td>{{$p?->cost_estimate_fel3 ? '1' : '0'}}</td>
+                <td>{{$p?->executive_summary_text_fel3 }}</td>
+                <td>{{$p?->problem_statement_text_fel3 }}</td>
+                <td>{{$p?->project_scope_text_fel3 }}</td>
+                <td>{{$p?->alternatives_and_best_option_text_fel3 }}</td>
+                <td>{{$p->project_schedule_text_fel3 }}</td>
+                <td>{{$p?->list_of_equipment_and_specification_text_fel3 }}</td>
+                <td>{{$p?->hazop_study_text_fel3 }}</td>
+                <td>{{$p?->cost_estimate_text_fel3 }}</td>
+
                 <td>{{$p?->project_scope_of_work_business_case ?: '0'}}</td>
                 <td>{{$p?->financial_evaluation_business_case ?: '0'}}</td>
                 <td>{{$p?->risk_assessment_business_case ?: '0'}}</td>
                 <td>{{$p?->cost_estimate_business_case}}</td>
+                <td>{{$p?->project_scope_of_work_text_business_case}}</td>
 
                 <td>{{$p?->getSeverityValue($p->people)}}</td>
                 <td>{{$p?->getSeverityValue($p?->environment)}}</td>
@@ -213,23 +232,23 @@
                 <td>{!!$p?->npv_business_case ?: '0' !!}</td>
                 <td>{{($p?->irr_business_case / 100) ?: '0'}}</td>
                 <td>{{$p?->payback_period_business_case ?: '0'}}</td>
-                <td>
-                    <div class="row">
-                        @foreach($p->breakdownPrioritizationCriteria() as $data)
-                            <div class="col-md-12">
-                                <p>{{$loop->index + 1}}) </p>
-                                <p>Criteria : {{$data['question']}}</p>
-                                <p>Answer : {{$data['answer']}}</p>
-                            </div>
-                        @endforeach
-                    </div>
-                </td>
-                <td>
-                    {{$p->isSubmitAssessment()}}
-                </td>
-                <td>
-                    {{$p->isSubmitBusinessCase()}}
-                </td>
+{{--                <td>--}}
+{{--                    <div class="row">--}}
+{{--                        @foreach($p->breakdownPrioritizationCriteria() as $data)--}}
+{{--                            <div class="col-md-12">--}}
+{{--                                <p>{{$loop->index + 1}}) </p>--}}
+{{--                                <p>Criteria : {{$data['question']}}</p>--}}
+{{--                                <p>Answer : {{$data['answer']}}</p>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    </div>--}}
+{{--                </td>--}}
+{{--                <td>--}}
+{{--                    {{$p->isSubmitAssessment()}}--}}
+{{--                </td>--}}
+{{--                <td>--}}
+{{--                    {{$p->isSubmitBusinessCase()}}--}}
+{{--                </td>--}}
             </tr>
         @endforeach
     </tbody>

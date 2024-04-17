@@ -415,6 +415,37 @@ class Project extends Model
         return $this->sanitizeTextAttribute($value);
     }
 
+    public function getProjectScopeTextFel3Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getAlternativesAndBestOptionTextFel3Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getProjectScheduleTextFel3Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getListOfEquipmentAndSpecificationTextFel3Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getHazopStudyTextFel3Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getExecutiveSummaryTextFel3Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getProblemStatementTextFel3Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getProjectScopeOfWorkTextBusinessCaseAttribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
 
     public function getLocationOfAssetCapitalizationAssessmentAttribute($value)
     {
