@@ -399,6 +399,23 @@ class Project extends Model
         return $this->sanitizeTextAttribute($value);
     }
 
+    public function getProjectScopeTextFel1Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getProjectScopeTextFel2Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getIdentifyMainEquipmentTextFel2Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+    public function getAlternativesAndAnalysisTextFel2Attribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
+
     public function getLocationOfAssetCapitalizationAssessmentAttribute($value)
     {
         $data = $value;
@@ -427,10 +444,10 @@ class Project extends Model
 
         foreach ($json as $item) {
             $list[] = [
-                'description' =>  $item['description'] ? '- ' . $item['description'] : '',
-                'uom' => $item['uom'] ? '- ' . $item['uom'] : '',
-                'time_benefit' =>  $item['time_benefit'] ? '- ' . $item['time_benefit'] : '',
-                'remarks' => $item['remarks'] ? '- ' . $item['remarks'] : '',
+                'description' =>  $item['description'] ? '- Description : ' . $item['description'] : '',
+                'uom' => $item['uom'] ? '- UOM : ' . $item['uom'] : '',
+                'time_benefit' =>  $item['time_benefit'] ? '- Time Benefit : ' . $item['time_benefit'] : '',
+                'remarks' => $item['remarks'] ? '- Remarks : ' . $item['remarks'] : '',
             ];
         }
 

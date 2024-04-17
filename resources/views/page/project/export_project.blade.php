@@ -17,8 +17,8 @@
             <th rowspan="3">Assessment of Level Project</th>
             <th rowspan="1" colspan="30">1. Form Assessment of Project Level</th>
             <th rowspan="1" colspan="2">2. Form Project Level Complexity</th>
-            <th rowspan="1" colspan="1">2. Form Fel 1 Engineering Report</th>
-            <th rowspan="1" colspan="3">3. Form Fel 2 Engineering Report</th>
+            <th rowspan="1" colspan="2">2. Form Fel 1 Engineering Report</th>
+            <th rowspan="1" colspan="6">3. Form Fel 2 Engineering Report</th>
             <th rowspan="1" colspan="25">4. Project FEL 3 or Business Case Form</th>
             <th rowspan="3">Prioritization Criteria</th>
             <th rowspan="3">Level Assessment Document Status</th>
@@ -60,10 +60,15 @@
             <td rowspan="2">2. Complexity Score</td>
 
             <td rowspan="2">1. Project Scope </td>
+            <td rowspan="2">1. Project Scope </td>
 
             <td rowspan="2">1. Project Scope</td>
             <td rowspan="2">2. Identify Main Equipment</td>
             <td rowspan="2">3. Alternatives and Analysis of Alternatives</td>
+            <td rowspan="2">1. Project Scope</td>
+            <td rowspan="2">2. Identify Main Equipment</td>
+            <td rowspan="2">3. Alternatives and Analysis of Alternatives</td>
+
 
             <td rowspan="1" colspan="8">Form Fel 3</td>
             <td rowspan="1" colspan="4">Business Case</td>
@@ -172,10 +177,15 @@
                 <td>{{$p?->cost_estimate_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->project_scope_fel1 ?: '0'}}</td>
+                <td>{{$p?->project_scope_text_fel1 }}</td>
 
                 <td>{{$p?->project_scope_fel2 ?: '0'}}</td>
                 <td>{{$p?->identify_main_equipment_fel2 ?: '0'}}</td>
                 <td>{{$p?->alternatives_and_analysis_fel2 ?: '0'}}</td>
+                <td>{{$p?->project_scope_text_fel2 }}</td>
+                <td>{{$p?->identify_main_equipment_text_fel2 }}</td>
+                <td>{{$p?->alternatives_and_analysis_text_fel2 }}</td>
+
 
                 <td>{{$p?->executive_summary_fel3 ?: '0'}}</td>
                 <td>{{$p?->problem_statement_fel3 ?: '0'}}</td>
