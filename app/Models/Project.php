@@ -427,10 +427,10 @@ class Project extends Model
 
         foreach ($json as $item) {
             $list[] = [
-                'description' => $item['description'],
-                'uom' => $item['uom'],
-                'time_benefit' => $item['time_benefit'],
-                'remarks' => $item['remarks'],
+                'description' =>  $item['description'] ? '- ' . $item['description'] : '',
+                'uom' => $item['uom'] ? '- ' . $item['uom'] : '',
+                'time_benefit' =>  $item['time_benefit'] ? '- ' . $item['time_benefit'] : '',
+                'remarks' => $item['remarks'] ? '- ' . $item['remarks'] : '',
             ];
         }
 

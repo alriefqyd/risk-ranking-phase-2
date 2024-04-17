@@ -15,7 +15,7 @@
             <th rowspan="3">Narrative</th>
             <th rowspan="3">Project Submit Date</th>
             <th rowspan="3">Assessment of Level Project</th>
-            <th rowspan="1" colspan="18">1. Form Assessment of Project Level</th>
+            <th rowspan="1" colspan="30">1. Form Assessment of Project Level</th>
             <th rowspan="1" colspan="2">2. Form Project Level Complexity</th>
             <th rowspan="1" colspan="1">2. Form Fel 1 Engineering Report</th>
             <th rowspan="1" colspan="3">3. Form Fel 2 Engineering Report</th>
@@ -23,7 +23,6 @@
             <th rowspan="3">Prioritization Criteria</th>
             <th rowspan="3">Level Assessment Document Status</th>
             <th rowspan="3">Business Case Document Status</th>
-            <th rowspan="3">Remark</th>
         </tr>
         {{-- column header row 2 start here--}}
         <tr>
@@ -45,6 +44,18 @@
             <td rowspan="2">Complexity Score</td>
             <td rowspan="2">Location of Asset Capitalization</td>
             <td rowspan="2">Assessment of Level Project</td>
+            <td rowspan="2">Executive Summary</td>
+            <td rowspan="2">Problem Statement</td>
+            <td rowspan="2">Objective</td>
+            <td rowspan="2">Project Scope</td>
+            <td rowspan="2">Alternatives and Best Option</td>
+            <td rowspan="2">Project Schedule</td>
+            <td rowspan="2">List of Equipment and Specification</td>
+            <td rowspan="2">Key Performance Metric</td>
+            <td rowspan="2">Key Project Risk Mitigants</td>
+            <td rowspan="2">Impact if not Executed</td>
+            <td rowspan="2">Hazop Study</td>
+            <td rowspan="2">Complexity Analysis Result</td>
             <td rowspan="2">1. Cost Estimate</td>
             <td rowspan="2">2. Complexity Score</td>
 
@@ -103,7 +114,7 @@
                 <td>{{$p->sponsor}}</td>
                 <td>{{$p->bc_presenter}}</td>
                 <td>{{$p->finance_analyst}}</td>
-                <td style="background-color:{!! $p->updated_at > now()->startOfDay() ? "#fefe00" : '' !!}">{!! $p->note !!}</td>
+                <td>{!! $p->note !!}</td>
                 <td>{{$p->created_at}}</td>
                 <td style="text-align: center">
                     {{$p?->level_project_text_assessment}}</td>
@@ -136,6 +147,28 @@
                     @endif
                 </td>
                 <td>{{$p?->level_project_text_assessment }}</td>
+                <td>{{$p?->executive_summary_text}}</td>
+                <td>{{$p?->problem_statement_text}}</td>
+                <td>{{$p?->objective_text}}</td>
+                <td>{{$p?->project_scope_text}}</td>
+                <td>{{$p?->alternatives_to_proposal_text}}</td>
+                <td>{{$p?->project_schedule_text}}</td>
+                <td>{{$p?->list_equipment_specification_text}}</td>
+                <td>
+                    @foreach($p?->key_performance_metric_text as $kpm)
+                        @if(isset($kpm['description']) && $kpm['description'] != '')
+                            {{$loop->index + 1}}). <br>
+                             {{$kpm['description']}} <br>
+                             {{$kpm['uom']}} <br>
+                             {{$kpm['time_benefit']}} <br>
+                             {{$kpm['remarks']}} <br>
+                         @endif
+                    @endforeach
+                </td>
+                <td>{{$p?->key_project_risk_and_mitigants_text}}</td>
+                <td>{{$p?->impact_if_not_executed_text}}</td>
+                <td>{{$p?->hazop_study_text}}</td>
+                <td>{{$p->complexity_analysis_type}}</td>
                 <td>{{$p?->cost_estimate_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->complexity_score_assessment ? '1' : '0'}}</td>
                 <td>{{$p?->project_scope_fel1 ?: '0'}}</td>
@@ -186,15 +219,6 @@
                 </td>
                 <td>
                     {{$p->isSubmitBusinessCase()}}
-                </td>
-                <td>
-                    <ul>
-                        For the following fields, please ensure they are filled out:
-                        @foreach($p->getRemark() as $key => $value)
-                            <li>{{$loop->index + 1}}). {{$value}} </li>
-                        @endforeach
-                    </ul>
-
                 </td>
             </tr>
         @endforeach
