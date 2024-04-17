@@ -447,6 +447,10 @@ class Project extends Model
         return $this->sanitizeTextAttribute($value);
     }
 
+    public function getNoteAttribute($value){
+        return $this->sanitizeTextAttribute($value);
+    }
+
     public function getLocationOfAssetCapitalizationAssessmentAttribute($value)
     {
         $data = $value;

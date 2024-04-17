@@ -26,7 +26,7 @@
         </tr>
         {{-- column header row 2 start here--}}
         <tr>
-            <td rowspan="2">1 Executive Summary</td>
+            <td rowspan="2">1 Executive Su mmary</td>
             <td rowspan="2">2 Problem Statement</td>
             <td rowspan="2">3 Objective</td>
             <td rowspan="2">4 Project Scope</td>
@@ -56,6 +56,7 @@
             <td rowspan="2">Impact if not Executed</td>
             <td rowspan="2">Hazop Study</td>
             <td rowspan="2">Complexity Analysis Result</td>
+
             <td rowspan="2">1. Cost Estimate</td>
             <td rowspan="2">2. Complexity Score</td>
 
@@ -71,9 +72,9 @@
 
 
             <td rowspan="1" colspan="16">Form Fel 3</td>
-            <td rowspan="1" colspan="4">Business Case</td>
-            <td rowspan="1" colspan="10">Business Case Risk Assessment</td>
-            <td rowspan="2">Change Management Request</td>
+            <td rowspan="1" colspan="5">Business Case</td>
+            <td rowspan="1" colspan="9">Business Case Risk Assessment</td>
+            <td rowspan="2" colspan="1">Change Management Request</td>
             <td rowspan="1" colspan="3">Financial Evaluation</td>
         </tr>
         {{-- Header Row 3 Start Here --}}
