@@ -110,11 +110,11 @@ class HomeController extends Controller
 
         foreach ($project as $p) {
             $investment = $p->investment_strategy;
-            $json = json_decode($investment, true);
+            $json = $investment;
 
             // Check and count occurrences for level1
-            if (isset($json['level1'])) {
-                $level1Key = $json['level1'];
+            if (isset($json->level1)) {
+                $level1Key = $json->level1;
                 if (!isset($countLevels['level1'][$level1Key])) {
                     $countLevels['level1'][$level1Key] = 1;
                 } else {
@@ -123,8 +123,8 @@ class HomeController extends Controller
             }
 
             // Check and count occurrences for level2
-            if (isset($json['level2'])) {
-                $level2Key = $json['level2'];
+            if (isset($json->level2)) {
+                $level2Key = $json->level2;
                 if (!isset($countLevels['level2'][$level2Key])) {
                     $countLevels['level2'][$level2Key] = 1;
                 } else {
