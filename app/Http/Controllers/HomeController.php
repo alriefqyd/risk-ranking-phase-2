@@ -89,9 +89,8 @@ class HomeController extends Controller
         $countSubBasket = [];
 
         foreach ($project as $p) {
-
             $subBasket = $p->subBaskets?->code;
-            $basket = $p->baskets->code;
+            $basket = $p->baskets?->code;
             if (!isset($countSubBasket[$basket][$subBasket])) {
                 $countSubBasket[$basket][$subBasket] = 1;
             } else {
@@ -100,8 +99,6 @@ class HomeController extends Controller
 
             // Check and count occurrences for level1
         }
-
-
         return (object) $countSubBasket;
     }
 
@@ -142,7 +139,7 @@ class HomeController extends Controller
     public function getDataByProjectType(){
         $userService = new UserService();
         $presented_year = config('constants.project_presented_year');
-        $data = Project::with('baskets')->where('presented_year', $presented_year);
+        $data = Project::with('baskets')->where('presented_year', $presented_year)->whereNull('deleted_at');
         if(!$userService->isAdmin() && !$userService->isViewer()){
             $data = $data->where('operation_area',auth()->user()->department);
         }
