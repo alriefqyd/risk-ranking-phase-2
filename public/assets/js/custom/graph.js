@@ -36,6 +36,7 @@ $(function (){
                 quality = result.margin?.quality ,
                 revenue = result.margin?.revenue,
                 volume = result.margin?.volume,
+                cost_reduction = result.margin?.cost_reduction,
                 safety = result.health_safety?.safety,
                 emergency_service = result.health_safety?.emergency_service,
                 health = result.health_safety?.health,
@@ -59,28 +60,28 @@ $(function (){
                         },
                         {
                             label: 'Refurbishment / Rebuild',
-                            data: [refurbishment_rebuild, margin, 0, 0, 0],
+                            data: [refurbishment_rebuild, 0, 0, 0, 0],
                             backgroundColor: 'rgb(54, 162, 235)', // Customize this color
                             borderColor: 'rgb(54, 162, 235)',
                             borderWidth: 1
                         },
                         {
                             label: 'Geotechnical - Tailing Dams / Dykes / Downstream Containment Structures',
-                            data: [geotechnical_tailing_dams_dykes_downstream_containment_structure, 0, hsor, 0, 0],
+                            data: [geotechnical_tailing_dams_dykes_downstream_containment_structure, 0, 0, 0, 0],
                             backgroundColor: 'rgb(255, 205, 86)', // Customize this color
                             borderColor: 'rgb(255, 205, 86)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Geotechnical - Power Dams',
-                            data: [geotechnical_power_dams, 0, 0, sustainability, 0],
+                            data: [geotechnical_power_dams, 0, 0, 0, 0],
                             backgroundColor: 'rgb(44,126,126)', // Customize this color
                             borderColor: 'rgb(44,126,126)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Geotechnical - Pit Slopes',
-                            data: [geotechnical_pit_slopes, 0, 0, 0, administrative],
+                            data: [geotechnical_pit_slopes, 0, 0, 0, 0],
                             backgroundColor: 'rgb(31,87,94)', // Customize this color
                             borderColor: 'rgb(31,87,94)',
                             borderWidth: 1,
@@ -128,57 +129,64 @@ $(function (){
                             borderWidth: 1,
                         },
                         {
+                            label: 'Cost Reduction',
+                            data: [0, cost_reduction, 0, 0, 0],
+                            backgroundColor: 'rgb(255, 69, 0)', // Customize this color
+                            borderColor: 'rgb(255, 69, 0)',
+                            borderWidth: 1,
+                        },
+                        {
                             label: 'Emergency Services',
-                            data: [0, 0, 0, emergency_service, 0],
+                            data: [0, 0, emergency_service, 0, 0],
                             backgroundColor: 'rgb(255, 140, 0)', // Customize this color
                             borderColor: 'rgb(255, 140, 0)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Health',
-                            data: [0, 0, 0, health, 0],
+                            data: [0, 0, health, 0, 0],
                             backgroundColor: 'rgb(9,154,154)', // Customize this color
                             borderColor: 'rgb(9,154,154)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Safety',
-                            data: [0, 0, 0, safety, 0],
+                            data: [0, 0, safety, 0, 0],
                             backgroundColor: 'rgb(255, 182, 193)', // Customize this color
                             borderColor: 'rgb(255, 182, 193)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Environment',
-                            data: [0, 0, 0, 0, environment],
+                            data: [0, 0, 0, environment, 0],
                             backgroundColor: 'rgb(98,121,103)', // Customize this color
                             borderColor: 'rgb(98,121,103)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Social',
-                            data: [0, 0, 0, 0, social],
+                            data: [0, 0, 0, social, 0],
                             backgroundColor: 'rgb(0, 128, 0)', // Customize this color
                             borderColor: 'rgb(0, 128, 0)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Equipment / Furniture',
-                            data: [0, 0, 0, 0, 0, equipment_furniture],
+                            data: [0, 0, 0, 0, equipment_furniture],
                             backgroundColor: 'rgb(128, 128, 128)', // Customize this color
                             borderColor: 'rgb(128, 128, 128)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Information Technology',
-                            data: [0, 0, 0, 0, 0, it],
+                            data: [0, 0, 0, 0, it],
                             backgroundColor: 'rgb(0, 0, 255)', // Customize this color
                             borderColor: 'rgb(0, 0, 255)',
                             borderWidth: 1,
                         },
                         {
                             label: 'Property Security',
-                            data: [0, 0, 0, 0, 0, property_security],
+                            data: [0, 0, 0, 0, property_security],
                             backgroundColor: 'rgb(210, 105, 30)', // Customize this color
                             borderColor: 'rgb(210, 105, 30)',
                         }
