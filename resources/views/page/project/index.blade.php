@@ -31,31 +31,31 @@
                 <div class="card-body m-0 card-body-custom">
                     <div class="col-md-12 m-l-15 m-b-15">
                         @canany(['create','export','read'])
-                            @if(!request()->year)
-                                <div class="col-md-12 col-sm-6 p-r-10 float-end">
-                                    @if(auth()->user()->role == \App\Models\User::ROLE['admin'])
-                                        @can('create')
-                                            <a href="/project/create">
-                                                <button class="btn btn-outline-primary-2x m-l-5 float-end" style="font-size: 12px" type="button">Create New Project</button>
-                                            </a>
-                                        @endcan
-                                    @endif
-                                    @can('export')
-                                        <a href="/export">
-                                            <button class="btn btn-export btn-outline-primary-2x float-end"
-                                                    data-storage="{{storage_path()}}"
-                                            >
-                                        <span class="text-button loader-box" style="height: 19px; font-size: 12px">
-                                            Download <span class="m-l-5 loader-34 d-none"></span>
-                                            <span class="js-icon-download">
-                                                <i style="width: 20px; height: 15px;" data-feather="download"></i>
-                                            </span>
-                                        </span>
-                                            </button>
+                            <div class="col-md-12 col-sm-6 p-r-10 float-end">
+                                @if(!request()->year)
+                                @if(auth()->user()->role == \App\Models\User::ROLE['admin'])
+                                    @can('create')
+                                        <a href="/project/create">
+                                            <button class="btn btn-outline-primary-2x m-l-5 float-end" style="font-size: 12px" type="button">Create New Project</button>
                                         </a>
                                     @endcan
-                                </div>
-                            @endif
+                                @endif
+                                @endif
+                                @can('export')
+                                    <a href="/export/{{request()->year}}">
+                                        <button class="btn btn-export btn-outline-primary-2x float-end"
+                                                data-storage="{{storage_path()}}"
+                                        >
+                                    <span class="text-button loader-box" style="height: 19px; font-size: 12px">
+                                        Download <span class="m-l-5 loader-34 d-none"></span>
+                                        <span class="js-icon-download">
+                                            <i style="width: 20px; height: 15px;" data-feather="download"></i>
+                                        </span>
+                                    </span>
+                                        </button>
+                                    </a>
+                                @endcan
+                            </div>
                             <div class="row mt-3 mb-0 ">
                                 <p class="f-14 f-w-600">Filter Project</p>
                             </div>

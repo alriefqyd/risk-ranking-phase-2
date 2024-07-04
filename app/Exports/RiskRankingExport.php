@@ -12,6 +12,9 @@ class RiskRankingExport implements FromCollection, WithMultipleSheets
     /**
     * @return \Illuminate\Support\Collection
     */
+    public function __construct($request){
+        $this->year = $request;
+    }
     public function collection()
     {
         //
@@ -20,7 +23,7 @@ class RiskRankingExport implements FromCollection, WithMultipleSheets
     public function sheets(): array
     {
         $sheets = [
-            'Project' => new ProjectListExport(),
+            'Project' => new ProjectListExport($this->year),
 //            'Cost Benefit' => new CostBenefitExport(),
         ];
 

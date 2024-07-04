@@ -162,14 +162,30 @@ $(function() {
     /**
      * Export Handle From Controller Using AJAX
      */
+    function getYearFromUrl() {
+        // Get the full URL
+        let url = window.location.href;
+
+        // Split the URL by '/'
+        let segments = url.split('/');
+
+        // Find the index of the 'year' segment and get the next segment
+        let yearIndex = segments.indexOf('year') + 1;
+        let year = segments[yearIndex];
+
+        return year;
+    }
+
+
     $('.btn-export').on('click', function (e) {
         e.preventDefault();
         var _this = $(this);
         _this.attr('disabled', 'disabled')
         _this.find('.js-icon-download').addClass('d-none');
         _this.find('.loader-34').removeClass('d-none');
+        var year = getYearFromUrl();
         $.ajax({
-            url: 'export',
+            url: '/export/' + year,
             method: 'GET',
             xhrFields: {
                 responseType: 'blob'

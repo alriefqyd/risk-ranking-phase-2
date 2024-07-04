@@ -294,11 +294,17 @@ class Project extends Model
     public function getProbabilityRiskAssessment($value){
         $probability = $value;
         if($probability == null) return "";
-        return RiskAssessments::PROBABILITY[$probability];
+        if(isset(RiskAssessments::PROBABILITY[$probability])){
+            return $probability;
+        }
+        return $value;
     }
 
     public function getSeverityValue($val){
         if(!$val) return "";
+        if(!isset(RiskAssessments::NEW_SEVERITY[$val])){
+            return RiskAssessments::SEVERITY[$val];
+        }
         return RiskAssessments::NEW_SEVERITY[$val];
     }
 
@@ -473,10 +479,16 @@ class Project extends Model
     public function getKeyPerformanceMetricTextAttribute($value){
         if(!$value) return [];
 
+
         $data = $value;
         $json = json_decode($data, true);
-        $list = [];
 
+        if(!is_object($value)
+            || !is_array($value)){
+            return $this->removeSpecialCharacters($value);
+        }
+
+        $list = [];
         foreach ($json as $item) {
             $list[] = [
                 'description' =>  $item['description'] ? '- Description : ' . $item['description'] : '',
@@ -676,5 +688,13 @@ class Project extends Model
         $investmentStrategy = (object)$json;
         // Replace underscores with spaces and convert to sentence case
         return $investmentStrategy;
+    }
+
+    protected function removeSpecialCharacters($string)
+    {
+        $string = strip_tags($string);
+        $string = str_replace('&nbsp',' ',$string);
+        $string = str_replace(';','',$string);
+        return $string;
     }
 }

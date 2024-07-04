@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Project;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -20,12 +21,13 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, ShouldAutoSize, WithStyles,
     WithTitle, WithColumnFormatting
 {
-    public function __construct()
+    public function __construct($year)
     {
         $worksheet = new Worksheet();
         $this->worksheet = $worksheet;
         $this->presented_year = config('constants.project_presented_year');
         $this->size = 210;
+        $this->year = $year;
     }
 
 
@@ -69,7 +71,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
             ->leftJoin('fel3s as fel3','fel3.project_id', '=','projects.id')
             ->leftJoin('business_case_assessments as business_case','business_case.project_id', '=','projects.id')
             ->leftJoin('risk_assessments as risk_assessment','risk_assessment.business_case_assessment_id', '=','business_case.id')
-            ->where('presented_year', $this->presented_year);
+            ->where('presented_year', $this->year);
             if(auth()->user()->department == 6){
                 $projects = $projects->where('operation_area', 6);
             };

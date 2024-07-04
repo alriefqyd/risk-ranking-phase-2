@@ -1,4 +1,4 @@
-@inject('setting',App\Models\Setting::class)
+{{--@inject('setting',App\Models\Setting::class)--}}
 <table class="tg">
     <thead>
         <tr>
@@ -170,15 +170,21 @@
                 <td>{{$p?->project_schedule_text}}</td>
                 <td>{{$p?->list_equipment_specification_text}}</td>
                 <td>
-                    @foreach($p?->key_performance_metric_text as $kpm)
-                        @if(isset($kpm['description']) && $kpm['description'] != '')
-                            {{$loop->index + 1}}). <br>
-                             {{$kpm['description']}} <br>
-                             {{$kpm['uom']}} <br>
-                             {{$kpm['time_benefit']}} <br>
-                             {{$kpm['remarks']}} <br>
-                         @endif
-                    @endforeach
+                    @if(isset($p->key_performance_metric_text))
+                        @if(is_object($p->key_performance_metric_text) || is_array($p->key_performance_metric_text))
+                            @foreach($p?->key_performance_metric_text as $kpm)
+                                @if(isset($kpm['description']) && $kpm['description'] != '')
+                                    {{$loop->index + 1}}). <br>
+                                     {{$kpm['description']}} <br>
+                                     {{$kpm['uom']}} <br>
+                                     {{$kpm['time_benefit']}} <br>
+                                     {{$kpm['remarks']}} <br>
+                                 @endif
+                            @endforeach
+                        @else
+                            {{$p->key_performance_metric_text }}
+                        @endif
+                    @endif
                 </td>
                 <td>{{$p?->key_project_risk_and_mitigants_text}}</td>
                 <td>{{$p?->impact_if_not_executed_text}}</td>

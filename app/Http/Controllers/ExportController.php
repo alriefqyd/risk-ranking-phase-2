@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\ProjectExport;
 use App\Exports\RiskRankingExport;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
@@ -11,13 +12,13 @@ use Carbon\Carbon;
 
 class ExportController extends Controller
 {
-    public function export()
+    public function export(Request $request)
     {
         try{
             Log::info('Start exporting');
             $this->authorize('export');
             $fileName = 'document\risk-ranking-2023.xlsx';
-            Excel::store(new RiskRankingExport(), $fileName);
+            Excel::store(new RiskRankingExport($request->year), $fileName);
             Log::info('Finish exporting');
             return response()->download(storage_path('app/document/risk-ranking-2023.xlsx'));
         } catch (\Exception $e){
