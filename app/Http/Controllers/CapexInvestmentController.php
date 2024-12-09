@@ -9,15 +9,9 @@ use Illuminate\Support\Facades\Cache;
 class CapexInvestmentController extends Controller
 {
     public function getSubBasketByBasket(Request $request){
-        $key = 'sub_basket_'.$request->basket;
-        $cacheBasket = Cache::get($key);
-
-        if($cacheBasket !== null) return $cacheBasket;
-
-        $data = CapexInvestment::where('type',CapexInvestment::type['sub_basket'])->where('parent_id',$request->basket)->where('status','ACTIVE')->get();
+        $data = CapexInvestment::where('type',CapexInvestment::type['investment_sub_type'])->where('parent_id',$request->basket)->where('status','ACTIVE')->get();
 
         if(!$data) return null;
-        Cache::put($key, $data, 43200);
 
         return $data;
     }

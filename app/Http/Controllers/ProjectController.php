@@ -104,7 +104,7 @@ class ProjectController extends Controller
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
         /*$capexCategories =  CapexInvestment::with('basket.subBasket.categories')->where('type','CAPEX_INVESTMENT')->get();*/
-        $basketList = CapexInvestment::where('type','basket')->where('status','ACTIVE')->get();
+        $basketList = CapexInvestment::where('type','INVESTMENT_TYPE')->where('status','ACTIVE')->get();
 
         return view('page.project.create',[
             'projectCategory' => $this->projectCategory,
@@ -202,7 +202,6 @@ class ProjectController extends Controller
         $investmentStrategyList = $settingService->getAllInvestmentStrategy();
         $dataMaturity = $maturityService->getMaturityAnalysis($project?->fel3, $project?->fel3?->id);
 
-        $capexCategories =  CapexInvestment::with('basket.subBasket')->where('type','CAPEX_INVESTMENT')->get();
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
 
@@ -225,7 +224,7 @@ class ProjectController extends Controller
         }
 
 
-        $basketList = CapexInvestment::where('type','basket')->where('status','ACTIVE')->get();
+        $basketList = CapexInvestment::where('type','INVESTMENT_TYPE')->where('status','ACTIVE')->get();
 
         return view('page.project.detail',[
             'project' => $project,
@@ -238,7 +237,6 @@ class ProjectController extends Controller
             'riskLevel' => $riskLevel,
             'riskMatrix' => $riskMatrix,
             'probability' => $probability,
-            'capexCategories' => $capexCategories,
             'sessionUpdate' => Session::get('projectUpdate'),
             'isAdmin' => auth()->user()->role == User::ROLE['admin'],
             'isNotCurrentData' => false,

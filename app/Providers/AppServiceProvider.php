@@ -7,6 +7,7 @@ use App\service\UserService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use  \Illuminate\Database\Query\Builder;
 
@@ -63,6 +64,16 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('export', function(User $user) use ($userService){
             if(auth()->user()->department == 6) return true;
             return $userService->isUserHaveAccess($userService->export);
+        });
+
+        View::composer('*', function ($view) {
+            // Get the count or any other conditional data
+            $years = date('Y') + 1 . '-' . date('Y') + 5;
+            $month = date('m');
+            if($month > 10){
+                $years = date('Y') + 2 . '-' . date('Y') + 6;
+            }
+            $view->with('years', $years);
         });
 
 

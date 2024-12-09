@@ -18,7 +18,8 @@ class CapexInvestment extends Model
         'capex_investment' => 'CAPEX_INVESTMENT',
         'basket' => 'BASKET',
         'sub_basket' => 'SUB_BASKET',
-        'category' => 'CATEGORY'
+        'category' => 'CATEGORY',
+        'investment_sub_type' => 'INVESTMENT_SUB_TYPE'
     ];
 
     public const CAPEX_INVESTMENT = [

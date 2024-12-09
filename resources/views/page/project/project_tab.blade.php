@@ -44,7 +44,7 @@
                         <a class="mr-2 setting-primary-custom bg-draft">
                             <i class="fa fa-dollar text-white"></i>
                         </a>
-                        <span class="text-primary-template f-w-700">CAPEX INVESTMENT</span>
+                        <span class="text-primary-template f-w-700">Investment Strategy</span>
                     </h5>
                     <div class="col-md-6 text-center">
                         <div style="height: 3px; background-color: #24695c "></div>
@@ -78,17 +78,17 @@
         <table class="table table-striped">
             <tbody>
             <tr>
-                <td style="width: 200px">Basket : </td>
+                <td style="width: 200px">Type : </td>
                 <td>{{$project?->baskets?->name}}</td>
             </tr>
             <tr>
-                <td style="width: 200px">Sub Basket : </td>
+                <td style="width: 200px">Sub Type : </td>
                 <td>{{$project?->subBaskets?->name}}</td>
             </tr>
-            <tr>
-                <td style="width: 200px">Sub Basket Categories : </td>
-                <td>{{$project?->categories?->name ?? ''}}</td>
-            </tr>
+{{--            <tr>--}}
+{{--                <td style="width: 200px">Sub Basket Categories : </td>--}}
+{{--                <td>{{$project?->categories?->name ?? ''}}</td>--}}
+{{--            </tr>--}}
 {{--            <tr>--}}
 {{--                <td style="width: 200px">Project Number : </td>--}}
 {{--                <td>{{$project?->project_number}}</td>--}}

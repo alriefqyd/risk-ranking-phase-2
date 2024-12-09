@@ -2607,7 +2607,7 @@ $(function() {
             renderCategories(_subBasket, false)
         } else {
             disabledSubBasket(_this.data('id'), false)
-            $('.js-text-validation-basket').text('* Please select sub basket')
+            $('.js-text-validation-basket').text('* Please select sub type')
             $('.js-button-investment_category').attr('disabled','disabled');
             $('.js-checkbox-categories-item').remove();
             $('.js-hidden-sub-basket').val('');
@@ -2624,6 +2624,7 @@ $(function() {
             url:'/getSubBasketByBasket',
             data: {basket:_basket},
             success:function(data){
+            console.log(data)
                 if(data.length < 1){
                     $('.js-button-investment_category').removeAttr('disabled');
                     $('.js-text-validation-basket').text('')
@@ -2632,7 +2633,7 @@ $(function() {
                 }
 
 
-                $('.js-text-validation-basket').text('* Please select sub basket')
+                $('.js-text-validation-basket').text('* Please select sub type')
                 var template = $('#js-template-capex-investment').html();
                 Mustache.parse(template);
                 var data = {

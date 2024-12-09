@@ -1,95 +1,97 @@
 @inject('setting',App\Models\Setting::class)
-    <div class="col-md-12 m-b-20">
-        <div class="col-md-12 m-l-10 m-t-10">
-            <h6>Investment Strategy</h6>
-        </div>
-        <div class="col-md-4 m-l-10 text-center">
-            <div style="height: 3px; background-color: #24695c "></div>
-        </div>
-    </div>
-    <div class="col-md-12 m-b-25">
-        <div class="card-body" style="padding-top: 0">
-            @foreach($investmentStrategyList as $investment)
-                <div class="js-level-1">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="checkbox checkbox-primary height-40"><input id="checkbox-{{$investment->key}}"
-                                       data-id="{{$investment->key}}"
-                                       name="checkbox_investment"
-                                       value="{{$investment->key}}"
-                                       {{!empty($project->investment_strategy) && $investment->key != $project->investment_strategy?->level1 ? 'disabled' : ''}}
-                                       {{$investment->key == $project->investment_strategy?->level1 ? 'checked' : ''}}
-                                       class="js-checkbox-{{$investment->key}} js-checkbox-investment-strategy"
-                                       type="checkbox">
+{{--    <div class="col-md-12 m-b-20">--}}
+{{--        <div class="col-md-12 m-l-10 m-t-10">--}}
+{{--            <h6>Investment Strategy</h6>--}}
+{{--        </div>--}}
+{{--        <div class="col-md-4 m-l-10 text-center">--}}
+{{--            <div style="height: 3px; background-color: #24695c "></div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--    <div class="col-md-12 m-b-25">--}}
+{{--        <div class="card-body" style="padding-top: 0">--}}
+{{--            @foreach($investmentStrategyList as $investment)--}}
+{{--                <div class="js-level-1">--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-12">--}}
+{{--                            <div class="checkbox checkbox-primary height-40"><input id="checkbox-{{$investment->key}}"--}}
+{{--                                       data-id="{{$investment->key}}"--}}
+{{--                                       name="checkbox_investment"--}}
+{{--                                       value="{{$investment->key}}"--}}
+{{--                                       {{!empty($project->investment_strategy) && $investment->key != $project->investment_strategy?->level1 ? 'disabled' : ''}}--}}
+{{--                                       {{$investment->key == $project->investment_strategy?->level1 ? 'checked' : ''}}--}}
+{{--                                       class="js-checkbox-{{$investment->key}} js-checkbox-investment-strategy"--}}
+{{--                                       type="checkbox">--}}
 
-                                <label for="checkbox-{{$investment->key}}">{{$investment->value}}</label>
-                            </div>
-                        </div>
-                    </div>
+{{--                                <label for="checkbox-{{$investment->key}}">{{$investment->value}}</label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    @foreach($investment->child as $child)
-                        <div class="js-level-2
-                        {{!isset($project->investment_category) && ($investment->key
-                        != $project->investment_strategy?->level1) ? 'd-none' : ''}}">
-                            <div class="row m-l-15">
-                                <div class="col-md-12">
-                                    <div class="checkbox checkbox-primary checkbox-width-auto height-35">
-                                        <input id="checkbox_level_2-{{$child->key}}"
-                                               data-id="{{$child->key}}"
-                                               name="checkbox_child_2"
-                                               value="{{$child->key}}"
-                                               {{!empty($project->investment_strategy) && $child->key != $project->investment_strategy?->level2 ? 'disabled' : ''}}
-                                               {{$child->key == $project->investment_strategy?->level2 ? 'checked' : ''}}
-                                               class="js-checkbox-{{$child->key}} js-checkbox-investment-strategy-level-2"
-                                               type="checkbox">
+{{--                    @foreach($investment->child as $child)--}}
+{{--                        <div class="js-level-2--}}
+{{--                        {{!isset($project->investment_category) && ($investment->key--}}
+{{--                        != $project->investment_strategy?->level1) ? 'd-none' : ''}}">--}}
+{{--                            <div class="row m-l-15">--}}
+{{--                                <div class="col-md-12">--}}
+{{--                                    <div class="checkbox checkbox-primary checkbox-width-auto height-35">--}}
+{{--                                        <input id="checkbox_level_2-{{$child->key}}"--}}
+{{--                                               data-id="{{$child->key}}"--}}
+{{--                                               name="checkbox_child_2"--}}
+{{--                                               value="{{$child->key}}"--}}
+{{--                                               {{!empty($project->investment_strategy) && $child->key != $project->investment_strategy?->level2 ? 'disabled' : ''}}--}}
+{{--                                               {{$child->key == $project->investment_strategy?->level2 ? 'checked' : ''}}--}}
+{{--                                               class="js-checkbox-{{$child->key}} js-checkbox-investment-strategy-level-2"--}}
+{{--                                               type="checkbox">--}}
 
-                                        <label for="checkbox_level_2-{{$child->key}}">{{$child->value}}</label>
-                                    </div>
-                                </div>
-                            </div>
-                            @foreach($child->child as $c)
-                                <div class="js-level-3
-                                {{!isset($project->investment_category) && ($child->key
-                                != $project->investment_strategy?->level2) ? 'd-none' : ''}}">
-                                    <div class="row m-l-45 m-t-0 ">
-                                        <div class="col-md-12">
-                                            <div class="checkbox checkbox-primary checkbox-width-auto height-35">
-                                                <input id="checkbox_level3-21{{$c->key}}"
-                                                       data-id="{{$c->key}}"
-                                                       name="checkbox_child_3"
-                                                       value="{{$c->key}}"
-                                                       {{!empty($project->investment_strategy) && $c->key != $project->investment_strategy?->level3 ? 'disabled' : ''}}
-                                                       {{$c->key == $project->investment_strategy?->level3 ? 'checked' : ''}}
-                                                       class="js-checkbox-{{$c->key}} js-checkbox-investment-strategy-level-3"
-                                                       type="checkbox">
-                                                <label for="checkbox_level3-21{{$c->key}}">{{$c->value}}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
-                </div>
-            @endforeach
-        </div>
-        <button class="btn btn-primary float-end js-next-assessment-form m-r-15 m-b-30 {{!empty($project->investment_strategy) ? 'd-none' : ''}}" {{empty($project->investment_strategy) ? 'disabled' : ''}}  id="nextBtn" type="button">
-           <span class="text-button loader-box loader-box-custom"  style="height: 21px">
-                Save <span class="m-l-5 loader-34 loader-34-custom d-none"></span>
-            </span>
-        </button>
-    </div>
+{{--                                        <label for="checkbox_level_2-{{$child->key}}">{{$child->value}}</label>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            @foreach($child->child as $c)--}}
+{{--                                <div class="js-level-3--}}
+{{--                                {{!isset($project->investment_category) && ($child->key--}}
+{{--                                != $project->investment_strategy?->level2) ? 'd-none' : ''}}">--}}
+{{--                                    <div class="row m-l-45 m-t-0 ">--}}
+{{--                                        <div class="col-md-12">--}}
+{{--                                            <div class="checkbox checkbox-primary checkbox-width-auto height-35">--}}
+{{--                                                <input id="checkbox_level3-21{{$c->key}}"--}}
+{{--                                                       data-id="{{$c->key}}"--}}
+{{--                                                       name="checkbox_child_3"--}}
+{{--                                                       value="{{$c->key}}"--}}
+{{--                                                       {{!empty($project->investment_strategy) && $c->key != $project->investment_strategy?->level3 ? 'disabled' : ''}}--}}
+{{--                                                       {{$c->key == $project->investment_strategy?->level3 ? 'checked' : ''}}--}}
+{{--                                                       class="js-checkbox-{{$c->key}} js-checkbox-investment-strategy-level-3"--}}
+{{--                                                       type="checkbox">--}}
+{{--                                                <label for="checkbox_level3-21{{$c->key}}">{{$c->value}}</label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--            @endforeach--}}
+{{--        </div>--}}
+{{--        <button class="btn btn-primary float-end js-next-assessment-form m-r-15 m-b-30 {{!empty($project->investment_strategy) ? 'd-none' : ''}}" {{empty($project->investment_strategy) ? 'disabled' : ''}}  id="nextBtn" type="button">--}}
+{{--           <span class="text-button loader-box loader-box-custom"  style="height: 21px">--}}
+{{--                Save <span class="m-l-5 loader-34 loader-34-custom d-none"></span>--}}
+{{--            </span>--}}
+{{--        </button>--}}
+{{--    </div>--}}
 
-    <div class="col-md-12 m-t-45 js-table-form-assessment {{empty($project->investment_strategy) ? 'd-none' : ''}}">
-        <div class="col-md-12 m-l-10">
-            <h6>Project Level Assessment</h6>
-        </div>
-        <div class="col-md-4 m-l-10 text-center  m-b-10">
-            <div style="height: 3px; background-color: #24695c "></div>
-        </div>
-    </div>
+{{--    <div class="col-md-12 m-t-45 js-table-form-assessment {{empty($project->investment_strategy) ? 'd-none' : ''}}">--}}
+{{--        <div class="col-md-12 m-l-10">--}}
+{{--            <h6>Project Level Assessment</h6>--}}
+{{--        </div>--}}
+{{--        <div class="col-md-4 m-l-10 text-center  m-b-10">--}}
+{{--            <div style="height: 3px; background-color: #24695c "></div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
-    <div class="table-responsive js-table-form-assessment {{empty($project->investment_strategy) ? 'd-none' : ''}}">
+    <div class="table-responsive js-table-form-assessment
+{{--    {{empty($project->investment_strategy) ? 'd-none' : ''}}--}}
+    ">
         <input type="hidden" class="js-project-id" value="{{$project->id}}">
         <table class="table table-striped js-table-assessment">
             <tbody>

@@ -12,7 +12,9 @@
             'isEdit' => false
         ])
 
-    <div class="card-footer js-button-submit-assessment {{empty($project->investment_strategy) ? 'd-none' : ''}}">
+    <div class="card-footer js-button-submit-assessment
+{{--    {{empty($project->investment_strategy) ? 'd-none' : ''}}--}}
+    ">
         <button class="btn btn-secondary  js-create-assessment"  data-status="draft">
            <span class="text-button loader-box loader-box-custom"  style="height: 21px">
                 Save As Draft <span class="m-l-5 loader-34 loader-34-custom d-none"></span>

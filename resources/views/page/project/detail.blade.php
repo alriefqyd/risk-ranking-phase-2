@@ -23,15 +23,17 @@
                     <div class="card-body p-0 b-b-info-custom">
                         <ul class="nav nav-tabs m-20" id="myTab" role="tablist">
                             <li class="nav-item"><a class="nav-link js-reset-check-count {{!Session::has('page-tab') ? 'active' : ''}}" id="project-tab" data-bs-toggle="tab" href="#project" role="tab" aria-controls="project" aria-selected="true">Project</a></li>
-                            @if($project->isHaveCriterias())
-                                <li class="nav-item">
-                                    <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'budget_tool_training' ? 'active' : ''}}" id="budget_tool_training-tabs" data-bs-toggle="tab" href="#budget_tool_training" role="tab" aria-controls="budget_tool_training" aria-selected="false">
-                                        Prioritization Criteria {!!sizeof($project?->criterias) > 0 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
-                                    </a>
-                                </li>
-                            @endif
+{{--                            @if($project->isHaveCriterias())--}}
+{{--                                <li class="nav-item">--}}
+{{--                                    <a class="nav-link js-reset-check-count {{Session::get('page-tab') == 'budget_tool_training' ? 'active' : ''}}" id="budget_tool_training-tabs" data-bs-toggle="tab" href="#budget_tool_training" role="tab" aria-controls="budget_tool_training" aria-selected="false">--}}
+{{--                                        Prioritization Criteria {!!sizeof($project?->criterias) > 0 ? '<i class="fa fa-check-circle-o"></i>' : '' !!}--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+{{--                            @endif--}}
                             <li class="nav-item">
-                                <a class="nav-link js-reset-check-count {!! $project->isHaveCriterias() && sizeof($project->criterias) < 1 || !isset($project->categories) ? 'disabled' : '' !!} {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">
+                                <a class="nav-link js-reset-check-count
+{{--                                {!! $project->isHaveCriterias() && sizeof($project->criterias) < 1 || !isset($project->categories) ? 'disabled' : '' !!} --}}
+                                {{Session::get('page-tab') == 'assessment' ? 'active' : ''}}" id="assessment-tabs" data-bs-toggle="tab" href="#assessment" role="tab" aria-controls="assessment" aria-selected="false">
                                     Level Assessment {!!$project?->assessment ? '<i class="fa fa-check-circle-o"></i>' : '' !!}
                                 </a>
                             </li>
@@ -75,13 +77,13 @@
                                 @include('page.project.budget_tool')
                             </div>
 
-                            @if(!$project->isHaveCriterias() || $project->isHaveCriterias() && sizeof($project->criterias) > 0)
-                                @if(isset($project->categories))
+{{--                            @if(!$project->isHaveCriterias() || $project->isHaveCriterias() && sizeof($project->criterias) > 0)--}}
+{{--                                @if(isset($project->categories))--}}
                                     <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'assessment' ? 'active show' : ''}}" id="assessment" role="tabpanel" aria-labelledby="assessment-tab">
                                         @include('page.assessment.assessment_tab')
                                     </div>
-                                @endif
-                            @endif
+{{--                                @endif--}}
+{{--                            @endif--}}
                             @if(isset($project->assessment))
                                 <div class="tab-pane fade js-tab-parent show {{Session::get('page-tab') == 'fel1' ? 'active show' : ''}}" id="fel1" role="tabpanel" aria-labelledby="fel1-tab">
                                     @include('page.fel1.fel1_tab')

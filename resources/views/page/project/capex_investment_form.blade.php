@@ -8,6 +8,7 @@
     <div class="col-md-6 text-center">
         <div style="height: 3px; background-color: #24695c "></div>
     </div>
+    <p>Type of sustaining project and its sub-type (optional)</p>
 </div>
 
 <div class="row mt-5">

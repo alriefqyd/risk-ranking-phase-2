@@ -1,7 +1,7 @@
 @inject('getSubBasket',App\Models\CapexInvestment::class)
 <div class="col-md-4 js-checkbox-basket-list">
-    <h6>Basket</h6>
-    <div class="col-md-2 mb-2">
+   <h6>Project Type</h6>
+    <div class="col-md-5 mb-2">
         <div style="height: 3px; background-color: #24695c "></div>
     </div>
     @foreach($basketList as $b)
@@ -23,20 +23,11 @@
 </div>
 
 <div class="col-md-4 js-checkbox-sub-basket-list">
-    <h6>Sub Basket</h6>
-    <div class="col-md-2 mb-2">
+    <h6>Project Sub Type</h6>
+    <div class="col-md-5 mb-2">
         <div style="height: 3px; background-color: #24695c "></div>
     </div>
     <div class="js-checkbox-sub-basket-form" style="height: auto">
-
-    </div>
-</div>
-<div class="col-md-4 js-checkbox-sub-basket-list">
-    <h6>Categories</h6>
-    <div class="col-md-2 mb-2">
-        <div style="height: 3px; background-color: #24695c "></div>
-    </div>
-    <div class="js-checkbox-categories-form" style="height: auto">
 
     </div>
 </div>
