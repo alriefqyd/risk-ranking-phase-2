@@ -14,7 +14,8 @@
                     <select class="select2 js-select-rr-project-list" data-allowClear="false" style="width: 100%">
                         <option value="2022" {{request()->year == '2022' ? 'selected' : ''}}>Risk Ranking Project List 2023 - 2027 (Presented 2022)</option>
                         <option value="2023" {{request()->year == '2023' ? 'selected' : ''}}>Risk Ranking Project List 2024 - 2028 (Presented 2023)</option>
-                        <option value="" {{!request()->year ? 'selected' : ''}}>Risk Ranking Project List 2025-2029</option>
+                        <option value="2024" {{request()->year == '2024' ? 'selected' : ''}}>Risk Ranking Project List 2025 - 2029 (Presented 2024)</option>
+                        <option value="" {{!request()->year ? 'selected' : ''}}>Risk Ranking Project List 2026-2030</option>
                     </select>
                 </div>
             </div>
