@@ -12,7 +12,7 @@ return  [
         'fel3' => 'fel3',
         'business-case' => 'business-case'
     ],
-    'project_presented_year' => '2024',
+    'project_presented_year' => '2025',
 ]
 
 ?>

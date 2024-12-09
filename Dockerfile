@@ -21,3 +21,5 @@ COPY . /var/www
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+COPY ./custom-memory-limit.ini /usr/local/etc/php/conf.d/
