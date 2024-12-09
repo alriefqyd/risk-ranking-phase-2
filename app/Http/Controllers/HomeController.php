@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\CapexInvestment;
 use App\Models\Project;
 use App\Models\Setting;
-use App\service\Fel2Service;
+use App\Service\Fel2Service;
 use App\Service\ProjectService;
 use App\Service\UserService;
-use App\service\Fel1Service;
-use App\service\Fel3Service;
-use App\service\BusinessCaseService;
+use App\Service\Fel1Service;
+use App\Service\Fel3Service;
+use App\Service\BusinessCaseService;
 use Illuminate\Http\Request;
 use App\Service\AssessmentService;
 
