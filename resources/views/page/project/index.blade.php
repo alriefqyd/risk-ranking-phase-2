@@ -4,7 +4,7 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-4">
-                    <h3>project list</h3>
+                    <h3>project list<ocker/h3>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
                         <li class="breadcrumb-item active">project list</li>
@@ -139,11 +139,6 @@
                                     <th scope="col">Priority Level</th>
                                     {{--<th scope="col" >Project No</th>--}}
                                     <th scope="col" >Project Name</th>
-                                    <th scope="col">Project Level Assessment</th>
-                                    <th scope="col">FEL 1</th>
-                                    <th scope="col">FEL 2</th>
-                                    <th scope="col">FEL 3</th>
-                                    <th scope="col">Business Case</th>
                                     <th scope="col">Owner Area</th>
                                     <th scope="col">Sponsor</th>
                                     <th scope="col">Note</th>
@@ -171,21 +166,6 @@
                                                 <a href="/project/{{$project->id}}">
                                                     <p class="alert-color-green">{{$project->project_name}}</p>
                                                 </a>
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectAssessment() !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectFel1() !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectFel2() !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectFel3() !!}
-                                            </td>
-                                            <td class="text-center">
-                                                {!! $project->getRelatedDataProjectBusinessCase() !!}
                                             </td>
                                             <td>{{$project->ownersProject?->name ?? $project->getOldDepartment($project->owner)}}</td>
                                             <td>{{$project?->sponsorsProject?->name ?? $project->getOldDepartment($project->sponsor)}}</td>

@@ -286,61 +286,62 @@ $(function (){
                 return acc + curr;
             }, 0);
 
-            r_and_d = [result.level2.r_and_d,0],
-            growth = [result.level2.growth,0],
-            volume = [0,result.level2.volume],
-            cost_reduction = [0,result.level2.cost_reduction],
-            replacement = [0,result.level2.replacement],
-            others = [0,result.level2.others]
+//            r_and_d = [result.level2.r_and_d,0],
+//            growth = [result.level2.growth,0],
+//            volume = [0,result.level2.volume],
+//            cost_reduction = [0,result.level2.cost_reduction],
+//            replacement = [0,result.level2.replacement],
+//            others = [0,result.level2.others]
+//
+//            health_safety = [result.health_safety,0,0,0];
+//            enviro = [result.enviro,0,0,0,0];
+//            complience = [result.complience,0,0,0,0];
+//            others_hse = [result.others];
+//
+//            rebuild = [0,result.rebuild,0,0,0];
+//            replacement = [0,result.replacement,0,0,0];
+//            others_maintain_capacity = [0,others_maintain_capacity,0,0,0];
+//
+//            cost_reduction = [0,0,result.cost_reduction,0,0];
+//            volume_betterment = [0,0, result_volume_betterment,0,0];
+//            others_profitability = [0,0, result_others_profitability,0,0];
+//
+//            well_being = [0,0,0,0,result.well_being];
+
 
         const options =  {
             type: 'bar',
             data: {
-                labels: labelArray,
+                labels: [labelArray],
                 datasets: [
                     {
-                        label: 'R & D',
-                        data: r_and_d,
+                        label: 'HSE/License to Operate',
+                        data: [1,2,3,4,5],
                         backgroundColor: 'rgb(0,166,149)',
                         borderColor: 'rgb(0,166,149)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Growth',
-                        data: growth,
+                        label: 'Maintain Capacity',
+                        data: [6,7,8,9,10],
                         backgroundColor: 'rgb(229,117,31)',
                         borderColor: 'rgb(229,117,31)',
                         borderWidth: 1,
                     },
                     {
-                        label: 'Volume',
-                        data: volume,
+                        label: 'Profitability',
+                        data: [11,12,13,14,15],
                         backgroundColor: 'rgb(179,179,179)',
                         borderColor: 'rgb(179,179,179)',
                         borderWidth: 1,
                     },
                     {
-                        label: 'Cost Reduction',
-                        data: cost_reduction,
+                        label: 'Well Being',
+                        data: [16,17,18,19,20],
                         backgroundColor: 'rgb(83,219,240)',
                         borderColor: 'rgb(83,219,240)',
                         borderWidth: 1,
                     },
-                    {
-                        label: 'Replacement',
-                        data: replacement,
-                        backgroundColor: 'rgb(255,204,153)',
-                        borderColor: 'rgb(255,204,153)',
-                        borderWidth: 1,
-                    },
-                    {
-                        label: 'Others',
-                        data: others,
-                        backgroundColor: 'rgb(145,81,81)',
-                        borderColor: 'rgb(145,81,81)',
-                        borderWidth: 1,
-                    },
-
                 ]
             },
             options: {

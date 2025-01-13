@@ -1,6 +1,20 @@
-<div class="mb-3">
-    <label class="col-sm-3 col-form-label" for="ProjectName">Project Title <span class="text-danger f-w-550">*</span></label>
-    <div class="col-sm-12">
+<div class="row g-3">
+    <div class="col-md-6">
+        <label class="col-sm-3 col-form-label" for="ProjectName">Project No <span class="text-danger f-w-550">*</span></label>
+        <input type="text" name="project_no"
+               disabled
+               value="{{old('project_no') ?: (isset($project->project_no) ?
+                $project->project_no : '')}}"
+               class="form-control
+                @error('project_no')
+                   is-invalid
+                @enderror">
+        @error('project_no')
+        <p class="txt-danger">{{$message}}</p>
+        @enderror
+    </div>
+    <div class="col-sm-6">
+        <label class="col-sm-3 col-form-label" for="ProjectName">Project Title <span class="text-danger f-w-550">*</span></label>
         <textarea class="form-control area1
             @error('project_name')
                 is-invalid
@@ -10,14 +24,14 @@
           placeholder="Project Title">{{ old('project_name') ?:
             (isset($project->project_name) ?
             $project->project_name : '') }}</textarea>
+        @error('project_name')
+            <p class="txt-danger">{{$message}}</p>
+        @enderror
     </div>
-    @error('project_name')
-        <p class="txt-danger">{{$message}}</p>
-    @enderror
 </div>
 <div class="row g-3">
     <div class="col-sm-6 mb-3">
-        <label class="col-sm-12 col-form-label" for="ProjectName">Operation Area <span class="text-danger f-w-550">*</span></label>
+        <label class="col-sm-12 col-form-label" for="ProjectName">Department <span class="text-danger f-w-550">*</span></label>
         <div class="col-sm-12
             @error('operation_area')
                 b-danger
@@ -45,7 +59,7 @@
         @enderror
     </div>
     <div class="mb-3 col-sm-6">
-        <label class="col-sm-12 col-form-label" for="ProjectName">Sponsor Area <span class="text-danger f-w-550">*</span></label>
+        <label class="col-sm-12 col-form-label" for="ProjectName">Directorate <span class="text-danger f-w-550">*</span></label>
         <div class="col-sm-12
             @error('sponsor_area')
                 b-danger
@@ -99,34 +113,6 @@
         </div>
         @error('project_sponsor')
             <p class="txt-danger">{{$message}}</p>
-        @enderror
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-6 mb-3">
-        <label class="col-sm-12 col-form-label">Maintenance Reps. <span class="text-danger f-w-550">*</span></label>
-        <input type="text" name="maintenance_reps"
-               value="{{old('maintenance_reps') ?: (isset($project->maintenance_reps) ?
-                $project->maintenance_reps : '')}}"
-               class="form-control
-                @error('maintenance_reps')
-                   is-invalid
-                @enderror">
-        @error('maintenance_reps')
-        <p class="txt-danger">{{$message}}</p>
-        @enderror
-    </div>
-    <div class="col-sm-6 mb-3">
-        <label class="col-sm-12 col-form-label">Operation Reps. <span class="text-danger f-w-550">*</span></label>
-        <input type="text" name="operation_reps"
-               value="{{old('operation_reps') ?: (isset($project->operation_reps)
-                ? $project->operation_reps : '')}}"
-               class="form-control
-                @error('operation_reps')
-                   is-invalid
-                @enderror">
-        @error('operation_reps')
-        <p class="txt-danger">{{$message}}</p>
         @enderror
     </div>
 </div>

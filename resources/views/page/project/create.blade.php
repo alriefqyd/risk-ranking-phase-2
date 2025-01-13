@@ -4,11 +4,11 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-8">
-                    <h3>project Form</h3>
+                    <h3>BC Form</h3>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="/project">project list</a></li>
-                        <li class="breadcrumb-item active">project list</li>
+                        <li class="breadcrumb-item"><a href="/project">BC list</a></li>
+                        <li class="breadcrumb-item active">Create BC</li>
                     </ol>
                 </div>
             </div>
@@ -24,6 +24,9 @@
                        <div class="row">
                         <div class="col-sm-12">
                             <div class="card">
+                                <div class="card-header">
+                                    Project Info
+                                </div>
                                 <div class="card-body">
                                     @include('page.project.form',[
                                             'subDepartment' => $subDepartment,
@@ -32,8 +35,32 @@
                                             'errors' => $errors
                                         ])
                                 </div>
-                                <div class="card-footer">
-                                    <button class="btn btn-primary js-next-capex-investment-form">Next</button>
+{{--                                <div class="card-footer">--}}
+{{--                                    <button class="btn btn-primary js-next-capex-investment-form">Next</button>--}}
+{{--                                </div>--}}
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    Business Case
+                                </div>
+                                <div class="card-body">
+                                    @include('page.business_case.form')
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    Document Attachment
+                                </div>
+                                <div class="card-body">
+                                    
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    Document Revision Log
+                                </div>
+                                <div class="card-body">
+
                                 </div>
                             </div>
                         </div>

@@ -2348,12 +2348,12 @@ table tbody .border-bottom-warning td {
   border-radius: 0;
   background-color: #fff; }
   .card .card-header {
-    padding: 30px;
-    border-bottom: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    position: relative;
-    background-color: #fff; }
+      padding: 20px;
+      border-bottom: solid 2px #f6f7fb;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      position: relative;
+      background-color: #fff; }
     .card .card-header.card-no-border {
       border-bottom: none !important; }
     .card .card-header h4 {

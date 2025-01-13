@@ -82,7 +82,7 @@ class HomeController extends Controller
        if($request->type == 'investment_strategy') return $investmentStrategy;
        if($request->type == 'basket') return $basket;
 
-       return null;
+       return $investmentStrategy;
     }
 
     public function getBasketChart($project){
@@ -102,12 +102,64 @@ class HomeController extends Controller
         return (object) $countSubBasket;
     }
 
+//    public function getInvestmentStrategy($project){
+//        $margin = array();
+//        $maintain = array();
+//        $hsor = array();
+//        $sustainability = array();
+//        $administrative = array();
+//        $engineering = array();
+//        $exploration = array();
+//        $innovation_technology = array();
+//        $volume_growth = array();
+//        $volume_replacement = array();
+//
+//        $health_safety = array();
+//        $environment = array();
+//        $complience = array();
+//        $others_hse = array();
+//
+//        $rebuild = array();
+//        $replacement = array();
+//        others
+//
+//        foreach ($project_category as $l){
+//            array_push($margin,$this->getDataByProjectType(Setting::MARGIN,$l));
+//            array_push($maintain,$this->getDataByProjectType(Setting::MAINTAIN_CAPACITY,$l));
+//            array_push($hsor,$this->getDataByProjectType(Setting::HEALTH_AND_SAFETY,$l));
+//            array_push($sustainability,$this->getDataByProjectType(Setting::SUSTAINABILITY,$l));
+//            array_push($administrative,$this->getDataByProjectType(Setting::ADMINISTRATIVE_IMPROVEMENTS,$l));
+//            array_push($engineering,$this->getDataByProjectType(Setting::ENGINEERING,$l));
+//            array_push($exploration,$this->getDataByProjectType(Setting::EXPLORATION,$l));
+//            array_push($innovation_technology,$this->getDataByProjectType(Setting::INNOVATION_AND_TECHNOLOGY,$l));
+//            array_push($volume_growth,$this->getDataByProjectType(Setting::VOLUME_GROWTH,$l));
+//            array_push($volume_replacement,$this->getDataByProjectType(Setting::VOLUME_REPLACEMENT,$l));
+//        }
+//
+//        $result = array(
+//            'label' => $label,
+//            'margin' => $margin,
+//            'administrative' => $administrative,
+//            'maintain' => $maintain,
+//            'hsor' => $hsor,
+//            'sustainability' => $sustainability,
+//            'engineering' => $engineering,
+//            'exploration' => $exploration,
+//            'innovation_technology' => $innovation_technology,
+//            'volume_growth' => $volume_growth,
+//            'volume_replacement' => $volume_replacement,
+//        );
+//
+//        return response()->json($result);
+//    }
     public function getInvestmentStrategy($project){
         $countLevels = [];
 
+//        dd($project);
         foreach ($project as $p) {
-            $investment = $p->investment_strategy;
-            $json = $investment;
+//            $investment = $p->investment_strategy;
+//            $json = $investment;
+//            dd($json);
 
             // Check and count occurrences for level1
             if (isset($json->level1)) {
