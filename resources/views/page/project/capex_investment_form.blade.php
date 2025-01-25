@@ -1,17 +1,12 @@
 <div class="col-md-12">
-    <h5 class="text-left">
-    <a class="mr-2 setting-primary-custom bg-draft">
-        <i class="fa fa-dollar text-white"></i>
-    </a>
-        <span class="text-primary-template f-w-700">INVESTMENT STRATEGY</span>
-    </h5>
+    <label>Sustaining Investment Strategy</label>
     <div class="col-md-6 text-center">
-        <div style="height: 3px; background-color: #24695c "></div>
+        <div style="height: 2px; background-color: #24695c "></div>
     </div>
-    <p>Type of sustaining project and its sub-type (optional)</p>
+    <p>(Choose only the most relevant strategy according to the project’s goal/benefit)</p>
 </div>
 
-<div class="row mt-5">
+<div class="row mt-5 m-l-5">
    @include('page.project.capex_investment_option')
 </div>
 

@@ -11,7 +11,8 @@ class Department extends Model
 
     public const TYPE = [
         "department" => "DEPARTMENT",
-        "sub-department" => "SUB-DEPARTMENT"
+        "sub-department" => "SUB-DEPARTMENT",
+        "directorate" => "DIRECTORATE",
     ];
 
     public function user(){

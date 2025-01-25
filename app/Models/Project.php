@@ -79,6 +79,10 @@ class Project extends Model
         return $this->belongsToMany(Criteria::class,'criterias_projects')->withPivot('answer');
     }
 
+    public function revisionLog(){
+        return $this->hasMany(RevisionLog::class,'project_id');
+    }
+
     public function isHaveCriterias(){
         $data = DB::table('criterias_categories')->where('sub_basket_id', $this->sub_basket)->where('category_id', $this->categories?->id)->count();
         if($data > 0) return true;

@@ -21,3 +21,8 @@ COPY . /var/www
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory-limit.ini
+RUN echo "upload_max_filesize=20M" > /usr/local/etc/php/conf.d/upload-max-filesize.ini
+RUN echo "post_max_size=20M" > /usr/local/etc/php/conf.d/post-max-size.ini
+

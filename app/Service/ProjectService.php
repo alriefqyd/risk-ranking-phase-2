@@ -7,13 +7,13 @@ use App\Models\CriteriasProjects;
 use App\Models\Department;
 use App\Models\Project;
 use App\Models\Setting;
-use http\Client\Request;
+use App\Models\TemporaryFile;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PHPUnit\Exception;
-use function Sodium\add;
 
 class ProjectService
 {
@@ -512,6 +512,128 @@ class ProjectService
             $newCostBenefit->project_id = $newProject->id;
             $newCostBenefit->save();
         }
+    }
+
+    public function generateProjectNumber()
+    {
+        $presentedYear = $this->getPresentedYear();
+
+        // Fetch all active project numbers (not deleted) for the current year
+        $existingNumbers = Project::where('presented_year', $presentedYear)
+            ->pluck('project_number')
+            ->toArray();
+
+        // Remove 'C' prefix and convert numbers to integers
+        $existingNumbers = array_map(function ($number) {
+            return intval(Str::replaceFirst('C', '', $number));
+        }, $existingNumbers);
+
+        // Sort the numbers in ascending order
+        sort($existingNumbers);
+
+        // Find the first missing number in the sequence
+        $nextNumber = 1; // Default to C000001
+        foreach ($existingNumbers as $num) {
+            if ($num == $nextNumber) {
+                $nextNumber++;
+            } else {
+                break; // Stop at the first gap
+            }
+        }
+
+        // Format the number as 'C000001', 'C000002', etc.
+        return 'C' . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+    }
+
+
+    public function getPresentedYear(){
+        $currentDate = new \DateTime();
+        $october1st = new \DateTime(date('Y') . '-10-01');
+
+        if ($currentDate > $october1st) {
+            $presented_year = $currentDate->format('Y') + 1;
+        } else {
+            $presented_year = $currentDate->format('Y');
+        }
+
+        return $presented_year;
+    }
+
+    public function uploadDocumentRequestBC(Request $request){
+        $documentsRequest = collect([]);
+       if(isset($request->preliminary_design)) $documentsRequest->put(Setting::BUSINESS_CASE_ATTACHMENT['preliminary_design'],$request->preliminary_design);
+       if(isset($request->hazop)) $documentsRequest->put(Setting::BUSINESS_CASE_ATTACHMENT['hazop'],$request->hazop);
+       if(isset($request->moc_document)) $documentsRequest->put(Setting::BUSINESS_CASE_ATTACHMENT['moc_document'],$request->moc_document);
+       if(isset($request->cost_estimate)) $documentsRequest->put(Setting::BUSINESS_CASE_ATTACHMENT['cost_estimate'],$request->cost_estimate);
+       if(isset($request->quotation_of_equipment)) $documentsRequest->put(Setting::BUSINESS_CASE_ATTACHMENT['quotation_of_equipment'],$request->quotation_of_equipment);
+       if(isset($request->lcc_report)) $documentsRequest->put(Setting::BUSINESS_CASE_ATTACHMENT['lcc_report'],$request->lcc_report);
+        return $documentsRequest;
+    }
+
+    public function uploadFilepond(Request $request, Project $project)
+    {
+        $tempFolder = $request->folder; // Temporary folder name
+        $att = collect([]); // Collection to store final attachments
+        $attachments = Setting::BUSINESS_CASE_ATTACHMENT; // Attachment types or categories
+
+        // Get existing attachments from the database (as an associative array)
+        $currentAttachments = json_decode($project->business_case?->attachment, true) ?? [];
+
+        // Retrieve temporary files
+        $tempFiles = TemporaryFile::where('folder_name', $tempFolder)->get();
+        if ($tempFiles->isNotEmpty() || count($currentAttachments) > 0) {
+            $tempDir = 'documents/temp/' . $tempFolder . '/'; // Temporary folder path
+            $dir = 'documents/' . $project->project_number . '/'; // Permanent folder path
+
+            // Ensure the permanent directory exists
+            if (!Storage::exists($dir)) {
+                Storage::makeDirectory($dir);
+            }
+
+            // Process all files in the temporary folder
+            $allFiles = Storage::allFiles($tempDir);
+            foreach ($allFiles as $filePath) {
+                $dirUrl = dirname($filePath);
+                $folder = basename($dirUrl);
+                $fileName = basename($filePath);
+
+                // Check if the folder already exists and compare files
+                if (isset($currentAttachments[$folder])) {
+                    // If the file is different, delete the old file
+                    if ($currentAttachments[$folder] !== $fileName) {
+                        Storage::delete($dir . $folder . '/' . $currentAttachments[$folder]);
+                    }
+                } else {
+                    // Create new folder if it doesn't exist
+                    Storage::makeDirectory($dir . $folder);
+                }
+
+                $att->put($folder, $fileName);
+                $relativePath = str_replace($tempDir, '', $filePath); // Preserve relative path
+                Storage::move($filePath, $dir . $relativePath);
+            }
+
+            // Merge new attachments with existing ones
+            foreach ($currentAttachments as $folder => $fileName) {
+                if (!$att->has($folder)) {
+                    $att->put($folder, $fileName); // Keep existing file if it wasn’t replaced
+                }
+            }
+
+            // Update the `business_case_attachment` column in the database
+            $project->business_case->attachment = $att->toJson();
+            $project->save();
+
+            // Delete the temporary directory and its records
+            Storage::deleteDirectory($tempDir);
+            TemporaryFile::where('folder_name', $tempFolder)->delete();
+        } else {
+            // If no temporary files, return existing attachments
+            return $project->business_case_attachment;
+        }
+
+        // Return the updated attachments
+        return $att;
     }
 
 }

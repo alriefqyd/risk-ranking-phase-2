@@ -1,15 +1,15 @@
 <div class="row g-3">
     <div class="col-md-6">
         <label class="col-sm-3 col-form-label" for="ProjectName">Project No <span class="text-danger f-w-550">*</span></label>
-        <input type="text" name="project_no"
-               disabled
-               value="{{old('project_no') ?: (isset($project->project_no) ?
-                $project->project_no : '')}}"
-               class="form-control
-                @error('project_no')
+        <input type="text" name="project_number"
+               readonly
+               value="{{old('project_number') ?: (isset($project->project_number) ?
+                $project->project_number : $initialProjectNo ?? "")}}"
+               class="form-control js-project_no
+                @error('project_number')
                    is-invalid
                 @enderror">
-        @error('project_no')
+        @error('project_number')
         <p class="txt-danger">{{$message}}</p>
         @enderror
     </div>
@@ -30,6 +30,32 @@
     </div>
 </div>
 <div class="row g-3">
+    <div class="mb-3 col-sm-6">
+        <label class="col-sm-12 col-form-label" for="ProjectName">Directorate <span class="text-danger f-w-550">*</span></label>
+        <div class="col-sm-12
+            @error('directorate')
+                b-danger
+            @enderror">
+            <select name="directorate"
+                    style="width: 100% !important;"
+                    data-placeholder="Select Operation Area"
+                    class="js-example-basic-single col-sm-12
+                    select2">
+                <option></option>
+                @foreach($directorate as $dep)
+                    <option {{old('directorate') == $dep->id ||
+                            (isset($project->directorate)
+                            && $project->directorate == $dep->id) ?
+                             'selected="selected"' : ''}}
+                            value="{{$dep->id}}">{{$dep->name}}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        @error('sponsor_area')
+        <p class="txt-danger">{{$message}}</p>
+        @enderror
+    </div>
     <div class="col-sm-6 mb-3">
         <label class="col-sm-12 col-form-label" for="ProjectName">Department <span class="text-danger f-w-550">*</span></label>
         <div class="col-sm-12
@@ -39,7 +65,6 @@
             <select name="operation_area"
                     style="width: 100% !important;"
                     data-placeholder="Select Operation Area"
-                    name="owner"
                     class="js-example-basic-single col-sm-12
                     js-select-owner
                     select2">
@@ -59,7 +84,7 @@
         @enderror
     </div>
     <div class="mb-3 col-sm-6">
-        <label class="col-sm-12 col-form-label" for="ProjectName">Directorate <span class="text-danger f-w-550">*</span></label>
+        <label class="col-sm-12 col-form-label" for="ProjectName">Sponsor <span class="text-danger f-w-550">*</span></label>
         <div class="col-sm-12
             @error('sponsor_area')
                 b-danger
@@ -69,7 +94,7 @@
              js-example-basic-single form-control js-select-sponsor">
                 <option value="" disabled selected>Select your option</option>
                 @if(isset($project->sponsorsProject?->name))
-                    <option value="{{$project->sponsorsProject?->id}}" data-sponsor="{{$project->sponsorsProject?->supervisor}}" data-owner="{{$project->ownersProject->supervisor}}" selected>{{$project->sponsorsProject?->name}}</option>
+                    <option value="{{$project->sponsorsProject?->id}}" data-sponsor="{{$project->sponsorsProject?->supervisor}}" data-owner="{{$project->ownersProject->supervisor}}" >{{$project->sponsorsProject?->name}}</option>
                 @endif
             </select>
         </div>
@@ -132,15 +157,15 @@
 
     </div>
     <div class="col-sm-6 mb-3">
-        <label class="col-sm-12 col-form-label" for="Finance Analyst">FEL1/FEL2/FEL3 Project Ref. <span class="text-danger f-w-550">*</span></label>
-        <input type="text" name="fel_123_project_ref"
-               value="{{old('fel_123_project_ref') ?: (isset($project->fel_123_project_ref)
-                ? $project->fel_123_project_ref : '')}}"
+        <label class="col-sm-12 col-form-label" for="Finance Analyst">BC Originator <span class="text-danger f-w-550">*</span></label>
+        <input type="text" name="bc_originator"
+               value="{{old('bc_originator') ?: (isset($project->bc_originator)
+                ? $project->bc_originator : '')}}"
                class="form-control
-                @error('fel_123_project_ref')
+                @error('bc_originator')
                    is-invalid
                 @enderror">
-        @error('fel_123_project_ref')
+        @error('bc_originator')
             <p class="txt-danger">{{$message}}</p>
         @enderror
     </div>
@@ -156,6 +181,19 @@
                    is-invalid
                 @enderror">
         @error('finance_analyst')
+        <p class="txt-danger">{{$message}}</p>
+        @enderror
+    </div>
+    <div class="col-sm-6 mb-3">
+        <label class="col-sm-12 col-form-label" for="Finance Analyst">Email PIC</label>
+        <input type="text" name="email_pic"
+               value="{{old('email_pic') ?: (isset($project->email_pic)
+                ? $project->email_pic : '')}}"
+               class="form-control
+                @error('email_pic')
+                   is-invalid
+                @enderror">
+        @error('email_pic')
         <p class="txt-danger">{{$message}}</p>
         @enderror
     </div>

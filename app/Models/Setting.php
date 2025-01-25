@@ -118,8 +118,16 @@ class Setting extends Model
     ];
 
     public const BUSINESS_CASE_ATTACHMENT = [
-      'fel3' => "fel3",
-      'business_case' => 'business_case'
+        'fel3' => "fel3",
+        'business_case' => 'business_case',
+        'preliminary_design' => 'preliminary_design',
+        'hazop' => 'hazop',
+        'moc_document' => 'moc_document',
+        'cost_estimate_file' => 'cost_estimate_file',
+        'quotation_of_equipment' => 'quotation_of_equipment',
+        'lcc_report' => 'lcc_report',
+        'financial_evaluation' => 'financial_evaluation',
+        'risk_assessment' => 'risk_assessment',
     ];
 
     public const CAPITAL_VALUE = [

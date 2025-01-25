@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\TemporaryFile;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,7 @@ Route::post('/project/duplicate',[\App\Http\Controllers\ProjectController::class
 Route::post('/update-investment-strategy',[\App\Http\Controllers\ProjectController::class,'updateInvestmentStrategy'])->name('project.update-investment ')->middleware('auth');
 Route::get('/project/create',[\App\Http\Controllers\ProjectController::class,'create'])->name('project.create ')->middleware('auth');
 Route::put('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'update'])->name('project.update ')->middleware('auth');
-Route::get('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'edit'])->name('project.edit ')->middleware('auth');
+Route::get('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'show'])->name('project.show ')->middleware('auth');
 Route::delete('/project/{project:id}',[\App\Http\Controllers\ProjectController::class,'delete'])->name('project.delete ')->middleware('auth');
 Route::get('/getProjectNote/{project:id}',[\App\Http\Controllers\ProjectController::class,'getProjectNote'])->name('project.get-project-note ')->middleware('auth');
 Route::get('/export/{year}',[\App\Http\Controllers\ExportController::class,'export'])->name('export')->middleware(['auth']);
@@ -68,4 +69,7 @@ Route::get('/getCategoriesBySubBasket', [\App\Http\Controllers\CapexInvestmentCo
 Route::get('/getProjectByOperationArea', [\App\Http\Controllers\ProjectController::class, 'getProjectByOperation'])->middleware(['auth']);
 Route::get('/getProjectByOperationSubmitted', [\App\Http\Controllers\ProjectController::class, 'getProjectByOperationSubmitted'])->middleware(['auth']);
 
+Route::post('upload',[\App\Http\Controllers\DocumentController::class,'store'])->name('upload')->middleware(['auth']);
+Route::put('upload/update',[\App\Http\Controllers\DocumentController::class,'update'])->name('update')->middleware(['auth']);
+Route::delete('upload/cancel', [\App\Http\Controllers\DocumentController::class, 'cancel'])->name('cancel')->middleware(['auth']);
 require __DIR__.'/auth.php';

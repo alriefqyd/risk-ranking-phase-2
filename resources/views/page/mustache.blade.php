@@ -31,6 +31,7 @@
                     <input id="checkbox-@{{ code }}"
                            data-id="@{{ id }}"
                            value="@{{ id }}"
+                           name="checkbox_sub_basket"
                            class="js-checkbox-margin js-checkbox-open-sub-basket"
                            type="checkbox">
                     <label for="checkbox-@{{ code }}">@{{ name }}<br></label>

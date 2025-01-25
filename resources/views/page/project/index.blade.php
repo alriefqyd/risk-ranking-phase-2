@@ -135,21 +135,21 @@
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead class="bg-primary">
-                                <tr class="text-center f-12">
-                                    <th scope="col">Priority Level</th>
-                                    {{--<th scope="col" >Project No</th>--}}
+                                <tr class="f-12">
+                                    <th scope="col" >Project Number</th>
                                     <th scope="col" >Project Name</th>
                                     <th scope="col">Owner Area</th>
                                     <th scope="col">Sponsor</th>
+                                    <th scope="col">BC Originator</th>
                                     <th scope="col">Note</th>
                                     @can('delete')
                                         <th scope="col">Action</th>
                                     @endcan
-                                    @if(auth()->user()->role === 'Administrator')
-                                        <th>
-                                            Duplicate
-                                        </th>
-                                    @endif
+{{--                                    @if(auth()->user()->role === 'Administrator')--}}
+{{--                                        <th>--}}
+{{--                                            Duplicate--}}
+{{--                                        </th>--}}
+{{--                                    @endif--}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -157,11 +157,8 @@
                                     @foreach($projectList as $project)
                                         <tr>
                                             <td>
-                                                {!! $project?->getPriorityTemplate($project?->business_case?->riskAssessment?->priority_level)!!}
-                                            </td>
-                                            {{--<td>
                                                 {{$project->project_number ?: '-'}}
-                                            </td>--}}
+                                            </td>
                                             <td>
                                                 <a href="/project/{{$project->id}}">
                                                     <p class="alert-color-green">{{$project->project_name}}</p>
@@ -169,6 +166,7 @@
                                             </td>
                                             <td>{{$project->ownersProject?->name ?? $project->getOldDepartment($project->owner)}}</td>
                                             <td>{{$project?->sponsorsProject?->name ?? $project->getOldDepartment($project->sponsor)}}</td>
+                                            <td>{{$project?->bc_originator}}</td>
                                             <td>
                                                 <a data-bs-toggle="modal"
                                                    class="modal-note"
@@ -190,18 +188,18 @@
                                                     </a>
                                                 </td>
                                             @endcan
-                                            @if(auth()->user()->role !== 'Viewer' && auth()->user()->role !== 'Admin Department')
-                                                <td>
-                                                    <button class="example-popover btn" data-bs-trigger="hover" data-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="" data-offset="-20px -20px" data-bs-original-title="Duplicate">
-                                                        <a class="js-duplicate-project" data-bs-toggle="modal" data-original-title="test"
-                                                           data-id="{{$project->id}}"
-                                                           data-bs-target="#projectDuplicate">
-                                                                <i class="cursor-pointer" style="color: #246a5d" data-feather="copy"></i>
-                                                        </a>
-                                                    </button>
-                                                </span>
-                                            </td>
-                                            @endif
+{{--                                            @if(auth()->user()->role !== 'Viewer' && auth()->user()->role !== 'Admin Department')--}}
+{{--                                                <td>--}}
+{{--                                                    <button class="example-popover btn" data-bs-trigger="hover" data-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="" data-offset="-20px -20px" data-bs-original-title="Duplicate">--}}
+{{--                                                        <a class="js-duplicate-project" data-bs-toggle="modal" data-original-title="test"--}}
+{{--                                                           data-id="{{$project->id}}"--}}
+{{--                                                           data-bs-target="#projectDuplicate">--}}
+{{--                                                                <i class="cursor-pointer" style="color: #246a5d" data-feather="copy"></i>--}}
+{{--                                                        </a>--}}
+{{--                                                    </button>--}}
+{{--                                                </span>--}}
+{{--                                            </td>--}}
+{{--                                            @endif--}}
                                         </tr>
                                     @endforeach
                                 @else

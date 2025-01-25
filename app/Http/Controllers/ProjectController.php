@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Events\Sending;
 use App\Models\Assessment;
-use App\Models\BusinessCaseAssessment;
 use App\Models\CapexInvestment;
 use App\Models\Criteria;
-use App\Models\CriteriasProjects;
 use App\Models\Department;
 use App\Models\Project;
+use App\Models\RevisionLog;
 use App\Models\RiskAssessments;
 use App\Models\Setting;
 use App\Notifications\ProjectNote;
@@ -25,6 +24,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
@@ -102,18 +102,21 @@ class ProjectController extends Controller
         }
         $projectService = new ProjectService();
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
+        $directorate = $projectService->getDepartment(Department::TYPE['directorate'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
         /*$capexCategories =  CapexInvestment::with('basket.subBasket.categories')->where('type','CAPEX_INVESTMENT')->get();*/
         $basketList = CapexInvestment::where('type','INVESTMENT_TYPE')->where('status','ACTIVE')->get();
-
+        $initialProjectNo = $projectService->generateProjectNumber();
         return view('page.project.create',[
             'projectCategory' => $this->projectCategory,
             'projectType' => $this->projectType,
             'department' => $department,
+            'directorate' => $directorate,
             'subDepartment' => $subDepartment,
             'userDepartment' => $this->userDepartment,
             'basketList' => $basketList,
-            'project' => null
+            'project' => null,
+            'initialProjectNo' => $initialProjectNo,
         ]);
     }
 
@@ -126,55 +129,132 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create');
-        if(auth()->user()->role == User::ROLE['admin-dept']){
-             abort(401);
+
+        if (auth()->user()->role == User::ROLE['admin-dept']) {
+            abort(401);
         }
+
+        $projectService = new ProjectService();
+
         DB::beginTransaction();
-        $data = $this->validate($request,[
-            'project_name' => 'required',
-            'operation_area' => 'required',
-            'sponsor_area' => 'required',
-            'owner' => 'required',
-            'project_sponsor' => 'required',
-            'maintenance_reps' => 'required',
-            'operation_reps' => 'required',
-            'bc_presenter' => 'required',
-            'fel_123_project_ref' => 'required',
-        ]);
 
-        try{
-            $currentDate = new \DateTime();
-            $october1st = new \DateTime(date('Y') . '-10-01');
+        try {
+            // Validate the request
+            $data = $this->validate($request, [
+                'project_name' => 'required',
+                'project_number' => [
+                    'required',
+                    Rule::unique('projects')->where('deleted_at', null)
+                ],
+                'operation_area' => 'required',
+                'sponsor_area' => 'required',
+                'owner' => 'required',
+                'project_sponsor' => 'required',
+                'bc_presenter' => 'required',
+                'bc_originator' => 'required',
+                'email_pic' => 'required',
+                'kpi_description' => 'required|array',
+                'kpi_description.*' => 'required|string',
+                'kpi_benefit' => 'required|array',
+                'kpi_benefit.*' => 'required|string',
+            ]);
 
-            if ($currentDate > $october1st) {
-                $presented_year = $currentDate->format('Y') + 1;
-            } else {
-                $presented_year = $currentDate->format('Y');
-            }
-
-            $project = new Project([
+            // Create the project
+            $project = Project::create([
+                'project_number' => $request->project_number,
                 'project_name' => $request->project_name,
                 'operation_area' => $request->operation_area,
                 'sponsor_area' => $request->sponsor_area,
                 'owner' => $request->owner,
                 'sponsor' => $request->project_sponsor,
-                'maintenance_reps' => $request->maintenance_reps,
-                'operation_reps' => $request->operation_reps,
+                'directorate' => $request->directorate,
                 'bc_presenter' => $request->bc_presenter,
+                'bc_originator' => $request->bc_originator,
                 'bc_status' => $request->bc_status,
-                'fel_123_project_ref' => $request->fel_123_project_ref,
                 'note' => $request->note,
                 'finance_analyst' => $request->finance_analyst,
+                'email_pic' => $request->email_pic,
                 'basket' => $request->basket,
                 'sub_basket' => $request->sub_basket,
                 'sub_basket_categories' => $request->sub_basket_categories,
-                'presented_year' => $presented_year,
-                'created_by' => Auth::user()->id
+                'presented_year' => now()->year,
+                'created_by' => auth()->id(),
+                'version' => $request->status == 'PUBLISH' ? 1 : 0
             ]);
 
+            $kpiData = [];
+            foreach ($request->kpi_description as $index => $description) {
+                $kpiData[] = [
+                    'description' => $description,
+                    'time_to_benefit' => $request->kpi_benefit[$index] ?? null,
+                ];
+            }
 
-            $project->saveOrFail();
+            // Create the business case
+            $businessCase = $project->business_case()->create([
+                'problem_statement_and_objective_text' => $request->problem_statement,
+                'objective' => $request->objective,
+                'project_scope_of_work_text' => $request->scope_of_work,
+                'npv' => $request->npv,
+                'irr' => $request->irr,
+                'payback_period' => $request->payback_period,
+                'tco' => $request->tco,
+                'cost_estimate' => $request->cost_estimate,
+                'created_by' => auth()->id(),
+                'kpi_summary' => json_encode($kpiData),
+            ]);
+
+            // Create the risk assessment
+            $businessCase->riskAssessment()->create([
+                'risk_level_residual' => $request->risk_level_residual,
+                'risk_level_forecast' => $request->risk_level_forecast,
+                'risk_level_deduction' => $request->risk_deduction,
+            ]);
+
+            $att = $projectService->uploadFilepond($request, $project);
+
+            $businessCase->attachment = json_encode($att);
+            $businessCase->status = $request->status ?? 'DRAFT';
+            if($businessCase->status == 'PUBLISH'){
+                RevisionLog::create([
+                    'revision' => 1,
+                    'date' => now(),
+                    'project_id' => $project->id,
+                    'summary_of_changes' => json_encode([
+                        ['field' => 'cost_estimate', 'oldValue' => 0, 'newValue' => $request?->cost_estimate],
+                        ['field' => 'project_name', 'oldValue' => "-", 'newValue' => $request?->project_name],
+                        ['field' => 'directorate', 'oldValue' => "-", 'newValue' => $request?->directorate],
+                        ['field' => 'operation_area', 'oldValue' => "-", 'newValue' => $request?->operation_area],
+                        ['field' => 'sponsor_area', 'oldValue' => "-", 'newValue' => $request?->sponsor_area],
+                        ['field' => 'bc_presenter', 'oldValue' => "-", 'newValue' => $request?->bc_presenter],
+                        ['field' => 'bc_originator', 'oldValue' => "-", 'newValue' => $request?->bc_originator],
+                        ['field' => 'finance_analyst', 'oldValue' => "-", 'newValue' => $request?->finance_analyst],
+                        ['field' => 'email_pic', 'oldValue' => "-", 'newValue' => $request?->email_pic],
+                        ['field' => 'checkbox_basket', 'oldValue' => "-", 'newValue' => $request?->checkbox_basket],
+                        ['field' => 'checkbox_sub_basket', 'oldValue' => "-", 'newValue' => $request?->checkbox_basket],
+                        ['field' => 'problem_statement', 'oldValue' => "-", 'newValue' => $request?->problem_statement],
+                        ['field' => 'objective', 'oldValue' => "-", 'newValue' => $request?->objective],
+                        ['field' => 'scope_of_work', 'oldValue' => "-", 'newValue' => $request?->scope_of_work],
+                        ['field' => 'npv', 'oldValue' => "-", 'newValue' => $request?->npv],
+                        ['field' => 'irr', 'oldValue' => "-", 'newValue' => $request?->irr],
+                        ['field' => 'payback_period', 'oldValue' => "-", 'newValue' => $request?->payback_period],
+                        ['field' => 'tco', 'oldValue' => "-", 'newValue' => $request?->tco],
+                        ['field' => 'risk_level_residual', 'oldValue' => "-", 'newValue' => $request?->risk_level_residual],
+                        ['field' => 'risk_level_forecast', 'oldValue' => "-", 'newValue' => $request?->risk_level_forecast],
+                        ['field' => 'risk_deduction', 'oldValue' => "-", 'newValue' => $request?->risk_deduction],
+                    ]),
+                ]);
+            }
+            $businessCase->save();
+
             DB::commit();
+
+            if($request->status == "PUBLISH"){
+                return response()->json([
+                    'success' => true,
+                    'id' => $project->id,
+                ]);
+            }
             $request->session()->flash('alert-success', 'Project was saved');
             return redirect('project/'.$project->id);
 
@@ -184,18 +264,19 @@ class ProjectController extends Controller
         }
     }
 
-    public function edit(Project $project, Request $request){
+
+    public function show(Project $project, Request $request){
         /**temporary disabled**/
-//        if(auth()->user()->role == User::ROLE['admin-dept']){
-//            abort(401);
-//        }
+        /*if(auth()->user()->role == User::ROLE['admin-dept']){
+            abort(401);
+        }*/
 
         $this->authorize('read');
         $projectService = new ProjectService();
         $maturityService = new MaturityService();
-//        if($projectService->projectNotAuthorized($project)){
-//            abort(404);
-//        }
+        /*if($projectService->projectNotAuthorized($project)){
+            abort(404);
+        }*/
 
 
         $settingService = new SettingService();
@@ -204,6 +285,7 @@ class ProjectController extends Controller
 
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
+        $directorate = $projectService->getDepartment(Department::TYPE['directorate'],null);
 
         $complexityScore = Assessment::COMPLEXITY_SCORE;
         $riskLevel = RiskAssessments::NEW_SEVERITY;
@@ -223,10 +305,17 @@ class ProjectController extends Controller
             })->get();
         }
 
+        $kpiData = json_decode($project->business_case->kpi_summary ?? "", true);
 
         $basketList = CapexInvestment::where('type','INVESTMENT_TYPE')->where('status','ACTIVE')->get();
+        $subBasketList = CapexInvestment::where('type','INVESTMENT_SUB_TYPE')->where('status','ACTIVE')->where('parent_id', $project->basket)->get();
 
-        return view('page.project.detail',[
+        $logs = RevisionLog::where('project_id', $project->id)->get();
+        $viewTemplate = 'page.project.detail';
+        if($project->presented_year == now()->year) {
+            $viewTemplate = 'page.project.new_detail';
+        }
+        return view($viewTemplate,[
             'project' => $project,
             'projectCategory' => $this->projectCategory,
             'projectType' => $this->projectType,
@@ -244,7 +333,11 @@ class ProjectController extends Controller
             'maturityOption' => Setting::MATURITY_VALUE,
             'criterias' => $criteria,
             'basketList' => $basketList,
-            'investmentStrategyList' => $investmentStrategyList
+            'subBasketList' => $subBasketList,
+            'investmentStrategyList' => $investmentStrategyList,
+            'kpiData' => $kpiData ?? [],
+            'directorate' => $directorate,
+            'logs' => $logs,
         ]);
     }
     /**
@@ -272,70 +365,175 @@ class ProjectController extends Controller
 
 
         if(!$request->isQuickUpdate){
-            $data = $this->validate($request,[
+            $data = $this->validate($request, [
                 'project_name' => 'required',
+                'project_number' => [
+                    'required',
+                    Rule::unique('projects')
+                        ->ignore($project->id) // Ignore the current record being updated
+                        ->whereNull('deleted_at') // Ensure deleted_at is null
+                ],
                 'operation_area' => 'required',
                 'sponsor_area' => 'required',
                 'owner' => 'required',
+                'directorate' => 'required',
                 'project_sponsor' => 'required',
-                'maintenance_reps' => 'required',
-                'operation_reps' => 'required',
                 'bc_presenter' => 'required',
-                'fel_123_project_ref' => 'required',
+                'bc_originator' => 'required',
+                'email_pic' => 'required',
+                'kpi_description' => 'required|array',
+                'kpi_description.*' => 'required|string',
+                'kpi_benefit' => 'required|array',
+                'kpi_benefit.*' => 'required|string',
             ]);
         }
 
 
         DB::beginTransaction();
         try{
-            if($request->has('note')) {
-                $pn = new ProjectNote(null);
-                $project->note = $request->note;
-                DB::table('notifications')->where('project_id',$project->id)
-                    ->where('notifiable_id',$project->created_by)
-                    ->where('type',get_class($pn))
-                    ->whereNull('read_at')->delete();
-                event(new Sending($project));
-            }
-            if($request->has('bc_status')) $project->bc_status = $request->bc_status;
+                if($request->has('note')) {
+                    $pn = new ProjectNote(null);
+                    $project->note = $request->note;
+                    DB::table('notifications')->where('project_id',$project->id)
+                        ->where('notifiable_id',$project->created_by)
+                        ->where('type',get_class($pn))
+                        ->whereNull('read_at')->delete();
+                    event(new Sending($project));
+                }
+                if($request->has('bc_status')) $project->bc_status = $request->bc_status;
 
-            $projectService = new ProjectService();
-            $projectService->updateBudgetToolCriteria($project, $request);
+                $projectService = new ProjectService();
+                /*$projectService->updateBudgetToolCriteria($project, $request);*/
 
-            if(!$request->isQuickUpdate){
-                $project->project_name = $request->project_name;
-                $project->operation_area = $request->operation_area;
-                $project->sponsor_area = $request->sponsor_area;
-                $project->owner = $request->owner;
-                $project->sponsor = $request->project_sponsor;
-                $project->maintenance_reps = $request->maintenance_reps;
-                $project->operation_reps = $request->operation_reps;
-                $project->bc_presenter = $request->bc_presenter;
-                $project->fel_123_project_ref = $request->fel_123_project_ref;
-                $project->basket = $request->basket;
-                $project->sub_basket = $request->sub_basket;
-                $project->sub_basket_categories = $request->sub_basket_categories;
-                $project->project_category = $request->project_category;
-                $project->finance_analyst = $request->finance_analyst;
-            }
+                if(!$request->isQuickUpdate){
+                    $project->project_name = $request->project_name;
+                    $project->operation_area = $request->operation_area;
+                    $project->sponsor_area = $request->sponsor_area;
+                    $project->owner = $request->owner;
+                    $project->sponsor = $request->project_sponsor;
+                    $project->directorate = $request->directorate;
+                    $project->bc_presenter = $request->bc_presenter;
+                    $project->bc_originator = $request->bc_originator;
+                    $project->bc_status = $request->bc_status;
+                    $project->finance_analyst = $request->finance_analyst;
+                    $project->email_pic = $request->email_pic;
+                    $project->basket = $request->basket;
+                    $project->sub_basket = $request->sub_basket;
+                    $project->sub_basket_categories = $request->sub_basket_categories;
 
-            $project->save();
-            DB::commit();
+                    $businessCase = $project?->business_case;
+                    $kpiData = [];
+                    foreach ($request->kpi_description as $index => $description) {
+                        $kpiData[] = [
+                            'description' => $description,
+                            'time_to_benefit' => $request->kpi_benefit[$index] ?? null,
+                        ];
+                    }
 
-            if(Storage::exists($path)){
-                rename(Storage::path($path),Storage::path('documents/'.$project->project_name));
-            }
+                    $businessCase->problem_statement_and_objective_text = $request->problem_statement;
+                    $businessCase->objective = $request->objective;
+                    $businessCase->project_scope_of_work_text = $request->scope_of_work;
+                    $businessCase->npv = $request->npv;
+                    $businessCase->irr = $request->irr;
+                    $businessCase->payback_period = $request->payback_period;
+                    $businessCase->tco = $request->tco;
+                    $businessCase->cost_estimate = $request->cost_estimate;
+                    $businessCase->kpi_summary = json_encode($kpiData);
+
+                    $att = $projectService->uploadFilepond($request, $project);
+
+                    $businessCase->attachment = json_encode($att);
+                    $businessCase->save();
+
+                    $riskAssessment = $businessCase->riskAssessment;
+                    $riskAssessment->risk_level_residual = $request->risk_level_residual;
+                    $riskAssessment->risk_level_forecast = $request->risk_level_forecast;
+                    $riskAssessment->risk_level_deduction = $request->risk_deduction;
+
+                    // check if this update is publish
+                    // if yes save log with version
+                    // check if version is 1 by look into $project->version (current version) + 1
+                    // if yes save into log with revision 1
+                    // if not first version up 1 then save with revision 2 and so on
+
+                    $riskAssessment->save();
+                    $currentVersion = $project->version + 1;
+
+                    if ($request->status == 'PUBLISH') {
+                        // Fields to track changes
+                        $fieldsToTrack = [
+                            'cost_estimate', 'project_name', 'directorate', 'operation_area', 'sponsor_area',
+                            'bc_presenter', 'bc_originator', 'finance_analyst', 'email_pic', 'checkbox_basket',
+                            'checkbox_sub_basket', 'problem_statement', 'objective', 'scope_of_work', 'npv',
+                            'irr', 'payback_period', 'tco', 'risk_level_residual', 'risk_level_forecast',
+                            'risk_deduction'
+                        ];
+                        $logArray = [];
+
+                        if ($project->version >= 1) {
+                            // Fetch the old version log
+                            $oldVersionLog = RevisionLog::where('project_id', $project->id)
+                                ->where('revision', $project->version)
+                                ->first();
+
+                            // Decode the old version data, if available
+                            $oldVersionData = $oldVersionLog ? json_decode($oldVersionLog->summary_of_changes, true) : [];
+                            foreach ($fieldsToTrack as $field) {
+                                foreach ($oldVersionData as $oldLog) {
+                                    if($oldLog['field'] == $field) {
+                                            $logArray[] = [
+                                                'field' => $field,
+                                                'newValue' => $request->$field,
+                                                'oldValue' => $oldLog['newValue'],
+                                            ];
+                                    }
+                                }
+                            }
+                        } else {
+                            // First-time publish, log initial values
+                            foreach ($fieldsToTrack as $field) {
+                                $logArray[] = [
+                                    'field' => $field,
+                                    'oldValue' => null,
+                                    'newValue' => $request->input($field, null),
+                                ];
+                            }
+                        }
+
+                        if (!empty($logArray)) {
+                            // Create a new revision log
+                            RevisionLog::create([
+                                'revision' => $currentVersion,
+                                'date' => now(),
+                                'project_id' => $project->id,
+                                'summary_of_changes' => json_encode($logArray),
+                            ]);
+
+                            // Update the project version
+                            $project->version = $currentVersion;
+                            $project->save();
+                        }
+                    }
+                }
+
+                $project->save();
+                DB::commit();
+
+                if(Storage::exists($path)){
+                    rename(Storage::path($path),Storage::path('documents/'.$project->project_name));
+                }
 
         } catch(Exception $e){
             DB::rollback();
             if($request->ajax()) return response()->json($e->getMessage());
-            return redirect('project/create')->withErrors($e->getMessage());
+            return redirect('project/'.$project->id)->withErrors($e->getMessage());
         }
 
         if($request->ajax()){
             return response()->json([
                 'status' => 200,
-                'message' => 'Data Successfully Updated'
+                'message' => 'Data Successfully Updated',
+                'id' => $project->id
             ]);
         }
 

@@ -401,9 +401,13 @@ $(function() {
     /**
      * TinyMce
      */
-
     tinymce.init({
         selector: '.tinymce',
+        setup: function (editor) {
+            editor.on('change', function () {
+                tinymce.triggerSave(); // Updates the underlying textarea
+            });
+        },
         plugins: 'table image fullscreen lists',
         toolbar: 'fullscreen | undo redo | fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
         tinycomments_mode: 'embedded',
@@ -1902,6 +1906,20 @@ $(function() {
         }
     })
 
+    $(document).on('change', '.js-checkbox-kpi-fel3', function(){
+            var _this = $(this);
+            var _row_kpi = _this.closest('.js-row-kpi').find('tr');
+            if(_this.is(':checked')){
+                $('.js-table-kpi').removeClass('d-none');
+                if(_row_kpi.length < 1){
+                    $('.js-table-kpi').find('tbody').append(rowKpiTemp())
+                }
+            } else {
+                $('.js-table-kpi').addClass('d-none');
+                _row_kpi.remove();
+            }
+        })
+
     function rowScheduleTemp(){
         var _temp = ' <tr class="js-table-row-schedule" data-idx="0">\n' +
             '              <td class="w-25">\n' +
@@ -1922,18 +1940,56 @@ $(function() {
         return _temp;
     }
 
+    function rowKpiTemp(){
+         return '<tr class="js-table-row-kpi" data-idx="0">\n' +
+             '                    <td>\n' +
+             '                        <input class="form-control js-kpi-desc" name="kpi_description[]">\n' +
+             '                    </td>\n' +
+             '                    <td>\n' +
+             '                        <select name="kpi_benefit[]" class="form-control select2 js-kpi-time-benefit">\n' +
+             '                            <option>0 - 1 Year</option>\n' +
+             '                            <option>1 - 2 years</option>\n' +
+             '                            <option>2 - 3 years</option>\n' +
+             '                            <option>3 - 4 years</option>\n' +
+             '                            <option>4 - 5 years</option>\n' +
+             '                            <option>5+ years</option>\n' +
+             '                        </select>\n' +
+             '                    </td>\n' +
+             '                    <td>\n' +
+             '                    <td>\n' +
+             '                        <span class="btn btn-sm btn-danger js-remove-kpi-fel3">\n' +
+             '                            <i class="fa fa-trash"></i>\n' +
+             '                        </span>\n' +
+             '                        <span class="btn btn-sm btn-success js-add-new-kpi-fel3">\n' +
+             '                            <i class="fa fa-plus"></i>\n' +
+             '                        </span>\n' +
+             '                    </td>\n' +
+             '                </tr>'
+    }
+
 
     $(document).on('click', '.js-add-new-schedule-fel3', function(){
-        console.log("op")
         var _this = $(this);
-        _this.closest('tbody').append(rowScheduleTemp())
+        _this.closest('tbody').append(rowKpiTemp())
     })
 
 
-    $(document).on('click', '.js-remove-schedule-fel3', function(){
+    $(document).on('click', '.js-remove-kpi-fel3', function(){
         var _this = $(this)
-        if(_this.closest('tbody').find('.js-table-row-schedule').length > 1) _this.closest('tr').remove()
+        if(_this.closest('tbody').find('.js-table-row-kpi').length > 1) _this.closest('tr').remove()
     })
+
+    $(document).on('click', '.js-add-new-kpi-fel3', function(){
+            var _this = $(this);
+            _this.closest('tbody').append(rowKpiTemp())
+            _this.closest('tbody').find('.js-kpi-time-benefit:last').select2();
+     })
+
+
+        $(document).on('click', '.js-remove-schedule-kpi', function(){
+            var _this = $(this)
+            if(_this.closest('tbody').find('.js-table-row-kpi').length > 1) _this.closest('tr').remove()
+        })
 
 
     $('.js-fel3-form').validate({
@@ -2602,13 +2658,12 @@ $(function() {
 
         disabledSubBasket(_this.data('id'), true)
         if(_this.is(':checked')){
-            $('.js-modal-loading').modal('show')
+            // $('.js-modal-loading').modal('show')
             $('.js-hidden-sub-basket').val(_subBasket);
-            renderCategories(_subBasket, false)
+            // renderCategories(_subBasket, false)
         } else {
             disabledSubBasket(_this.data('id'), false)
-            $('.js-text-validation-basket').text('* Please select sub type')
-            $('.js-button-investment_category').attr('disabled','disabled');
+            // $('.js-button-investment_category').attr('disabled','disabled');
             $('.js-checkbox-categories-item').remove();
             $('.js-hidden-sub-basket').val('');
             $('.js-hidden-sub_basket_categories').val('');
@@ -2624,7 +2679,6 @@ $(function() {
             url:'/getSubBasketByBasket',
             data: {basket:_basket},
             success:function(data){
-            console.log(data)
                 if(data.length < 1){
                     $('.js-button-investment_category').removeAttr('disabled');
                     $('.js-text-validation-basket').text('')
@@ -2633,7 +2687,6 @@ $(function() {
                 }
 
 
-                $('.js-text-validation-basket').text('* Please select sub type')
                 var template = $('#js-template-capex-investment').html();
                 Mustache.parse(template);
                 var data = {
@@ -2652,7 +2705,7 @@ $(function() {
                     $('.js-checkbox-open-sub-basket').removeAttr('disabled');
                 }
             }
-        })
+        });
     }
     function renderCategories(_subBasket, isEdit){
         if(_subBasket === null){
@@ -2783,7 +2836,6 @@ $(function() {
      * Handle Project Form
      */
 
-
     $('#projectDuplicate').on('shown.bs.modal', function (e) {
         var relatedTarget = $(e.relatedTarget)
         var _id = relatedTarget.data('id');
@@ -2828,32 +2880,147 @@ $(function() {
     var _project_form = $('.js-project-form')
     _project_form.validate({
         rules:{
+            project_name:{
+                required: true
+            },
+            operation_area:{
+                required:true
+            },
+            sponsor_area:{
+                required:true
+            },
+            directorate:{
+                required:true
+            },
+            bc_presenter:{
+                required:true
+            },
+            bc_originator:{
+                required:true
+            },
+            email_pic:{
+                required:true
+            },
             checkbox_basket:{
                 required: true
             },
             checkbox_sub_basket: {
-                required : {
-                    depends:function (element){
-                        var _this = null
-                        if($(this).data('idx') == 0){
-                            _this = $(this)
+                required : true
+            },
+            problem_statement:{
+                required: true,
+            },
+            objective:{
+                required:true
+            },
+            scope_of_work:{
+                required:true
+            },
+            cost_estimate:{
+                required:true
+            },
+            financial_evaluation:{
+                required: {
+                    depends: function () {
+                        if ($('.js-attachment-financial_evaluation').attr('data-val') == "") {
+                            return true;
                         }
-                        if(_this) return _this.closest('.js-basket-list-detail').find('.js-checkbox-open-bucket').is(':checked');
+                        return false;
                     }
                 }
+            },
+            risk_assessment:{
+                required:true
+            },
+            business_case:{
+                required:true
             }
+
+
         },
         messages:{
+            project_name:{
+                required:"Project Name cannot be blank"
+            },
+            checkbox_basket: {
+                required: "You must select project type."
+            },
             checkbox_sub_basket:{
-                required:"Sub Basket is Required"
+                required:"You must select project sub type"
+            },
+            problem_statement:{
+                required:"Problem statement cannot be blank"
+            },
+            financial_evaluation:{
+                required:"Attachment of the financial evaluation approved document is mandatory"
+            },
+            risk_assessment:{
+                required:"Attachment of the risk assessment approved document is mandatory"
+            },
+            business_case:{
+                required:"Attachment of the business case approved document is mandatory"
             }
         },
-        errorPlacement:function(error, element){
-            if(element.hasClass('js-checkbox-sub-basket')){
-                element.closest('.js-sub-basket-list').siblings('.js-sub-basket-error').append(error)
+        errorPlacement: function (error, element) {
+            if(element.hasClass('js-checkbox-open-bucket')){
+                element.closest('.js-checkbox-basket-list').find('.js-error-project-type').append(error);
+            } else if (element.hasClass('js-checkbox-open-sub-basket')) {
+                element.closest('.js-checkbox-sub-basket-list').find('.js-error-project-type').append(error);
+            } else if (element.hasClass('tinymce')){
+                element.siblings('.js-error-message').append(error);
+            } else if (element.hasClass('filepond--browser')){
+                error.insertAfter(element.closest('.filepond'));
+            } else {
+                console.log(element);
+                error.insertAfter(element);
             }
+
+        },
+        ignore: [], // Do not ignore hidden fields (important for TinyMCE)
+    });
+
+    $(document).on('click', '.js-confirm-publish', function () {
+        var form = $('.js-project-form'); // Reference your form
+        if (_project_form.valid()) {
+            var formData = new FormData(form[0]);
+
+            // Append status or other data if needed
+            formData.append('status', 'PUBLISH');
+
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    notification('success', 'Project successfully publish', 'fa fa-time', 'success')
+                    window.location.href = '/project/'+ response.id;
+                },
+                error: function (error) {
+                    notification('danger','Project Error','','error');
+                },
+            });
+
+            // Close the modal
+            $('#modal-confirm').modal('hide');
+
+        } else {
+            $('#modal-confirm').modal('hide');
+            $('html, body').animate({ scrollTop: $('.error:visible:first').offset().top - 100 }, 500);
         }
-    })
+    });
+
+    $('.js-btn-edit-bc').on('click', function(){
+       $('.js-bc-detail').addClass('d-none');
+       $('.js-bc-form').removeClass('d-none');
+    });
+
+    $('.js-btn-cancel-edit-bc').on('click', function(){
+        $('.js-bc-detail').removeClass('d-none');
+        $('.js-bc-form').addClass('d-none');
+    });
+
 
     /**
      * Notification

@@ -17,7 +17,8 @@
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
         "mckenziearts/laravel-notify": "^2.3",
-        "psr/simple-cache": "2.0"
+        "psr/simple-cache": "2.0",
+        "sopamo/laravel-filepond": "^1.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
