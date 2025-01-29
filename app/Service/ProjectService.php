@@ -542,7 +542,7 @@ class ProjectService
         }
 
         // Format the number as 'C000001', 'C000002', etc.
-        return 'C' . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+        return 'C' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
     }
 
 
@@ -621,8 +621,8 @@ class ProjectService
             }
 
             // Update the `business_case_attachment` column in the database
-            $project->business_case->attachment = $att->toJson();
-            $project->save();
+//            $project->business_case->attachment = $att->toJson();
+//            $project->save();
 
             // Delete the temporary directory and its records
             Storage::deleteDirectory($tempDir);

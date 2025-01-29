@@ -31,6 +31,9 @@
 <script src="{{asset('assets/jquery-validation/dist/jquery.validate.min.js')}}"></script>
 <script src="{{asset('assets/tinymce/tinymce.min.js')}}"></script>
 <script src="{{asset('assets/js/form-wizard/form-wizard.js')}}"></script>
+{{--<script src="{{asset('assets/js/sweet-alert/sweetalert.min.js')}}"></script>--}}
+<script src="{{asset('assets/js/sweet-alert/app.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {{--<script src="https://cdn.tiny.cloud/1/v40ov1kx8ufxesasyu8imd5a9bl5h6vvi7iulph996cjgrtb/tinymce/6/plugins.min.js" referrerpolicy="origin"></script>--}}
 <script src="{{asset('assets/js/application.js')}}"></script>
 <!-- Plugins JS Ends-->

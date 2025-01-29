@@ -48,21 +48,6 @@
     </div>
 
     <div class="mb-4">
-        <label for="additionalFile" class="form-label fw-bold">Cost Estimate With Rough of Magnitude 15-20%</label>
-        <input type="file" class="filepond" name="cost_estimate_file" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'cost_estimate_file')}}" id="file">
-        @if($project?->getAllAttachment($project->business_case?->attachment,'cost_estimate_file'))
-            <div class="mt-2">
-                <a
-                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project->getAllAttachment($project->business_case?->attachment,'cost_estimate_file'))}}"
-                    target="_blank"
-                    class="text-decoration-none">
-                    <i class="fa fa-file-text-o text-info"></i> View Existing Attachment
-                </a>
-            </div>
-        @endif
-    </div>
-
-    <div class="mb-4">
         <label for="additionalFile" class="form-label fw-bold">Quotation of Equipment / Site Query</label>
         <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'quotation_of_equipment')}}" name="quotation_of_equipment" id="file">
         @if($project?->getAllAttachment($project->business_case?->attachment,'quotation_of_equipment'))
@@ -91,36 +76,10 @@
             </div>
         @endif
     </div>
+
+
     <div class="mb-4">
-        <label for="additionalFile" class="form-label fw-bold">Financial Evaluation Approved</label>
-        <input type="file" class="filepond js-attachment-financial_evaluation" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'financial_evaluation')}}" name="financial_evaluation" id="file">
-        @if($project?->getAllAttachment($project->business_case?->attachment,'financial_evaluation'))
-            <div class="mt-2">
-                <a
-                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project->getAllAttachment($project->business_case?->attachment,'financial_evaluation'))}}"
-                    target="_blank"
-                    class="text-decoration-none">
-                    <i class="fa fa-file-text-o text-info"></i> View Existing Attachment
-                </a>
-            </div>
-        @endif
-    </div>
-    <div class="mb-4">
-        <label for="additionalFile" class="form-label fw-bold">Risk Assessment Approved</label>
-        <input type="file" class="filepond" name="risk_assessment" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'risk_assessment')}}" id="file">
-        @if($project?->getAllAttachment($project->business_case?->attachment,'risk_assessment'))
-            <div class="mt-2">
-                <a
-                    href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project->getAllAttachment($project->business_case?->attachment,'risk_assessment'))}}"
-                    target="_blank"
-                    class="text-decoration-none">
-                    <i class="fa fa-file-text-o text-info"></i> View Existing Attachment
-                </a>
-            </div>
-        @endif
-    </div>
-    <div class="mb-4">
-        <label for="additionalFile" class="form-label fw-bold">BC Approved</label>
+        <label for="additionalFile" class="form-label fw-bold">Approved BC Form <span class="text-danger">*</span></label>
         <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}" name="business_case" id="file">
         @if($project?->getAllAttachment($project->business_case?->attachment,'business_case'))
             <div class="mt-2">
@@ -153,6 +112,10 @@
     }
 </style>
 @section('scripts')
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script>
+<script>
+    FilePond.registerPlugin(FilePondPluginFileValidateType);
+</script>
 <script>
     $(document).ready(function () {
         $('.filepond').each(function () {
@@ -204,11 +167,14 @@
                         ondata: function (formData, file) {
                             // Dynamically get the 'name' and other attributes from the current element
                             const currentTempFolder = $('.js-temp-folder').val(); // Adjust if the folder is form-specific
-                            console.log(currentTempFolder)
                             return formData;
                         },
                     },
                 },
+                // Restrict file types to PDF only
+                acceptedFileTypes: ['application/pdf'], // Only allow PDFs
+                labelFileTypeNotAllowed: 'Only PDF files are allowed.', // Custom error message
+                fileValidateTypeLabelExpectedTypes: 'Expected a PDF file', // Tooltip for validation
             });
 
             pond.on('removefile', (error, file) => {

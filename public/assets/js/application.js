@@ -403,6 +403,7 @@ $(function() {
      */
     tinymce.init({
         selector: '.tinymce',
+        height: 150,
         setup: function (editor) {
             editor.on('change', function () {
                 tinymce.triggerSave(); // Updates the underlying textarea
@@ -2908,7 +2909,7 @@ $(function() {
                 required : true
             },
             problem_statement:{
-                required: true,
+                required: true
             },
             objective:{
                 required:true
@@ -2917,6 +2918,18 @@ $(function() {
                 required:true
             },
             cost_estimate:{
+                required:true
+            },
+            npv:{
+                required:true
+            },
+            irr:{
+                required:true
+            },
+            payback_period:{
+                required:true
+            },
+            tco:{
                 required:true
             },
             financial_evaluation:{
@@ -2929,13 +2942,35 @@ $(function() {
                     }
                 }
             },
+            cost_estimate_file:{
+                required: {
+                    depends: function () {
+                        if ($('.js-attachment-cost_estimate').attr('data-val') == "") {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            },
             risk_assessment:{
-                required:true
+                required: {
+                    depends: function () {
+                        if ($('.js-attachment_risk_assessment').attr('data-val') == "") {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
             },
             business_case:{
                 required:true
+            },
+            kpi_description:{
+                required:true
+            },
+            preliminary_design:{
+                required:true
             }
-
 
         },
         messages:{
@@ -2959,6 +2994,9 @@ $(function() {
             },
             business_case:{
                 required:"Attachment of the business case approved document is mandatory"
+            },
+            preliminary_design:{
+                required:"Attachment of the preliminary design document is mandatory"
             }
         },
         errorPlacement: function (error, element) {
@@ -2983,7 +3021,7 @@ $(function() {
         var form = $('.js-project-form'); // Reference your form
         if (_project_form.valid()) {
             var formData = new FormData(form[0]);
-
+            $('.js-modal-loading').modal('show')
             // Append status or other data if needed
             formData.append('status', 'PUBLISH');
 
@@ -2994,8 +3032,24 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    notification('success', 'Project successfully publish', 'fa fa-time', 'success')
-                    window.location.href = '/project/'+ response.id;
+                    $('.js-modal-loading').modal('hide')
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Your business case : ' + response.title + ' was submit successfully.',
+                        icon: 'success', // Display the success icon
+                        confirmButtonText: 'OK', // Customize the button text
+                        buttonsStyling: false, // To match Viho styles
+                        customClass: {
+                            confirmButton: 'btn btn-success', // Add Viho button classes
+                        },
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to a new page
+                            window.location.href =  '/project/'+ response.id;;
+                        }
+                    });;
+                    // notification('success', 'Project successfully publish', 'fa fa-time', 'success')
+                    // window.location.href = '/project/'+ response.id;
                 },
                 error: function (error) {
                     notification('danger','Project Error','','error');
@@ -3020,6 +3074,7 @@ $(function() {
         $('.js-bc-detail').removeClass('d-none');
         $('.js-bc-form').addClass('d-none');
     });
+
 
 
     /**

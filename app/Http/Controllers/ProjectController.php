@@ -97,11 +97,12 @@ class ProjectController extends Controller
      * @return /View
      */
     public function create(){
-        if(auth()->user()->role == User::ROLE['admin-dept']){
+        /*if(auth()->user()->role == User::ROLE['admin-dept']){
             abort(401);
-        }
+        }*/
         $projectService = new ProjectService();
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
+
         $directorate = $projectService->getDepartment(Department::TYPE['directorate'],null);
         $subDepartment = $projectService->getDepartment(Department::TYPE['sub-department'],null);
         /*$capexCategories =  CapexInvestment::with('basket.subBasket.categories')->where('type','CAPEX_INVESTMENT')->get();*/
@@ -130,9 +131,9 @@ class ProjectController extends Controller
     {
         $this->authorize('create');
 
-        if (auth()->user()->role == User::ROLE['admin-dept']) {
+        /*if (auth()->user()->role == User::ROLE['admin-dept']) {
             abort(401);
-        }
+        }*/
 
         $projectService = new ProjectService();
 
@@ -242,6 +243,15 @@ class ProjectController extends Controller
                         ['field' => 'risk_level_residual', 'oldValue' => "-", 'newValue' => $request?->risk_level_residual],
                         ['field' => 'risk_level_forecast', 'oldValue' => "-", 'newValue' => $request?->risk_level_forecast],
                         ['field' => 'risk_deduction', 'oldValue' => "-", 'newValue' => $request?->risk_deduction],
+                        ['field' => 'business_case', 'oldValue' => "-", 'newValue' => $att->get('business_case')],
+                        ['field' => 'preliminary_design', 'oldValue' => "-", 'newValue' => $att->get('preliminary_design')],
+                        ['field' => 'hazop', 'oldValue' => "-", 'newValue' => $att->get('hazop')],
+                        ['field' => 'moc_document', 'oldValue' => "-", 'newValue' => $att->get('moc_document')],
+                        ['field' => 'cost_estimate_file', 'oldValue' => "-", 'newValue' => $att->get('cost_estimate_file')],
+                        ['field' => 'quotation_of_equipment', 'oldValue' => "-", 'newValue' => $att->get('quotation_of_equipment')],
+                        ['field' => 'lcc_report', 'oldValue' => "-", 'newValue' => $att->get('lcc_report')],
+                        ['field' => 'financial_evaluation', 'oldValue' => "-", 'newValue' => $att->get('financial_evaluation')],
+                        ['field' => 'risk_assessment', 'oldValue' => "-", 'newValue' => $att->get('risk_assessment')],
                     ]),
                 ]);
             }
@@ -253,6 +263,7 @@ class ProjectController extends Controller
                 return response()->json([
                     'success' => true,
                     'id' => $project->id,
+                    'title' => $project->project_name,
                 ]);
             }
             $request->session()->flash('alert-success', 'Project was saved');
@@ -363,7 +374,6 @@ class ProjectController extends Controller
             abort(404);
         }
 
-
         if(!$request->isQuickUpdate){
             $data = $this->validate($request, [
                 'project_name' => 'required',
@@ -441,34 +451,33 @@ class ProjectController extends Controller
                     $businessCase->kpi_summary = json_encode($kpiData);
 
                     $att = $projectService->uploadFilepond($request, $project);
-
-                    $businessCase->attachment = json_encode($att);
-                    $businessCase->save();
+                    $oldAtt = json_decode($project->business_case?->attachment, true);
 
                     $riskAssessment = $businessCase->riskAssessment;
                     $riskAssessment->risk_level_residual = $request->risk_level_residual;
                     $riskAssessment->risk_level_forecast = $request->risk_level_forecast;
                     $riskAssessment->risk_level_deduction = $request->risk_deduction;
 
-                    // check if this update is publish
-                    // if yes save log with version
-                    // check if version is 1 by look into $project->version (current version) + 1
-                    // if yes save into log with revision 1
-                    // if not first version up 1 then save with revision 2 and so on
-
                     $riskAssessment->save();
                     $currentVersion = $project->version + 1;
 
+                    // Fields to track changes
+                    $fieldsToTrack = [
+                        'cost_estimate', 'project_name', 'directorate', 'operation_area', 'sponsor_area',
+                        'bc_presenter', 'bc_originator', 'finance_analyst', 'email_pic', 'checkbox_basket',
+                        'checkbox_sub_basket', 'problem_statement', 'objective', 'scope_of_work', 'npv',
+                        'irr', 'payback_period', 'tco', 'risk_level_residual', 'risk_level_forecast',
+                        'risk_deduction','business_case','preliminary_design','hazop','moc_document','cost_estimate_file','quotation_of_equipment','lcc_report','financial_evaluation','risk_assessment'
+                    ];
+
+                    $attachments = [
+                        'business_case','preliminary_design','hazop','moc_document','cost_estimate_file','quotation_of_equipment','lcc_report','financial_evaluation','risk_assessment'
+                    ];
+
                     if ($request->status == 'PUBLISH') {
-                        // Fields to track changes
-                        $fieldsToTrack = [
-                            'cost_estimate', 'project_name', 'directorate', 'operation_area', 'sponsor_area',
-                            'bc_presenter', 'bc_originator', 'finance_analyst', 'email_pic', 'checkbox_basket',
-                            'checkbox_sub_basket', 'problem_statement', 'objective', 'scope_of_work', 'npv',
-                            'irr', 'payback_period', 'tco', 'risk_level_residual', 'risk_level_forecast',
-                            'risk_deduction'
-                        ];
+
                         $logArray = [];
+                        $changesArray = [];
 
                         if ($project->version >= 1) {
                             // Fetch the old version log
@@ -478,35 +487,56 @@ class ProjectController extends Controller
 
                             // Decode the old version data, if available
                             $oldVersionData = $oldVersionLog ? json_decode($oldVersionLog->summary_of_changes, true) : [];
+                            // Decode business_case_attachment to get the array
+                            $businessCaseAttachment = json_decode($project->business_case->attachment, true);
+
                             foreach ($fieldsToTrack as $field) {
                                 foreach ($oldVersionData as $oldLog) {
                                     if($oldLog['field'] == $field) {
-                                            $logArray[] = [
+                                        $newValue = $request->$field;
+                                        if(in_array($field, $attachments)) {
+                                            $newValue = $att->get($field);
+                                        }
+
+                                        if ($oldLog['newValue'] != $newValue) {
+                                            $changesArray[] = [
                                                 'field' => $field,
-                                                'newValue' => $request->$field,
+                                                'newValue' => $newValue,
                                                 'oldValue' => $oldLog['newValue'],
                                             ];
+                                        }
+                                        $logArray[] = [
+                                            'field' => $field,
+                                            'newValue' => $newValue,
+                                            'oldValue' => $oldLog['newValue'],
+                                        ];
                                     }
                                 }
                             }
                         } else {
-                            // First-time publish, log initial values
                             foreach ($fieldsToTrack as $field) {
+                                $newValue = $request->input($field, null);
+                                if(array_key_exists($field, $attachments)) {
+                                    $newValue = $att->get($field);
+                                }
                                 $logArray[] = [
                                     'field' => $field,
                                     'oldValue' => null,
-                                    'newValue' => $request->input($field, null),
+                                    'newValue' => $newValue,
                                 ];
                             }
                         }
 
                         if (!empty($logArray)) {
                             // Create a new revision log
+                            $changes = json_encode($changesArray);
+                            if(empty($changesArray)) $changes = null;
                             RevisionLog::create([
                                 'revision' => $currentVersion,
                                 'date' => now(),
                                 'project_id' => $project->id,
                                 'summary_of_changes' => json_encode($logArray),
+                                'changes' => $changes,
                             ]);
 
                             // Update the project version
@@ -516,6 +546,8 @@ class ProjectController extends Controller
                     }
                 }
 
+                $businessCase->attachment = json_encode($att);
+                $businessCase->save();
                 $project->save();
                 DB::commit();
 
@@ -533,6 +565,7 @@ class ProjectController extends Controller
             return response()->json([
                 'status' => 200,
                 'message' => 'Data Successfully Updated',
+                'title' => $project->project_name,
                 'id' => $project->id
             ]);
         }

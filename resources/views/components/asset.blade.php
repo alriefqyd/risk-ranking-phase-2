@@ -34,5 +34,5 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/select2/dist/css/select2.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/summernote/summernote-bs4.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/froala/css/froala_editor.pkgd.css')}}">
-
+<link rel="stylesheet" type="text/css" href="{{asset('assets/css/sweetalert2.css')}}">
 @livewireStyles

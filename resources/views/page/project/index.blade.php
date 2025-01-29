@@ -34,12 +34,12 @@
                         @canany(['create','export','read'])
                             <div class="col-md-12 col-sm-6 p-r-10 float-end">
                                 @if(!request()->year)
-                                @if(auth()->user()->role == \App\Models\User::ROLE['admin'])
+                                {{--@if(auth()->user()->role == \App\Models\User::ROLE['admin'])--}}
                                     @can('create')
                                         <a href="/project/create">
                                             <button class="btn btn-outline-primary-2x m-l-5 float-end" style="font-size: 12px" type="button">Create New Project</button>
                                         </a>
-                                    @endcan
+                                    {{--@endcan--}}
                                 @endif
                                 @endif
                                 @can('export')

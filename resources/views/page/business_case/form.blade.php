@@ -57,25 +57,39 @@
 
     <!-- Financial Evaluation -->
     <div class="field-container">
-        <h6>Financial Evaluation <span class="text-danger">*</span></h6>
+        <h6>Financial Evaluation </h6>
         <small>Summarize the financial benefits of the project. Include metrics such as NPV, IRR, payback period, and TCO.</small>
         <div class="row mb-4">
             <div class="col-md-6 mb-2">
-                <label>NPV ($)</label>
+                <label>NPV ($) <span class="text-danger">*</span></label>
                 <input type="text" name="npv" value="{{$project?->business_case?->npv}}" class="form-control js_bc_npv js-currency-format">
             </div>
             <div class="col-md-6 mb-2">
-                <label>IRR (%)</label>
+                <label>IRR (%) <span class="text-danger">*</span></label>
                 <input type="number" name="irr" value="{{$project?->business_case?->irr}}" class="form-control js_bc_irr">
             </div>
             <div class="col-md-6 mb-2">
-                <label>Payback Period (Years)</label>
+                <label>Payback Period (Years) <span class="text-danger">*</span></label>
                 <input type="number" name="payback_period" value="{{$project?->business_case?->payback_period}}" class="form-control js_bc_payback_period">
             </div>
             <div class="col-md-6 mb-2">
-                <label>TCO ($)</label>
+                <label>TCO ($) <span class="text-danger">*</span></label>
                 <input type="text" name="tco" value="{{$project?->business_case?->tco}}" class="form-control js_bc_tco js-currency-format">
             </div>
+        </div>
+        <div class="mb-4">
+            <label for="additionalFile" class="form-label">Financial Evaluation Approved <span class="text-danger">*</span></label>
+            <input type="file" class="filepond js-attachment-financial_evaluation" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'financial_evaluation')}}" name="financial_evaluation" id="file">
+            @if($project?->getAllAttachment($project->business_case?->attachment,'financial_evaluation'))
+                <div class="mt-2">
+                    <a
+                        href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project->getAllAttachment($project->business_case?->attachment,'financial_evaluation'))}}"
+                        target="_blank"
+                        class="text-decoration-none">
+                        <i class="fa fa-file-text-o text-info"></i> View Existing Attachment
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -87,11 +101,25 @@
             <span class="input-group-text">$</span>
             <input type="text" value="{{$project?->business_case?->cost_estimate}}" name="cost_estimate" class="form-control js-cost_estimate_bc js-currency-format">
         </div>
+        <div class="mb-4">
+            <label for="additionalFile" class="form-label fw-bold">Cost Estimate With Rough of Magnitude 15-20% <span class="text-danger">*</span></label>
+            <input type="file" class="filepond js-attachment-cost_estimate" name="cost_estimate_file" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'cost_estimate_file')}}" id="file">
+            @if($project?->getAllAttachment($project->business_case?->attachment,'cost_estimate_file'))
+                <div class="mt-2">
+                    <a
+                        href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project->getAllAttachment($project->business_case?->attachment,'cost_estimate_file'))}}"
+                        target="_blank"
+                        class="text-decoration-none">
+                        <i class="fa fa-file-text-o text-info"></i> View Existing Attachment
+                    </a>
+                </div>
+            @endif
+        </div>
     </div>
 
     <!-- Risk Assessment -->
     <div class="field-container">
-        <h6>Risk Assessment <span class="text-danger">*</span></h6>
+        <h6>Risk Assessment </h6>
         <small>Summarize the financial benefits of the project. Include metrics such as NPV, IRR, payback period, and TCO.</small>
         <div class="row mb-4">
             <div class="col-md-4 mb-2">
@@ -106,6 +134,20 @@
                 <label>Risk Deduction <span class="text-danger">*</span>:</label>
                 <input type="number" value="{{$project?->business_case?->riskAssessment?->risk_level_deduction ?? ""}}" name="risk_deduction" class="form-control js-cost_estimate_bc">
             </div>
+        </div>
+        <div class="mb-4">
+            <label for="additionalFile" class="form-label">Risk Assessment Approved</label>
+            <input type="file" class="filepond js-attachment_risk_assessment" name="risk_assessment" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'risk_assessment')}}" id="file">
+            @if($project?->getAllAttachment($project->business_case?->attachment,'risk_assessment'))
+                <div class="mt-2">
+                    <a
+                        href="/preview?dir={{urlencode($project->project_name)}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project->getAllAttachment($project->business_case?->attachment,'risk_assessment'))}}"
+                        target="_blank"
+                        class="text-decoration-none">
+                        <i class="fa fa-file-text-o text-info"></i> View Existing Attachment
+                    </a>
+                </div>
+            @endif
         </div>
     </div>
 

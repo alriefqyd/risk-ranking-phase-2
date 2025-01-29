@@ -9,24 +9,33 @@
         </thead>
         <tbody>
         @foreach($logs as $log)
+            @if(!empty(json_decode($log['changes'])))
                 <tr>
                     <td>{{$log['revision']}}</td>
                     <td>{{$log['date']}}</td>
                     <td>
                         <ul style="list-style-type: disc; margin-left: 20px;">
-                            {{--                        {{dd(json_decode($log['summary_of_changes']))}}--}}
-                            @if($loop->index > 0)
-                                @foreach(json_decode($log['summary_of_changes']) as $item)
-                                    @if($item->oldValue != $item->newValue)
-                                        <li>Adjusted the {{$item->field}} from {{$item->oldValue}} to {{$item->newValue}}.</li>
-                                    @endif
-                                @endforeach
-                            @else
-                                Business Case {{$project->title}} Created and Publish
-                            @endif
+                            @foreach(json_decode($log['changes']) as $item)
+                                @if(isset($item->oldValue))
+                                <li>Adjusted the {{$item->field}} from {{$item->oldValue}} to {{$item->newValue}}.</li>
+                                @else
+                                    <li>Added a new file for {{$item->field}} : {{$item->newValue}}</li>
+                                @endif
+                            @endforeach
                         </ul>
                     </td>
                 </tr>
+            @elseif($log['revision'] == 1)
+                <tr>
+                    <td>{{$log['revision']}}</td>
+                    <td>{{$log['date']}}</td>
+                    <td>
+                        <ul style="list-style-type: disc; margin-left: 20px;">
+                            Business Case {{$project->title}} Created and Publish
+                        </ul>
+                    </td>
+                </tr>
+            @endif
         @endforeach
 
         <!-- More entries here -->

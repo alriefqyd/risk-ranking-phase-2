@@ -1,6 +1,6 @@
 @inject('getSubBasket',App\Models\CapexInvestment::class)
 <div class="col-md-4 js-checkbox-basket-list">
-   <label>Project Type</label>
+   <label>Project Type <span class="text-danger">*</span></label>
     <div class="col-md-5 mb-2">
         <div style="height: 1px; background-color: #24695c "></div>
     </div>
@@ -24,7 +24,7 @@
 </div>
 
 <div class="col-md-4 js-checkbox-sub-basket-list">
-    <label>Project Sub Type</label>
+    <label>Project Sub Type <span class="text-danger">*</span></label>
     <div class="col-md-5 mb-2">
         <div style="height: 1px; background-color: #24695c ">
 

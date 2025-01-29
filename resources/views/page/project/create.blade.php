@@ -27,7 +27,6 @@
     {{ count($errors) > 0 ? 'isError' : ''}}
     js-project-form">
     @csrf
-        <input type="hidden" name="status" value="PUBLISH">
         <div class="container-fluid js-capex-investment-form">
             <div class="row">
                 <div class="col-sm-12 col-xl-12">
@@ -88,7 +87,7 @@
                             <button class="btn btn-danger">Cancel</button>
                             <button type="submit" class="btn btn-secondary js-save-project-bc" data-status="DRAFT">Save as Draft</button>
                             <button class="btn btn-success js-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#modal-confirm">
-                                Publish
+                                Submit
                             </button>
                         </div>
                         </div>
@@ -114,15 +113,15 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Confirm Publish</h5>
+                    <h5 class="modal-title" id="modalLabel">Confirm Submit</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to publish this project?
+                    Are you sure you want to submit this project?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary js-confirm-publish">Yes, Publish</button>
+                    <button type="button" class="btn btn-primary js-confirm-publish">Yes, Submit</button>
                 </div>
             </div>
         </div>
