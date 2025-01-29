@@ -252,6 +252,7 @@ class ProjectController extends Controller
                         ['field' => 'lcc_report', 'oldValue' => "-", 'newValue' => $att->get('lcc_report')],
                         ['field' => 'financial_evaluation', 'oldValue' => "-", 'newValue' => $att->get('financial_evaluation')],
                         ['field' => 'risk_assessment', 'oldValue' => "-", 'newValue' => $att->get('risk_assessment')],
+                        ['field' => 'kpi', 'oldValue' => "-", 'newValue' => json_encode($kpiData)],
                     ]),
                 ]);
             }
@@ -466,7 +467,7 @@ class ProjectController extends Controller
                         'cost_estimate', 'project_name', 'directorate', 'operation_area', 'sponsor_area',
                         'bc_presenter', 'bc_originator', 'finance_analyst', 'email_pic', 'checkbox_basket',
                         'checkbox_sub_basket', 'problem_statement', 'objective', 'scope_of_work', 'npv',
-                        'irr', 'payback_period', 'tco', 'risk_level_residual', 'risk_level_forecast',
+                        'irr', 'payback_period', 'tco', 'risk_level_residual', 'risk_level_forecast','kpi',
                         'risk_deduction','business_case','preliminary_design','hazop','moc_document','cost_estimate_file','quotation_of_equipment','lcc_report','financial_evaluation','risk_assessment'
                     ];
 
@@ -496,6 +497,10 @@ class ProjectController extends Controller
                                         $newValue = $request->$field;
                                         if(in_array($field, $attachments)) {
                                             $newValue = $att->get($field);
+                                        }
+
+                                        if($field == 'kpi'){
+                                            $newValue = json_encode($kpiData);
                                         }
 
                                         if ($oldLog['newValue'] != $newValue) {
