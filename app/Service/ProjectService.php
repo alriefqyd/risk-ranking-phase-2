@@ -574,6 +574,7 @@ class ProjectService
     {
         $tempFolder = $request->folder; // Temporary folder name
         $att = collect([]); // Collection to store final attachments
+        $pd = [];
         $attachments = Setting::BUSINESS_CASE_ATTACHMENT; // Attachment types or categories
 
         // Get existing attachments from the database (as an associative array)
@@ -597,18 +598,37 @@ class ProjectService
                 $folder = basename($dirUrl);
                 $fileName = basename($filePath);
 
+
                 // Check if the folder already exists and compare files
                 if (isset($currentAttachments[$folder])) {
                     // If the file is different, delete the old file
                     if ($currentAttachments[$folder] !== $fileName) {
-                        Storage::delete($dir . $folder . '/' . $currentAttachments[$folder]);
+                        if($folder == 'preliminary_design'){
+                            foreach ($currentAttachments[$folder] as $ap) {
+                                Storage::delete($dir . $folder . '/' . $ap);
+                            }
+                        } else {
+                            Storage::delete($dir . $folder . '/' . $currentAttachments[$folder]);
+                        }
+
                     }
                 } else {
                     // Create new folder if it doesn't exist
                     Storage::makeDirectory($dir . $folder);
                 }
 
-                $att->put($folder, $fileName);
+
+
+                if($folder == 'preliminary_design'){
+                   $allPD = Storage::allFiles($tempDir . $folder);
+                   foreach ($allPD as $ap) {
+                       $pd[] = basename($ap);
+                   }
+                   $att->put($folder, $pd);
+                } else {
+                    $att->put($folder, $fileName);
+                }
+
                 $relativePath = str_replace($tempDir, '', $filePath); // Preserve relative path
                 Storage::move($filePath, $dir . $relativePath);
             }
@@ -616,13 +636,21 @@ class ProjectService
             // Merge new attachments with existing ones
             foreach ($currentAttachments as $folder => $fileName) {
                 if (!$att->has($folder)) {
-                    $att->put($folder, $fileName); // Keep existing file if it wasn’t replaced
+                    if($folder == 'preliminary_design'){
+                        $pd = [];
+                        foreach ($currentAttachments[$folder] as $ap) {
+                            $pd[] = $ap;
+                        }
+                        $att->put($folder, $pd);
+                    } else {
+                        $att->put($folder, $fileName); // Keep existing file if it wasn’t replaced
+                    }
                 }
             }
 
             // Update the `business_case_attachment` column in the database
-//            $project->business_case->attachment = $att->toJson();
-//            $project->save();
+            //$project->business_case->attachment = $att->toJson();
+            //$project->save();
 
             // Delete the temporary directory and its records
             Storage::deleteDirectory($tempDir);

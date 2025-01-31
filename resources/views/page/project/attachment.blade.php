@@ -2,23 +2,27 @@
     <!-- FEL 3 Approved Document -->
     <div class="mb-4">
         <label for="fel3File" class="form-label fw-bold">Preliminary Design <span class="text-danger">*</span></label>
-        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'preliminary_design')}}" name="preliminary_design" id="file">
-        @if($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']))
-            <div class="mt-2">
-                <a
-                    href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{urlencode($project->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']))}}&dir={{$project->project_name}}"
-                    target="_blank"
-                    class="text-decoration-none">
-                    <i class="fa fa-file-text-o text-info"></i> View Existing Document
-                </a>
-            </div>
-        @endif
+        <input type="file" class="filepond"
+               name="preliminary_design[]" multiple id="preliminary_design">
+        <div class="mt-2">
+            @if($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']))
+                <ul>
+                    @foreach($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']) as $pd)
+                        <li><a
+                            href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$pd}}&dir={{$project->project_name}}"
+                            target="_blank"
+                            class="text-decoration-none">
+                            <i class="fa fa-file-text-o text-info"></i> View Existing Document {{$pd}}
+                        </a></li>
+                    @endforeach
+                </ul>
+            @endif
+        </div>
     </div>
-
     <!-- Change Management Request -->
     <div class="mb-4">
         <label for="changeRequestFile" class="form-label fw-bold">Hazop Study</label>
-        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['hazop'])}}" name="hazop" id="file">
+        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['hazop'])}}" name="hazop" id="hazop">
         @if($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['hazop']))
             <div class="mt-2">
                 <a
@@ -34,7 +38,7 @@
     <!-- Additional Attachments -->
     <div class="mb-4">
         <label for="additionalFile" class="form-label fw-bold">MOC Document</label>
-        <input type="file" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'moc_document')}}" class="filepond" name="moc_document" id="file">
+        <input type="file" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'moc_document')}}" class="filepond" name="moc_document" id="moc_document">
         @if($project?->getAllAttachment($project->business_case?->attachment,'moc_document'))
             <div class="mt-2">
                 <a
@@ -49,7 +53,7 @@
 
     <div class="mb-4">
         <label for="additionalFile" class="form-label fw-bold">Quotation of Equipment / Site Query</label>
-        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'quotation_of_equipment')}}" name="quotation_of_equipment" id="file">
+        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'quotation_of_equipment')}}" name="quotation_of_equipment" id="quotation">
         @if($project?->getAllAttachment($project->business_case?->attachment,'quotation_of_equipment'))
             <div class="mt-2">
                 <a
@@ -64,7 +68,7 @@
 
     <div class="mb-4">
         <label for="additionalFile" class="form-label fw-bold">Relevant AMF/LCC Report</label>
-        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'lcc_report')}}" name="lcc_report" id="file">
+        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'lcc_report')}}" name="lcc_report" id="lcc">
         @if($project?->getAllAttachment($project->business_case?->attachment,'lcc_report'))
             <div class="mt-2">
                 <a
@@ -77,10 +81,9 @@
         @endif
     </div>
 
-
     <div class="mb-4">
         <label for="additionalFile" class="form-label fw-bold">Approved BC Form <span class="text-danger">*</span></label>
-        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}" name="business_case" id="file">
+        <input type="file" class="filepond" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'business_case')}}" name="business_case" id="bc">
         @if($project?->getAllAttachment($project->business_case?->attachment,'business_case'))
             <div class="mt-2">
                 <a
@@ -112,62 +115,62 @@
     }
 </style>
 @section('scripts')
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script>
-<script>
-    FilePond.registerPlugin(FilePondPluginFileValidateType);
-</script>
-<script>
-    $(document).ready(function () {
-        $('.filepond').each(function () {
-            const inputElement = this; // Reference to the current file input element
-            const documentType = $(inputElement).attr('name'); // Get the name attribute
-            const tempFolder = $('.js-temp-folder').val(); // Get the temp folder value
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.min.js"></script>
+    <script>
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.filepond').each(function () {
+                const inputElement = this; // Reference to the current file input element
+                const documentType = $(inputElement).attr('name'); // Get the name attribute
+                const tempFolder = $('.js-temp-folder').val(); // Get the temp folder value
 
-            const fileSource = $(inputElement).attr('data-value');
-            const isValidSource = fileSource && fileSource !== 'null' && fileSource !== 'undefined';
+                const fileSource = $(inputElement).attr('data-value');
+                const isValidSource = fileSource && fileSource !== 'null' && fileSource !== 'undefined';
 
-            // Initialize FilePond
-            const pond = FilePond.create(inputElement);
-
-            {{--console.log({{ csrf_token() }})--}}
-            // Set FilePond options for this instance
-            pond.setOptions({
-                files: isValidSource
-                    ? [
-                        {
-                            source: fileSource,
-                            options: {
-                                type: 'local',
+                // Initialize FilePond
+                const pond = FilePond.create(inputElement);
+                // Set FilePond options for this instance
+                pond.setOptions({
+                    files: isValidSource
+                        ? [
+                            {
+                                source: fileSource,
+                                options: {
+                                    type: 'local',
+                                },
                             },
-                        },
-                    ]
-                    : [], // If invalid, set an empty array to prevent issues
-                server: {
-                    process: {
-                        url: '/upload',
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        },
-                        ondata: function (formData) {
-                            // Dynamically get the 'name' and other attributes from the current element
-                            const currentTempFolder = $('.js-temp-folder').val(); // Adjust if the folder is form-specific
-                            formData.append('type', pond.name);
-                            formData.append('folder', currentTempFolder);
+                        ]
+                        : [], // If invalid, set an empty array to prevent issues
+                    server: {
+                        process: {
+                            url: '/upload',
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            },
+                            ondata: function (formData) {
+                                console.log(pond.element.id)
+                                // Dynamically get the 'name' and other attributes from the current element
+                                const currentTempFolder = $('.js-temp-folder').val(); // Adjust if the folder is form-specific
+                                formData.append('folder', currentTempFolder);
+                                // formData.append('field_name')
+                                // Check if the field supports multiple files
+                                if (pond.element.hasAttribute('multiple')) {
+                                    formData.append('type', pond.name + '[]');
+                                } else {
+                                    formData.append('type', pond.name);
+                                }
 
                             return formData;
                         },
                     },
                     revert: {
-                        url: '/upload/cancel?folder=' + tempFolder + '&type=' + pond.name, // API endpoint to handle cancellation
+                        url: '/upload/cancel?folder=' + tempFolder + '&type=' + pond.element.id, // API endpoint to handle cancellation
                         method: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN':'{{ csrf_token() }}',
-                        },
-                        ondata: function (formData, file) {
-                            // Dynamically get the 'name' and other attributes from the current element
-                            const currentTempFolder = $('.js-temp-folder').val(); // Adjust if the folder is form-specific
-                            return formData;
                         },
                     },
                 },
@@ -180,12 +183,22 @@
             pond.on('removefile', (error, file) => {
                 if (!error) {
                     console.log(`File ${file.filename} was removed.`);
+                    if(pond.element.id == "preliminary_design"){
+                        const tempFolder = $('.js-temp-folder').val(); // Get the temp folder value
+                        $.ajax({
+                            url: '/upload/cancel?folder=' + tempFolder + '&type=' + pond.element.id + '&file_name=' + file.filename,
+                            type: 'DELETE',
+                            success: function (response) {
+                                console.log(response)
+                            }
+                        })
+
+                    }
                     // You could trigger additional cleanup logic here if needed.
                 }
             });
 
+            });
         });
-    });
-
-</script>
+    </script>
 @endsection

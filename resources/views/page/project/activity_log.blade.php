@@ -16,11 +16,16 @@
                     <td>
                         <ul style="list-style-type: disc; margin-left: 20px;">
                             @foreach(json_decode($log['changes']) as $item)
-                                @if(isset($item->oldValue))
-                                <li>Adjusted the {{$item->field}} from {{$item->oldValue}} to {{$item->newValue}}.</li>
+                                @if($item->field == 'preliminary_design')
+                                    <li>Adjusted the file preliminary design</li>
                                 @else
-                                    <li>Added a new file for {{$item->field}} : {{$item->newValue}}</li>
+                                    @if(isset($item->oldValue))
+                                        <li>Adjusted the {{$item->field}} from {{$item->oldValue}} to {{$item->newValue}}.</li>
+                                    @else
+                                        <li>Added a new file/value for {{$item->field}} : {{$item->newValue}}</li>
+                                    @endif
                                 @endif
+
                             @endforeach
                         </ul>
                     </td>

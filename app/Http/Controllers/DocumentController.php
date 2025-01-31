@@ -163,15 +163,30 @@ class DocumentController extends Controller
         $arr = Setting::BUSINESS_CASE_ATTACHMENT;
         foreach ($arr as $k => $v) {
             if ($request->hasFile($k)) {
-                $file = $request->file($k);
-                $filename = $file->getClientOriginalName();
+                $files = $request->file($k);
                 $folder = $request->folder;
-                $file->storeAs('documents/temp/' . $folder . '/' . $request->type, $filename);
 
-                TemporaryFile::create([
-                    'file_name' => $filename,
-                    'folder_name' => $folder,
-                ]);
+                if (is_array($files)) {
+                    // Handle multiple files for preliminary_design
+                    foreach ($files as $file) {
+                        $filename = $file->getClientOriginalName();
+                        $file->storeAs('documents/temp/' . $folder . '/' . $k, $filename);
+
+                        TemporaryFile::create([
+                            'file_name' => $filename,
+                            'folder_name' => $folder,
+                        ]);
+                    }
+                } else {
+                    // Handle single file for other fields
+                    $filename = $files->getClientOriginalName();
+                    $files->storeAs('documents/temp/' . $folder . '/' . $k, $filename);
+
+                    TemporaryFile::create([
+                        'file_name' => $filename,
+                        'folder_name' => $folder,
+                    ]);
+                }
 
                 return $folder;
             }
@@ -184,18 +199,39 @@ class DocumentController extends Controller
         // Retrieve the folder and type from the request
         $folder = $request->folder; // Main folder name
         $type = $request->type; // Subfolder (folder type) name
-        $tempFileDb = TemporaryFile::where('folder_name', $folder)->first();
+
         // Construct the path to the folder_type directory
         $directoryPath = 'documents/temp/' . $folder . '/' . $type . '/';
 
+        // Check if the directory exists
         if (Storage::exists($directoryPath)) {
-            Storage::deleteDirectory($directoryPath); // Delete only this folder
-            $tempFileDb->delete();
-            return response()->json(['status' => 'success']);
+            // If the type is 'preliminary_design', delete the specific file
+            if ($type == 'preliminary_design') {
+
+                $tempFileDb = TemporaryFile::where('folder_name', $folder)->where('file_name',$request->file_name)->first();
+                // Delete the file associated with the temporary record
+                Storage::delete($directoryPath . $tempFileDb->file_name);
+                // Remove the record from the database
+                $tempFileDb->delete();
+            } else {
+                $tempFileDb = TemporaryFile::where('folder_name', $folder)->first();
+                // Get all files in the directory and delete them one by one
+                $files = Storage::files($directoryPath);
+                foreach ($files as $file) {
+                    Storage::delete($file); // Delete each file individually
+                }
+                // After files are deleted, delete the directory (optional)
+                Storage::deleteDirectory($directoryPath);
+                // Remove the database record
+                $tempFileDb->delete();
+
+                return response()->json(['status' => 'success']);
+            }
         }
 
         return response()->json(['error' => 'Folder type directory not found.'], 404);
     }
+
 
     public function update(Request $request){
         // Validate the request

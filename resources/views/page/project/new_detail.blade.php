@@ -269,12 +269,18 @@
                                             <p>Preliminary Design :</p>
                                         </td>
                                         <td>
-                                            @if($project?->getAllAttachment($project?->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']))
-                                                <a target="_blank"
-                                                   href="/preview?id={{$project?->id}}&file={{urlencode($project?->getAllAttachment($project?->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']))}}&dir={{urlencode($project?->project_number)}}&category=preliminary_design">
-                                                    <i class="mt-2 fa fa-file-text-o txt-info"></i>
-                                                    {{$project?->getAllAttachment($project?->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design'])}}
-                                                </a>
+                                            @if($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']))
+                                                <ul>
+                                                    @foreach($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']) as $pd)
+                                                        <li>
+                                                            <a target="_blank"
+                                                               href="/preview?id={{$project?->id}}&file={{$pd}}&dir={{urlencode($project?->project_number)}}&category=preliminary_design">
+                                                                <i class="mt-2 fa fa-file-text-o txt-info"></i>
+                                                                {{$pd}}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
                                             @endif
                                         </td>
                                     </tr>

@@ -27,7 +27,7 @@
     {{ count($errors) > 0 ? 'isError' : ''}}
     js-project-form">
     @csrf
-        <div class="container-fluid js-capex-investment-form">
+       <div class="container-fluid js-capex-investment-form">
             <div class="row">
                 <div class="col-sm-12 col-xl-12">
                        <div class="row">

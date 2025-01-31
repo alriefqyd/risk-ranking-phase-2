@@ -452,8 +452,8 @@ class ProjectController extends Controller
                     $businessCase->kpi_summary = json_encode($kpiData);
 
                     $att = $projectService->uploadFilepond($request, $project);
-                    $oldAtt = json_decode($project->business_case?->attachment, true);
 
+                    $oldAtt = json_decode($project->business_case?->attachment, true);
                     $riskAssessment = $businessCase->riskAssessment;
                     $riskAssessment->risk_level_residual = $request->risk_level_residual;
                     $riskAssessment->risk_level_forecast = $request->risk_level_forecast;
