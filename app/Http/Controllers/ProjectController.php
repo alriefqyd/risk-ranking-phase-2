@@ -613,6 +613,17 @@ class ProjectController extends Controller
         ]);
     }
 
+    public function getDepartmentByDirectorate(Request $request){
+        $type = Department::where('type','=', Department::TYPE['department'])->where('parent',$request->directorate)->get();
+        $response = array();
+        foreach($type as $t){
+            $response[] = array(
+                "id"=>$t->id,
+                "text"=>$t->name
+            );
+        }
+        return response()->json($response);
+    }
     /**
      * Get Sponsor By Owner
      * @param Request $request

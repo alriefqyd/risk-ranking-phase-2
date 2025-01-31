@@ -272,6 +272,32 @@ $(function() {
         })
     }
 
+    var projectOwnerInit = function (el) {
+        var _this = $(el);
+        if (_this.data("select2")) _this.select2("destroy");
+        console.log(_this.closest('.js-project-form').find('.js-select-directorate').val())
+        _this.select2({
+            placeholder: "please select",
+            allowClear: true,
+            width: '100%',
+            ajax: {
+                url: '/getProjectOwner',
+                data: function (params) {
+                    var _directorate = _this.closest('.js-project-form').find('.js-select-directorate').val();
+                    return {
+                        directorate: _directorate,
+                        q: params.term
+                    }
+                },
+                processResults: function (resp) {
+                    return {
+                        results: resp
+                    }
+                },
+            }
+        })
+    }
+
     var projectSponsorInit = function (el) {
         var _this = $(el);
         if (_this.data("select2")) _this.select2("destroy");
@@ -327,12 +353,22 @@ $(function() {
         projectSponsorInit(this)
     })
 
+    var _project_owner = $('.js-select-owner');
+    console.log(_project_owner.length);
+    _project_owner.each(function () {
+        projectOwnerInit(this)
+    })
+
     $('.js-select-project-category').on('change', function () {
         $(this).closest('.js-project-form').find('.js-project-type').val('').trigger('change')
     });
 
     $('.js-select-owner').on('change', function () {
         $(this).closest('.js-project-form').find('.js-select-sponsor').val('').trigger('change')
+    });
+
+    $('.js-select-directorate').on('change', function () {
+        $(this).closest('.js-project-form').find('.js-select-owner').val('').trigger('change')
     });
 
     /**

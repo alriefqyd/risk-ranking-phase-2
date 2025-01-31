@@ -38,4 +38,8 @@ class Department extends Model
     public function sponsors(){
         return $this->belongsTo(Department::class, 'parent');
     }
+
+    public function directorates(){
+        return $this->belongsTo(Department::class, 'parent');
+    }
 }

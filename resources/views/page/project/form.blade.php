@@ -40,6 +40,7 @@
                     style="width: 100% !important;"
                     data-placeholder="Select Operation Area"
                     class="js-example-basic-single col-sm-12
+                    js-select-directorate
                     select2">
                 <option></option>
                 @foreach($directorate as $dep)
@@ -62,21 +63,13 @@
             @error('operation_area')
                 b-danger
             @enderror">
-            <select name="operation_area"
-                    style="width: 100% !important;"
-                    data-placeholder="Select Operation Area"
-                    class="js-example-basic-single col-sm-12
-                    js-select-owner
-                    select2">
-                <option></option>
-                @foreach($department as $dep)
-                    <option {{old('operation_area') == $dep->id ||
-                            (isset($project->operation_area)
-                            && $project->operation_area == $dep->id) ?
-                             'selected="selected"' : ''}}
-                            value="{{$dep->id}}">{{$dep->name}}
-                    </option>
-                @endforeach
+            <select id="" name="operation_area" data-url="/getProjectOwner"
+                    class="select2
+             js-example-basic-single form-control js-select-owner">
+                <option value="" disabled selected>Select your option</option>
+                @if(isset($project->directoratesProject?->name))
+                    <option value="{{$project->directoratesProject?->id}}" >{{$project->directoratesProject?->name}}</option>
+                @endif
             </select>
         </div>
         @error('operation_area')

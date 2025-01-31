@@ -56,6 +56,7 @@ Route::get('/setSession',[\App\Http\Controllers\SettingController::class,'setSes
 Route::get('/getProjectType',[\App\Http\Controllers\SettingController::class,'getProjectType'])->middleware('auth');
 Route::get('/getSponsorByOwner',[\App\Http\Controllers\ProjectController::class,'getSponsorByOwner'])->middleware('auth');
 Route::get('/getSubDepartment',[\App\Http\Controllers\ProjectController::class,'getSubDepartment'])->middleware('auth');
+Route::get('/getProjectOwner',[\App\Http\Controllers\ProjectController::class,'getDepartmentByDirectorate'])->middleware('auth');
 
 Route::post('/cost_benefit',[\App\Http\Controllers\CostBenefitController::class,'store'])->name('cost_benefit_post')->middleware(['auth']);
 

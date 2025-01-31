@@ -55,6 +55,10 @@ class Project extends Model
         return $this->belongsTo(Department::class,'sponsor_area');
     }
 
+    public function directoratesProject(){
+        return $this->belongsTo(Department::class,'directorate');
+    }
+
     public function cost_benefits(){
         return $this->hasOne(CostBenefit::class,'project_id')->withTrashed();
     }
