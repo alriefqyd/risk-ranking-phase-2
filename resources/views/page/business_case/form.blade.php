@@ -78,7 +78,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <label for="additionalFile" class="form-label">Financial Evaluation Approved <span class="text-danger">*</span></label>
+            <label for="additionalFile" class="form-label">Approved Financial Evaluation (by FA) <span class="text-danger">*</span></label>
             <input type="file" class="filepond js-attachment-financial_evaluation" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'financial_evaluation')}}" name="financial_evaluation" id="file">
             @if($project?->getAllAttachment($project->business_case?->attachment,'financial_evaluation'))
                 <div class="mt-2">
@@ -136,7 +136,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <label for="additionalFile" class="form-label">Risk Assessment Approved</label>
+            <label for="additionalFile" class="form-label">Approved Risk Matrix (by HSOR) <span class="text-danger">*</span></label>
             <input type="file" class="filepond js-attachment_risk_assessment" name="risk_assessment" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'risk_assessment')}}" id="file">
             @if($project?->getAllAttachment($project->business_case?->attachment,'risk_assessment'))
                 <div class="mt-2">
