@@ -97,11 +97,12 @@
     <div class="field-container">
         <h6>Cost Estimate <span class="text-danger">*</span></h6>
         <small>Enter the estimated total cost of the project, including all relevant expenses.</small>
-        <div class="input-group mb-4">
+        <div class="input-group">
             <span class="input-group-text">$</span>
             <input type="text" value="{{$project?->business_case?->cost_estimate}}" name="cost_estimate" class="form-control js-cost_estimate_bc js-currency-format">
         </div>
-        <div class="mb-4">
+        <span class="js-error"></span>
+        <div class="mb-4 mt-4">
             <label for="additionalFile" class="form-label fw-bold">Cost Estimate With Rough of Magnitude 15-20% <span class="text-danger">*</span></label>
             <input type="file" class="filepond js-attachment-cost_estimate" name="cost_estimate_file" data-value="{{$project?->getAllAttachment($project->business_case?->attachment,'cost_estimate_file')}}" id="file">
             @if($project?->getAllAttachment($project->business_case?->attachment,'cost_estimate_file'))

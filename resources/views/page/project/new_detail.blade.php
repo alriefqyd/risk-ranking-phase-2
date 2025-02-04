@@ -57,6 +57,14 @@
                                     </tr>
                                     <tr>
                                         <td>
+                                            Directorate :
+                                        </td>
+                                        <td>
+                                            {{$project->directoratesProject?->name}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             Department :
                                         </td>
                                         <td>
@@ -65,7 +73,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            Directorate :
+                                            Sponsor :
                                         </td>
                                         <td>
                                             {{$project->sponsorsProject->name}}

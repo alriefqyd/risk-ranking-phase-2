@@ -30,19 +30,16 @@
     </div>
 </div>
 <div class="row g-3">
-    <div class="mb-3 col-sm-6">
+    <div class="col-sm-6">
         <label class="col-sm-12 col-form-label" for="ProjectName">Directorate <span class="text-danger f-w-550">*</span></label>
         <div class="col-sm-12
             @error('directorate')
                 b-danger
             @enderror">
-            <select name="directorate"
-                    style="width: 100% !important;"
-                    data-placeholder="Select Operation Area"
-                    class="js-example-basic-single col-sm-12
-                    js-select-directorate
-                    select2">
-                <option></option>
+            <select style="width: 100%" id="" name="directorate"
+                    class="select2
+             js-example-basic-single form-control js-select-directorate">
+                <option value="" disabled selected>Select Directorate</option>
                 @foreach($directorate as $dep)
                     <option {{old('directorate') == $dep->id ||
                             (isset($project->directorate)
@@ -54,10 +51,11 @@
             </select>
         </div>
         @error('sponsor_area')
-        <p class="txt-danger">{{$message}}</p>
+            <p class="txt-danger">{{$message}}</p>
         @enderror
+        <span class="js-error"></span>
     </div>
-    <div class="col-sm-6 mb-3">
+    <div class="col-sm-6">
         <label class="col-sm-12 col-form-label" for="ProjectName">Department <span class="text-danger f-w-550">*</span></label>
         <div class="col-sm-12
             @error('operation_area')
@@ -67,14 +65,15 @@
                     class="select2
              js-example-basic-single form-control js-select-owner">
                 <option value="" disabled selected>Select your option</option>
-                @if(isset($project->directoratesProject?->name))
-                    <option value="{{$project->directoratesProject?->id}}" >{{$project->directoratesProject?->name}}</option>
+                @if(isset($project->ownersProject?->name))
+                    <option selected value="{{$project->ownersProject?->id}}" >{{$project->ownersProject?->name}}</option>
                 @endif
             </select>
         </div>
         @error('operation_area')
             <p class="txt-danger">{{$message}}</p>
         @enderror
+        <span class="js-error"></span>
     </div>
     <div class="mb-3 col-sm-6">
         <label class="col-sm-12 col-form-label" for="ProjectName">Sponsor <span class="text-danger f-w-550">*</span></label>
@@ -87,13 +86,14 @@
              js-example-basic-single form-control js-select-sponsor">
                 <option value="" disabled selected>Select your option</option>
                 @if(isset($project->sponsorsProject?->name))
-                    <option value="{{$project->sponsorsProject?->id}}" data-sponsor="{{$project->sponsorsProject?->supervisor}}" data-owner="{{$project->ownersProject->supervisor}}" >{{$project->sponsorsProject?->name}}</option>
+                    <option selected value="{{$project->sponsorsProject?->id}}" data-sponsor="{{$project->sponsorsProject?->supervisor}}" data-owner="{{$project->ownersProject->supervisor}}" >{{$project->sponsorsProject?->name}}</option>
                 @endif
             </select>
         </div>
         @error('sponsor_area')
             <p class="txt-danger">{{$message}}</p>
         @enderror
+        <span class="js-error"></span>
     </div>
 </div>
 <div class="row">
@@ -114,6 +114,7 @@
         @error('owner')
             <p class="txt-danger">{{$message}}</p>
         @enderror
+        <span class="js-error"></span>
     </div>
     <div class="col-sm-6 mb-3">
         <label class="col-sm-12 col-form-label" for="ProjectName">Project Sponsor <span class="text-danger f-w-550">*</span></label>

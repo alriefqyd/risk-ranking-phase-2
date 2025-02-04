@@ -275,7 +275,7 @@ $(function() {
     var projectOwnerInit = function (el) {
         var _this = $(el);
         if (_this.data("select2")) _this.select2("destroy");
-        console.log(_this.closest('.js-project-form').find('.js-select-directorate').val())
+
         _this.select2({
             placeholder: "please select",
             allowClear: true,
@@ -354,7 +354,7 @@ $(function() {
     })
 
     var _project_owner = $('.js-select-owner');
-    console.log(_project_owner.length);
+
     _project_owner.each(function () {
         projectOwnerInit(this)
     })
@@ -1528,7 +1528,6 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    // console.log(data)
                     if (data.status === 200) window.location.href = data.url;
                     else {
                         notification('danger', data, 'fa fa-time', data.message)
@@ -1891,7 +1890,6 @@ $(function() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    console.log(data)
                     if (data.status === 200) window.location.href = data.url;
                     else {
                         notification('danger', data, 'fa fa-time', data.message)
@@ -2888,7 +2886,6 @@ $(function() {
     })
 
     $('.js-risk-level-count').on('change keyup', function (e) {
-        console.log('test')
         var _riskForecast = $('.js-risk-forecast').val();
         var _riskResidual = $('.js-risk-residual').val();
         $('.js-risk-deduction').val(parseInt(_riskForecast) - parseInt(_riskResidual));
@@ -2917,6 +2914,10 @@ $(function() {
 
         return hasFiles;
     }, "Please select at least one file.");
+
+    $.validator.addMethod("emailDomain", function(value, element) {
+        return this.optional(element) || /^[a-zA-Z0-9._%+-]+@vale\.com$/.test(value);
+    }, "Please enter a valid email with the domain @vale.com");
 
     $(document).on('click','.js-confirm-duplicate-project', function(){
         var _id = $('.js-id-duplicate').val();
@@ -2967,7 +2968,9 @@ $(function() {
                 required:true
             },
             email_pic:{
-                required:true
+                required:true,
+                email:true,
+                emailDomain:true
             },
             checkbox_basket:{
                 required: true
@@ -3000,37 +3003,16 @@ $(function() {
                 required:true
             },
             financial_evaluation:{
-                required: {
-                    depends: function () {
-                        if ($('.js-attachment-financial_evaluation').attr('data-val') == "") {
-                            return true;
-                        }
-                        return false;
-                    }
-                }
+                required: true
             },
             cost_estimate_file:{
-                required: {
-                    depends: function () {
-                        if ($('.js-attachment-cost_estimate').attr('data-val') == "") {
-                            return true;
-                        }
-                        return false;
-                    }
-                }
+                required: true
             },
             risk_assessment:{
-                required: {
-                    depends: function () {
-                        if ($('.js-attachment_risk_assessment').attr('data-val') == "") {
-                            return true;
-                        }
-                        return false;
-                    }
-                }
+                required:true
             },
             "preliminary_design[]": { // Use the name with [] for array inputs
-                required: true, // Standard required rule
+                required: true // Standard required rule
                 // atLeastOneFile: true // Custom rule to ensure at least one file is selected
             },
             business_case:{
@@ -3053,6 +3035,15 @@ $(function() {
             project_name:{
                 required:"Project Name cannot be blank"
             },
+            directorate:{
+              required:"Directorate cannot be blank"
+            },
+            operation_area:{
+              required:"Department cannot be blank"
+            },
+            sponsor_area:{
+                required:"Sponsor cannot be blank"
+            },
             checkbox_basket: {
                 required: "You must select project type."
             },
@@ -3062,11 +3053,32 @@ $(function() {
             problem_statement:{
                 required:"Problem statement cannot be blank"
             },
+            objective:{
+                required:"Object cannot be blank"
+            },
+            scope_of_work: {
+                required:"Scope of Work cannot be blank"
+            },
             financial_evaluation:{
                 required:"Attachment of the financial evaluation approved document is mandatory"
             },
+            cost_estimate_file:{
+                required:"Attachment of the cost estimate document is mandatory"
+            },
+            cost_estimate:{
+                required:"Cost estimate cannot be blank"
+            },
             risk_assessment:{
                 required:"Attachment of the risk assessment approved document is mandatory"
+            },
+            bc_presenter:{
+                required:"BC Presenter cannot be blank"
+            },
+            bc_originator:{
+                required:"BC Originator cannot be blank"
+            },
+            email_pic:{
+                required:"Email cannot be blank"
             },
             business_case:{
                 required:"Attachment of the business case approved document is mandatory"
@@ -3092,10 +3104,13 @@ $(function() {
                 element.closest('.js-checkbox-sub-basket-list').find('.js-error-project-type').append(error);
             } else if (element.hasClass('tinymce')){
                 element.siblings('.js-error-message').append(error);
-            } else if (element.hasClass('filepond--browser')){
+            } else if (element.hasClass('filepond--browser')) {
                 error.insertAfter(element.closest('.filepond'));
+            } else if (element.hasClass('js-cost_estimate_bc')) {
+                error.insertAfter(element.closest('.field-container').find('.js-error'));
+            } else if (element.hasClass('select2')) {
+                error.insertAfter(element.closest('.col-sm-12').siblings('.js-error'));
             } else {
-                console.log(element);
                 error.insertAfter(element);
             }
 
