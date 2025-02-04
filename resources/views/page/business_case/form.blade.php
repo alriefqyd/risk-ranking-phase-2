@@ -124,15 +124,15 @@
         <div class="row mb-4">
             <div class="col-md-4 mb-2">
                 <label>Risk Level Residual <span class="text-danger">*</span>:</label>
-                <input type="number" value="{{$project?->business_case?->riskAssessment?->risk_level_residual ?? ""}}" name="risk_level_residual" class="form-control js-cost_estimate_bc">
+                <input type="number" value="{{$project?->business_case?->riskAssessment?->risk_level_residual ?? ""}}" name="risk_level_residual" class="form-control js-risk-level-count js-risk-residual">
             </div>
             <div class="col-md-4 mb-2">
                 <label>Risk Level Forecast <span class="text-danger">*</span>:</label>
-                <input type="number" value="{{$project?->business_case?->riskAssessment?->risk_level_forecast ?? ""}}" name="risk_level_forecast" class="form-control js-cost_estimate_bc">
+                <input type="number" value="{{$project?->business_case?->riskAssessment?->risk_level_forecast ?? ""}}" name="risk_level_forecast" class="form-control js-risk-level-count js-risk-forecast">
             </div>
             <div class="col-md-4 mb-2">
                 <label>Risk Deduction <span class="text-danger">*</span>:</label>
-                <input type="number" value="{{$project?->business_case?->riskAssessment?->risk_level_deduction ?? ""}}" name="risk_deduction" class="form-control js-cost_estimate_bc">
+                <input type="number" value="{{$project?->business_case?->riskAssessment?->risk_level_deduction ?? ""}}" name="risk_deduction" readonly class="form-control js-risk-deduction">
             </div>
         </div>
         <div class="mb-4">

@@ -1,14 +1,16 @@
 <div class="container mt-4">
     <!-- FEL 3 Approved Document -->
-    <div class="mb-4">
+    <div class="mb-4 js-parent-pd">
         <label for="fel3File" class="form-label fw-bold">Preliminary Design <span class="text-danger">*</span></label>
-        <input type="file" class="filepond"
-               name="preliminary_design[]" multiple id="preliminary_design">
+        <input type="file" class="filepond js-attachment-preliminary_design"
+               name="preliminary_design[]" multiple id="preliminary_design"
+               data-value="{{json_encode($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']))}}"
+                >
         <div class="mt-2">
             @if($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']))
                 <ul>
                     @foreach($project?->getAllAttachment($project->business_case?->attachment,$setting::BUSINESS_CASE_ATTACHMENT['preliminary_design']) as $pd)
-                        <li><a
+                        <li class="js-existing-pd"><a
                             href="/preview?id={{$project->id}}&category={{$setting::FOLDER_TYPE['bc']}}&file={{$pd}}&dir={{$project->project_name}}"
                             target="_blank"
                             class="text-decoration-none">
@@ -126,22 +128,37 @@
                 const documentType = $(inputElement).attr('name'); // Get the name attribute
                 const tempFolder = $('.js-temp-folder').val(); // Get the temp folder value
 
-                const fileSource = $(inputElement).attr('data-value');
+                var fileSource = $(inputElement).attr('data-value');
                 const isValidSource = fileSource && fileSource !== 'null' && fileSource !== 'undefined';
-
+                var f =  [{
+                        source: fileSource,
+                        options: {
+                            type: 'local',
+                        },
+                    }]
+                if(documentType == 'preliminary_design[]'){
+                    fileSource = JSON.parse(fileSource)
+                    if(fileSource == null){
+                        fileSource = [{
+                            source: fileSource,
+                            options: {
+                                type: 'local',
+                            },
+                        }]
+                    }
+                    f = fileSource.map(fi => ({
+                        source: fi,
+                        options: {
+                        type: 'local',
+                        },
+                    }));
+                }
                 // Initialize FilePond
                 const pond = FilePond.create(inputElement);
                 // Set FilePond options for this instance
                 pond.setOptions({
                     files: isValidSource
-                        ? [
-                            {
-                                source: fileSource,
-                                options: {
-                                    type: 'local',
-                                },
-                            },
-                        ]
+                        ? f
                         : [], // If invalid, set an empty array to prevent issues
                     server: {
                         process: {

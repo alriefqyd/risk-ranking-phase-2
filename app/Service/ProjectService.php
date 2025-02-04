@@ -593,11 +593,10 @@ class ProjectService
 
             // Process all files in the temporary folder
             $allFiles = Storage::allFiles($tempDir);
-            foreach ($allFiles as $filePath) {
+            foreach ($allFiles as $k => $filePath) {
                 $dirUrl = dirname($filePath);
                 $folder = basename($dirUrl);
                 $fileName = basename($filePath);
-
 
                 // Check if the folder already exists and compare files
                 if (isset($currentAttachments[$folder])) {
@@ -610,7 +609,6 @@ class ProjectService
                         } else {
                             Storage::delete($dir . $folder . '/' . $currentAttachments[$folder]);
                         }
-
                     }
                 } else {
                     // Create new folder if it doesn't exist
@@ -618,12 +616,14 @@ class ProjectService
                 }
 
 
-
                 if($folder == 'preliminary_design'){
                    $allPD = Storage::allFiles($tempDir . $folder);
                    foreach ($allPD as $ap) {
-                       $pd[] = basename($ap);
+                       if(!in_array(basename($ap), $pd)){
+                           $pd[] = basename($ap);
+                       }
                    }
+                   //Handle Duplicate record file
                    $att->put($folder, $pd);
                 } else {
                     $att->put($folder, $fileName);

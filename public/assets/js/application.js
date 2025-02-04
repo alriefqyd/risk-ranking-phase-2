@@ -2887,6 +2887,36 @@ $(function() {
         _this.find('.js-id-duplicate').val('')
     })
 
+    $('.js-risk-level-count').on('change keyup', function (e) {
+        var _riskForecast = $('.js-risk-forecast').val();
+        var _riskResidual = $('.js-risk-residual').val();
+        $('.js-risk-deduction').val(parseInt(_riskForecast) - parseInt(_riskResidual));
+    })
+
+    $.validator.addMethod("greaterThanResidual", function(value, element) {
+        var residualValue = parseFloat($(".js-risk-residual").val());
+        var forecastValue = parseFloat(value);
+        return this.optional(element) || forecastValue > residualValue;
+    });
+
+    // Custom method to check if Risk Residual is less than Risk Forecast
+    $.validator.addMethod("lessThanForecast", function(value, element) {
+        var forecastValue = parseFloat($(".js-risk-forecast").val());
+        var residualValue = parseFloat(value);
+        return this.optional(element) || residualValue < forecastValue;
+    });
+
+    $.validator.addMethod("atLeastOneFile", function(value, element) {
+        // Check if at least one file is selected in FilePond or existing files are present
+        const filePondInput = $(element).closest('.js-parent-pd').find('.filepond--data')[0];
+        const existingFiles = $(element).closest('.js-parent-pd').find('.js-existing-pd').length;
+
+        // Check if FilePond has files
+        const hasFiles = filePondInput && filePondInput.files && filePondInput.files.length > 0;
+
+        return hasFiles;
+    }, "Please select at least one file.");
+
     $(document).on('click','.js-confirm-duplicate-project', function(){
         var _id = $('.js-id-duplicate').val();
         $.ajax({
@@ -2998,16 +3028,25 @@ $(function() {
                     }
                 }
             },
+            "preliminary_design[]": { // Use the name with [] for array inputs
+                required: true, // Standard required rule
+                // atLeastOneFile: true // Custom rule to ensure at least one file is selected
+            },
             business_case:{
                 required:true
             },
             kpi_description:{
                 required:true
             },
-            preliminary_design:{
-                required:true
+            risk_level_residual:{
+                required: true,
+                number: true,
+            },
+            risk_level_forecast:{
+                required: true,
+                number: true,
+                greaterThanResidual: true
             }
-
         },
         messages:{
             project_name:{
@@ -3031,8 +3070,18 @@ $(function() {
             business_case:{
                 required:"Attachment of the business case approved document is mandatory"
             },
-            preliminary_design:{
-                required:"Attachment of the preliminary design document is mandatory"
+            "preliminary_design[]": {
+                required: "Please upload at least one preliminary design file."
+            },
+            risk_level_forecast: {
+                required: "Please enter the Risk Forecast",
+                number: "Please enter a valid number",
+                greaterThanResidual: "Risk Forecast must be greater than Risk Residual"
+            },
+            risk_level_residual: {
+                required: "Please enter the Risk Residual",
+                number: "Please enter a valid number",
+                lessThanForecast: "Risk Residual must be less than Risk Forecast"
             }
         },
         errorPlacement: function (error, element) {
@@ -3051,6 +3100,10 @@ $(function() {
 
         },
         ignore: [], // Do not ignore hidden fields (important for TinyMCE)
+    });
+
+    $('.js-attachment-preliminary_design').on('change', function() {
+        $(this).valid(); // Manually trigger validation for the file input
     });
 
     $(document).on('click', '.js-confirm-publish', function () {
