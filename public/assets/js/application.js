@@ -2888,6 +2888,7 @@ $(function() {
     })
 
     $('.js-risk-level-count').on('change keyup', function (e) {
+        console.log('test')
         var _riskForecast = $('.js-risk-forecast').val();
         var _riskResidual = $('.js-risk-residual').val();
         $('.js-risk-deduction').val(parseInt(_riskForecast) - parseInt(_riskResidual));
