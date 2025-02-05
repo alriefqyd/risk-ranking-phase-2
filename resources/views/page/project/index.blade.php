@@ -222,7 +222,6 @@
                                     {{$projectList->lastItem()}} of {{$projectList->total()}} records</small>
 
                             </nav>
-
                         </div>
                     @endif
                 </div>

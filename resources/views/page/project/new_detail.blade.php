@@ -33,7 +33,15 @@
                         <div class="card">
                             <div class="card-header">
                                 <h6 class="text-primary-template float-start">Project Info</h6>
-                                <button class="btn btn-success js-btn-edit-bc float-end">Update BC</button>
+                                <a data-bs-toggle="modal"
+                                   class="modal-note float-start m-l-10 hover-button"
+                                   data-original-title="test"
+                                   data-note="{{$project->note}}"
+                                   data-id="{{$project->id}}"
+                                   data-bs-target="#detail_note_project">
+                                    {!! $project->getNoteTemplateForm() !!}
+                                </a>
+                                <div class="btn btn-success js-btn-edit-bc float-end">Update BC</div>
                             </div>
 
                             <div class="card-body">
@@ -526,6 +534,8 @@
             </div>
         </div>
     </div>
+    @include('components.modal')
+
     @include('page.project.notification')
 @endsection
 

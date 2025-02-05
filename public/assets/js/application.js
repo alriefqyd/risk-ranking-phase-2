@@ -104,9 +104,11 @@ $(function() {
         var _id = $(this).closest('.detail_note_project').find('.js-project_id').val()
         var editor = CKEDITOR.instances['editor1'];
         var _note = editor.getData();
-        var _url = 'project/' + _id;
+        var _url = '/project/note-status/' + _id;
         var _modalNote = $('#detail_note_project');
-
+        var _this = $(this);
+        _this.addClass('d-none');
+        _this.siblings('.loading-spinner').removeClass('d-none');
         try {
             $.ajax({
                 url: _url,
@@ -114,12 +116,17 @@ $(function() {
                 type: 'put',
                 success: function (data) {
                     if (data.status === 200) {
+                        _this.removeClass('d-none');
+                        _this.siblings('.loading-spinner').addClass('d-none');
                         _modalNote.modal('toggle');
                         notification('', 'Note Successfully Added', '')
                     }
                 }
-            })
+            });
         } catch (error) {
+            $(this).removeClass('d-none');
+            $(this).siblings('.loading-spinner').addClass('d-none');
+            notification('error',error,'')
             console.log(error)
         }
     });

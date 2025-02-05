@@ -402,17 +402,6 @@ class ProjectController extends Controller
 
         DB::beginTransaction();
         try{
-                if($request->has('note')) {
-                    $pn = new ProjectNote(null);
-                    $project->note = $request->note;
-                    DB::table('notifications')->where('project_id',$project->id)
-                        ->where('notifiable_id',$project->created_by)
-                        ->where('type',get_class($pn))
-                        ->whereNull('read_at')->delete();
-                    event(new Sending($project));
-                }
-                if($request->has('bc_status')) $project->bc_status = $request->bc_status;
-
                 $projectService = new ProjectService();
                 /*$projectService->updateBudgetToolCriteria($project, $request);*/
 
@@ -580,6 +569,36 @@ class ProjectController extends Controller
 
     }
 
+    public function updateNoteStatus(Project $project, Request $request){
+        try {
+            $ps = new ProjectService();
+            DB::beginTransaction();
+            if ($request->has('note')) {
+                $pn = new ProjectNote(null);
+                $project->note = $request->note;
+                DB::table('notifications')->where('project_id', $project->id)
+                    ->where('notifiable_id', $project->created_by)
+                    ->where('type', get_class($pn))
+                    ->whereNull('read_at')->delete();
+                event(new Sending($project));
+
+                $ps->sendEmail($project);
+            }
+
+            if($request->has('bc_status')) $project->bc_status = $request->bc_status;
+            $project->save();
+            DB::commit();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Data Successfully Updated',
+                'title' => $project->project_name,
+                'id' => $project->id
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            if($request->ajax()) return response()->json($e->getMessage());
+        }
+    }
 
     /**
      * Delete Project using Ajax
@@ -606,7 +625,8 @@ class ProjectController extends Controller
      * @param Project $project
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getProjectNote(Project $project){
+    public function getProjectNote(Request $request){
+        $project = Project::where('id', $request->id)->select('id', 'note')->first();
         return response()->json([
             'status' => 200,
             'project' => $project

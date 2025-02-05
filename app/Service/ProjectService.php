@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Mail\NoteRemarkEmail;
 use App\Models\CapexInvestment;
 use App\Models\CriteriasProjects;
 use App\Models\Department;
@@ -11,6 +12,8 @@ use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PHPUnit\Exception;
@@ -662,6 +665,20 @@ class ProjectService
 
         // Return the updated attachments
         return $att;
+    }
+
+    public function sendEmail(Project $project){
+        $mail = $project->email_pic;
+        if(isset($mail)){
+            try{
+                Mail::to($mail)->send(new NoteRemarkEmail($project));
+                Log::info('Email send to : '.$mail);
+            } catch (Exception $e){
+                Log::error($e->getMessage());
+            }
+        } else {
+            Log::warning("No email found for {$mail} in project : {$project->project_name}");
+        }
     }
 
 }

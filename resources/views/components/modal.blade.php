@@ -23,12 +23,13 @@
                         Save changes
                         <div class="loader-3"></div>
                     </button>
+                    <div class="loading-spinner mb-2 d-none"></div>
                 </div>
             @else
                 <div class="modal-body d-none js-note-viewer">
                     <span class="js-project_note"></span>
                 </div>
-            @endcan`
+            @endcan
         </div>
     </div>
 </div>
