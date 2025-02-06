@@ -14,7 +14,9 @@
 <script src="{{asset('assets/js/rating/jquery.barrating.js')}}"></script>
 <script src="{{asset('assets/js/rating/rating-script.js')}}"></script>
 <!-- Plugins JS start-->
-<script src="{{asset('assets/js/custom/chart.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script src="{{asset('assets/js/dashboard/default.js')}}"></script>
 
 <script src="{{asset('assets/js/jquery.ui.min.js')}}"></script>

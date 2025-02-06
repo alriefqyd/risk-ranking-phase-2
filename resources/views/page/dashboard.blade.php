@@ -202,12 +202,12 @@
         </div>--}}
         <div class="row">
             @if($isAdmin)
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header pb-0">
                         <h5>Project Submission</h5>
                     </div>
-                    <div class="card-body chart-block m-t-30" >
+                    <div class="card-body chart-block m-t-30 p-1" >
                         <div class="flot-chart-container" style="height:650px">
                             <canvas class="flot-chart-placeholder" width="800" height="625" id="project-stacked-bar-chart"></canvas>
                         </div>

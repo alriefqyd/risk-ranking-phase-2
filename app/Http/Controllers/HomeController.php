@@ -28,7 +28,7 @@ class HomeController extends Controller
 
        //count all data
        $project = $getProject->getAllProject(false, config('constants.project_presented_year'), true);
-       $countAssessment = $assessmentService->countAssessment(null);
+       /*$countAssessment = $assessmentService->countAssessment(null);
        $countAssessmentDraft = $assessmentService->countAssessment(config('constants.status.draft'));
        $countAssessmentPublish = $assessmentService->countAssessment(config('constants.status.publish'));
        $countFel1 = $fel1Service->countFel1(null);
@@ -42,25 +42,10 @@ class HomeController extends Controller
        $countFel3Publish = $fel3Service->countFel3(config('constants.status.publish'));
        $countBC = $bcService->countAllBc(null);
        $countBCDraft = $bcService->countAllBc(config('constants.status.draft'));
-       $countBCPublish = $bcService->countAllBc(config('constants.status.publish'));
+       $countBCPublish = $bcService->countAllBc(config('constants.status.publish'));*/
 
        return view('page.dashboard',[
            'projectCount' => $project->count(),
-           'countAssessment' => $countAssessment,
-           'countAssessmentDraft' => $countAssessmentDraft,
-           'countAssessmentPublish' => $countAssessmentPublish,
-           'countFel1' => $countFel1,
-           'countFel1Draft' => $countFel1Draft,
-           'countFel1Publish' => $countFel1Publish,
-           'countFel2' => $countFel2,
-           'countFel2Draft' => $countFel2Draft,
-           'countFel2Publish' => $countFel2Publish,
-           'countFel3' => $countFel3,
-           'countFel3Draft' => $countFel3Draft,
-           'countFel3Publish' => $countFel3Publish,
-           'countBC' => $countBC,
-           'countBCDraft' => $countBCDraft,
-           'countBCPublish' => $countBCPublish,
            'countBasketCategory' => $this->getDataBasket(),
            'isAdmin'=> $userService->isAdmin() || $userService->isViewer()
        ]);
@@ -75,14 +60,36 @@ class HomeController extends Controller
    }
 
     public function getDataGraph(Request $request){
+        $ps = new ProjectService();
+        $project = Project::with(['business_case','ownersProject'])->where('presented_year',config('constants.project_presented_year'));
 
-       $project = $this->getDataByProjectType();
-       $investmentStrategy = $this->getInvestmentStrategy($project);
-       $basket = $this->getBasketChart($project);
-       if($request->type == 'investment_strategy') return $investmentStrategy;
-       if($request->type == 'basket') return $basket;
+        /*$investmentStrategy = $this->getInvestmentStrategy($project);
+        $basket = $this->getBasketChart($project);
+        if($request->type == 'investment_strategy') return $investmentStrategy;
+        if($request->type == 'basket') return $basket;
 
-       return $investmentStrategy;
+        return $investmentStrategy;*/
+
+        $projectByArea = $project->with('ownersProject')->get()->groupBy('ownersProject.name');
+
+        $data = $projectByArea->map(function ($items, $area) {
+            $projectCount = $items->count();
+            $totalBudget = $items->sum(function ($item) {
+                $intCost = str_replace('.', '', $item->business_case->cost_estimate);
+                return (float) $intCost ?? 0;
+            });
+
+            return [
+                'projects' => $projectCount,
+                'budget' => $totalBudget
+            ];
+        });
+
+
+        return response()->json([
+            'status' => 200,
+            'data' => $data,
+        ]);
     }
 
     public function getBasketChart($project){
@@ -155,11 +162,7 @@ class HomeController extends Controller
     public function getInvestmentStrategy($project){
         $countLevels = [];
 
-//        dd($project);
         foreach ($project as $p) {
-//            $investment = $p->investment_strategy;
-//            $json = $investment;
-//            dd($json);
 
             // Check and count occurrences for level1
             if (isset($json->level1)) {
