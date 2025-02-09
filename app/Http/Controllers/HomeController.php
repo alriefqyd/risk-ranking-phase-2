@@ -62,7 +62,9 @@ class HomeController extends Controller
     public function getDataGraph(Request $request){
         $ps = new ProjectService();
         $project = Project::with(['business_case','ownersProject'])->where('presented_year',config('constants.project_presented_year'));
-
+        if(auth()->user()->role == 'Admin Department'){
+            $project = $project->where('operation_area', auth()->user()->department);
+        }
         /*$investmentStrategy = $this->getInvestmentStrategy($project);
         $basket = $this->getBasketChart($project);
         if($request->type == 'investment_strategy') return $investmentStrategy;
@@ -71,8 +73,22 @@ class HomeController extends Controller
         return $investmentStrategy;*/
 
         $projectByArea = $project->with('ownersProject')->get()->groupBy('ownersProject.name');
+        $projectByType = $project->with(['ownersProject','baskets'])->get()->groupBy('baskets.name');
 
         $data = $projectByArea->map(function ($items, $area) {
+            $projectCount = $items->count();
+            $totalBudget = $items->sum(function ($item) {
+                $intCost = str_replace('.', '', $item->business_case->cost_estimate);
+                return (float) $intCost ?? 0;
+            });
+
+            return [
+                'projects' => $projectCount,
+                'budget' => $totalBudget
+            ];
+        });
+
+        $dataByType = $projectByType->map(function ($items, $area) {
             $projectCount = $items->count();
             $totalBudget = $items->sum(function ($item) {
                 $intCost = str_replace('.', '', $item->business_case->cost_estimate);
@@ -89,6 +105,7 @@ class HomeController extends Controller
         return response()->json([
             'status' => 200,
             'data' => $data,
+            'dataType' => $dataByType
         ]);
     }
 

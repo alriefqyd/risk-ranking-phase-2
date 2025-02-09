@@ -201,20 +201,18 @@
             @endforeach
         </div>--}}
         <div class="row">
-            @if($isAdmin)
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header pb-0">
-                        <h5>Project Submission</h5>
+                        <h5>BC Submitted</h5>
                     </div>
                     <div class="card-body chart-block m-t-30 p-1" >
-                        <div class="flot-chart-container" style="height:650px">
-                            <canvas class="flot-chart-placeholder" width="800" height="625" id="project-stacked-bar-chart"></canvas>
+                        <div class="flot-chart-container" style="height:auto">
+                            <canvas class="flot-chart-placeholder" width="800" height="500" id="project-stacked-bar-chart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-            @endif
 {{--            <div class="col-lg-7 col-sm-6 box-col-6">--}}
 {{--                <div class="card">--}}
 {{--                    <div class="card-header pb-0">--}}
@@ -230,11 +228,11 @@
             <div class="col-lg-6 col-sm-6 box-col-6">
                 <div class="card">
                     <div class="card-header pb-0">
-                        <h5>Investment Strategy</h5>
+                        <h5>Investment Type</h5>
                     </div>
                     <div class="card-body chart-block m-t-30" >
                         <div class="flot-chart-container" style="height:auto">
-                            <canvas class="flot-chart-placeholder" width="800" height="400" id="stacked-bar-chart-investment-strategy"></canvas>
+                            <canvas class="flot-chart-placeholder" width="800" height="480" id="stacked-bar-chart-investment-strategy"></canvas>
                         </div>
                     </div>
                 </div>
