@@ -125,7 +125,7 @@ $(function () {
                     tooltip: {
                         callbacks: {
                             title: function (tooltipItems) {
-                                let index = tooltipItems[0].label;
+                                let index = tooltipItems[0].dataIndex;
                                 return fullLabels[index];
                             }
                         }
