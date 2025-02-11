@@ -106,7 +106,7 @@ $(function () {
                         beginAtZero: false,
                         title: {
                             display: true,
-                            text: 'Cost Estimate Budget (in $)'
+                            text: 'Cost Estimate Budget (in million $)'
                         },
                         ticks: {
                             callback: function (value) {

@@ -2901,7 +2901,7 @@ $(function() {
     $.validator.addMethod("greaterThanResidual", function(value, element) {
         var residualValue = parseFloat($(".js-risk-residual").val());
         var forecastValue = parseFloat(value);
-        return this.optional(element) || forecastValue > residualValue;
+        return this.optional(element) || forecastValue >= residualValue;
     });
 
     // Custom method to check if Risk Residual is less than Risk Forecast
@@ -3031,11 +3031,15 @@ $(function() {
             risk_level_residual:{
                 required: true,
                 number: true,
+                min:1,
+                max:25
             },
             risk_level_forecast:{
                 required: true,
                 number: true,
-                greaterThanResidual: true
+                greaterThanResidual: true,
+                min:1,
+                max:25
             }
         },
         messages:{
@@ -3096,7 +3100,7 @@ $(function() {
             risk_level_forecast: {
                 required: "Please enter the Risk Forecast",
                 number: "Please enter a valid number",
-                greaterThanResidual: "Risk Forecast must be greater than Risk Residual"
+                greaterThanResidual: "Risk Forecast must be same or greater than Risk Residual"
             },
             risk_level_residual: {
                 required: "Please enter the Risk Residual",

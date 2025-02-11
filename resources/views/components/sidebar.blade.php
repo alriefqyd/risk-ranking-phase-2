@@ -13,15 +13,16 @@
                         <div class="mobile-back text-end"><span>Back</span></div>
                     </li>
                     <li class="dropdown">
-                        <a class="nav-link menu-title
+                        <a style="display: flex;align-items: center; gap: 8px;"
+                            class="nav-link menu-title
                             {{request()->is('/') ? 'active' : ''}}"
                             href="/"><i data-feather="home"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li class="dropdown">
-                        <a class="nav-link menu-title {{request()->is(['project*']) ? 'active' : ''}}" href="/project">
-                            <i data-feather="box"></i><span>Project</span></a>
+                        <a class="nav-link menu-title {{request()->is(['project*']) ? 'active' : ''}}" style="display: flex;align-items: center; gap: 8px;" href="/project">
+                            <i data-feather="box"></i>Project</a>
                     </li>
                 </ul>
             </div>

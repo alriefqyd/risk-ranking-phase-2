@@ -1,4 +1,5 @@
 <!-- latest jquery-->
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="{{asset('assets/js/jquery-3.5.1.min.js')}}"></script>
 <!-- feather icon js-->
 <script src="{{asset('assets/js/icons/feather-icon/feather.min.js')}}"></script>

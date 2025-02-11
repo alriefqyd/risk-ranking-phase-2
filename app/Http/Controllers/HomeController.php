@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CapexInvestment;
 use App\Models\Project;
+use App\Models\RiskAssessments;
 use App\Models\Setting;
 use App\Service\Fel2Service;
 use App\Service\ProjectService;
@@ -44,10 +45,17 @@ class HomeController extends Controller
        $countBCDraft = $bcService->countAllBc(config('constants.status.draft'));
        $countBCPublish = $bcService->countAllBc(config('constants.status.publish'));*/
 
+       $budgetRiskLevel = [];
+       foreach (range(1,25) as $riskLevel) {
+           $budgetRiskLevel[] = $this->getBudgetRiskValue($riskLevel);
+       }
+
+
        return view('page.dashboard',[
            'projectCount' => $project->count(),
            'countBasketCategory' => $this->getDataBasket(),
-           'isAdmin'=> $userService->isAdmin() || $userService->isViewer()
+           'isAdmin'=> $userService->isAdmin() || $userService->isViewer(),
+           'budgetRiskLevel' => $budgetRiskLevel,
        ]);
    }
 
@@ -79,12 +87,14 @@ class HomeController extends Controller
             $projectCount = $items->count();
             $totalBudget = $items->sum(function ($item) {
                 $intCost = str_replace('.', '', $item->business_case->cost_estimate);
-                return (float) $intCost ?? 0;
+                $intCost = (float)$intCost ?? 0;
+                $intCost = $intCost / 1000000;
+                return $intCost;
             });
 
             return [
                 'projects' => $projectCount,
-                'budget' => $totalBudget
+                'budget' => number_format($totalBudget,2,'.')
             ];
         });
 
@@ -92,12 +102,14 @@ class HomeController extends Controller
             $projectCount = $items->count();
             $totalBudget = $items->sum(function ($item) {
                 $intCost = str_replace('.', '', $item->business_case->cost_estimate);
-                return (float) $intCost ?? 0;
+                $intCost = (float)$intCost ?? 0;
+                $intCost = $intCost / 1000000;
+                return $intCost;
             });
 
             return [
                 'projects' => $projectCount,
-                'budget' => $totalBudget
+                'budget' => number_format($totalBudget,2,'.')
             ];
         });
 
@@ -105,7 +117,7 @@ class HomeController extends Controller
         return response()->json([
             'status' => 200,
             'data' => $data,
-            'dataType' => $dataByType
+            'dataType' => $dataByType,
         ]);
     }
 
@@ -246,5 +258,24 @@ class HomeController extends Controller
            $capexCollection->put($ciValue,$basketCollection);
        }
        return $capexCollection;
+    }
+
+    public function getBudgetRiskValue($value){
+        $ra = RiskAssessments::with('businessCase')->where('risk_level_residual',$value)->get();
+        if(!isset($ra)) return 0;
+
+        $ce = $ra->sum(function($item){
+            if(isset($item->businessCase->cost_estimate)){
+                $cost = str_replace('.','',$item->businessCase->cost_estimate);
+                $cost = (float)$cost ?? 0;
+                $cost = $cost / 1000000;
+                return $cost;
+            }
+
+            return 0;
+
+        });
+
+        return $ce;
     }
 }

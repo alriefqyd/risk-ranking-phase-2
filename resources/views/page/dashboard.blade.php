@@ -1,5 +1,6 @@
 @extends('main')
 @section('main')
+
     <div class="container-fluid dashboard-default-sec">
         <div class="col-sm-12">
 {{--            @foreach($notifications as $notification)--}}
@@ -233,6 +234,80 @@
                     <div class="card-body chart-block m-t-30" >
                         <div class="flot-chart-container" style="height:auto">
                             <canvas class="flot-chart-placeholder" width="800" height="480" id="stacked-bar-chart-investment-strategy"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-sm-12 box-col-12">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <h5>Risk Matrix</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="flex justify-center items-center">
+                        <div class="text-center">
+                            <div class="grid grid-cols-6 grid-rows-6 gap-2 text-center font-semibold">
+                                <!-- Top Header -->
+                                <div class="col-span-1 row-span-1"></div>
+                                <div class="bg-gray-300 p-3">Very Remote</div>
+                                <div class="bg-gray-300 p-3">Remote</div>
+                                <div class="bg-gray-300 p-3">Possible</div>
+                                <div class="bg-gray-300 p-3">Likely</div>
+                                <div class="bg-gray-300 p-3">Very Likely</div>
+
+                                <!-- Risk Matrix 5x5 with Left Header -->
+                                <div class="bg-gray-300 p-3">Very Critical</div>
+                                <div class="bg-orange-400 cursor-pointer p-3 text-white">$ {{number_format($budgetRiskLevel[7],'2','.',',')}}</div>
+                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[6],'2','.',',')}}</div>
+                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[2],'2','.',',')}}</div>
+                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[1],'2','.',',')}}</div>
+                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[0],'2','.',',')}}</div>
+
+                                <div class="bg-gray-300 p-3">Critical</div>
+                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[10],'2','.',',')}}</div>
+                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[9],'2','.',',')}}</div>
+                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[8],'2','.',',')}}</div>
+                                <div class="bg-red-500 p-3 text-white p-3">$ {{number_format($budgetRiskLevel[4],'2','.',',')}}</div>
+                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[3],'2','.',',')}}</div>
+
+                                <div class="bg-gray-300 p-3">Significant</div>
+                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[14],'2','.',',')}}</div>
+                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[13],'2','.',',')}}</div>
+                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[12],'2','.',',')}}</div>
+                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[11],'2','.',',')}}</div>
+                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[5],'2','.',',')}}</div>
+
+                                <div class="bg-gray-300 p-3">Moderate</div>
+                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[21],'2','.',',')}}</div>
+                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[20],'2','.',',')}}</div>
+                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[17],'2','.',',')}}</div>
+                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[16],'2','.',',')}}</div>
+                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[15],'2','.',',')}}</div>
+
+                                <div class="bg-gray-300 p-3">Low</div>
+                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[24],'2','.',',')}}</div>
+                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[23],'2','.',',')}}</div>
+                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[22],'2','.',',')}}</div>
+                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[19],'2','.',',')}}</div>
+                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[18],'2','.',',')}}</div>
+                            </div>
+
+                            <!-- Axis Labels -->
+                            <div class="flex justify-between items-center mt-4">
+                                <span class="rotate-[-90deg] absolute p-b-40 text-xl" style="left: 7rem; top:16rem">Impact of Risk</span>
+                                <span class="text-xl center-content">Probability of Risk</span>
+                            </div>
+                            <!-- Legend -->
+                            <div class="flex gap-4 mt-2">
+                            <h3 class="font-semibold text-gray-800 mt-5">Priority Legend:</h3>
+                            </div>
+                            <div class="flex gap-4 mt-2">
+                                <span class="flex items-center"><span class="w-4 h-4 bg-red-500 rounded inline-block mr-2"></span> Very High</span>
+                                <span class="flex items-center"><span class="w-4 h-4 bg-orange-500 rounded inline-block mr-2"></span> High</span>
+                                <span class="flex items-center"><span class="w-4 h-4 bg-yellow-400 rounded inline-block mr-2"></span> Medium</span>
+                                <span class="flex items-center"><span class="w-4 h-4 bg-green-500 rounded inline-block mr-2"></span> Low</span>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
