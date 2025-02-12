@@ -45,9 +45,11 @@ class HomeController extends Controller
        $countBCDraft = $bcService->countAllBc(config('constants.status.draft'));
        $countBCPublish = $bcService->countAllBc(config('constants.status.publish'));*/
 
-       $budgetRiskLevel = [];
+       $budgetRiskLevelResidual = [];
+       $budgetRiskLevelForecast = [];
        foreach (range(1,25) as $riskLevel) {
-           $budgetRiskLevel[] = $this->getBudgetRiskValue($riskLevel);
+           $budgetRiskLevelResidual[] = $this->getBudgetRiskValue($riskLevel, 'risk_level_residual');
+           $budgetRiskLevelForecast[] = $this->getBudgetRiskValue($riskLevel, 'risk_level_forecast');
        }
 
 
@@ -55,7 +57,8 @@ class HomeController extends Controller
            'projectCount' => $project->count(),
            'countBasketCategory' => $this->getDataBasket(),
            'isAdmin'=> $userService->isAdmin() || $userService->isViewer(),
-           'budgetRiskLevel' => $budgetRiskLevel,
+           'budgetRiskLevelResidual' => $budgetRiskLevelResidual,
+           'budgetRiskLevelForecast' => $budgetRiskLevelForecast,
        ]);
    }
 
@@ -260,8 +263,8 @@ class HomeController extends Controller
        return $capexCollection;
     }
 
-    public function getBudgetRiskValue($value){
-        $ra = RiskAssessments::with('businessCase')->where('risk_level_residual',$value)->get();
+    public function getBudgetRiskValue($value, $type){
+        $ra = RiskAssessments::with('businessCase')->where($type,$value)->get();
         if(!isset($ra)) return 0;
 
         $ce = $ra->sum(function($item){

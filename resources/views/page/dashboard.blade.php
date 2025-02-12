@@ -238,80 +238,162 @@
                     </div>
                 </div>
             </div>
+            @if(auth()->user()->role == "Administrator")
             <div class="col-lg-12 col-sm-12 box-col-12">
                 <div class="card">
-                    <div class="card-header pb-0">
+                    <div class="card-header pb-0" style="border: 0px !important">
                         <h5>Risk Matrix</h5>
                     </div>
                     <div class="card-body">
-                        <div class="flex justify-center items-center">
-                        <div class="text-center">
-                            <div class="grid grid-cols-6 grid-rows-6 gap-2 text-center font-semibold">
-                                <!-- Top Header -->
-                                <div class="col-span-1 row-span-1"></div>
-                                <div class="bg-gray-300 p-3">Very Remote</div>
-                                <div class="bg-gray-300 p-3">Remote</div>
-                                <div class="bg-gray-300 p-3">Possible</div>
-                                <div class="bg-gray-300 p-3">Likely</div>
-                                <div class="bg-gray-300 p-3">Very Likely</div>
+                        <div class="tabbed-card">
+                            <ul class="pull-right nav nav-pills nav-primary" id="pills-clrtab1" role="tablist" style="top:9px !important;">
+                                <li class="nav-item"><a class="nav-link active" id="pills-clrhome-tab1" data-bs-toggle="pill" href="#pills-clrhome1" role="tab" aria-controls="pills-clrhome1" aria-selected="true">Residual</a></li>
+                                <li class="nav-item"><a class="nav-link" id="pills-clrprofile-tab1" data-bs-toggle="pill" href="#pills-clrprofile1" role="tab" aria-controls="pills-clrprofile1" aria-selected="false">Forecast</a></li>
+                            </ul>
+                            <div class="tab-content" id="pills-clrtabContent1">
+                                <div class="tab-pane fade show active" id="pills-clrhome1" role="tabpanel" aria-labelledby="pills-clrhome-tab1">
+                                    <div class="flex justify-center items-center js-risk-level-residual mt-3">
+                                        <div class="text-center">
+                                            <div class="grid grid-cols-6 grid-rows-6 gap-2 text-center font-semibold">
+                                                <!-- Top Header -->
+                                                <div class="col-span-1 row-span-1"></div>
+                                                <div class="bg-gray-300 p-3">Very Remote</div>
+                                                <div class="bg-gray-300 p-3">Remote</div>
+                                                <div class="bg-gray-300 p-3">Possible</div>
+                                                <div class="bg-gray-300 p-3">Likely</div>
+                                                <div class="bg-gray-300 p-3">Very Likely</div>
 
-                                <!-- Risk Matrix 5x5 with Left Header -->
-                                <div class="bg-gray-300 p-3">Very Critical</div>
-                                <div class="bg-orange-400 cursor-pointer p-3 text-white">$ {{number_format($budgetRiskLevel[7],'2','.',',')}}</div>
-                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[6],'2','.',',')}}</div>
-                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[2],'2','.',',')}}</div>
-                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[1],'2','.',',')}}</div>
-                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[0],'2','.',',')}}</div>
+                                                <!-- Risk Matrix 5x5 with Left Header -->
+                                                <div class="bg-gray-300 p-3">Very Critical</div>
+                                                <div class="bg-orange-400 cursor-pointer p-3 text-white">$ {{number_format($budgetRiskLevelResidual[7],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[6],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[2],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[1],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[0],'2','.',',')}}</div>
 
-                                <div class="bg-gray-300 p-3">Critical</div>
-                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[10],'2','.',',')}}</div>
-                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[9],'2','.',',')}}</div>
-                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[8],'2','.',',')}}</div>
-                                <div class="bg-red-500 p-3 text-white p-3">$ {{number_format($budgetRiskLevel[4],'2','.',',')}}</div>
-                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[3],'2','.',',')}}</div>
+                                                <div class="bg-gray-300 p-3">Critical</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[10],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[9],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[8],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white p-3">$ {{number_format($budgetRiskLevelResidual[4],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[3],'2','.',',')}}</div>
 
-                                <div class="bg-gray-300 p-3">Significant</div>
-                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[14],'2','.',',')}}</div>
-                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[13],'2','.',',')}}</div>
-                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[12],'2','.',',')}}</div>
-                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevel[11],'2','.',',')}}</div>
-                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevel[5],'2','.',',')}}</div>
+                                                <div class="bg-gray-300 p-3">Significant</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[14],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[13],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[12],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[11],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[5],'2','.',',')}}</div>
 
-                                <div class="bg-gray-300 p-3">Moderate</div>
-                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[21],'2','.',',')}}</div>
-                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[20],'2','.',',')}}</div>
-                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[17],'2','.',',')}}</div>
-                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[16],'2','.',',')}}</div>
-                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[15],'2','.',',')}}</div>
+                                                <div class="bg-gray-300 p-3">Moderate</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[21],'2','.',',')}}</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[20],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[17],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[16],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[15],'2','.',',')}}</div>
 
-                                <div class="bg-gray-300 p-3">Low</div>
-                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[24],'2','.',',')}}</div>
-                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[23],'2','.',',')}}</div>
-                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevel[22],'2','.',',')}}</div>
-                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[19],'2','.',',')}}</div>
-                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevel[18],'2','.',',')}}</div>
+                                                <div class="bg-gray-300 p-3">Low</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[24],'2','.',',')}}</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[23],'2','.',',')}}</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[22],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[19],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelResidual[18],'2','.',',')}}</div>
+                                            </div>
+
+                                            <!-- Axis Labels -->
+                                            <div class="flex justify-between items-center mt-4">
+                                                <span class="rotate-[-90deg] absolute p-b-40 text-xl" style="left: 7rem; top:16rem">Impact of Risk</span>
+                                                <span class="text-xl center-content">Probability of Risk</span>
+                                            </div>
+                                            <!-- Legend -->
+                                            <div class="flex gap-4 mt-2">
+                                                <h3 class="font-semibold text-gray-800 mt-5">Priority Legend:</h3>
+                                            </div>
+                                            <div class="flex gap-4 mt-2">
+                                                <span class="flex items-center"><span class="w-4 h-4 bg-red-500 rounded inline-block mr-2"></span> Very High</span>
+                                                <span class="flex items-center"><span class="w-4 h-4 bg-orange-500 rounded inline-block mr-2"></span> High</span>
+                                                <span class="flex items-center"><span class="w-4 h-4 bg-yellow-400 rounded inline-block mr-2"></span> Medium</span>
+                                                <span class="flex items-center"><span class="w-4 h-4 bg-green-500 rounded inline-block mr-2"></span> Low</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-clrprofile1" role="tabpanel" aria-labelledby="pills-clrprofile-tab1">
+                                    <div class="mt-3 flex justify-center items-center js-risk-">
+                                        <div class="text-center">
+                                            <div class="grid grid-cols-6 grid-rows-6 gap-2 text-center font-semibold">
+                                                <!-- Top Header -->
+                                                <div class="col-span-1 row-span-1"></div>
+                                                <div class="bg-gray-300 p-3">Very Remote</div>
+                                                <div class="bg-gray-300 p-3">Remote</div>
+                                                <div class="bg-gray-300 p-3">Possible</div>
+                                                <div class="bg-gray-300 p-3">Likely</div>
+                                                <div class="bg-gray-300 p-3">Very Likely</div>
+
+                                                <!-- Risk Matrix 5x5 with Left Header -->
+                                                <div class="bg-gray-300 p-3">Very Critical</div>
+                                                <div class="bg-orange-400 cursor-pointer p-3 text-white">$ {{number_format($budgetRiskLevelForecast[7],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[6],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[2],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[1],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[0],'2','.',',')}}</div>
+
+                                                <div class="bg-gray-300 p-3">Critical</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[10],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[9],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[8],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white p-3">$ {{number_format($budgetRiskLevelForecast[4],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[3],'2','.',',')}}</div>
+
+                                                <div class="bg-gray-300 p-3">Significant</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[14],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[13],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[12],'2','.',',')}}</div>
+                                                <div class="bg-orange-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[11],'2','.',',')}}</div>
+                                                <div class="bg-red-500 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[5],'2','.',',')}}</div>
+
+                                                <div class="bg-gray-300 p-3">Moderate</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[21],'2','.',',')}}</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[20],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[17],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[16],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[15],'2','.',',')}}</div>
+
+                                                <div class="bg-gray-300 p-3">Low</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[24],'2','.',',')}}</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[23],'2','.',',')}}</div>
+                                                <div class="bg-green-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[22],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[19],'2','.',',')}}</div>
+                                                <div class="bg-yellow-400 p-3 text-white">$ {{number_format($budgetRiskLevelForecast[18],'2','.',',')}}</div>
+                                            </div>
+
+                                            <!-- Axis Labels -->
+                                            <div class="flex justify-between items-center mt-4">
+                                                <span class="rotate-[-90deg] absolute p-b-40 text-xl" style="left: 7rem; top:16rem">Impact of Risk</span>
+                                                <span class="text-xl center-content">Probability of Risk</span>
+                                            </div>
+                                            <!-- Legend -->
+                                            <div class="flex gap-4 mt-2">
+                                                <h3 class="font-semibold text-gray-800 mt-5">Priority Legend:</h3>
+                                            </div>
+                                            <div class="flex gap-4 mt-2">
+                                                <span class="flex items-center"><span class="w-4 h-4 bg-red-500 rounded inline-block mr-2"></span> Very High</span>
+                                                <span class="flex items-center"><span class="w-4 h-4 bg-orange-500 rounded inline-block mr-2"></span> High</span>
+                                                <span class="flex items-center"><span class="w-4 h-4 bg-yellow-400 rounded inline-block mr-2"></span> Medium</span>
+                                                <span class="flex items-center"><span class="w-4 h-4 bg-green-500 rounded inline-block mr-2"></span> Low</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-clrcontact1" role="tabpanel" aria-labelledby="pills-clrcontact-tab1">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+                                </div>
                             </div>
-
-                            <!-- Axis Labels -->
-                            <div class="flex justify-between items-center mt-4">
-                                <span class="rotate-[-90deg] absolute p-b-40 text-xl" style="left: 7rem; top:16rem">Impact of Risk</span>
-                                <span class="text-xl center-content">Probability of Risk</span>
-                            </div>
-                            <!-- Legend -->
-                            <div class="flex gap-4 mt-2">
-                            <h3 class="font-semibold text-gray-800 mt-5">Priority Legend:</h3>
-                            </div>
-                            <div class="flex gap-4 mt-2">
-                                <span class="flex items-center"><span class="w-4 h-4 bg-red-500 rounded inline-block mr-2"></span> Very High</span>
-                                <span class="flex items-center"><span class="w-4 h-4 bg-orange-500 rounded inline-block mr-2"></span> High</span>
-                                <span class="flex items-center"><span class="w-4 h-4 bg-yellow-400 rounded inline-block mr-2"></span> Medium</span>
-                                <span class="flex items-center"><span class="w-4 h-4 bg-green-500 rounded inline-block mr-2"></span> Low</span>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 @endsection
