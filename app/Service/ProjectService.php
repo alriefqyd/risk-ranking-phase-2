@@ -671,7 +671,7 @@ class ProjectService
         $mail = $project->email_pic;
         if(isset($mail)){
             try{
-                Mail::to($mail)->send(new NoteRemarkEmail($project));
+                Mail::to($mail)->cc(Setting::EMAIL_CC_REMARK)->send(new NoteRemarkEmail($project));
                 Log::info('Email send to : '.$mail);
             } catch (Exception $e){
                 Log::error($e->getMessage());

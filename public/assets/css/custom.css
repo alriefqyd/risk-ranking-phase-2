@@ -817,3 +817,18 @@
 .modal-dialog-large-custom {
     max-width: 610px !important;
 }
+.table {
+    table-layout: fixed; /* Fix table width */
+    width: 100%; /* Make table use full width */
+}
+
+td {
+    word-wrap: break-word; /* Ensures long text breaks */
+    white-space: normal; /* Allows text wrapping */
+}
+
+td:first-child {
+    width: 250px; /* Set fixed width for the left column */
+    vertical-align: top; /* Align text to the top */
+    font-weight: bold; /* Optional: makes labels clearer */
+}

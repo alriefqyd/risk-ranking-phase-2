@@ -230,6 +230,14 @@ class Setting extends Model
         'r_and_d_growth' => 'R & D / Growth'
     ];
 
+    public const EMAIL_CC_REMARK = [
+        "yunita" => "yunita.rahmuddin@vale.com",
+        "zulfikar" => "zulfikar.ibnu.masud@vale.com",
+        "busran" => "busran.mahmud@vale.com",
+        "muslim" => "muslim@vale.com",
+        "elfri" => "elfriani@vale.com",
+    ];
+
     public const INVESTMENT_STRATEGY = 'INVESTMENT_STRATEGY';
     public const sustaining = 'sustaining';
     public const r_and_d = 'r_and_d';

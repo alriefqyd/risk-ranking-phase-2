@@ -13,7 +13,7 @@
                 <li class="onhover-dropdown p-0">
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button class="btn btn-primary-light" type="button"><a :href="route('logout')"
+                        <button class="btn btn-primary-light" style="display: flex;align-items: center; gap: 8px;" type="button"><a :href="route('logout')"
                                onclick="event.preventDefault();
                                 this.closest('form').submit();">
                                 <i data-feather="log-out"></i>Log out</a></button>

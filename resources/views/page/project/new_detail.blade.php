@@ -165,112 +165,114 @@
                                 <h6 class="text-primary-template">Business Case</h6>
                             </div>
                             <div class="card-body">
-                                <table class="table table-striped table-responsive">
-                                    <tbody>
-                                    <tr>
-                                        <td width="200">
-                                            <p>Problem Statement :</p>
-                                        </td>
-                                        <td>{!! $project->business_case?->problem_statement_and_objective_text!!}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Objective :</td>
-                                        <td>
-                                            {!! $project->business_case?->objective !!}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Scope of Work :</td>
-                                        <td>
-                                            {!! $project->business_case?->project_scope_of_work_text !!}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>NPV :</td>
-                                        <td>
-                                            {{$project->business_case?->npv}} USD
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            IRR :
-                                        </td>
-                                        <td>
-                                            {{$project->business_case?->irr}} %
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Payback Period :
-                                        </td>
-                                        <td>
-                                            {{$project->business_case?->payback_period}} Year(s)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            TCO :
-                                        </td>
-                                        <td>
-                                            {{$project->business_case?->tco}} USD
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Cost Estimate :
-                                        </td>
-                                        <td>
-                                            {{$project->business_case?->cost_estimate}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Risk Level residual :
-                                        </td>
-                                        <td>
-                                            {{$project->business_case?->riskAssessment?->risk_level_residual ?? ""}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Risk Level Forecast :
-                                        </td>
-                                        <td>
-                                            {{$project->business_case?->riskAssessment?->risk_level_forecast ?? ""}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Risk Deduction :
-                                        </td>
-                                        <td>
-                                            {{$project->business_case?->riskAssessment?->risk_level_deduction ?? ""}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            KPI Summary :
-                                        </td>
-                                        <td>
-                                            <table>
-                                                <thead>
-                                                <td width="200">KPI</td>
-                                                <td width="100%">Est Time to Benefit</td>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($kpiData as $kpi)
-                                                    <tr>
-                                                        <td>{{$kpi['description']}}</td>
-                                                        <td>{{$kpi['time_to_benefit']}}</td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
+                                <div>
+                                    <table class="table table-striped table-content">
+                                        <tbody>
+                                        <tr>
+                                            <td width="200">
+                                                <p>Problem Statement :</p>
+                                            </td>
+                                            <td>{!! $project->business_case?->problem_statement_and_objective_text!!}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Objective :</p>
+                                            </td>
+                                            <td>{!! $project->business_case?->objective !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Scope of Work :</td>
+                                            <td>
+                                                <p>{!! $project->business_case?->project_scope_of_work_text !!}</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>NPV :</td>
+                                            <td>
+                                                {{$project->business_case?->npv}} USD
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                IRR :
+                                            </td>
+                                            <td>
+                                                {{$project->business_case?->irr}} %
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Payback Period :
+                                            </td>
+                                            <td>
+                                                {{$project->business_case?->payback_period}} Year(s)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                TCO :
+                                            </td>
+                                            <td>
+                                                {{$project->business_case?->tco}} USD
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Cost Estimate :
+                                            </td>
+                                            <td>
+                                                {{$project->business_case?->cost_estimate}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Risk Level residual :
+                                            </td>
+                                            <td>
+                                                {{$project->business_case?->riskAssessment?->risk_level_residual ?? ""}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Risk Level Forecast :
+                                            </td>
+                                            <td>
+                                                {{$project->business_case?->riskAssessment?->risk_level_forecast ?? ""}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Risk Deduction :
+                                            </td>
+                                            <td>
+                                                {{$project->business_case?->riskAssessment?->risk_level_deduction ?? ""}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                KPI Summary :
+                                            </td>
+                                            <td>
+                                                <table>
+                                                    <thead>
+                                                    <td width="200">KPI</td>
+                                                    <td width="100%">Est Time to Benefit</td>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($kpiData as $kpi)
+                                                        <tr>
+                                                            <td>{{$kpi['description']}}</td>
+                                                            <td>{{$kpi['time_to_benefit']}}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
 
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="card">
@@ -443,7 +445,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h6 class="text-primary-template float-start">Project Info</h6>
-                                    <button class="btn btn-danger js-btn-cancel-edit-bc float-end">Edit BC</button>
+                                    <div class="btn btn-danger js-btn-cancel-edit-bc float-end">Edit BC</div>
                                 </div>
                                 <div class="card-body">
                                     @include('page.project.form',[
