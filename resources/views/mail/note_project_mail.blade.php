@@ -49,7 +49,7 @@
                         <table style="width: 650px; margin: 0 auto; margin-bottom: 30px">
                             <tbody>
                             <tr>
-                                <td><img src="../assets/images/logo/logo.png" alt=""></td>
+                                <td><img src="{{asset('image/vale.png')}}" alt="Company Logo" width="100"/></td>
                                 <td style="text-align: right; color:#999"><span>Risk Ranking 2025</span></td>
                             </tr>
                             </tbody>

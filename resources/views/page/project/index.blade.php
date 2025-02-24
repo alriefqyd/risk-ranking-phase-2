@@ -141,6 +141,7 @@
                                     <th scope="col">Owner Area</th>
                                     <th scope="col">Sponsor</th>
                                     <th scope="col">BC Originator</th>
+                                    <th scope="col">BC Version</th>
                                     <th scope="col">Note</th>
                                     @can('delete')
                                         <th scope="col">Action</th>
@@ -167,6 +168,7 @@
                                             <td>{{$project->ownersProject?->name ?? $project->getOldDepartment($project->owner)}}</td>
                                             <td>{{$project?->sponsorsProject?->name ?? $project->getOldDepartment($project->sponsor)}}</td>
                                             <td>{{$project?->bc_originator}}</td>
+                                            <td>{{$project->version}}</td>
                                             <td>
                                                 <a data-bs-toggle="modal"
                                                    class="modal-note"

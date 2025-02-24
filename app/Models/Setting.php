@@ -236,6 +236,7 @@ class Setting extends Model
         "busran" => "busran.mahmud@vale.com",
         "muslim" => "muslim@vale.com",
         "elfri" => "elfriani@vale.com",
+        "alriefqy" => "c0661472@vale.com",
     ];
 
     public const INVESTMENT_STRATEGY = 'INVESTMENT_STRATEGY';

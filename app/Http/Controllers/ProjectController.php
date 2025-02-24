@@ -257,7 +257,7 @@ class ProjectController extends Controller
                 ]);
             }
             $businessCase->save();
-
+            $projectService->sendEmailSubmitNotification($project);
             DB::commit();
 
             if($request->status == "PUBLISH"){
@@ -582,7 +582,7 @@ class ProjectController extends Controller
                     ->whereNull('read_at')->delete();
                 event(new Sending($project));
 
-                $ps->sendEmail($project);
+                $ps->sendEmailRemarkNotification($project);
             }
 
             if($request->has('bc_status')) $project->bc_status = $request->bc_status;

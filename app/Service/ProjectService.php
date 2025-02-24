@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Mail\NoteRemarkEmail;
+use App\Mail\SubmissionNotificationEmail;
 use App\Models\CapexInvestment;
 use App\Models\CriteriasProjects;
 use App\Models\Department;
@@ -667,7 +668,7 @@ class ProjectService
         return $att;
     }
 
-    public function sendEmail(Project $project){
+    public function sendEmailRemarkNotification(Project $project){
         $mail = $project->email_pic;
         if(isset($mail)){
             try{
@@ -678,6 +679,19 @@ class ProjectService
             }
         } else {
             Log::warning("No email found for {$mail} in project : {$project->project_name}");
+        }
+    }
+
+    public function sendEmailSubmitNotification(Project $project){
+        if(isset($project->project_name)){
+            try{
+                Mail::to("elfriani@vale.com")->cc(Setting::EMAIL_CC_REMARK)->send(new SubmissionNotificationEmail($project));
+                Log::info('Email send to : elfriani@vale.com');
+            } catch (Exception $e){
+                Log::error($e->getMessage());
+            }
+        } else {
+            Log::warning("No email found");
         }
     }
 
