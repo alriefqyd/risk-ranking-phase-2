@@ -29,6 +29,7 @@ class UserService
 
     public $export = [
         User::ROLE['admin'],
+        User::ROLE['admin-dept'],
         //User::ROLE['viewer']
     ];
 

@@ -62,7 +62,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('export', function(User $user) use ($userService){
-            if(auth()->user()->department == 6) return true;
             return $userService->isUserHaveAccess($userService->export);
         });
 

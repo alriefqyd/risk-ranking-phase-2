@@ -178,8 +178,12 @@ $(function() {
 
         // Find the index of the 'year' segment and get the next segment
         let yearIndex = segments.indexOf('year') + 1;
-        let year = segments[yearIndex];
 
+        if(yearIndex == 0){
+            return '2025'
+        }
+
+        let year = segments[yearIndex];
         return year;
     }
 
@@ -201,7 +205,7 @@ $(function() {
                 var a = document.createElement('a');
                 var url = window.URL.createObjectURL(data);
                 a.href = url;
-                a.download = 'risk-ranking-2023.xlsx';
+                a.download = 'risk-ranking-'+year+'.xlsx';
                 document.body.append(a);
                 a.click();
                 a.remove();
