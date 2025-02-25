@@ -206,7 +206,7 @@
                                     @endforeach
                                 @else
                                     <tr class="text-center">
-                                        <td colspan="15">Empty Data</td>
+                                        <td colspan="8">Empty Data</td>
                                     </tr>
                                 @endif
                                 </tbody>

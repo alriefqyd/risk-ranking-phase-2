@@ -182,7 +182,6 @@
                                 </select>
                             </td>
                             <td>
-                            <td>
                             <span class="btn btn-sm btn-danger js-remove-kpi-fel3">
                                 <i class="fa fa-trash"></i>
                             </span>
