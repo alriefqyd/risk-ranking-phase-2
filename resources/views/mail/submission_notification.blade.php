@@ -54,15 +54,15 @@
                                     <p>Dear Elfriani,</p>
                                     <p>We would like to inform you that a new business case has been submitted with the following details:</p>
 
-                                    <p><b>Title:</b> {{ $data->project_name }}</p>
+                                    <p><b>Title:</b>  <a href="{{ url('/project/'.$data->id) }}"> {{ $data->project_name }} </a></p>
                                     <p><b>Originator:</b> {{ $data->bc_originator }}</p>
                                     <p><b>Presenter:</b> {{$data->bc_presenter}}</p>
                                     <p><b>Owner:</b> {{$data->ownersProject?->name}}</p>
                                     <p><b>Sponsor:</b> {{$data?->sponsorsProject?->name}}</p>
 
-                                    <p>Please review the submission at your earliest convenience.</p>
+                                    <p>Please review the submission <a href="{{ url('/project/'.$data->id) }}"> here </a> at your earliest convenience.</p>
 
-                                    <p><i>This is an automated message. <b>Please do not reply to this email.</b>
+                                    <p><i>This is an automated message. <b>Please do not reply to this email.</b></i>
                                     <p style="margin-bottom: 0">Best regards,<br><b>Risk Ranking 2026-2030 Team</b></p>
                                 </td>
                             </tr>
