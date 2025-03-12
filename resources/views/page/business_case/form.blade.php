@@ -32,7 +32,7 @@
     <input type="hidden" class="js-project-id" value="{{$project->id ?? ''}}">
 
     <!-- Problem Statement -->
-    <div class="field-container">
+    <div class="field-container js-tour" data-tg-tour="Provide a clear and concise description of the issue or opportunity being addressed by this project.">
         <h6>Problem Statement <span class="text-danger">*</span></h6>
         <small>Provide a clear and concise description of the issue or opportunity being addressed by this project.</small>
         <textarea class="tinymce js-bc_problem_statement" name="problem_statement">{!! $project->business_case?->problem_statement_and_objective_text ?? ""!!}</textarea>
@@ -40,7 +40,7 @@
     </div>
 
     <!-- Objective -->
-    <div class="field-container">
+    <div class="field-container js-tour" data-tg-tour="Define the key objective of this project, focusing on measurable outcomes and solutions to the stated problem.">
         <h6>Objective<span class="text-danger">*</span></h6>
         <small>(Clear objective of projected connected to finding a solution of the stated problem statement above – preferably measurable objectives)</small>
         <textarea class="tinymce" name="objective">{!! $project?->business_case?->objective ?? ""!!}</textarea>
@@ -48,7 +48,7 @@
     </div>
 
     <!-- Scope of Work -->
-    <div class="field-container">
+    <div class="field-container js-tour" data-tg-tour="Outline the specific tasks and deliverables required to address the problem or opportunity effectively.">
         <h6>Scope of Work <span class="text-danger">*</span></h6>
         <small>Define the specific tasks and deliverables required to address the problem or opportunity.</small>
         <textarea class="tinymce js-bc_scope_of_work" name="scope_of_work">{!! $project?->business_case?->project_scope_of_work_text ?? "" !!}</textarea>
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Financial Evaluation -->
-    <div class="field-container">
+    <div class="field-container js-tour" data-tg-tour="Enter key financial metrics to assess the project's economic feasibility. Ensure to attach the approved financial evaluation document for verification.">
         <h6>Financial Evaluation </h6>
         <small>Summarize the financial benefits of the project. Include metrics such as NPV, IRR, payback period, and TCO.</small>
         <div class="row mb-4">
@@ -90,11 +90,12 @@
                     </a>
                 </div>
             @endif
+            <span class="text-danger">* Submit only fully completed and approved documents.</span>
         </div>
     </div>
 
     <!-- Cost Estimate -->
-    <div class="field-container">
+    <div class="field-container js-tour" data-tg-tour="Enter the total estimated cost of the project, including all relevant expenses. Ensure to attach the approved cost estimate document for validation.">
         <h6>Cost Estimate <span class="text-danger">*</span></h6>
         <small>Enter the estimated total cost of the project, including all relevant expenses.</small>
         <div class="input-group">
@@ -115,11 +116,12 @@
                     </a>
                 </div>
             @endif
+            <span class="text-danger">* Submit only fully completed and approved documents.</span>
         </div>
     </div>
 
     <!-- Risk Assessment -->
-    <div class="field-container">
+    <div class="field-container js-tour" data-tg-tour="Assess the project's risk levels, including residual risk, forecasted risk, and risk deductions. Ensure to attach the approved risk matrix document for reference.">
         <h6>Risk Assessment </h6>
         <small>Summarize the financial benefits of the project. Include metrics such as NPV, IRR, payback period, and TCO.</small>
         <div class="row mb-4">
@@ -149,10 +151,11 @@
                     </a>
                 </div>
             @endif
+            <span class="text-danger">* Submit only fully completed and approved documents.</span>
         </div>
     </div>
 
-    <div class="field-container">
+    <div class="field-container js-tour" data-tg-tour="Define the project's expected benefits and key performance indicators.">
         <h6>KPI Summary <span class="text-danger">*</span></h6>
         <small>(Description of project's expected benefit and measurable KPIs, a plan to measure and calculate the benefit/KPIs for post project review, and the estimated timeframe to achieve KPI/benefit from the execution of this project)</small>
         <div class="row p-4">

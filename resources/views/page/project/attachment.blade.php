@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4 js-tour" data-tg-tour="Attach all required supporting documents before submission.">
     <!-- FEL 3 Approved Document -->
     <div class="mb-4 js-parent-pd">
         <label for="fel3File" class="form-label fw-bold">Preliminary Design <span class="text-danger">*</span></label>
@@ -19,6 +19,7 @@
                     @endforeach
                 </ul>
             @endif
+            <span class="text-danger">* Submit only fully completed and approved documents.</span>
         </div>
     </div>
     <!-- Change Management Request -->
@@ -96,6 +97,7 @@
                 </a>
             </div>
         @endif
+        <p><span class="text-danger">* Submit only fully completed and approved documents.</span></p>
     </div>
     <input type="hidden" name="folder" value="{{uniqid() . '-' . now()->timestamp}}" class="js-temp-folder">
 </div>
@@ -195,6 +197,8 @@
                 acceptedFileTypes: ['application/pdf'], // Only allow PDFs
                 labelFileTypeNotAllowed: 'Only PDF files are allowed.', // Custom error message
                 fileValidateTypeLabelExpectedTypes: 'Expected a PDF file', // Tooltip for validation
+                labelMaxFileSizeExceeded:'The maximum size of file is 20MB',
+                maxFileSize: 2.5 * 1024 * 1024
             });
 
             pond.on('removefile', (error, file) => {
