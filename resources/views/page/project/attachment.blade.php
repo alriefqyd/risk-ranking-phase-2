@@ -194,7 +194,9 @@
                     },
                 },
                 // Restrict file types to PDF only
-                acceptedFileTypes: ['application/pdf'], // Only allow PDFs
+                acceptedFileTypes: documentType === "financial_evaluation"
+                        ? ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/pdf'] // .xlsx MIME type
+                        : ['application/pdf'],
                 labelFileTypeNotAllowed: 'Only PDF files are allowed.', // Custom error message
                 fileValidateTypeLabelExpectedTypes: 'Expected a PDF file', // Tooltip for validation
                 labelMaxFileSizeExceeded:'The maximum size of file is 20MB',
