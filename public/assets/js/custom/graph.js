@@ -78,6 +78,11 @@ $(function () {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout:{
+                    padding:{
+                        top:30
+                    }
+                },
                 scales: {
                     x: {
                         stacked: false,
@@ -98,6 +103,12 @@ $(function () {
                         title: {
                             display: true,
                             text: 'Number of Projects'
+                        },
+                        ticks: {
+                            stepSize: 1, // Show only whole numbers
+                            callback: function(value) {
+                                return Number.isInteger(value) ? value : null;
+                            }
                         }
                     },
                     yBudget: {
@@ -109,18 +120,32 @@ $(function () {
                             text: 'Cost Estimate Budget (in million $)'
                         },
                         ticks: {
-                            callback: function (value) {
-                                return value.toLocaleString();
-                            }
+                            callback: function (value, index, values) {
+                                const log = Math.log10(value);
+                                const isWholePower = Number.isInteger(log);
+                                const allowedDecimals = [1, 2, 5];
+                                const base = Math.pow(10, Math.floor(log));
+                                const ratio = value / base;
+
+                                // Show only clean values like 0.1, 0.2, 0.5, 1, 2, 5, etc.
+                                if (isWholePower || allowedDecimals.includes(ratio)) {
+                                    // Format to avoid duplicates like "0.10" vs "0.1"
+                                    return parseFloat(value.toFixed(2)).toString();
+                                }
+                                return null;
+                            },
+                            autoSkip: false
                         },
                         grid: {
                             drawOnChartArea: false
                         }
                     }
+
                 },
                 plugins: {
                     legend: {
-                        display: true
+                        display: true,
+                        position: 'bottom'
                     },
                     tooltip: {
                         callbacks: {
