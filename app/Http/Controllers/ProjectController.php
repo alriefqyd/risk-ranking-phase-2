@@ -257,10 +257,10 @@ class ProjectController extends Controller
                 ]);
             }
             $businessCase->save();
-            $projectService->sendEmailSubmitNotification($project);
             DB::commit();
 
             if($request->status == "PUBLISH"){
+                $projectService->sendEmailSubmitNotification($project);
                 return response()->json([
                     'success' => true,
                     'id' => $project->id,
@@ -519,6 +519,10 @@ class ProjectController extends Controller
                                     'newValue' => $newValue,
                                 ];
                             }
+                        }
+
+                        if($currentVersion == 1){
+                            $projectService->sendEmailSubmitNotification($project);
                         }
 
                         if (!empty($logArray)) {
