@@ -546,7 +546,7 @@ class ProjectController extends Controller
                 $project->save();
                 DB::commit();
 
-                if($currentVersion >= 1){
+                if($currentVersion >= 1 && $request->status == "PUBLISH"){
                     $projectService->sendEmailSubmitNotification($project);
                 }
 
