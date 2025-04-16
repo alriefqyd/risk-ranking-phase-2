@@ -72,7 +72,7 @@ class HomeController extends Controller
 
     public function getDataGraph(Request $request){
         $ps = new ProjectService();
-        $project = Project::with(['business_case','ownersProject'])->where('presented_year',config('constants.project_presented_year'));
+        $project = Project::with(['business_case','ownersProject'])->where('presented_year',config('constants.project_presented_year'))->where('version','>=','1');
         if(auth()->user()->role == 'Admin Department'){
             $project = $project->where('operation_area', auth()->user()->department);
         }
@@ -264,7 +264,10 @@ class HomeController extends Controller
     }
 
     public function getBudgetRiskValue($value, $type){
-        $ra = RiskAssessments::with('businessCase')->where($type,$value)->get();
+        $ra = RiskAssessments::with(['businessCase.project'])->where($type,$value)->whereHas('businessCase.project',function ($query){
+            return $query->where('version','>=','1');
+        })->get();
+
         if(!isset($ra)) return 0;
 
         $ce = $ra->sum(function($item){

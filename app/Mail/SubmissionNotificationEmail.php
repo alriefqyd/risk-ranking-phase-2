@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\RevisionLog;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -21,6 +22,7 @@ class SubmissionNotificationEmail extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
+
     }
 
     /**
@@ -30,8 +32,12 @@ class SubmissionNotificationEmail extends Mailable
      */
     public function envelope()
     {
+        $subject = 'New Business Case Submitted: "' . $this->data->project_name . '" – Review Required';
+        if($this->data->version > 1){
+            $subject = 'Updated Business Case: "' . $this->data->project_name . '" – Review Required';
+        }
         return new Envelope(
-            subject: 'Submission Notification Email',
+            subject: $subject
         );
     }
 
@@ -42,9 +48,16 @@ class SubmissionNotificationEmail extends Mailable
      */
     public function content()
     {
+        $latestLog = RevisionLog::where('project_id', $this->data->id)
+            ->orderByDesc('revision') // or 'created_at' if available
+            ->first(); // Get only the newest log
+
         return new Content(
             view: 'mail.submission_notification',
-            with: ['data' => $this->data],
+            with: [
+                'data' => $this->data,
+                'log' => $latestLog, // pass single log, not list
+            ],
         );
     }
 

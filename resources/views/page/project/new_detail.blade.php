@@ -254,19 +254,14 @@
                                             </td>
                                             <td>
                                                 <table>
-                                                    <thead>
-                                                    <td width="200">KPI</td>
-                                                    <td width="100%">Est Time to Benefit</td>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($kpiData as $kpi)
-                                                        <tr>
-                                                            <td>{{$kpi['description']}}</td>
-                                                            <td>{{$kpi['time_to_benefit']}}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-
+                                                    <tr>
+                                                        <td>KPI</td>
+                                                        <td><b>Est Time to Benefit</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>2</td>
+                                                    </tr>
                                                 </table>
                                             </td>
                                         </tr>

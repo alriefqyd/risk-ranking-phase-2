@@ -521,9 +521,6 @@ class ProjectController extends Controller
                             }
                         }
 
-                        if($currentVersion == 1){
-                            $projectService->sendEmailSubmitNotification($project);
-                        }
 
                         if (!empty($logArray)) {
                             // Create a new revision log
@@ -548,6 +545,10 @@ class ProjectController extends Controller
                 $businessCase->save();
                 $project->save();
                 DB::commit();
+
+                if($currentVersion >= 1){
+                    $projectService->sendEmailSubmitNotification($project);
+                }
 
                 if(Storage::exists($path)){
                     rename(Storage::path($path),Storage::path('documents/'.$project->project_name));

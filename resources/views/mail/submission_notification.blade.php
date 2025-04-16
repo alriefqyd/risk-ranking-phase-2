@@ -52,22 +52,57 @@
                             <tr>
                                 <td style="padding: 30px">
                                     <p>Dear Elfriani,</p>
-                                    <p>We would like to inform you that a new business case has been submitted with the following details:</p>
+                                    @if($data->version  == 1)
+                                        <p>We would like to inform you that a new business case has been submitted with the following details:</p>
 
-                                    <p><b>Title:</b>  <a href="{{ url('/project/'.$data->id) }}"> {{ $data->project_name }} </a></p>
-                                    <p><b>Originator:</b> {{ $data->bc_originator }}</p>
-                                    <p><b>Presenter:</b> {{$data->bc_presenter}}</p>
-                                    <p><b>Owner:</b> {{$data->ownersProject?->name}}</p>
-                                    <p><b>Sponsor:</b> {{$data?->sponsorsProject?->name}}</p>
+                                        <p><b>Title:</b>  <a href="{{ url('/project/'.$data->id) }}"> {{ $data->project_name }} </a></p>
+                                        <p><b>Originator:</b> {{ $data->bc_originator }}</p>
+                                        <p><b>Presenter:</b> {{$data->bc_presenter}}</p>
+                                        <p><b>Owner:</b> {{$data->ownersProject?->name}}</p>
+                                        <p><b>Sponsor:</b> {{$data?->sponsorsProject?->name}}</p>
+                                    @endif
 
-                                    <p>Please review the submission <a href="{{ url('/project/'.$data->id) }}"> here </a> at your earliest convenience.</p>
+                                    @if($data->version  > 1)
+                                        <p>We would like to inform you that the business case titled “{{$data->project_name}}” has been updated to version [<b>{{$data->version}}</b>] with new information and now requires your review again.</p>
 
-                                    <p><i>This is an automated message. <b>Please do not reply to this email.</b></i>
-                                    <p style="margin-bottom: 0">Best regards,<br><b>Risk Ranking 2026-2030 Team</b></p>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                        <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px;">
+                                            <thead>
+                                            <tr style="background-color: #f2f2f2; color: #333;">
+                                                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Revision No.</th>
+                                                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Revision Date</th>
+                                                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Summary of Changes</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @if($log && !empty(json_decode($log->changes)))
+                                                <tr>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">{{ $log->revision }}</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">{{ $log->date }}</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">
+                                                        <ul style="list-style-type: disc; padding-left: 20px; margin: 0;">
+                                                            @foreach(json_decode($log->changes) as $item)
+                                                                @if($item->field == 'preliminary_design')
+                                                                    <li>Adjusted the file preliminary design</li>
+                                                                @else
+                                                                    @if(isset($item->oldValue))
+                                                                        <li>Adjusted the {{ $item->field }} from <b>{{ $item->oldValue }}</b> to <b>{{ $item->newValue }}</b>.</li>
+                                                                    @else
+                                                                        <li>Added a new file/value for {{ $item->field }}: <b>{{ $item->newValue }}</b></li>
+                                                                    @endif
+                                                                @endif
+                                                            @endforeach
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                            </tbody>
+                                        </table>
+                                   @endif
+                        <br>
+                        <p>Please review the submission <a href="{{ url('/project/'.$data->id) }}"> here </a> at your earliest convenience.</p>
+
+                        <p><i>This is an automated message. <b>Please do not reply to this email.</b></i>
+                        <p style="margin-bottom: 0">Best regards,</br><b>Risk Ranking 2026-2030 Team</b></p>
                     </td>
                 </tr>
                 </tbody>
