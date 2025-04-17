@@ -51,31 +51,49 @@ class DocumentController extends Controller
         ]);
     }
 
-    public function preview(Request $request){
+    public function preview(Request $request)
+    {
         try {
             $dir = urldecode($request->dir);
-            return response()->file(storage_path('app/documents/'.$dir.'/'. $request->category .'/'.$request->file));
-        } catch (\Exception $e){
-            if($request->category == Setting::FOLDER_TYPE['assessment']){
-                $request->session()->flash('page-tab','assessment');
+            $filePath = storage_path('app/documents/' . $dir . '/' . $request->category . '/' . $request->file);
+
+            if (!file_exists($filePath)) {
+                throw new \Exception('File not found.');
             }
-            if($request->category == Setting::FOLDER_TYPE['fel1']){
-                $request->session()->flash('page-tab','fel1');
+
+            $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+            // Preview only if it's a PDF
+            if ($extension === 'pdf') {
+                return response()->file($filePath);
             }
-            if($request->category == Setting::FOLDER_TYPE['fel2']){
-                $request->session()->flash('page-tab','fel2');
+
+            // For all other types, trigger download
+            return response()->download($filePath);
+
+        } catch (\Exception $e) {
+            // Preserve tab state if error occurs
+            if ($request->category == Setting::FOLDER_TYPE['assessment']) {
+                $request->session()->flash('page-tab', 'assessment');
             }
-            if($request->category == Setting::FOLDER_TYPE['fel3']){
-                $request->session()->flash('page-tab','fel3');
+            if ($request->category == Setting::FOLDER_TYPE['fel1']) {
+                $request->session()->flash('page-tab', 'fel1');
             }
-            if($request->category == Setting::FOLDER_TYPE['bc']){
-                $request->session()->flash('page-tab','business-case');
+            if ($request->category == Setting::FOLDER_TYPE['fel2']) {
+                $request->session()->flash('page-tab', 'fel2');
+            }
+            if ($request->category == Setting::FOLDER_TYPE['fel3']) {
+                $request->session()->flash('page-tab', 'fel3');
+            }
+            if ($request->category == Setting::FOLDER_TYPE['bc']) {
+                $request->session()->flash('page-tab', 'business-case');
             }
 
             $request->session()->flash('alert-error-download', $e->getMessage());
-            return $e->getMessage();
+            return back();
         }
     }
+
 
     public function uploadDocument(Request $request,$file, $existingDocument, $project_name, $allowedFileExtension){
         $document_name = null;
