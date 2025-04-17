@@ -85,7 +85,7 @@
                                                                     <li>Adjusted the file preliminary design</li>
                                                                 @else
                                                                     @if(isset($item->oldValue))
-                                                                        <li>Adjusted the {{ $item->field }} from <b>{{ $item->oldValue }}</b> to <b>{{ $item->newValue }}</b>.</li>
+                                                                        <li>Adjusted the {{ $item->field }} from <b>{!!  $item->oldValue !!}</b> to <b>{!! $item->newValue !!}</b>.</li>
                                                                     @else
                                                                         <li>Added a new file/value for {{ $item->field }}: <b>{{ $item->newValue }}</b></li>
                                                                     @endif

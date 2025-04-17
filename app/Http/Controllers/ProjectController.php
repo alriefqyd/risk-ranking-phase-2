@@ -143,10 +143,7 @@ class ProjectController extends Controller
             // Validate the request
             $data = $this->validate($request, [
                 'project_name' => 'required',
-                'project_number' => [
-                    'required',
-                    Rule::unique('projects')->where('deleted_at', null)
-                ],
+                'project_number' => 'required',
                 'operation_area' => 'required',
                 'sponsor_area' => 'required',
                 'owner' => 'required',
@@ -161,27 +158,34 @@ class ProjectController extends Controller
             ]);
 
             // Create the project
-            $project = Project::create([
-                'project_number' => $request->project_number,
-                'project_name' => $request->project_name,
-                'operation_area' => $request->operation_area,
-                'sponsor_area' => $request->sponsor_area,
-                'owner' => $request->owner,
-                'sponsor' => $request->project_sponsor,
-                'directorate' => $request->directorate,
-                'bc_presenter' => $request->bc_presenter,
-                'bc_originator' => $request->bc_originator,
-                'bc_status' => $request->bc_status,
-                'note' => $request->note,
-                'finance_analyst' => $request->finance_analyst,
-                'email_pic' => $request->email_pic,
-                'basket' => $request->basket,
-                'sub_basket' => $request->sub_basket,
-                'sub_basket_categories' => $request->sub_basket_categories,
-                'presented_year' => now()->year,
-                'created_by' => auth()->id(),
-                'version' => $request->status == 'PUBLISH' ? 1 : 0
-            ]);
+            $project = DB::transaction(function () use ($request, $projectService) {
+                // Lock the entire table or a specific row (if you have a settings/config row)
+                DB::table('projects')->where('presented_year', now()->year)->lockForUpdate()->get();
+
+                $projectNumber = $projectService->generateProjectNumber();
+
+                return Project::create([
+                    'project_number' => $projectNumber,
+                    'project_name' => $request->project_name,
+                    'operation_area' => $request->operation_area,
+                    'sponsor_area' => $request->sponsor_area,
+                    'owner' => $request->owner,
+                    'sponsor' => $request->project_sponsor,
+                    'directorate' => $request->directorate,
+                    'bc_presenter' => $request->bc_presenter,
+                    'bc_originator' => $request->bc_originator,
+                    'bc_status' => $request->bc_status,
+                    'note' => $request->note,
+                    'finance_analyst' => $request->finance_analyst,
+                    'email_pic' => $request->email_pic,
+                    'basket' => $request->basket,
+                    'sub_basket' => $request->sub_basket,
+                    'sub_basket_categories' => $request->sub_basket_categories,
+                    'presented_year' => now()->year,
+                    'created_by' => auth()->id(),
+                    'version' => $request->status == 'PUBLISH' ? 1 : 0,
+                ]);
+            });
 
             $kpiData = [];
             foreach ($request->kpi_description as $index => $description) {
