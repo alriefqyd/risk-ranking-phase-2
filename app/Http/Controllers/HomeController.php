@@ -284,4 +284,33 @@ class HomeController extends Controller
 
         return $ce;
     }
+
+
+    public function getDataBudgetByRiskCategory(Request $request){
+        $riskCollect = collect();
+        $type = $request->type;
+        foreach (Setting::RISK_CATEGORY as $risk){
+            $ra = RiskAssessments::with(['businessCase.project'])->whereIn($type,$risk)->whereHas('businessCase.project',function ($query){
+                return $query->where('version','>=','1');
+            })->get();
+
+            $ce = $ra->sum(function($item){
+                if(isset($item->businessCase->cost_estimate)){
+                    $cost = str_replace('.','',$item->businessCase->cost_estimate);
+                    $cost = (float)$cost ?? 0;
+                    $cost = $cost / 1000000;
+                    return $cost;
+                }
+
+                return 0;
+
+            });
+
+            $riskCollect->push([
+                'cost'=> $ce,
+                'quantity' => $ra->count()
+            ]);
+        }
+        return response()->json(['data'=>$riskCollect]);
+    }
 }

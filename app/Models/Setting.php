@@ -234,10 +234,22 @@ class Setting extends Model
         "yunita" => "yunita.rahmuddin@vale.com",
         "zulfikar" => "zulfikar.ibnu.masud@vale.com",
         "busran" => "busran.mahmud@vale.com",
+        "Warsa" => "c0676376@vale.com ",
+        "Gio" => "c0671662@vale.com ",
+        "Nisa" => "c0670579@vale.com",
+        "Femi" => "c0675856@vale.com",
+        "Ibnu" => "c0678809@vale.com",
         "muslim" => "muslim@vale.com",
         "elfri" => "elfriani@vale.com",
         "alriefqy" => "c0661472@vale.com",
         "syahriani" => "syahriani.syahriani@vale.com",
+    ];
+
+    public const RISK_CATEGORY = [
+        'very_high' => [1,2,3,4,5,6],
+        'high' => [7,8,9,10,11,12,13],
+        'medium' => [14,15,16,17,18,19,20],
+        'low' => [21,22,23,24,25,26],
     ];
 
     public const INVESTMENT_STRATEGY = 'INVESTMENT_STRATEGY';

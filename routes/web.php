@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class,'index'])->middleware(['auth'])->name('dashboard.default');
 Route::get('/dashboard', [\App\Http\Controllers\HomeController::class,'index'])->middleware(['auth'])->name('dashboard');
 Route::get('/getDataGraph',[\App\Http\Controllers\HomeController::class,'getDataGraph'])->name('getDataGraph ')->middleware('auth');
+Route::get('/getDataGraphByRiskCategory', [\App\Http\Controllers\HomeController::class, 'getDataBudgetByRiskCategory'])->middleware(['auth']);
 
 Route::get('/project',[\App\Http\Controllers\ProjectController::class,'index'])->name('project ')->middleware('auth');
 Route::get('/project/year/{year}',[\App\Http\Controllers\ProjectController::class,'index'])->name('project.year ')->middleware('auth');

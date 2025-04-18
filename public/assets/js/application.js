@@ -12,10 +12,36 @@ $(function() {
         })
     })
 
+        // if(!localStorage.getItem('tour')){
+        //     const tour = new tourguide.TourGuideClient({
+        //         showStepNumbers: true,
+        //         showPrevStep: true,
+        //         showNextStep: true
+        //     });
+        //
+        //     $('.js-tour').each(function () {
+        //         let stepText = $(this).attr('data-tg-tour'); // Get the text from the attribute
+        //         stepText = stepText + '<br><br><input type="checkbox" value="tour" name="tour"> Close and Dont show this again'
+        //         $(this).attr('data-tg-tour', stepText);
+        //     });
+        //     // Start the tour
+        //     tour.start();
+        //
+        //     tour.onAfterStepChange(function (){
+        //         if(tour.activeStep === 2){
+        //             $('.main-nav').removeClass('close_icon');
+        //             // Add your custom code here
+        //         }
+        //     });
+        //
+        //     // localStorage.setItem('tour',true);
+        // }
+
+
     var $summernote = $('.summernote');
     $summernote.each(function () {
-        var _this = $(this)
-        var _disable = _this.data('disable')
+        var _this = $(this);
+        var _disable = _this.data('disable');
         _this.summernote(
             {
                 disable: true,
@@ -78,6 +104,10 @@ $(function() {
                     if (_note_viewer.length > 0) {
                         _this.find('.js-project_note').html(data.project.note)
                     } else {
+                        console.log(data.project.note.length)
+                        if(data.project.note.length < 1){
+                            editor.setData("<br><br>Deadline revisi sampai tgl 19 April sesuai schedule. Jika belum ada revisi submission sampai deadline tersebut tolong dihapus saja dari database utk memudahkan kompilasi. Hanya BC yg sudah komplit yang diskedulkan utk pre-CRC meeting")
+                        }
                         editor.setData(data.project.note);
                     }
                     _this.find('.loader-box').addClass('d-none');
