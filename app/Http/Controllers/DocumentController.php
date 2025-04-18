@@ -56,7 +56,6 @@ class DocumentController extends Controller
         try {
             $dir = urldecode($request->dir);
             $filePath = storage_path('app/documents/' . $dir . '/' . $request->category . '/' . $request->file);
-
             if (!file_exists($filePath)) {
                 throw new \Exception('File not found.');
             }
@@ -188,6 +187,7 @@ class DocumentController extends Controller
                     // Handle multiple files for preliminary_design
                     foreach ($files as $file) {
                         $filename = $file->getClientOriginalName();
+                        $filename = str_replace('#','-',$filename);
                         $file->storeAs('documents/temp/' . $folder . '/' . $k, $filename);
 
                         TemporaryFile::create([
