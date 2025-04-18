@@ -77,6 +77,8 @@ class ProjectController extends Controller
             $year = $request->year;
         }
         $projectList = $projectService->getAllProject(true, $year);
+        $projectDraft = $projectService->getAllProjectStatus($year)->where('version','<',1)->count();
+        $projectSubmit = $projectService->getAllProjectStatus($year)->where('version','>',0)->count();
         $department = $projectService->getDepartment($department, null);
         $subDepartment = $projectService->getDepartment($subDepartment, null);
 
@@ -88,7 +90,9 @@ class ProjectController extends Controller
             'department' => $department,
             'subDepartment' => $subDepartment,
             'bcStatus' => $bcStatus,
-            'year' => $year
+            'year' => $year,
+            'draft' => $projectDraft,
+            'submit' => $projectSubmit,
         ]);
     }
 

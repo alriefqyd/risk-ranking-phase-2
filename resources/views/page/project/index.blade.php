@@ -128,6 +128,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="btn-group btn-group-square " role="group" aria-label="Basic example">
+                                            <input type="hidden" name="status" value="{{request()->status}}" class="js-status-filter">
+                                            <button class="btn btn-outline-light txt-dark {{request()->status == "DRAFT" ? "active" : ""}} js-btn-status" style="font-size: 13px; font-weight:normal" data-value="DRAFT" type="button">
+                                                Draft ({{$draft}})
+                                            </button>
+                                            <button class="btn btn-outline-light txt-dark {{request()->status == "SUBMIT" ? "active" : ""}} js-btn-status" style="font-size: 13px; font-weight:normal" data-value="SUBMIT" type="button">
+                                                Submit ({{$submit}})
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         @endcan
                     </div>
@@ -142,6 +155,7 @@
                                     <th scope="col">Sponsor</th>
                                     <th scope="col">BC Originator</th>
                                     <th scope="col">BC Version</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Note</th>
                                     @can('delete')
                                         <th scope="col">Action</th>
@@ -169,6 +183,12 @@
                                             <td>{{$project?->sponsorsProject?->name ?? $project->getOldDepartment($project->sponsor)}}</td>
                                             <td>{{$project?->bc_originator}}</td>
                                             <td>{{$project->version}}</td>
+                                            <td>@if ($project?->getStatus() === 'SUBMIT')
+                                                    <span class="badge bg-success">Submitted</span>
+                                                @else
+                                                    <span class="badge bg-warning text-dark">Draft</span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <a data-bs-toggle="modal"
                                                    class="modal-note"

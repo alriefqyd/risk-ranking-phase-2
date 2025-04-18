@@ -113,7 +113,7 @@ $(function() {
                     _this.find('.loader-box').addClass('d-none');
                 }
             }
-        })
+        });
 
     });
 
@@ -3295,6 +3295,14 @@ $(function() {
     /**
      * select risk ranking project list
      */
+
+    $('.js-btn-status').on('click',function(){
+        var _this = $(this);
+        var _data_value = _this.data('value');
+        _this.siblings('.js-status-filter').val(_data_value);
+        _this.closest('form').submit();
+    });
+
     $('.js-select-rr-project-list').on('change',function(){
         var _value = $(this).val();
         if(_value != '')window.location.href = '/project/year/'+_value

@@ -64,12 +64,15 @@ class ProjectService
         return $price;
     }
 
+    public function getAllProjectStatus($year){
+        return $this->getAllProject(false,$year,null,false);
+    }
     /**
      * Get All Project
      * @param $paginate
      * @return mixed
      */
-    public function getAllProject($paginate, $year, $isHomePage = null){
+    public function getAllProject($paginate, $year, $isHomePage = null, $isCountStatus = true){
         $department = auth()->user()->department;
 
         if(!isset($year)) {
@@ -82,6 +85,7 @@ class ProjectService
         }
 
         $filter = ['q','operation_area','sponsor_area','category','type'];
+        if($isCountStatus) $filter = ['q','operation_area','sponsor_area','category','type','status'];
         if($year < config('constants.project_presented_year')){
             $new = ['owner','sponsor'];
             $filter = array_merge($new,$filter);

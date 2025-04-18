@@ -87,6 +87,14 @@ class Project extends Model
         return $this->hasMany(RevisionLog::class,'project_id');
     }
 
+    public function getStatus(){
+        if($this->version > 0){
+            return "SUBMIT";
+        }
+
+        return "DRAFT";
+    }
+
     public function isHaveCriterias(){
         $data = DB::table('criterias_categories')->where('sub_basket_id', $this->sub_basket)->where('category_id', $this->categories?->id)->count();
         if($data > 0) return true;
@@ -129,6 +137,13 @@ class Project extends Model
         $query->when($filters['type'] ?? false, fn($query, $type) =>
         $query->where('project_type', '=', $type)
         );
+
+        $query->when(isset($filters['status']), function ($query) use ($filters) {
+            return $filters['status'] === "DRAFT"
+                ? $query->where('version', '<', 1)
+                : $query->where('version', '>', 0);
+        });
+
         $query->when($filters['q'] ?? false, fn($query, $q) =>
         $query->where('project_name', 'like', '%'.$q.'%')
             ->orwhere('project_number', 'like', '%'.$q.'%')
