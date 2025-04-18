@@ -532,18 +532,11 @@ class ProjectService
             return intval(Str::replaceFirst('C', '', $number));
         }, $existingNumbers);
 
-        // Sort the numbers in ascending order
-        sort($existingNumbers);
+        // Get the max existing number, default to 0 if none
+        $maxNumber = !empty($existingNumbers) ? max($existingNumbers) : 0;
 
-        // Find the first missing number in the sequence
-        $nextNumber = 1; // Default to C000001
-        foreach ($existingNumbers as $num) {
-            if ($num == $nextNumber) {
-                $nextNumber++;
-            } else {
-                break; // Stop at the first gap
-            }
-        }
+        // Generate next number
+        $nextNumber = $maxNumber + 1;
 
         // Format the number as 'C000001', 'C000002', etc.
         return 'C' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
