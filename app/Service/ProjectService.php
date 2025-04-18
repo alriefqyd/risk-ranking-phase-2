@@ -102,12 +102,12 @@ class ProjectService
             $project = $project->where($owner,$department);
         }
 
-        if($year) {
+        if($year && $isCountStatus) {
             $project = $project->orderBy('created_at', 'DESC');
             if(!$isHomePage) $project = $project->paginate(20)->withQueryString();
         }
 
-        if($paginate && !$year){
+        if($paginate && !$year && !$isCountStatus){
             $project = $project->orderBy('created_at', 'DESC')->paginate(20)->withQueryString();
         }
 
