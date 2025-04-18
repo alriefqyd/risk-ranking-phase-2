@@ -29,6 +29,8 @@ class HomeController extends Controller
 
        //count all data
        $project = $getProject->getAllProject(false, config('constants.project_presented_year'), true);
+       $projectDraft = $getProject->getAllProject(false, config('constants.project_presented_year'), true)->where('version','<',1)->count();
+       $projectSubmitted = $getProject->getAllProject(false, config('constants.project_presented_year'), true)->where('version','>',0)->count();
        /*$countAssessment = $assessmentService->countAssessment(null);
        $countAssessmentDraft = $assessmentService->countAssessment(config('constants.status.draft'));
        $countAssessmentPublish = $assessmentService->countAssessment(config('constants.status.publish'));
@@ -55,6 +57,8 @@ class HomeController extends Controller
 
        return view('page.dashboard',[
            'projectCount' => $project->count(),
+           'draftCount' => $projectDraft,
+           'submittedCount' => $projectSubmitted,
            'countBasketCategory' => $this->getDataBasket(),
            'isAdmin'=> $userService->isAdmin() || $userService->isViewer(),
            'budgetRiskLevelResidual' => $budgetRiskLevelResidual,

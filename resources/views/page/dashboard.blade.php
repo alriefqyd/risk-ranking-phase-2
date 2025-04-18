@@ -22,17 +22,45 @@
             <div class="col-sm-6 col-xl-4 col-lg-6 mt-4">
                 <div class="card o-hidden border-0">
                     <div class="bg-primary b-r-4 card-body">
-                        <div class="media static-top-widget">
-                            <div class="align-self-center text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg></div>
-                            <div class="media-body"><span class="m-0">Num of BC</span>
-                                <h4 class="mb-0 counter">{{$projectCount}}</h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database icon-bg"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                        <div class="media static-top-widget align-items-center">
+                            <!-- Icon -->
+                            <div class="align-self-center text-center me-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                     class="feather feather-database text-white">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                </svg>
                             </div>
+
+                            <!-- Main Content -->
+                            <div class="media-body text-white">
+                                <span class="fw-semibold">Num of BC</span>
+                                <h4 class="mb-1 counter">{{$projectCount}}</h4>
+                                <div class="d-flex gap-3 small">
+                                    <div><span class="text-warning">●</span> Draft: <strong>{{$draftCount}}</strong></div>
+                                    <div><span class="text-success">●</span> Submitted: <strong>{{$submittedCount}}</strong></div>
+                                </div>
+                            </div>
+
+                            <!-- Faded Background Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                 class="feather feather-database icon-bg text-white-50 position-absolute end-0 bottom-0 me-3 mb-2">
+                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                            </svg>
                         </div>
                     </div>
                 </div>
             </div>
 
-{{--            <div class="col-sm-6 col-xl-4 col-lg-6">--}}
+
+            {{--            <div class="col-sm-6 col-xl-4 col-lg-6">--}}
 {{--                <div class="card rounded-3 bg-primary b-primary">--}}
 {{--                    <div class="card-body text-white">--}}
 {{--                        <div class="row b-b-light">--}}
