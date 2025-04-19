@@ -105,9 +105,9 @@ class ProjectController extends Controller
      * @return /View
      */
     public function create(){
-        /*if(auth()->user()->role == User::ROLE['admin-dept']){
+        if(auth()->user()->role == User::ROLE['admin-dept']){
             abort(401);
-        }*/
+        }
         $projectService = new ProjectService();
         $department = $projectService->getDepartment(Department::TYPE['department'],null);
 
@@ -139,9 +139,9 @@ class ProjectController extends Controller
     {
         $this->authorize('create');
 
-        /*if (auth()->user()->role == User::ROLE['admin-dept']) {
+        if (auth()->user()->role == User::ROLE['admin-dept']) {
             abort(401);
-        }*/
+        }
 
         $projectService = new ProjectService();
 
