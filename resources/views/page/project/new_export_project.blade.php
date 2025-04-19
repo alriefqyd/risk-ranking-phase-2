@@ -52,7 +52,7 @@
             <td>{{ $p->business_case?->npv ?? 0 }}</td>
             <td>{{ number_format((int) $p->business_case?->irr ?? 0, 2) }}</td>
             <td>{{ number_format((int) $p->business_case?->payback_period ?? 0, 2) }}</td>
-            <td>{{ $p->business_case?->tco ?? 0  }} USD</td>
+            <td>{{ $p->business_case?->tco ?? 0  }}</td>
             <td>{{ str_replace('.','',$p->business_case?->cost_estimate) ?? 'N/A' }}</td>
             <td>{{ $p->business_case?->riskAssessment?->risk_level_residual ?? 'N/A' }}</td>
             <td>{{ $p->business_case?->riskAssessment?->risk_level_forecast ?? 'N/A' }}</td>
