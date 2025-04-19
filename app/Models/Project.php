@@ -135,7 +135,11 @@ class Project extends Model
         );
 
         $query->when($filters['type'] ?? false, fn($query, $type) =>
-        $query->where('project_type', '=', $type)
+        $query->where('basket', '=', $type)
+        );
+
+        $query->when($filters['sub_type'] ?? false, fn($query, $type) =>
+        $query->where('sub_basket', '=', $type)
         );
 
         $query->when(isset($filters['status']), function ($query) use ($filters) {

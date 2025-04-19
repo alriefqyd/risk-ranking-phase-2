@@ -84,8 +84,8 @@ class ProjectService
             $owner = 'operation_area';
         }
 
-        $filter = ['q','operation_area','sponsor_area','category','type'];
-        if($isCountStatus) $filter = ['q','operation_area','sponsor_area','category','type','status'];
+        $filter = ['q','operation_area','sponsor_area','category','type','sub_type'];
+        if($isCountStatus) $filter = ['q','operation_area','sponsor_area','category','type','sub_type','status'];
         if($year < config('constants.project_presented_year')){
             $new = ['owner','sponsor'];
             $filter = array_merge($new,$filter);

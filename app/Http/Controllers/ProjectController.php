@@ -69,6 +69,7 @@ class ProjectController extends Controller
         $bcStatus = $this->bcStatus;
 
         $projectType = $this->projectType;
+
         $isAdmin = $this->isAdmin;
 
 
@@ -81,11 +82,14 @@ class ProjectController extends Controller
         $projectSubmit = $projectService->getAllProjectStatus($year)->where('version','>',0)->count();
         $department = $projectService->getDepartment($department, null);
         $subDepartment = $projectService->getDepartment($subDepartment, null);
+        $basketList = CapexInvestment::where('type','INVESTMENT_TYPE')->where('status','ACTIVE')->get();
+        $subBasketList = CapexInvestment::where('type','INVESTMENT_SUB_TYPE')->where('status','ACTIVE')->get();
 
         return view('page.project.index',[
             'projectList' => $projectList,
             'projectCategory' => $projectCategory,
-            'projectType' => $projectType,
+            'projectType' => $basketList,
+            'projectSubType' => $subBasketList,
             'isAdmin' => $isAdmin,
             'department' => $department,
             'subDepartment' => $subDepartment,

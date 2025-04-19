@@ -112,17 +112,17 @@
                                             <select name="type" data-placeholder="Select Project Type" class="js-search-project js-example-basic-single col-sm-12 select2">
                                                 <option></option>
                                                 @foreach($projectType as $pt)
-                                                    <option {{$pt->id == request('type') ? 'selected' : ''}} value="{{$pt->id}}">{{$pt->setting_value}}</option>
+                                                    <option {{$pt->id == request('type') ? 'selected' : ''}} value="{{$pt->id}}">{{$pt->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-2 m-l-5 p-0">
                                         <div class="mb-2">
-                                            <select name="category" data-placeholder="Select Project Category" class="js-search-project js-example-basic-single col-sm-12 select2">
+                                            <select name="sub_type" data-placeholder="Select Sub Project Type" class="js-search-project js-example-basic-single col-sm-12 select2">
                                                 <option></option>
-                                                @foreach($projectCategory as $key=>$value)
-                                                    <option {{$key == request('category') ? 'selected' : ''}} value="{{$key}}">{{$value}}</option>
+                                                @foreach($projectSubType as $value)
+                                                    <option {{$value->id == request('sub_type') ? 'selected' : ''}} value="{{$value->id}}">{{$value->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
