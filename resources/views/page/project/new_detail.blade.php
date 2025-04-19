@@ -488,9 +488,11 @@
                                                 <p class="mb-0"><small class="text-danger js-text-validation-basket"></small></p>
                                                 <button class="btn btn-danger">Cancel</button>
                                                 <button type="submit" class="btn btn-secondary js-save-project-bc" data-status="DRAFT">Save as Draft</button>
-                                                <button class="btn btn-success js-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#modal-confirm">
-                                                    Submit
-                                                </button>
+                                                @if(auth()->user()->role == User::ROLE['admin-dept'] && $project->version > 1)
+                                                    <button class="btn btn-success js-open-modal" type="button" data-bs-toggle="modal" data-bs-target="#modal-confirm">
+                                                        Submit
+                                                    </button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
