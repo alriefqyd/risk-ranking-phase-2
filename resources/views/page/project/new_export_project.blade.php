@@ -13,6 +13,8 @@
         <th>Finance Analyst</th>
         <th>Project Type</th>
         <th>Project Sub Type</th>
+        <th>Status</th>
+        <th>Note From Reviewer</th>
         <th>Problem Statement</th>
         <th>Objective</th>
         <th>Scope of Work</th>
@@ -42,6 +44,8 @@
             <td>{{ $p->finance_analyst ?? 'N/A' }}</td>
             <td>{{ $p->baskets?->name ?? 'N/A' }}</td>
             <td>{{ $p->subBaskets?->name ?? 'N/A' }}</td>
+            <td style="background-color: {{$p->getStatus() == "DRAFT" ? "#e2c636" : "#198754"}} ">{{ $p->getStatus() }}</td>
+            <td>{!! $p->note !!}</td>
             <td>{{ strip_tags($p->business_case?->problem_statement_and_objective_text ?? 'N/A') }}</td>
             <td>{{ strip_tags($p->business_case?->objective ?? 'N/A') }}</td>
             <td>{{ strip_tags($p->business_case?->project_scope_of_work_text ?? 'N/A') }}</td>

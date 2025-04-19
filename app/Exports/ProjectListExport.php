@@ -98,7 +98,7 @@ class ProjectListExport extends AfterSheet implements FromView, WithHeadingRow, 
     {
         $header = 'A1:CI3';
         if ($this->presented_year == $this->year) {
-            $header = 'A1:X1'; // Ensure the range includes rows
+            $header = 'A1:Z1'; // Ensure the range includes rows
         }
 
         $columnSize = $this->size + 2;
