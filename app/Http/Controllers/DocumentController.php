@@ -187,7 +187,7 @@ class DocumentController extends Controller
                     // Handle multiple files for preliminary_design
                     foreach ($files as $file) {
                         $filename = $file->getClientOriginalName();
-                        $filename = str_replace('#','-',$filename);
+                        $filename = preg_replace('/[^A-Za-z0-9\-_.]/', '-', $filename);
                         $file->storeAs('documents/temp/' . $folder . '/' . $k, $filename);
 
                         TemporaryFile::create([
