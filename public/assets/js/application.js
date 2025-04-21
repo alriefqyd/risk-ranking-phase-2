@@ -66,6 +66,19 @@ $(function() {
         $('#detail_note_project').find('#editor1').attr('data-note', _val);
     });
 
+
+    function getCurrentDate(){
+        var today = new Date();
+        var day = String(today.getDate()).padStart(2, '0');
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var month = monthNames[today.getMonth()];
+        var year = today.getFullYear();
+
+        var formattedDate = day + ' ' + month + ' ' + year;
+       return formattedDate;
+    }
+
     /**
      * Handle for open notifications
      */
@@ -87,6 +100,7 @@ $(function() {
      * handle for open modal note
      * data will get from db using ajax
      */
+
     $('#detail_note_project').on('shown.bs.modal', function (e) {
         var _this = $(this);
         var _note_viewer = _this.find('.js-note-viewer');
@@ -99,17 +113,24 @@ $(function() {
             success: function (data) {
                 if (data.status === 200) {
                     var editor = CKEDITOR.instances['editor1'];
-                    _this.find('.modal-body').removeClass('d-none')
+                    _this.find('.modal-body').removeClass('d-none');
                     _this.find('.js-project_id').val(data.project.id);
-                    if (_note_viewer.length > 0) {
-                        _this.find('.js-project_note').html(data.project.note)
+                    var _template = "Update " + getCurrentDate() + ": <br> Deadline revisi kelengkapan BC sampai dengan tgl 23 April. Hanya BC yang lengkap approval dan document yang akan dijadwalkan untuk presentasi <br>";
+
+                    console.log(_template);
+                    if( data.project.note.length < 1){
+                        editor.setData(_template);
                     } else {
-                        console.log(data.project.note.length)
-                        if(data.project.note.length < 1){
-                            editor.setData("<br><br>Deadline revisi sampai tgl 19 April sesuai schedule. Jika belum ada revisi submission sampai deadline tersebut tolong dihapus saja dari database utk memudahkan kompilasi. Hanya BC yg sudah komplit yang diskedulkan utk pre-CRC meeting")
-                        }
-                        editor.setData(data.project.note);
+                        editor.setData(_template + "<br><br>" + data.project.note);
                     }
+                    // if (_note_viewer.length > 0) {
+                    //     _this.find('.js-project_note').html(_template);
+                    // } else {
+                    //     if(data.project.note.length < 1){
+                    //         editor.setData("<br><br>Deadline revisi sampai tgl 19 April sesuai schedule. Jika belum ada revisi submission sampai deadline tersebut tolong dihapus saja dari database utk memudahkan kompilasi. Hanya BC yg sudah komplit yang diskedulkan utk pre-CRC meeting<br>" + _template)
+                    //     }
+                    //     editor.setData(_template);
+                    // }
                     _this.find('.loader-box').addClass('d-none');
                 }
             }
@@ -123,7 +144,7 @@ $(function() {
      */
     $('#detail_note_project').on('hide.bs.modal', function (e) {
         var _this = $(this);
-        _this.find('.modal-body').addClass('d-none')
+        _this.find('.modal-body').addClass('d-none');
         _this.find('.loader-box').removeClass('d-none');
     });
 
