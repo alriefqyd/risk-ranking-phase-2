@@ -144,7 +144,7 @@ $(function () {
                     yBudget: {
                         type: 'logarithmic',
                         min: 0.05,
-                        max: 1500,
+                        max: 110,
                         position: 'right',
                         title: {
                             display: true,
