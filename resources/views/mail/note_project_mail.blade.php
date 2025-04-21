@@ -67,7 +67,7 @@
                                     <p style="background-color: #f8f9fa; padding: 10px; border-radius: 4px;">
                                         {!! nl2br(e($data->note)) !!}
                                     </p>
-                                    <p>Please review and address this matter as soon as possible to complete your submission <span class="danger-color">by the deadline of 19 April 2025</span>. Let us know if you need any clarification or further assistance</p>
+                                    <p>Please review and address this matter as soon as possible to finalize your submission <span class="danger-color">by the deadline of 23 April 2025</span>. Let us know if you need any clarification or further assistance</p>
                                     <p><i>This is an automated message. <b>Please do not reply to this email.</b></i> For any inquiries or support, please contact <a href="mailto:elfriani@vale.com">Elfriani@vale.com</a>.</p>
                                     <p style="margin-bottom: 0">Best regards,<br><b>Risk Ranking 2026-2030 Team</b></p>
                                 </td>
