@@ -422,7 +422,7 @@
                 </div>
             </div>
             <div class="col-lg-5 col-sm-5 box-col-5">
-                <div class="card" style="height: 495px">
+                <div class="card">
                     <div class="card-header pb-0" style="border: 0px !important">
                         <h5>Risk Priority</h5>
                     </div>
@@ -439,7 +439,7 @@
 
                             <div class="tab-content" id="pills-clrtabContent21">
                                 <div class="tab-pane fade show active" id="pills-clrhome21" role="tabpanel" aria-labelledby="pills-clrhome-tab21">
-                                    <canvas class="flot-chart-placeholder" width="800" height="700" id="stacked-bar-chart-priority_risk"></canvas>
+                                    <canvas class="flot-chart-placeholder" id="stacked-bar-chart-priority_risk"></canvas>
                                 </div>
                                 <div class="tab-pane fade" id="pills-clrprofile21" role="tabpanel" aria-labelledby="pills-clrprofile-tab21">
                                     <canvas class="flot-chart-placeholder" style="" id="stacked-bar-chart-priority_risk-forecast"></canvas>
