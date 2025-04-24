@@ -41,7 +41,9 @@
                                    data-bs-target="#detail_note_project">
                                     {!! $project->getNoteTemplateForm() !!}
                                 </a>
-                                <div class="btn btn-success js-btn-edit-bc float-end">Update BC</div>
+                                @if(auth()->user()->role == 'Administrator')
+                                    <div class="btn btn-success js-btn-edit-bc float-end">Update BC</div>
+                                @endif
                             </div>
 
                             <div class="card-body">
