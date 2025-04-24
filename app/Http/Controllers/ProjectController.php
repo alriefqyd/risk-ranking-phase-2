@@ -379,7 +379,9 @@ class ProjectController extends Controller
         $user = $userService->getCurrentUser();
 
 //        /**temporary disabled**/
-        if(auth()->user()->role == User::ROLE['admin-dept'] && $project->version == 0){
+        if(auth()->user()->role == User::ROLE['admin-dept']
+//            && $project->version == 0
+        ) {
             abort(401);
         }
 
