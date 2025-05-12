@@ -27,6 +27,7 @@
         <th>Risk Level Forecast</th>
         <th>Risk Deduction</th>
         <th>KPI Summary</th>
+        <th>Created At</th>
     </tr>
     </thead>
     <tbody>
@@ -65,6 +66,7 @@
                 @endforeach
                 </ol>
             </td>
+            <td>{{ \Carbon\Carbon::parse($p->created_at)->format('d-M-Y')}}</td>
         </tr>
     @endforeach
     </tbody>
