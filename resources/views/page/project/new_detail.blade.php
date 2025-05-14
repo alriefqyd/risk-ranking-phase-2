@@ -256,14 +256,16 @@
                                             </td>
                                             <td>
                                                 <table>
-                                                    <tr>
-                                                        <td>KPI</td>
-                                                        <td><b>Est Time to Benefit</b></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>2</td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td>KPI</td>
+                                                            <td><b>Est Time to Benefit</b></td>
+                                                        </tr>
+                                                    @foreach($kpiData as $data)
+                                                        <tr>
+                                                            <td>{{$data['description']}}</td>
+                                                            <td>{{$data['time_to_benefit']}}</td>
+                                                        </tr>
+                                                    @endforeach
                                                 </table>
                                             </td>
                                         </tr>

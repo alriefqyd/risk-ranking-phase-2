@@ -115,13 +115,14 @@ $(function() {
                     var editor = CKEDITOR.instances['editor1'];
                     _this.find('.modal-body').removeClass('d-none');
                     _this.find('.js-project_id').val(data.project.id);
-                    var _template = "Update " + getCurrentDate() + ": <br> Deadline revisi kelengkapan BC sampai dengan tgl 23 April. Hanya BC yang lengkap approval dan document yang akan dijadwalkan untuk presentasi <br>";
+                    var _template = "Update " + getCurrentDate() ;
 
                     if(editor){
                         if( data.project.note.length < 1){
                             editor.setData(_template);
                         } else {
-                            editor.setData(_template + "<br><br>" + data.project.note);
+                            // editor.setData(_template + "<br><br>" + data.project.note);
+                            editor.setData(_template);
                         }
                     } else {
                         _this.find('.js-project_note').html(_note);
