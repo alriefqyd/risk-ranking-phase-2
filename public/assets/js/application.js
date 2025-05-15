@@ -122,7 +122,7 @@ $(function() {
                             editor.setData(_template);
                         } else {
                             // editor.setData(_template + "<br><br>" + data.project.note);
-                            editor.setData(_template);
+                            editor.setData(data.project.note);
                         }
                     } else {
                         _this.find('.js-project_note').html(_note);
