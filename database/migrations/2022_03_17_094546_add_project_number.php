@@ -13,7 +13,7 @@ class AddProjectNumber extends Migration
      */
     public function up()
     {
-        Schema::table('Projects', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->string('project_number')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddProjectNumber extends Migration
      */
     public function down()
     {
-        Schema::table('Projects', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->removeColumn('project_number');
         });
     }
