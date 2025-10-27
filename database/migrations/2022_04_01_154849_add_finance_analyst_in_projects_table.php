@@ -13,7 +13,7 @@ class AddFinanceAnalystInProjectsTable extends Migration
      */
     public function up()
     {
-        Schema::table('Projects', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->string('finance_analyst')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddFinanceAnalystInProjectsTable extends Migration
      */
     public function down()
     {
-        Schema::table('Projects', function (Blueprint $table) {
+        Schema::table('projects', function (Blueprint $table) {
             $table->removeColumn('finance_analyst');
         });
     }
