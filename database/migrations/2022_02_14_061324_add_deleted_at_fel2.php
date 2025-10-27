@@ -13,7 +13,7 @@ class AddDeletedAtFel2 extends Migration
      */
     public function up()
     {
-        Schema::table('Fel2s', function (Blueprint $table) {
+        Schema::table('fel2s', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class AddDeletedAtFel2 extends Migration
      */
     public function down()
     {
-        Schema::table('Fel2s', function (Blueprint $table) {
+        Schema::table('fel2s', function (Blueprint $table) {
             //
         });
     }

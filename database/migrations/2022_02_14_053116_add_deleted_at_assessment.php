@@ -13,7 +13,7 @@ class AddDeletedAtAssessment extends Migration
      */
     public function up()
     {
-        Schema::table('Assessments', function (Blueprint $table) {
+        Schema::table('assessments', function (Blueprint $table) {
             $table->softDeletes();
         });
     }
@@ -25,7 +25,7 @@ class AddDeletedAtAssessment extends Migration
      */
     public function down()
     {
-        Schema::table('Assessments', function (Blueprint $table) {
+        Schema::table('assessments', function (Blueprint $table) {
             //
         });
     }
