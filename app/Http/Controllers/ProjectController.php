@@ -336,7 +336,7 @@ class ProjectController extends Controller
 
         $logs = RevisionLog::where('project_id', $project->id)->get();
         $viewTemplate = 'page.project.detail';
-        if($project->presented_year == now()->year) {
+        if($project->presented_year >= now()->year) {
             $viewTemplate = 'page.project.new_detail';
         }
         return view($viewTemplate,[
