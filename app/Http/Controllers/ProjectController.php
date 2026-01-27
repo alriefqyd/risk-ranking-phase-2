@@ -335,10 +335,10 @@ class ProjectController extends Controller
         $subBasketList = CapexInvestment::where('type','INVESTMENT_SUB_TYPE')->where('status','ACTIVE')->where('parent_id', $project->basket)->get();
 
         $logs = RevisionLog::where('project_id', $project->id)->get();
-        $viewTemplate = 'page.project.detail';
-        if($project->presented_year == now()->year) {
+//        $viewTemplate = 'page.project.detail';
+//        if($project->presented_year == now()->year) {
             $viewTemplate = 'page.project.new_detail';
-        }
+//        }
         return view($viewTemplate,[
             'project' => $project,
             'projectCategory' => $this->projectCategory,
